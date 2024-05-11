@@ -350,7 +350,7 @@ export const messages = [
     lastName: 'Lehner',
     email: 'Ethyl_Kihn98@yahoo.com',
     avatar:
-      'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-05.webp',
+      'https://avatars.githubusercontent.com/u/120194990?v=4',
     company: 'Kuphal, Lind and Blick',
     markedAsRead: true,
     summary:
@@ -390,7 +390,7 @@ export const messages = [
     lastName: 'Fahey',
     email: 'Garth68@hotmail.com',
     avatar:
-      'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-04.webp',
+      'https://avatars.githubusercontent.com/u/120194990?v=4',
     company: 'Champlin - Dare',
     markedAsRead: true,
     summary:
@@ -422,7 +422,7 @@ export const messages = [
     lastName: 'Von',
     email: 'Connie.Will@yahoo.com',
     avatar:
-      'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-03.webp',
+      'https://avatars.githubusercontent.com/u/120194990?v=4',
     company: 'Douglas LLC',
     markedAsRead: false,
     summary:
@@ -454,7 +454,7 @@ export const messages = [
     lastName: 'Hane',
     email: 'Torrance.Beier@yahoo.com',
     avatar:
-      'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-03.webp',
+      'https://avatars.githubusercontent.com/u/120194990?v=4',
     company: 'King - Wolff',
     markedAsRead: false,
     summary:
@@ -486,7 +486,7 @@ export const messages = [
     lastName: 'Schuster-Willms',
     email: 'Bennie_Anderson23@gmail.com',
     avatar:
-      'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-01.webp',
+      'https://avatars.githubusercontent.com/u/120194990?v=4',
     company: 'Konopelski - Schmidt',
     markedAsRead: false,
     summary:
@@ -526,7 +526,7 @@ export const messages = [
     lastName: 'Gislason',
     email: 'Francisca_Koelpin77@gmail.com',
     avatar:
-      'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-02.webp',
+      'https://avatars.githubusercontent.com/u/120194990?v=4',
     company: 'Gerlach LLC',
     markedAsRead: false,
     summary:
@@ -701,7 +701,7 @@ export const messages = [
     lastName: 'Heaney',
     email: 'Brittany.Spencer@yahoo.com',
     avatar:
-      'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-03.webp',
+      'https://avatars.githubusercontent.com/u/120194990?v=4',
     company: 'Bernhard - Kunde',
     markedAsRead: true,
     summary: 'Nesciunt culpa fugit. Quidem est autem magni. Soluta nobis ab.',
@@ -772,7 +772,7 @@ export const messages = [
     lastName: 'Ernser',
     email: 'Serenity.Wunsch@yahoo.com',
     avatar:
-      'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-01.webp',
+      'https://avatars.githubusercontent.com/u/120194990?v=4',
     company: 'Cruickshank - Krajcik',
     markedAsRead: true,
     summary:
@@ -804,7 +804,7 @@ export const messages = [
     lastName: 'Franey',
     email: 'Lauren.Yost56@hotmail.com',
     avatar:
-      'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-02.webp',
+      'https://avatars.githubusercontent.com/u/120194990?v=4',
     company: 'Kulas, Swift and Boehm',
     markedAsRead: true,
     summary:
@@ -836,7 +836,7 @@ export const messages = [
     lastName: 'Bode',
     email: 'Lavinia.Tillman@hotmail.com',
     avatar:
-      'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-03.webp',
+      'https://avatars.githubusercontent.com/u/120194990?v=4',
     company: 'Schulist, MacGyver and Hermann',
     markedAsRead: true,
     summary:
@@ -876,7 +876,7 @@ export const messages = [
     lastName: 'Windler',
     email: 'Hunter97@gmail.com',
     avatar:
-      'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-04.webp',
+      'https://avatars.githubusercontent.com/u/120194990?v=4',
     company: 'Mueller and Sons',
     markedAsRead: true,
     summary:
@@ -916,7 +916,7 @@ export const messages = [
     lastName: 'McClure',
     email: 'Alayna.Hoppe@hotmail.com',
     avatar:
-      'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-05.webp',
+      'https://avatars.githubusercontent.com/u/120194990?v=4',
     company: 'Kemmer - Altenwerth',
     markedAsRead: false,
     summary:

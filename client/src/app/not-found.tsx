@@ -12,7 +12,7 @@ export default function NotFound() {
       <div className="sticky top-0 z-40 flex justify-center py-5 backdrop-blur-lg lg:backdrop-blur-none xl:py-10">
         <Link href="/">
           <Image
-            src={siteConfig.logo}
+            src={""}
             alt={siteConfig.title}
             className="dark:invert"
             priority

@@ -16,7 +16,7 @@ export const invoiceData = [
     name: 'Francis Sanford MD',
     userName: 'George33',
     avatar:
-      'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-01.webp',
+      'https://avatars.githubusercontent.com/u/120194990?v=4',
     email: 'Maryam.Barrows@yahoo.com',
     dueDate: '2023-10-18T13:24:00.760Z',
     amount: '544.00',
@@ -28,7 +28,7 @@ export const invoiceData = [
     name: 'Lucia Kshlerin',
     userName: 'Kenyon_Goldner56',
     avatar:
-      'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-02.webp',
+      'https://avatars.githubusercontent.com/u/120194990?v=4',
     email: 'Mason_Davis4@yahoo.com',
     dueDate: '2023-07-18T01:06:16.095Z',
     amount: '560.00',
@@ -40,7 +40,7 @@ export const invoiceData = [
     name: 'Byron Hoppe III',
     userName: 'Walton.Hane98',
     avatar:
-      'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-03.webp',
+      'https://avatars.githubusercontent.com/u/120194990?v=4',
     email: 'Jayda_Schiller35@yahoo.com',
     dueDate: '2024-12-18T15:32:21.317Z',
     amount: '249.00',
@@ -52,7 +52,7 @@ export const invoiceData = [
     name: 'Camille Jenkins',
     userName: 'Dalton_Von55',
     avatar:
-      'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-04.webp',
+      'https://avatars.githubusercontent.com/u/120194990?v=4',
     email: 'Retha.Lehner47@hotmail.com',
     dueDate: '2024-06-30T19:06:03.018Z',
     amount: '255.00',
@@ -64,7 +64,7 @@ export const invoiceData = [
     name: 'Kelli Mitchell',
     userName: 'Iva.Denesik',
     avatar:
-      'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-05.webp',
+      'https://avatars.githubusercontent.com/u/120194990?v=4',
     email: 'Guiseppe.Champlin@hotmail.com',
     dueDate: '2025-07-24T18:45:02.179Z',
     amount: '329.00',
@@ -184,7 +184,7 @@ export const invoiceData = [
     name: 'Lillian Anderson',
     userName: 'Cyrus_Hettinger',
     avatar:
-      'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-02.webp',
+      'https://avatars.githubusercontent.com/u/120194990?v=4',
     email: 'Aletha_Waters87@gmail.com',
     dueDate: '2023-12-29T04:41:54.007Z',
     amount: '196.00',
@@ -208,7 +208,7 @@ export const invoiceData = [
     name: 'Mattie Miller',
     userName: 'Madison_MacGyver-Lesch52',
     avatar:
-      'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-03.webp',
+      'https://avatars.githubusercontent.com/u/120194990?v=4',
     email: 'Bianka30@yahoo.com',
     dueDate: '2025-06-27T15:53:33.802Z',
     amount: '812.00',

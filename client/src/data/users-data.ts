@@ -28,9 +28,7 @@ export const STATUSES = {
 export const usersData = [
   {
     id: '0256',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Bessie Beatty',
     email: 'christophe78@gmail.com',
     role: ROLES.Manager,
@@ -40,9 +38,7 @@ export const usersData = [
   },
   {
     id: '6177',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Joshua Green',
     email: 'ayla_schuster28@yahoo.com',
     role: ROLES.Support,
@@ -52,9 +48,7 @@ export const usersData = [
   },
   {
     id: '5456',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Wendy Ankunding',
     email: 'lorine66@gmail.com',
     role: ROLES.Support,
@@ -64,9 +58,7 @@ export const usersData = [
   },
   {
     id: '6370',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Daryl Wilderman',
     email: 'kane_anderson@gmail.com',
     role: ROLES.RestrictedUser,
@@ -76,9 +68,7 @@ export const usersData = [
   },
   {
     id: '8681',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Antonia Ankunding Jr.',
     email: 'forest_aufderhar76@gmail.com',
     role: ROLES.RestrictedUser,
@@ -88,9 +78,7 @@ export const usersData = [
   },
   {
     id: '1083',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Marie VonRueden',
     email: 'molly.hauck57@hotmail.com',
     role: ROLES.Manager,
@@ -100,9 +88,7 @@ export const usersData = [
   },
   {
     id: '9425',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Katherine Parisian',
     email: 'rashad.moen@yahoo.com',
     role: ROLES.RestrictedUser,
@@ -112,9 +98,7 @@ export const usersData = [
   },
   {
     id: '4775',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Jaime Tremblay',
     email: 'madyson4@yahoo.com',
     role: ROLES.Sales,
@@ -124,9 +108,7 @@ export const usersData = [
   },
   {
     id: '5854',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Mr. Abel Hettinger',
     email: 'mac_ebert@hotmail.com',
     role: ROLES.Developer,
@@ -136,9 +118,7 @@ export const usersData = [
   },
   {
     id: '9964',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Velma Flatley',
     email: 'mohamed.ebert@yahoo.com',
     role: ROLES.Administrator,
@@ -148,9 +128,7 @@ export const usersData = [
   },
   {
     id: '6964',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Ebony Mertz-Grimes',
     email: 'jerry53@yahoo.com',
     role: ROLES.Customer,
@@ -160,9 +138,7 @@ export const usersData = [
   },
   {
     id: '3866',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Alma Ebert IV',
     email: 'trent.mcglynn@yahoo.com',
     role: ROLES.Administrator,
@@ -172,9 +148,7 @@ export const usersData = [
   },
   {
     id: '4895',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Dr. Lynn Hills V',
     email: 'lauretta.lehner0@gmail.com',
     role: ROLES.HRD,
@@ -184,9 +158,7 @@ export const usersData = [
   },
   {
     id: '8615',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Leona Berge',
     email: 'vanessa_zieme88@gmail.com',
     role: ROLES.Administrator,
@@ -196,9 +168,7 @@ export const usersData = [
   },
   {
     id: '0735',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Vicky Gorczany',
     email: 'javier.ernser-schiller@hotmail.com',
     role: ROLES.Administrator,
@@ -208,9 +178,7 @@ export const usersData = [
   },
   {
     id: '8778',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Elsie Veum',
     email: 'sienna9@yahoo.com',
     role: ROLES.Customer,
@@ -220,9 +188,7 @@ export const usersData = [
   },
   {
     id: '1520',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Sandy Kunde',
     email: 'ernie64@gmail.com',
     role: ROLES.Administrator,
@@ -232,9 +198,7 @@ export const usersData = [
   },
   {
     id: '7680',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Mrs. Melanie Harber',
     email: 'sadye.franey@hotmail.com',
     role: ROLES.Support,
@@ -244,9 +208,7 @@ export const usersData = [
   },
   {
     id: '4530',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Ben Schiller',
     email: 'johathan_runolfsson89@yahoo.com',
     role: ROLES.Administrator,
@@ -256,9 +218,7 @@ export const usersData = [
   },
   {
     id: '0649',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Ramon Schneider',
     email: 'maiya85@yahoo.com',
     role: ROLES.Developer,
@@ -268,9 +228,7 @@ export const usersData = [
   },
   {
     id: '3675',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Pearl Harvey',
     email: 'torey_schuster@yahoo.com',
     role: ROLES.Developer,
@@ -280,9 +238,7 @@ export const usersData = [
   },
   {
     id: '3104',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Orville Heathcote',
     email: 'titus.howe@yahoo.com',
     role: ROLES.Manager,
@@ -292,9 +248,7 @@ export const usersData = [
   },
   {
     id: '5806',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Sonia Schinner',
     email: 'oceane_jakubowski@hotmail.com',
     role: ROLES.Support,
@@ -304,9 +258,7 @@ export const usersData = [
   },
   {
     id: '6235',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Franklin Tillman',
     email: 'teagan_hartmann74@hotmail.com',
     role: ROLES.RestrictedUser,
@@ -316,9 +268,7 @@ export const usersData = [
   },
   {
     id: '8853',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Rick Dietrich',
     email: 'colton_rutherford55@gmail.com',
     role: ROLES.Sales,
@@ -328,9 +278,7 @@ export const usersData = [
   },
   {
     id: '0278',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Mathew Lang III',
     email: 'leonora_casper47@hotmail.com',
     role: ROLES.Support,
@@ -340,9 +288,7 @@ export const usersData = [
   },
   {
     id: '7029',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Bob Douglas',
     email: 'breanna_toy@hotmail.com',
     role: ROLES.Support,
@@ -352,9 +298,7 @@ export const usersData = [
   },
   {
     id: '0017',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Alexandra Nicolas',
     email: 'katrina99@yahoo.com',
     role: ROLES.Developer,
@@ -364,9 +308,7 @@ export const usersData = [
   },
   {
     id: '4295',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Jan Schiller',
     email: 'dina_kuhn@yahoo.com',
     role: ROLES.Developer,
@@ -376,9 +318,7 @@ export const usersData = [
   },
   {
     id: '4133',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Dr. Leigh Wolf',
     email: 'juana_schneider@hotmail.com',
     role: ROLES.Manager,
@@ -388,9 +328,7 @@ export const usersData = [
   },
   {
     id: '8054',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Bennie Block',
     email: 'willa49@hotmail.com',
     role: ROLES.Sales,
@@ -400,9 +338,7 @@ export const usersData = [
   },
   {
     id: '3288',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Christopher Veum',
     email: 'rosetta_shanahan76@yahoo.com',
     role: ROLES.Sales,
@@ -412,9 +348,7 @@ export const usersData = [
   },
   {
     id: '6680',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Claudia Kutch I',
     email: 'izabella.gleason@gmail.com',
     role: ROLES.Support,
@@ -424,9 +358,7 @@ export const usersData = [
   },
   {
     id: '4369',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Hubert Glover',
     email: 'gregoria.buckridge64@hotmail.com',
     role: ROLES.HRD,
@@ -436,9 +368,7 @@ export const usersData = [
   },
   {
     id: '2882',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Dr. Allison Collier',
     email: 'mabel.runolfsdottir@hotmail.com',
     role: ROLES.Customer,
@@ -448,9 +378,7 @@ export const usersData = [
   },
   {
     id: '0456',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Patty Schimmel',
     email: 'buster.cormier@yahoo.com',
     role: ROLES.Customer,
@@ -460,9 +388,7 @@ export const usersData = [
   },
   {
     id: '7503',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Marcella Roberts',
     email: 'elva73@hotmail.com',
     role: ROLES.Administrator,
@@ -472,9 +398,7 @@ export const usersData = [
   },
   {
     id: '8237',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Claire Schumm',
     email: 'coty31@hotmail.com',
     role: ROLES.HRD,
@@ -484,9 +408,7 @@ export const usersData = [
   },
   {
     id: '1885',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Marcella Weber',
     email: 'nelson.kovacek@gmail.com',
     role: ROLES.HRD,
@@ -496,9 +418,7 @@ export const usersData = [
   },
   {
     id: '2335',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Pete Little-Schaefer',
     email: 'fred53@gmail.com',
     role: ROLES.Sales,
@@ -508,9 +428,7 @@ export const usersData = [
   },
   {
     id: '1187',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Irma Legros-Hilpert',
     email: 'lesly.kessler87@hotmail.com',
     role: ROLES.Manager,
@@ -520,9 +438,7 @@ export const usersData = [
   },
   {
     id: '6848',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'May Vandervort',
     email: 'adrienne.schamberger@yahoo.com',
     role: ROLES.Support,
@@ -532,9 +448,7 @@ export const usersData = [
   },
   {
     id: '0542',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Belinda Goldner',
     email: 'eden33@hotmail.com',
     role: ROLES.Customer,
@@ -544,9 +458,7 @@ export const usersData = [
   },
   {
     id: '5708',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Doreen Spencer',
     email: 'jacklyn52@yahoo.com',
     role: ROLES.Manager,
@@ -556,9 +468,7 @@ export const usersData = [
   },
   {
     id: '9416',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Bethany Reilly',
     email: 'mozelle.rosenbaum90@yahoo.com',
     role: ROLES.Manager,
@@ -568,9 +478,7 @@ export const usersData = [
   },
   {
     id: '0756',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Ellis Hartmann',
     email: 'holden69@yahoo.com',
     role: ROLES.Sales,
@@ -580,9 +488,7 @@ export const usersData = [
   },
   {
     id: '6171',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Lance Dickens',
     email: 'dasia40@yahoo.com',
     role: ROLES.HRD,
@@ -592,9 +498,7 @@ export const usersData = [
   },
   {
     id: '9363',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Eva Lang',
     email: 'lorine.cassin4@yahoo.com',
     role: ROLES.HRD,
@@ -604,9 +508,7 @@ export const usersData = [
   },
   {
     id: '5455',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Latoya Beatty',
     email: 'lauretta_koelpin80@yahoo.com',
     role: ROLES.Manager,
@@ -616,9 +518,7 @@ export const usersData = [
   },
   {
     id: '7949',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Douglas Hand',
     email: 'will73@yahoo.com',
     role: ROLES.Manager,
@@ -628,9 +528,7 @@ export const usersData = [
   },
   {
     id: '1568',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Virgil Stracke',
     email: 'gilberto23@hotmail.com',
     role: ROLES.Sales,
@@ -640,9 +538,7 @@ export const usersData = [
   },
   {
     id: '8505',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Mr. Amos Botsford',
     email: 'trent11@hotmail.com',
     role: ROLES.HRD,
@@ -652,9 +548,7 @@ export const usersData = [
   },
   {
     id: '1619',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Gilbert Mertz Sr.',
     email: 'sonia41@yahoo.com',
     role: ROLES.Developer,
@@ -664,9 +558,7 @@ export const usersData = [
   },
   {
     id: '7952',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Clinton Mante',
     email: 'dante60@yahoo.com',
     role: ROLES.Sales,
@@ -676,9 +568,7 @@ export const usersData = [
   },
   {
     id: '3376',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'April Von-Davis',
     email: 'ruben_bins@gmail.com',
     role: ROLES.Administrator,
@@ -688,9 +578,7 @@ export const usersData = [
   },
   {
     id: '3544',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Hugo Veum',
     email: 'davon42@hotmail.com',
     role: ROLES.Sales,
@@ -700,9 +588,7 @@ export const usersData = [
   },
   {
     id: '5807',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Patrick Keebler',
     email: 'fred_nader@hotmail.com',
     role: ROLES.Sales,
@@ -712,9 +598,7 @@ export const usersData = [
   },
   {
     id: '9200',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Everett Bins Jr.',
     email: 'marielle_mante53@hotmail.com',
     role: ROLES.Administrator,
@@ -724,9 +608,7 @@ export const usersData = [
   },
   {
     id: '7412',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Sherman Ondricka',
     email: 'mylene_grant@yahoo.com',
     role: ROLES.Support,
@@ -736,9 +618,7 @@ export const usersData = [
   },
   {
     id: '5879',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Rufus Conn',
     email: 'einar_crist-hickle@yahoo.com',
     role: ROLES.Customer,
@@ -748,9 +628,7 @@ export const usersData = [
   },
   {
     id: '2784',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Ms. Kim Tillman',
     email: 'alexzander46@gmail.com',
     role: ROLES.Support,
@@ -760,9 +638,7 @@ export const usersData = [
   },
   {
     id: '6320',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Eddie Wisozk',
     email: 'julie5@gmail.com',
     role: ROLES.Developer,
@@ -772,9 +648,7 @@ export const usersData = [
   },
   {
     id: '0973',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Vincent Hand',
     email: 'lura58@hotmail.com',
     role: ROLES.Manager,
@@ -784,9 +658,7 @@ export const usersData = [
   },
   {
     id: '5323',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Marvin Langworth',
     email: 'nigel.blanda91@gmail.com',
     role: ROLES.Sales,
@@ -796,9 +668,7 @@ export const usersData = [
   },
   {
     id: '5052',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Alex Jenkins III',
     email: 'ezekiel_brown57@hotmail.com',
     role: ROLES.HRD,
@@ -808,9 +678,7 @@ export const usersData = [
   },
   {
     id: '6099',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Muriel Boyer',
     email: 'myrl.swaniawski21@gmail.com',
     role: ROLES.Customer,
@@ -820,9 +688,7 @@ export const usersData = [
   },
   {
     id: '8420',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Bernadette Bode III',
     email: 'providenci79@hotmail.com',
     role: ROLES.Sales,
@@ -832,9 +698,7 @@ export const usersData = [
   },
   {
     id: '9621',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Louis Rippin',
     email: 'brad34@yahoo.com',
     role: ROLES.RestrictedUser,
@@ -844,9 +708,7 @@ export const usersData = [
   },
   {
     id: '4794',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Silvia Leuschke',
     email: 'nyasia.spencer46@gmail.com',
     role: ROLES.HRD,
@@ -856,9 +718,7 @@ export const usersData = [
   },
   {
     id: '4050',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Rosie Hintz',
     email: 'lilliana.dare@gmail.com',
     role: ROLES.HRD,
@@ -868,9 +728,7 @@ export const usersData = [
   },
   {
     id: '9681',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Ray Marquardt PhD',
     email: 'giles53@hotmail.com',
     role: ROLES.HRD,
@@ -880,9 +738,7 @@ export const usersData = [
   },
   {
     id: '0596',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Alfred Braun',
     email: 'benny76@yahoo.com',
     role: ROLES.HRD,
@@ -892,9 +748,7 @@ export const usersData = [
   },
   {
     id: '4156',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Jody Kshlerin',
     email: 'bobby.hettinger83@gmail.com',
     role: ROLES.Administrator,
@@ -904,9 +758,7 @@ export const usersData = [
   },
   {
     id: '9124',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'George Ratke',
     email: 'lydia.kovacek47@yahoo.com',
     role: ROLES.Developer,
@@ -916,9 +768,7 @@ export const usersData = [
   },
   {
     id: '8363',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Albert Purdy Sr.',
     email: 'melany_collier@yahoo.com',
     role: ROLES.Support,
@@ -928,9 +778,7 @@ export const usersData = [
   },
   {
     id: '4473',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Marsha Cummings',
     email: 'fay.damore@gmail.com',
     role: ROLES.RestrictedUser,
@@ -940,9 +788,7 @@ export const usersData = [
   },
   {
     id: '0716',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Miss Kellie Grady',
     email: 'yolanda_ryan91@hotmail.com',
     role: ROLES.Sales,
@@ -952,9 +798,7 @@ export const usersData = [
   },
   {
     id: '5425',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Holly Pfannerstill',
     email: 'eudora29@hotmail.com',
     role: ROLES.Sales,
@@ -964,9 +808,7 @@ export const usersData = [
   },
   {
     id: '7397',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Mabel Blick',
     email: 'lelia.barton-heathcote26@hotmail.com',
     role: ROLES.RestrictedUser,
@@ -976,9 +818,7 @@ export const usersData = [
   },
   {
     id: '2861',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Willie Cremin',
     email: 'shirley63@hotmail.com',
     role: ROLES.Developer,
@@ -988,9 +828,7 @@ export const usersData = [
   },
   {
     id: '9210',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Miss Tabitha Feil',
     email: 'vesta_quigley-schimmel@hotmail.com',
     role: ROLES.Support,
@@ -1000,9 +838,7 @@ export const usersData = [
   },
   {
     id: '6085',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Megan Corkery',
     email: 'lane4@gmail.com',
     role: ROLES.HRD,
@@ -1012,9 +848,7 @@ export const usersData = [
   },
   {
     id: '9633',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Dwight Baumbach',
     email: 'gail29@gmail.com',
     role: ROLES.Manager,
@@ -1024,9 +858,7 @@ export const usersData = [
   },
   {
     id: '7815',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Blanca Raynor Sr.',
     email: 'hubert.auer@gmail.com',
     role: ROLES.Developer,
@@ -1036,9 +868,7 @@ export const usersData = [
   },
   {
     id: '1461',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Loren Kunde',
     email: 'lillie37@hotmail.com',
     role: ROLES.Customer,
@@ -1048,9 +878,7 @@ export const usersData = [
   },
   {
     id: '1437',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Ms. Patty Gerlach',
     email: 'emilio_harber41@yahoo.com',
     role: ROLES.HRD,
@@ -1060,9 +888,7 @@ export const usersData = [
   },
   {
     id: '0569',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Jenna Lang',
     email: 'lacey82@yahoo.com',
     role: ROLES.Customer,
@@ -1072,9 +898,7 @@ export const usersData = [
   },
   {
     id: '8289',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Leroy Buckridge',
     email: 'bo.frami34@yahoo.com',
     role: ROLES.RestrictedUser,
@@ -1084,9 +908,7 @@ export const usersData = [
   },
   {
     id: '3468',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Dr. Ada Koss',
     email: 'jefferey_kling@hotmail.com',
     role: ROLES.Sales,
@@ -1096,9 +918,7 @@ export const usersData = [
   },
   {
     id: '6174',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Mr. Francis Breitenberg',
     email: 'jayme.halvorson@hotmail.com',
     role: ROLES.Customer,
@@ -1108,9 +928,7 @@ export const usersData = [
   },
   {
     id: '1831',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Omar Schimmel',
     email: 'bertram.thiel65@gmail.com',
     role: ROLES.Manager,
@@ -1120,9 +938,7 @@ export const usersData = [
   },
   {
     id: '8643',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Delbert Brekke',
     email: 'joel_pacocha@hotmail.com',
     role: ROLES.HRD,
@@ -1132,9 +948,7 @@ export const usersData = [
   },
   {
     id: '3483',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Dr. Patrick Emard',
     email: 'noel_ratke53@gmail.com',
     role: ROLES.RestrictedUser,
@@ -1144,9 +958,7 @@ export const usersData = [
   },
   {
     id: '2303',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Mitchell Hermiston',
     email: 'daryl.bechtelar67@gmail.com',
     role: ROLES.HRD,
@@ -1156,9 +968,7 @@ export const usersData = [
   },
   {
     id: '8674',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Dr. Robyn Casper',
     email: 'armando13@yahoo.com',
     role: ROLES.Customer,
@@ -1168,9 +978,7 @@ export const usersData = [
   },
   {
     id: '1973',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Eula Gleichner',
     email: 'patricia_reichert@yahoo.com',
     role: ROLES.Developer,
@@ -1180,9 +988,7 @@ export const usersData = [
   },
   {
     id: '5985',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Erin Schumm Jr.',
     email: 'priscilla.deckow9@gmail.com',
     role: ROLES.HRD,
@@ -1192,9 +998,7 @@ export const usersData = [
   },
   {
     id: '9780',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Celia Miller',
     email: 'adrienne_leffler39@hotmail.com',
     role: ROLES.Customer,
@@ -1204,9 +1008,7 @@ export const usersData = [
   },
   {
     id: '3294',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Katrina Price',
     email: 'oleta70@gmail.com',
     role: ROLES.Manager,
@@ -1216,9 +1018,7 @@ export const usersData = [
   },
   {
     id: '0649',
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
     fullName: 'Leonard Franecki Sr.',
     email: 'danyka.ryan99@yahoo.com',
     role: ROLES.Manager,

@@ -42,7 +42,7 @@ export const members = [
   {
     id: 5,
     thumbnail:
-      'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-02.webp',
+      'https://avatars.githubusercontent.com/u/120194990?v=4',
     name: 'Robert Fox',
     email: 'michael.mitc@example.com',
     color: 'text-[#00b8d9]',
@@ -62,7 +62,7 @@ export const members = [
   {
     id: 7,
     thumbnail:
-      'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-03.webp',
+      'https://avatars.githubusercontent.com/u/120194990?v=4',
     name: 'Shoeie Fashio',
     email: 'fashio@example.com',
     color: 'text-[#00a76f]',

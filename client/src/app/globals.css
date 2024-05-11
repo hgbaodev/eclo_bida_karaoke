@@ -2,8 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import './react-big-calendar.css';
-@import 'react-calendar/dist/Calendar.css';
+@import "react-big-calendar/lib/css/react-big-calendar.css";
 
 @layer base {
   /* default theme */
@@ -89,7 +88,7 @@
   }
 
   /* dark theme */
-  [data-theme='dark'] {
+  [data-theme="dark"] {
     /*
       - gray/natural color shades for texts, borders and disabled elements.
       - If required we can use as background too.
@@ -187,16 +186,16 @@
     @apply hidden;
   }
 
-  input[type='search']::-webkit-search-cancel-button {
+  input[type="search"]::-webkit-search-cancel-button {
     @apply hidden;
   }
 
-  input[type='number']::-webkit-inner-spin-button,
-  input[type='number']::-webkit-outer-spin-button {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
     @apply m-0 appearance-none;
   }
 
-  input[type='checkbox']:checked {
+  input[type="checkbox"]:checked {
     @apply bg-none;
   }
 
@@ -211,11 +210,11 @@
   }
 
   h1 {
-    @apply text-3xl dark:text-gray-800 2xl:text-[32px] 4xl:text-4xl;
+    @apply text-3xl 2xl:text-[32px] 4xl:text-4xl dark:text-gray-800;
   }
 
   h2 {
-    @apply text-2xl dark:text-gray-800 2xl:text-[26px] 4xl:text-3xl;
+    @apply text-2xl 2xl:text-[26px] 4xl:text-3xl dark:text-gray-800;
   }
 
   h3 {
@@ -278,9 +277,7 @@
 
   /* experimental */
   .card-shadow {
-    box-shadow:
-      0px 1px 0 rgba(0, 0, 0, 0.02),
-      0px 2px 6px rgba(0, 0, 0, 0.05);
+    box-shadow: 0px 1px 0 rgba(0, 0, 0, 0.02), 0px 2px 6px rgba(0, 0, 0, 0.05);
   }
 }
 
@@ -823,7 +820,7 @@ select:-webkit-autofill:focus {
   .react-datepicker__time-box
   .react-datepicker__time-list
   .react-datepicker__time-list-item {
-  @apply dark:hover:bg-gray-100 max-sm:my-1 max-sm:!h-[unset] max-sm:!px-1 max-sm:!py-0 max-sm:text-[10px];
+  @apply max-sm:my-1 max-sm:!h-[unset] max-sm:!px-1 max-sm:!py-0 max-sm:text-[10px] dark:hover:bg-gray-100;
 }
 
 /* ................................................... */
@@ -853,7 +850,7 @@ td.rc-table-cell-fix-right {
 
 .rc-table-cell-fix-right-first:after,
 .rc-table-cell-fix-right-last:after {
-  content: '';
+  content: "";
   transform: translate(-100%);
   @apply pointer-events-none absolute -bottom-[1px] -left-[1px] top-0 w-5;
 }
@@ -977,7 +974,7 @@ td.rc-table-cell-fix-right {
 
 .ql-formats button:hover::before,
 .ql-formats > span:hover::before {
-  content: '';
+  content: "";
   @apply absolute left-1/2 top-[-9px] z-10 -translate-x-1/2 transform border-x-[7px] border-y-[6px] border-solid border-transparent border-t-[#0d1e42];
 }
 
@@ -988,75 +985,75 @@ td.rc-table-cell-fix-right {
 
 /** Set tooltip content for toolbar options **/
 .ql-bold:hover::after {
-  content: 'Bold';
+  content: "Bold";
 }
 
 .ql-italic:hover::after {
-  content: 'Italic';
+  content: "Italic";
 }
 
 .ql-underline:hover::after {
-  content: 'Underline';
+  content: "Underline";
 }
 
 .ql-strike:hover::after {
-  content: 'Strikeout';
+  content: "Strikeout";
 }
 
 .ql-link:hover::after {
-  content: 'Hyperlink';
+  content: "Hyperlink";
 }
 
 .ql-blockquote:hover::after {
-  content: 'Quote';
+  content: "Quote";
 }
 
 .ql-code-block:hover::after {
-  content: 'Code Block';
+  content: "Code Block";
 }
 
-.ql-list[value='bullet']:hover::after {
-  content: 'Bulleted List';
+.ql-list[value="bullet"]:hover::after {
+  content: "Bulleted List";
 }
 
-.ql-list[value='ordered']:hover::after {
-  content: 'Numbered List';
+.ql-list[value="ordered"]:hover::after {
+  content: "Numbered List";
 }
 
-.ql-script[value='sub']:hover::after {
-  content: 'Sub Script';
+.ql-script[value="sub"]:hover::after {
+  content: "Sub Script";
 }
 
-.ql-script[value='super']:hover::after {
-  content: 'Super Script';
+.ql-script[value="super"]:hover::after {
+  content: "Super Script";
 }
 
-.ql-indent[value='-1']:hover::after {
-  content: 'Indent -1';
+.ql-indent[value="-1"]:hover::after {
+  content: "Indent -1";
 }
 
-.ql-indent[value='+1']:hover::after {
-  content: 'Indent +1';
+.ql-indent[value="+1"]:hover::after {
+  content: "Indent +1";
 }
 
 .ql-color:hover::after {
-  content: 'Text Color';
+  content: "Text Color";
 }
 
 .ql-background:hover::after {
-  content: 'Background Color';
+  content: "Background Color";
 }
 
 .ql-align:hover::after {
-  content: 'Text Align';
+  content: "Text Align";
 }
 
 .ql-clean:hover::after {
-  content: 'Clear Formatting';
+  content: "Clear Formatting";
 }
 
 .ql-font:hover::after {
-  content: 'Font Family';
+  content: "Font Family";
 }
 
 /* react-quill responsive styles */
@@ -1090,7 +1087,7 @@ td.rc-table-cell-fix-right {
 }
 
 /* colors filter  */
-.colors-filter input[type='checkbox']:checked ~ svg {
+.colors-filter input[type="checkbox"]:checked ~ svg {
   @apply !hidden;
 }
 
@@ -1137,7 +1134,7 @@ textarea::placeholder {
 /* .gmnoprint {
   @apply hidden;
 } */
-div[style='z-index: 1000001;'],
+div[style="z-index: 1000001;"],
 .gm-style-cc {
   @apply hidden;
 }
@@ -1369,133 +1366,4 @@ div[style='z-index: 1000001;'],
   .swiper-pagination
   span.swiper-pagination-bullet-active {
   @apply !w-4 !bg-gray-400;
-}
-
-/* react calendar customize style */
-.react-calendar__navigation__prev2-button,
-.react-calendar__navigation__next2-button {
-  @apply hidden;
-}
-.react-calendar__navigation {
-  @apply items-center;
-}
-.react-calendar__navigation__prev-button,
-.react-calendar__navigation__next-button {
-  @apply h-7 w-7 !min-w-[28px] rounded-md !border !border-solid !border-gray-200 !bg-transparent;
-}
-.react-calendar__navigation__label {
-  @apply text-sm font-semibold text-gray-800 disabled:!bg-transparent lg:text-base;
-}
-.react-calendar__month-view__days {
-  @apply gap-x-1 gap-y-2;
-}
-.react-calendar__month-view__days__day {
-  @apply flex h-9 w-9 items-center justify-center rounded-full;
-}
-.react-calendar__month-view__weekdays {
-  @apply mb-4 !text-sm !capitalize;
-}
-.react-calendar__month-view__weekdays__weekday > abbr {
-  @apply font-semibold text-gray-500 no-underline;
-}
-.react-calendar__tile {
-  @apply !basis-[calc(14.2857%-4px)] !text-sm;
-}
-.react-calendar__navigation button:enabled:hover,
-.react-calendar__navigation button:enabled:focus {
-  @apply !bg-transparent;
-}
-.react-calendar__tile--active,
-.react-calendar__tile--now {
-  @apply !bg-[#2B7F75];
-}
-.react-calendar__tile--now {
-  @apply !text-gray-0;
-}
-.react-calendar__month-view__days__day--weekend {
-  @apply !text-red-dark;
-}
-
-/* job dashboard calender style  */
-.job-schedule-calendar {
-  @apply !w-full !border-none dark:bg-transparent;
-}
-.job-schedule-calendar .react-calendar__navigation {
-  @apply justify-between px-5 lg:px-7;
-}
-.job-schedule-calendar .react-calendar__navigation__arrow {
-  @apply inline-flex items-center justify-center text-[22px] leading-none;
-}
-.job-schedule-calendar .react-calendar__navigation__next2-button,
-.job-schedule-calendar .react-calendar__navigation__prev2-button {
-  @apply hidden;
-}
-.job-schedule-calendar .react-calendar__month-view__weekdays {
-  @apply mb-0;
-}
-.job-schedule-calendar .react-calendar__month-view__weekdays > div {
-  @apply mb-0 border border-r-0 border-gray-200 bg-gray-50 py-4 font-inter first:border-l-0;
-}
-.job-schedule-calendar .react-calendar__month-view__days {
-  @apply !grid !grid-cols-7 gap-0;
-}
-.job-schedule-calendar .react-calendar__month-view__days > button {
-  @apply h-full !w-full rounded-none border border-s-0 border-t-0 border-solid border-gray-200 px-0 py-4 font-inter dark:hover:!bg-gray-100 dark:focus:!bg-gray-100 [&:nth-child(7n)]:border-r-0;
-}
-.job-schedule-calendar button.react-calendar__tile--active,
-.job-schedule-calendar button.react-calendar__tile--hasActive,
-.job-schedule-calendar button.react-calendar__tile--now {
-  @apply !bg-transparent !text-gray-600  hover:!bg-[#e6e6e6] dark:hover:!bg-gray-100;
-}
-.job-schedule-calendar button.react-calendar__month-view__days__day {
-  @apply relative;
-}
-
-/* job schedule calendar months view */
-.job-schedule-calendar .react-calendar__year-view__months {
-  @apply !grid !grid-cols-4 gap-0 border-t border-gray-200;
-}
-.job-schedule-calendar .react-calendar__year-view__months > button {
-  @apply border border-s-0 border-t-0 border-solid border-gray-200 dark:hover:bg-gray-100 dark:focus:bg-gray-100 [&:nth-child(4n)]:border-r-0;
-}
-
-/* job schedule calendar decades view */
-.job-schedule-calendar .react-calendar__decade-view__years {
-  @apply !grid !grid-cols-5 gap-0 border-t border-gray-200;
-}
-.job-schedule-calendar .react-calendar__decade-view__years > button {
-  @apply border border-s-0 border-t-0 border-solid border-gray-200 dark:hover:bg-gray-100 dark:focus:bg-gray-100 dark:disabled:bg-gray-100 [&:nth-child(5n)]:border-r-0;
-}
-
-/* job schedule calendar century view */
-.job-schedule-calendar .react-calendar__century-view__decades {
-  @apply !grid !grid-cols-4 gap-0 border-t border-gray-200;
-}
-.job-schedule-calendar .react-calendar__century-view__decades > button {
-  @apply border border-s-0 border-t-0 border-solid border-gray-200 dark:hover:bg-gray-100 dark:focus:bg-gray-100 dark:disabled:bg-gray-100 [&:nth-child(4n)]:border-r-0;
-}
-
-/* invoice builder custom styles  */
-@media print {
-  @page {
-    size: auto;
-    margin: 0mm;
-  }
-  html,
-  body {
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-
-  .print-container .invoice-print-table-header {
-    @apply !rounded-t-md !bg-gray-100;
-    print-color-adjust: exact;
-  }
-
-  .print-container table thead {
-    display: table-header-group;
-  }
-  .print-container table tfoot {
-    display: table-footer-group;
-  }
 }

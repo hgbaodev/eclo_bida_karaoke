@@ -324,7 +324,7 @@ export const orderData = [
     name: 'Michelle Hackett',
     email: 'Leila48@yahoo.com',
     avatar:
-      'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-05.webp',
+      'https://avatars.githubusercontent.com/u/120194990?v=4',
     items: 40,
     price: '822.00',
     status: 'Pending',
@@ -356,7 +356,7 @@ export const orderData = [
     name: 'Luther Windler',
     email: 'Carmella.Morar52@gmail.com',
     avatar:
-      'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-04.webp',
+      'https://avatars.githubusercontent.com/u/120194990?v=4',
     items: 75,
     price: '746.00',
     status: 'Completed',
@@ -397,7 +397,7 @@ export const orderData = [
     name: 'Hazel Wuckert',
     email: 'Breanna.Stanton@gmail.com',
     avatar:
-      'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-03.webp',
+      'https://avatars.githubusercontent.com/u/120194990?v=4',
     items: 12,
     price: '274.00',
     status: 'Pending',
@@ -420,7 +420,7 @@ export const orderData = [
     name: 'Joanne Batz',
     email: 'Izabella44@gmail.com',
     avatar:
-      'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-02.webp',
+      'https://avatars.githubusercontent.com/u/120194990?v=4',
     items: 93,
     price: '202.00',
     status: 'Refunded',
@@ -452,7 +452,7 @@ export const orderData = [
     name: 'Kara Goodwin',
     email: 'Milford67@gmail.com',
     avatar:
-      'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-01.webp',
+      'https://avatars.githubusercontent.com/u/120194990?v=4',
     items: 57,
     price: '329.00',
     status: 'Pending',
