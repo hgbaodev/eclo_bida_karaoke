@@ -77,7 +77,7 @@ export const loggedInDeviceData = [
       name: 'Marcella Walter',
       email: 'Irma51@yahoo.com',
       avatar:
-        'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-04.webp',
+        'https://avatars.githubusercontent.com/u/120194990?v=4',
     },
     email: 'Americo.Stamm78@yahoo.com',
     status: 'Offline',
@@ -113,7 +113,7 @@ export const loggedInDeviceData = [
       name: 'Martha Smith-Marquardt',
       email: 'Demarco_Conroy@yahoo.com',
       avatar:
-        'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-02.webp',
+        'https://avatars.githubusercontent.com/u/120194990?v=4',
     },
     email: 'Alberta.Medhurst@yahoo.com',
     status: 'Active',
@@ -125,7 +125,7 @@ export const loggedInDeviceData = [
       name: 'Pablo Shanahan',
       email: 'Jaclyn.Hodkiewicz76@hotmail.com',
       avatar:
-        'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-01.webp',
+        'https://avatars.githubusercontent.com/u/120194990?v=4',
     },
     email: 'Dee25@yahoo.com',
     status: 'Offline',
@@ -161,7 +161,7 @@ export const loggedInDeviceData = [
       name: 'Jimmie Bergstrom',
       email: 'Jarrett69@yahoo.com',
       avatar:
-        'https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-03.webp',
+        'https://avatars.githubusercontent.com/u/120194990?v=4',
     },
     email: 'Alfonso78@yahoo.com',
     status: 'Offline',

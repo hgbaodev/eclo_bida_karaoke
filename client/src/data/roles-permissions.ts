@@ -5,45 +5,33 @@ import { getRandomArrayElement } from '@/utils/get-random-array-element';
 export const users = [
   {
     id: 1,
-    role: ROLES.Administrator,
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    role: ROLES.HRD,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
   },
   {
     id: 2,
     role: ROLES.Administrator,
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
   },
   {
     id: 3,
-    role: ROLES.Administrator,
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    role: ROLES.Developer,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
   },
   {
     id: 4,
     role: ROLES.Administrator,
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
   },
   {
     id: 5,
     role: ROLES.Administrator,
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
   },
   {
     id: 6,
     role: ROLES.Administrator,
-    avatar: `https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-${getRandomArrayElement(
-      avatarIds
-    )}.webp`,
+    avatar: `https://avatars.githubusercontent.com/u/120194990?v=4`,
   },
 ];
 

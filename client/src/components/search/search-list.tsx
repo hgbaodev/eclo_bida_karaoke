@@ -52,7 +52,7 @@ export default function SearchList({ onClose }: { onClose?: () => void }) {
           value={searchText}
           ref={inputRef}
           onChange={(e) => setSearchText(() => e.target.value)}
-          placeholder="Search pages here"
+          placeholder="Search here"
           className="flex-1"
           prefix={
             <PiMagnifyingGlassBold className="h-[18px] w-[18px] text-gray-600" />
@@ -92,7 +92,14 @@ export default function SearchList({ onClose }: { onClose?: () => void }) {
               text="No Result Found"
               textClassName="text-xl"
             />
-          ) : null}
+          ) : (
+            <Title
+              as="h6"
+              className="mb-5 px-3 font-semibold dark:text-gray-700"
+            >
+              Quick Page Links
+            </Title>
+          )}
         </>
 
         {menuItemsFiltered.map((item, index) => {
