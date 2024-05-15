@@ -1,7 +1,7 @@
 import { type NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
-import { env } from '@/env.mjs';
+import { env } from '@/env.js';
 import isEqual from 'lodash/isEqual';
 import { pagesOptions } from './pages-options';
 
