@@ -14,11 +14,13 @@ class RoleSeeder extends Seeder
     public function run(): void
     {
         Role::create([
-            'name' => 'admin'
+            'name' => 'Admin',
+            'color' => 'rgba(159, 102, 102, 1)'
         ]);
 
         Role::create([
-            'name' => 'user'
+            'name' => 'User',
+            'color' => 'rgba(20, 159, 10, 1)'
         ]);
     }
 }

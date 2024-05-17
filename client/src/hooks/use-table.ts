@@ -8,7 +8,7 @@ interface AnyObject {
 export function useTable<T extends AnyObject>(
   initialData: T[],
   countPerPage: number = 10,
-  initialFilterState?: Partial<Record<string, any>>
+  initialFilterState?: Partial<Record<string, any>>,
 ) {
   const [data, setData] = useState(initialData);
 
@@ -110,9 +110,7 @@ export function useTable<T extends AnyObject>(
    * Handle Filters and searching
    */
   const [searchTerm, setSearchTerm] = useState('');
-  const [filters, setFilters] = useState<Record<string, any>>(
-    initialFilterState ?? {}
-  );
+  const [filters, setFilters] = useState<Record<string, any>>(initialFilterState ?? {});
 
   function updateFilter(columnId: string, filterValue: string | any[]) {
     if (!Array.isArray(filterValue) && !isString(filterValue)) {
@@ -135,37 +133,26 @@ export function useTable<T extends AnyObject>(
     return (
       sortedData
         .filter((item) => {
-          const isMatchingItem = Object.entries(filters).some(
-            ([columnId, filterValue]) => {
-              if (
-                Array.isArray(filterValue) &&
-                typeof filterValue[1] === 'object'
-              ) {
-                const itemValue = new Date(item[columnId]);
-                return (
-                  // @ts-ignore
-                  itemValue >= filterValue[0] && itemValue <= filterValue[1]
-                );
-              }
-              if (
-                Array.isArray(filterValue) &&
-                typeof filterValue[1] === 'string'
-              ) {
-                const itemPrice = Math.ceil(Number(item[columnId]));
-                return (
-                  itemPrice >= Number(filterValue[0]) &&
-                  itemPrice <= Number(filterValue[1])
-                );
-              }
-              if (isString(filterValue) && !Array.isArray(filterValue)) {
-                const itemValue = item[columnId]?.toString().toLowerCase();
-                if (itemValue !== filterValue.toString().toLowerCase()) {
-                  return false;
-                }
-                return true;
-              }
+          const isMatchingItem = Object.entries(filters).some(([columnId, filterValue]) => {
+            if (Array.isArray(filterValue) && typeof filterValue[1] === 'object') {
+              const itemValue = new Date(item[columnId]);
+              return (
+                // @ts-ignore
+                itemValue >= filterValue[0] && itemValue <= filterValue[1]
+              );
             }
-          );
+            if (Array.isArray(filterValue) && typeof filterValue[1] === 'string') {
+              const itemPrice = Math.ceil(Number(item[columnId]));
+              return itemPrice >= Number(filterValue[0]) && itemPrice <= Number(filterValue[1]);
+            }
+            if (isString(filterValue) && !Array.isArray(filterValue)) {
+              const itemValue = item[columnId]?.toString().toLowerCase();
+              if (itemValue !== filterValue.toString().toLowerCase()) {
+                return false;
+              }
+              return true;
+            }
+          });
           return isMatchingItem;
         })
         // global search after running filters
@@ -174,12 +161,10 @@ export function useTable<T extends AnyObject>(
             typeof value === 'object'
               ? value &&
                 Object.values(value).some(
-                  (nestedItem) =>
-                    nestedItem &&
-                    String(nestedItem).toLowerCase().includes(searchTermLower)
+                  (nestedItem) => nestedItem && String(nestedItem).toLowerCase().includes(searchTermLower),
                 )
-              : value && String(value).toLowerCase().includes(searchTermLower)
-          )
+              : value && String(value).toLowerCase().includes(searchTermLower),
+          ),
         )
     );
   }
@@ -201,12 +186,10 @@ export function useTable<T extends AnyObject>(
         typeof value === 'object'
           ? value &&
             Object.values(value).some(
-              (nestedItem) =>
-                nestedItem &&
-                String(nestedItem).toLowerCase().includes(searchTermLower)
+              (nestedItem) => nestedItem && String(nestedItem).toLowerCase().includes(searchTermLower),
             )
-          : value && String(value).toLowerCase().includes(searchTermLower)
-      )
+          : value && String(value).toLowerCase().includes(searchTermLower),
+      ),
     );
   }
 

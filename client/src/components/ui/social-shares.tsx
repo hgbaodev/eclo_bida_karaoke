@@ -1,30 +1,25 @@
-import {
-  PiFacebookLogoFill,
-  PiInstagramLogoFill,
-  PiTwitterLogoFill,
-  PiYoutubeLogoFill,
-} from 'react-icons/pi';
+import { PiFacebookLogoFill, PiInstagramLogoFill, PiTwitterLogoFill, PiYoutubeLogoFill } from 'react-icons/pi';
 
 const socialData = [
   {
     title: 'Facebook',
     icon: <PiFacebookLogoFill className="h-auto w-4" />,
-    link: 'https://facebook.com',
+    link: 'https://facebook.com/hgbaodev',
   },
   {
     title: 'Twitter',
     icon: <PiTwitterLogoFill className="h-auto w-4" />,
-    link: 'https://twitter.com',
+    link: 'https://twitter.com/hgbaodev',
   },
   {
     title: 'Instagram',
     icon: <PiInstagramLogoFill className="h-auto w-4" />,
-    link: 'https://instagram.com',
+    link: 'https://instagram.com/hgbaodev',
   },
   {
     title: 'Youtube',
     icon: <PiYoutubeLogoFill className="h-auto w-4" />,
-    link: 'https://youtube.com',
+    link: 'https://youtube.com/@hgbaodev',
   },
 ];
 

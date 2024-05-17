@@ -2,29 +2,26 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { signIn } from 'next-auth/react';
 import { SubmitHandler } from 'react-hook-form';
 import { PiArrowRightBold } from 'react-icons/pi';
 import { Checkbox, Password, Button, Input, Text } from 'rizzui';
 import { Form } from '@/components/ui/form';
 import { routes } from '@/config/routes';
 import { loginSchema, LoginSchema } from '@/utils/validators/login.schema';
+import { signIn } from '@/store/slices/authSlice';
+import { dispatch } from '@/store';
 
 const initialValues: LoginSchema = {
-  email: 'admin@admin.com',
-  password: 'admin',
-  rememberMe: true,
+  email: '',
+  password: '',
+  rememberMe: false,
 };
 
 export default function SignInForm() {
-  //TODO: why we need to reset it here
   const [reset, setReset] = useState({});
 
-  const onSubmit: SubmitHandler<LoginSchema> = (data) => {
-    console.log(data);
-    signIn('credentials', {
-      ...data,
-    });
+  const onSubmit: SubmitHandler<LoginSchema> = async (data) => {
+    await dispatch(signIn(data));
   };
 
   return (
@@ -59,11 +56,7 @@ export default function SignInForm() {
               error={errors.password?.message}
             />
             <div className="flex items-center justify-between pb-2">
-              <Checkbox
-                {...register('rememberMe')}
-                label="Remember Me"
-                className="[&>label>span]:font-medium"
-              />
+              <Checkbox {...register('rememberMe')} label="Remember Me" className="[&>label>span]:font-medium" />
               <Link
                 href={routes.auth.forgotPassword}
                 className="h-auto p-0 text-sm font-semibold text-blue underline transition-colors hover:text-gray-900 hover:no-underline"
@@ -72,18 +65,14 @@ export default function SignInForm() {
               </Link>
             </div>
             <Button className="w-full" type="submit" size="lg">
-              <span>Sign in</span>{' '}
-              <PiArrowRightBold className="ms-2 mt-0.5 h-5 w-5" />
+              <span>Sign in</span> <PiArrowRightBold className="ms-2 mt-0.5 h-5 w-5" />
             </Button>
           </div>
         )}
       </Form>
       <Text className="mt-6 text-center leading-loose text-gray-500 lg:mt-8 lg:text-start">
         Don’t have an account?{' '}
-        <Link
-          href={routes.auth.signUp}
-          className="font-semibold text-gray-700 transition-colors hover:text-blue"
-        >
+        <Link href={routes.auth.signUp} className="font-semibold text-gray-700 transition-colors hover:text-blue">
           Sign Up
         </Link>
       </Text>

@@ -5,19 +5,10 @@ import { PiCheckBold, PiXBold } from 'react-icons/pi';
 import { Controller, SubmitHandler } from 'react-hook-form';
 import { permissions, roles } from '@/app/shared/roles-permissions/utils';
 import { useModal } from '@/app/shared/modal-views/use-modal';
-import {
-  ActionIcon,
-  AdvancedCheckbox,
-  Title,
-  Button,
-  CheckboxGroup,
-} from 'rizzui';
+import { ActionIcon, AdvancedCheckbox, Title, Button, CheckboxGroup } from 'rizzui';
 import { PERMISSIONS } from '@/data/users-data';
 import { Form } from '@/components/ui/form';
-import {
-  RolePermissionInput,
-  rolePermissionSchema,
-} from '@/utils/validators/edit-role.schema';
+import { RolePermissionInput, rolePermissionSchema } from '@/utils/validators/edit-role.schema';
 
 export default function EditRole() {
   const { closeModal } = useModal();
@@ -39,14 +30,14 @@ export default function EditRole() {
       validationSchema={rolePermissionSchema}
       useFormProps={{
         defaultValues: {
-          administrator: [PERMISSIONS.Read],
-          manager: [PERMISSIONS.Write],
+          administrator: [PERMISSIONS.View],
+          manager: [PERMISSIONS.Create],
           sales: [PERMISSIONS.Delete],
-          support: [PERMISSIONS.Read],
-          developer: [PERMISSIONS.Write],
+          support: [PERMISSIONS.View],
+          developer: [PERMISSIONS.Create],
           hrd: [PERMISSIONS.Delete],
-          restricteduser: [PERMISSIONS.Write],
-          customer: [PERMISSIONS.Read],
+          restricteduser: [PERMISSIONS.Create],
+          customer: [PERMISSIONS.View],
         },
       }}
       className="grid grid-cols-1 gap-6 p-6  @container [&_.rizzui-input-label]:font-medium [&_.rizzui-input-label]:text-gray-900"
@@ -70,14 +61,8 @@ export default function EditRole() {
               {roles.map(({ label, value }) => {
                 const parent = value.toLowerCase();
                 return (
-                  <div
-                    key={value}
-                    className="flex flex-col gap-3 pb-4 md:flex-row md:items-center md:justify-between"
-                  >
-                    <Title
-                      as="h6"
-                      className="font-medium text-gray-700 2xl:text-sm"
-                    >
+                  <div key={value} className="flex flex-col gap-3 pb-4 md:flex-row md:items-center md:justify-between">
+                    <Title as="h6" className="font-medium text-gray-700 2xl:text-sm">
                       {label}
                     </Title>
                     <Controller
@@ -111,18 +96,10 @@ export default function EditRole() {
             </div>
 
             <div className="col-span-full flex items-center justify-end gap-4">
-              <Button
-                variant="outline"
-                onClick={closeModal}
-                className="w-full @xl:w-auto"
-              >
+              <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
                 Cancel
               </Button>
-              <Button
-                type="submit"
-                isLoading={isLoading}
-                className="w-full @xl:w-auto"
-              >
+              <Button type="submit" isLoading={isLoading} className="w-full @xl:w-auto">
                 Save
               </Button>
             </div>

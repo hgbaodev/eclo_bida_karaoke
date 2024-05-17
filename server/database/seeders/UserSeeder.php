@@ -17,7 +17,8 @@ class UserSeeder extends Seeder
             'last_name' => 'Nhật Sinh',
             'email' => 'transinh085@gmail.com',
             'password' => '123456',
-            'role' => 1
+            'image' => 'https://avatars.githubusercontent.com/u/45101901?v=4',
+            'role_id' => 1
         ]);
 
         User::create([
@@ -25,7 +26,8 @@ class UserSeeder extends Seeder
             'last_name' => 'Gia Bảo',
             'email' => 'musicanime2501@gmail.com',
             'password' => '123456',
-            'role' => 2
+            'image' => 'https://avatars.githubusercontent.com/u/120194990?v=4',
+            'role_id' => 2
         ]);
     }
 }

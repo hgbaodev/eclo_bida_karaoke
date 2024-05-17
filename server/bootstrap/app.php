@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\Auth;
 use App\Http\Middleware\LogRequest;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -16,6 +17,8 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->append(LogRequest::class);
+        // tôi muốn thêm 1 middleware khác ở đây
+        
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (AuthenticationException $e, Request $request) {
