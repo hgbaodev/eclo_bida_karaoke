@@ -6,10 +6,9 @@ import { useTable } from '@/hooks/use-table';
 import { useColumn } from '@/hooks/use-column';
 import ControlledTable from '@/components/controlled-table';
 import { getColumns } from '@/app/shared/roles-permissions/users-table/columns';
-const FilterElement = dynamic(
-  () => import('@/app/shared/roles-permissions/users-table/filter-element'),
-  { ssr: false }
-);
+const FilterElement = dynamic(() => import('@/app/shared/roles-permissions/users-table/filter-element'), {
+  ssr: false,
+});
 const TableFooter = dynamic(() => import('@/app/shared/table-footer'), {
   ssr: false,
 });
@@ -74,14 +73,13 @@ export default function UsersTable({ data = [] }: { data: any[] }) {
       onDeleteItem,
       handleRowSelect,
       handleSelectAll,
-    ]
+    ],
   );
 
-  const { visibleColumns, checkedColumns, setCheckedColumns } =
-    useColumn(columns);
+  const { visibleColumns, checkedColumns, setCheckedColumns } = useColumn(columns);
 
   return (
-    <div className="mt-14">
+    <div className="mt-0">
       <FilterElement
         isFiltered={isFiltered}
         filters={filters}

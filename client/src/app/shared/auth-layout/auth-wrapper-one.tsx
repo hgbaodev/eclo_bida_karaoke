@@ -9,6 +9,9 @@ import { PiAppleLogoFill, PiArrowLeftBold } from 'react-icons/pi';
 import { FcGoogle } from 'react-icons/fc';
 import OrSeparation from '@/app/shared/auth-layout/or-separation';
 import toast from 'react-hot-toast';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store/types';
+import { useRouter } from 'next/navigation';
 
 export default function AuthWrapperOne({
   children,
@@ -18,7 +21,7 @@ export default function AuthWrapperOne({
   description,
   pageImage,
   isSocialLoginActive = false,
-  isSignIn = false,
+  isSignIn = true,
 }: {
   children: React.ReactNode;
   title: React.ReactNode;
@@ -29,6 +32,12 @@ export default function AuthWrapperOne({
   isSocialLoginActive?: boolean;
   isSignIn?: boolean;
 }) {
+  const router = useRouter();
+
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+  if (isSignIn && isAuthenticated) {
+    router.push('/admin');
+  }
   function handleSignIn() {
     toast.error(
       <Text>
@@ -37,7 +46,7 @@ export default function AuthWrapperOne({
           Sign In
         </Text>{' '}
         button to login.
-      </Text>
+      </Text>,
     );
   }
   return (
@@ -61,16 +70,9 @@ export default function AuthWrapperOne({
               <b className="ms-1 font-medium">Back to home</b>
             </Link>
             <div className="mb-7 px-6 pt-3 text-center md:pt-0 lg:px-0 lg:text-start xl:mb-8 2xl:mb-10">
-              <Link
-                href={'/'}
-                className="mb-6 inline-flex max-w-[168px] xl:mb-8"
-              >
+              <Link href={'/'} className="mb-6 inline-flex max-w-[168px] xl:mb-8">
                 <Image src={logoImg} alt="Isomorphic" />
-                <Image
-                  src={logoImgText}
-                  alt="Isomorphic"
-                  className="ps-2.5 dark:invert"
-                />
+                <Image src={logoImgText} alt="Isomorphic" className="ps-2.5 dark:invert" />
               </Link>
               <Title
                 as="h2"
@@ -78,9 +80,7 @@ export default function AuthWrapperOne({
               >
                 {title}
               </Title>
-              <Text className=" leading-[1.85] text-gray-700 md:leading-loose lg:pe-8 2xl:pe-14">
-                {description}
-              </Text>
+              <Text className=" leading-[1.85] text-gray-700 md:leading-loose lg:pe-8 2xl:pe-14">{description}</Text>
             </div>
             {isSocialLoginActive && (
               <>
@@ -118,15 +118,10 @@ export default function AuthWrapperOne({
         <div className="hidden w-7/12 items-center justify-center rounded-[20px] bg-gray-50 px-6 lg:flex xl:justify-start 2xl:px-16 dark:bg-gray-100/40">
           <div className="pb-8 pt-10 text-center xl:pt-16 2xl:block 2xl:w-[1063px]">
             <div className="mx-auto mb-10 max-w-sm pt-2 2xl:max-w-lg">
-              <Title
-                as="h2"
-                className="mb-5 font-semibold !leading-normal lg:text-[26px] 2xl:px-10 2xl:text-[32px]"
-              >
+              <Title as="h2" className="mb-5 font-semibold !leading-normal lg:text-[26px] 2xl:px-10 2xl:text-[32px]">
                 {bannerTitle}
               </Title>
-              <Text className="leading-[1.85] text-gray-700 md:leading-loose 2xl:px-6">
-                {bannerDescription}
-              </Text>
+              <Text className="leading-[1.85] text-gray-700 md:leading-loose 2xl:px-6">{bannerDescription}</Text>
             </div>
             {pageImage}
           </div>

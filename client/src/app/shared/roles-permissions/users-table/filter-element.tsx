@@ -5,8 +5,6 @@ import StatusField from '@/components/controlled-table/status-field';
 import { Badge, Text, Title, Button, Input } from 'rizzui';
 import { STATUSES } from '@/data/users-data';
 import { rolesList } from '@/data/roles-permissions';
-import ModalButton from '@/app/shared/modal-button';
-import CreateUser from '@/app/shared/roles-permissions/create-user';
 
 const statusOptions = [
   {
@@ -48,10 +46,6 @@ export default function FilterElement({
   return (
     <>
       <div className="relative z-50 mb-4 flex flex-wrap items-center justify-between gap-2.5 @container ">
-        <Title as="h5" className="-order-6 basis-2/5 @xl:basis-auto">
-          All Users
-        </Title>
-
         <StatusField
           className=" -order-3 w-full @[25rem]:w-[calc(calc(100%_-_10px)_/_2)] @4xl:-order-5 @4xl:w-auto"
           options={statusOptions}
@@ -62,12 +56,8 @@ export default function FilterElement({
           }}
           placeholder="Filter by Status"
           getOptionValue={(option: { value: any }) => option.value}
-          getOptionDisplayValue={(option: { value: any }) =>
-            renderOptionDisplayValue(option.value as string)
-          }
-          displayValue={(selected: string) =>
-            renderOptionDisplayValue(selected)
-          }
+          getOptionDisplayValue={(option: { value: any }) => renderOptionDisplayValue(option.value as string)}
+          displayValue={(selected: string) => renderOptionDisplayValue(selected)}
         />
 
         <StatusField
@@ -80,9 +70,7 @@ export default function FilterElement({
           onChange={(value: string) => {
             updateFilter('role', value);
           }}
-          displayValue={(selected: string) =>
-            roles.find((option) => option.value === selected)?.value ?? selected
-          }
+          displayValue={(selected: string) => roles.find((option) => option.value === selected)?.value ?? selected}
         />
 
         {isFiltered && (
@@ -107,15 +95,6 @@ export default function FilterElement({
           clearable
           className="-order-4 w-full @xl:-order-5 @xl:ms-auto @xl:w-auto @4xl:-order-2 @4xl:w-[230px] @5xl:w-auto"
         />
-
-        <div className="-order-5 flex basis-auto justify-end @xl:-order-4 @4xl:-order-1">
-          <ModalButton
-            label="Add New User"
-            view={<CreateUser />}
-            customSize="600px"
-            className="mt-0"
-          />
-        </div>
       </div>
     </>
   );
@@ -127,27 +106,21 @@ function renderOptionDisplayValue(value: string) {
       return (
         <div className="flex items-center">
           <Badge color="success" renderAsDot />
-          <Text className="ms-2 font-medium capitalize text-green-dark">
-            {value}
-          </Text>
+          <Text className="ms-2 font-medium capitalize text-green-dark">{value}</Text>
         </div>
       );
     case STATUSES.Deactivated:
       return (
         <div className="flex items-center">
           <Badge color="danger" renderAsDot />
-          <Text className="ms-2 font-medium capitalize text-red-dark">
-            {value}
-          </Text>
+          <Text className="ms-2 font-medium capitalize text-red-dark">{value}</Text>
         </div>
       );
     default:
       return (
         <div className="flex items-center">
           <Badge renderAsDot className="bg-gray-400" />
-          <Text className="ms-2 font-medium capitalize text-gray-600">
-            {value}
-          </Text>
+          <Text className="ms-2 font-medium capitalize text-gray-600">{value}</Text>
         </div>
       );
   }

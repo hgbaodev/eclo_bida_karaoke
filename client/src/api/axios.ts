@@ -1,15 +1,16 @@
+import env from '@/env';
+import { getValidAuthTokens } from '@/lib/cookies';
 import axios from 'axios';
-import Cookies from 'js-cookie';
 
 // Tạo một instance Axios với cấu hình mặc định
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:8000/api/',
+  baseURL: env.NEXT_API_URL,
 });
 
 // Đăng ký interceptor để gắn token vào header
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = Cookies.get('token');
+    const { token } = getValidAuthTokens();
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`;
     }
@@ -17,7 +18,7 @@ axiosInstance.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 export default axiosInstance;

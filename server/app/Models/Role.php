@@ -15,6 +15,7 @@ class Role extends Model
     protected $fillable = [
         'id',
         'name',
+        'color'
     ];
 
     public function roleFunctionalPermissions()
@@ -26,6 +27,10 @@ class Role extends Model
     {
         return $this->belongsToMany(Functional::class, 'role_functional_permissions')
                     ->withPivot('permission_id');
+    }
+
+    public function users(){
+        return $this->hasMany(User::class);
     }
 
 }

@@ -5,7 +5,6 @@ import { PiDotsThreeBold } from 'react-icons/pi';
 import { Title, ActionIcon, Dropdown } from 'rizzui';
 import cn from '@/utils/class-names';
 import UserCog from '@/components/icons/user-cog';
-import { ROLES } from '@/config/constants';
 import { useModal } from '@/app/shared/modal-views/use-modal';
 import ModalButton from '@/app/shared/modal-button';
 import EditRole from '@/app/shared/roles-permissions/edit-role';
@@ -13,7 +12,10 @@ import CreateUser from '@/app/shared/roles-permissions/create-user';
 
 type User = {
   id: number;
-  role: keyof typeof ROLES;
+  first_name: string;
+  last_name: string;
+  email: string;
+  image: string;
   avatar: string;
 };
 
@@ -25,12 +27,7 @@ interface RoleCardProps {
   users: User[];
 }
 
-export default function RoleCard({
-  name,
-  color,
-  users,
-  className,
-}: RoleCardProps) {
+export default function RoleCard({ name, color, users, className }: RoleCardProps) {
   const { openModal } = useModal();
   return (
     <div className={cn('rounded-lg border border-muted p-6', className)}>
@@ -42,13 +39,7 @@ export default function RoleCard({
               backgroundColor: color,
             }}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-            >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
               <path
                 d="M7 6.5H16.75C18.8567 6.5 19.91 6.5 20.6667 7.00559C20.9943 7.22447 21.2755 7.50572 21.4944 7.83329C21.935 8.49268 21.9916 8.96506 21.9989 10.5M12 6.5L11.3666 5.23313C10.8418 4.18358 10.3622 3.12712 9.19926 2.69101C8.6899 2.5 8.10802 2.5 6.94427 2.5C5.1278 2.5 4.21956 2.5 3.53806 2.88032C3.05227 3.15142 2.65142 3.55227 2.38032 4.03806C2 4.71956 2 5.6278 2 7.44427V10.5C2 15.214 2 17.5711 3.46447 19.0355C4.8215 20.3926 6.44493 20.4927 10.5 20.5H11"
                 stroke="currentColor"
@@ -90,12 +81,8 @@ export default function RoleCard({
                 Add User
               </span>
             </Dropdown.Item>
-            <Dropdown.Item className="gap-2 text-xs sm:text-sm">
-              Rename
-            </Dropdown.Item>
-            <Dropdown.Item className="gap-2 text-xs sm:text-sm">
-              Remove Role
-            </Dropdown.Item>
+            <Dropdown.Item className="gap-2 text-xs sm:text-sm">Rename</Dropdown.Item>
+            <Dropdown.Item className="gap-2 text-xs sm:text-sm">Remove Role</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </header>
@@ -103,16 +90,8 @@ export default function RoleCard({
       <div className="mt-4 flex items-center gap-2">
         <div className="flex items-center">
           {users?.slice(0, 4).map((user) => (
-            <figure
-              key={user.id}
-              className="relative z-10 -ml-1.5 h-8 w-8 rounded-full border-2 border-white"
-            >
-              <Image
-                src={user.avatar}
-                alt="user avatar"
-                fill
-                className="rounded-full"
-              />
+            <figure key={user.id} className="relative z-10 -ml-1.5 h-8 w-8 rounded-full border-2 border-white">
+              <Image src={user.image} alt="user image" fill className="rounded-full" />
             </figure>
           ))}
         </div>
