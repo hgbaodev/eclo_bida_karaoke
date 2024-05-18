@@ -22,7 +22,7 @@ export default function RolesGrid({ className, gridClassName }: RolesGridProps) 
     };
     fetchData();
   }, []);
-  console.log(fetchData, fetchDataLoading);
+
   return (
     <div className={cn('@container', className)}>
       <div

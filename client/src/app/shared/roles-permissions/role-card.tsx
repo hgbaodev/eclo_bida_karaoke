@@ -9,6 +9,11 @@ import { useModal } from '@/app/shared/modal-views/use-modal';
 import ModalButton from '@/app/shared/modal-button';
 import EditRole from '@/app/shared/roles-permissions/edit-role';
 import CreateUser from '@/app/shared/roles-permissions/create-user';
+import { deleteRole } from '@/store/slices/roleSlice';
+import { dispatch } from '@/store';
+import toast from 'react-hot-toast';
+import { permissions } from './utils';
+import { RolePermissionInput } from '@/utils/validators/edit-role.schema';
 
 type User = {
   id: number;
@@ -20,15 +25,38 @@ type User = {
 };
 
 interface RoleCardProps {
+  id: number;
   name: string;
   color?: string;
   className?: string;
   icon?: React.ReactNode;
   users: User[];
+  functionals: RolePermissionInput;
 }
 
-export default function RoleCard({ name, color, users, className }: RoleCardProps) {
+export default function RoleCard({ id, name, color, users, functionals, className }: RoleCardProps) {
   const { openModal } = useModal();
+
+  const handleCreateUser = () => {
+    openModal({
+      view: <CreateUser />,
+    });
+  };
+
+  const handleRenameRole = () => {
+    console.log('rename role');
+  };
+
+  const handleDeleteRole = () => {
+    dispatch(deleteRole(id)).then((action: any) => {
+      if (deleteRole.fulfilled.match(action)) {
+        toast.success('Delete role successfully');
+      } else {
+        toast.error(action.payload.errors);
+      }
+    });
+  };
+
   return (
     <div className={cn('rounded-lg border border-muted p-6', className)}>
       <header className="flex items-center justify-between gap-2">
@@ -70,19 +98,15 @@ export default function RoleCard({ name, color, users, className }: RoleCardProp
             </ActionIcon>
           </Dropdown.Trigger>
           <Dropdown.Menu className="!z-0">
-            <Dropdown.Item className="gap-2 text-xs sm:text-sm">
-              <span
-                onClick={() =>
-                  openModal({
-                    view: <CreateUser />,
-                  })
-                }
-              >
-                Add User
-              </span>
+            <Dropdown.Item className="gap-2 text-xs sm:text-sm" onClick={handleCreateUser}>
+              Add User
             </Dropdown.Item>
-            <Dropdown.Item className="gap-2 text-xs sm:text-sm">Rename</Dropdown.Item>
-            <Dropdown.Item className="gap-2 text-xs sm:text-sm">Remove Role</Dropdown.Item>
+            <Dropdown.Item className="gap-2 text-xs sm:text-sm" onClick={handleRenameRole}>
+              Rename
+            </Dropdown.Item>
+            <Dropdown.Item className="gap-2 text-xs sm:text-sm" onClick={handleDeleteRole}>
+              Remove Role
+            </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </header>
@@ -102,7 +126,7 @@ export default function RoleCard({ name, color, users, className }: RoleCardProp
         variant="outline"
         label="Edit Role"
         icon={<UserCog className="h-5 w-5" />}
-        view={<EditRole />}
+        view={<EditRole id={id} name={name} functionals={functionals} />} // Fix: Set functionals prop to an empty array
         className="items-center gap-1 text-gray-800 @lg:w-full lg:mt-6"
       />
     </div>

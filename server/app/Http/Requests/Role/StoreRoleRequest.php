@@ -23,7 +23,7 @@ class StoreRoleRequest extends HelperRequest
     {
         return [
             'name' => 'required|unique:roles,name',
-            'color' => 'required'
+            'color' => 'required|unique:roles,color'
         ];
     }
 }

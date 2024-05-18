@@ -9,19 +9,38 @@ import { ActionIcon, AdvancedCheckbox, Title, Button, CheckboxGroup } from 'rizz
 import { PERMISSIONS } from '@/data/users-data';
 import { Form } from '@/components/ui/form';
 import { RolePermissionInput, rolePermissionSchema } from '@/utils/validators/edit-role.schema';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store/types';
+import { dispatch } from '@/store';
+import { updateRole } from '@/store/slices/roleSlice';
+import toast from 'react-hot-toast';
 
-export default function EditRole() {
+export default function EditRole({
+  id,
+  name,
+  functionals,
+}: {
+  id: number;
+  name: string;
+  functionals: RolePermissionInput;
+}) {
   const { closeModal } = useModal();
-  const [isLoading, setLoading] = useState(false);
+  const { updateLoading } = useSelector((state: RootState) => state.role);
 
   const onSubmit: SubmitHandler<RolePermissionInput> = (data) => {
     // set timeout ony required to display loading state of the create category button
-    setLoading(true);
-    setTimeout(() => {
-      console.log('data', data);
-      setLoading(false);
-      closeModal();
-    }, 600);
+    const values = {
+      id: id,
+      functionals: data,
+    };
+    dispatch(updateRole(values)).then((action: any) => {
+      if (updateRole.fulfilled.match(action)) {
+        toast.success('Role update successfully');
+        closeModal();
+      } else {
+        toast.error('Role update errors');
+      }
+    });
   };
 
   return (
@@ -29,16 +48,7 @@ export default function EditRole() {
       onSubmit={onSubmit}
       validationSchema={rolePermissionSchema}
       useFormProps={{
-        defaultValues: {
-          administrator: [PERMISSIONS.View],
-          manager: [PERMISSIONS.Create],
-          sales: [PERMISSIONS.Delete],
-          support: [PERMISSIONS.View],
-          developer: [PERMISSIONS.Create],
-          hrd: [PERMISSIONS.Delete],
-          restricteduser: [PERMISSIONS.Create],
-          customer: [PERMISSIONS.View],
-        },
+        defaultValues: functionals,
       }}
       className="grid grid-cols-1 gap-6 p-6  @container [&_.rizzui-input-label]:font-medium [&_.rizzui-input-label]:text-gray-900"
     >
@@ -47,7 +57,7 @@ export default function EditRole() {
           <>
             <div className="col-span-full flex items-center justify-between">
               <Title as="h4" className="font-semibold">
-                Edit Role
+                Edit Role - {name}
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
@@ -99,7 +109,7 @@ export default function EditRole() {
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
                 Cancel
               </Button>
-              <Button type="submit" isLoading={isLoading} className="w-full @xl:w-auto">
+              <Button type="submit" isLoading={updateLoading} className="w-full @xl:w-auto">
                 Save
               </Button>
             </div>

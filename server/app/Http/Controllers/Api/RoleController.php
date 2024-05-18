@@ -43,7 +43,8 @@ class RoleController extends Controller
         }
         $this->roleFunctionalPermissionRepository->deleteAllByRoleId($id);
         $this->roleFunctionalPermissionRepository->addRoleFunctionalPermissionByRoleId($id, $validatedData['functionals']);
-        return $this->sentSuccessResponse($this->roleRepository->updateRoleById($id, $validatedData));
+        $validatedData['id'] = $id;
+        return $this->sentSuccessResponse($validatedData, "Update role success", 200);
     }
 
     function destroy($id){

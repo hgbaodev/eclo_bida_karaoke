@@ -22,11 +22,7 @@ export default function OtpForm() {
             size="lg"
             className="lg:justify-start"
           />
-          <Button
-            className="w-full text-base font-medium"
-            type="submit"
-            size="lg"
-          >
+          <Button className="w-full text-base font-medium" type="submit" size="lg">
             Verify OTP
           </Button>
           <div className="">
