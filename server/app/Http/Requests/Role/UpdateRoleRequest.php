@@ -22,8 +22,6 @@ class UpdateRoleRequest extends HelperRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|unique:roles,name,'.$this->id,
-            'color' => 'required',
             'functionals' => 'required|array',
         ];
     }

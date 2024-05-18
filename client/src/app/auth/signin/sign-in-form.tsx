@@ -10,6 +10,8 @@ import { routes } from '@/config/routes';
 import { loginSchema, LoginSchema } from '@/utils/validators/login.schema';
 import { signIn } from '@/store/slices/authSlice';
 import { dispatch } from '@/store';
+import { RootState } from '@/store/types';
+import { useSelector } from 'react-redux';
 
 const initialValues: LoginSchema = {
   email: '',
@@ -19,6 +21,7 @@ const initialValues: LoginSchema = {
 
 export default function SignInForm() {
   const [reset, setReset] = useState({});
+  const { isLoaded } = useSelector((state: RootState) => state.auth);
 
   const onSubmit: SubmitHandler<LoginSchema> = async (data) => {
     await dispatch(signIn(data));
@@ -64,7 +67,7 @@ export default function SignInForm() {
                 Forget Password?
               </Link>
             </div>
-            <Button className="w-full" type="submit" size="lg">
+            <Button className="w-full" type="submit" size="lg" isLoading={isLoaded}>
               <span>Sign in</span> <PiArrowRightBold className="ms-2 mt-0.5 h-5 w-5" />
             </Button>
           </div>

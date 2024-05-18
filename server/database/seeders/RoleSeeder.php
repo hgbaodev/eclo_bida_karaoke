@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Role;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class RoleSeeder extends Seeder
@@ -15,7 +14,7 @@ class RoleSeeder extends Seeder
     {
         Role::create([
             'name' => 'Admin',
-            'color' => 'rgba(159, 102, 102, 1)'
+            'color' => 'rgba(23, 13, 102, 1)'
         ]);
 
         Role::create([

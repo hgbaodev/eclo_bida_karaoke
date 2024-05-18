@@ -3,47 +3,46 @@
 import { useState } from 'react';
 import { PiChecksBold, PiFilesBold, PiXBold } from 'react-icons/pi';
 import { RgbaColorPicker } from 'react-colorful';
-import { Controller, SubmitHandler } from 'react-hook-form';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { Form } from '@/components/ui/form';
 import { Input, Button, Tooltip, ActionIcon, Title } from 'rizzui';
 import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard';
-import {
-  CreateRoleInput,
-  createRoleSchema,
-} from '@/utils/validators/create-role.schema';
+import { CreateRoleInput, createRoleSchema } from '@/utils/validators/create-role.schema';
 import { useModal } from '@/app/shared/modal-views/use-modal';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store/types';
+import { dispatch } from '@/store';
+import { createRole } from '@/store/slices/roleSlice';
+import toast from 'react-hot-toast';
 
-// main category form component for create and update category
 export default function CreateRole() {
   const { closeModal } = useModal();
-  const [reset, setReset] = useState({});
-  const [isLoading, setLoading] = useState(false);
+  const { createLoading } = useSelector((state: RootState) => state.role);
   const [isCopied, setIsCopied] = useState(false);
   const [state, copyToClipboard] = useCopyToClipboard();
 
-  console.log('state', state);
-
   const onSubmit: SubmitHandler<CreateRoleInput> = (data) => {
-    // set timeout ony required to display loading state of the create category button
-    setLoading(true);
-    setTimeout(() => {
-      console.log('data', data);
-      setLoading(false);
-      setReset({
-        roleName: '',
-        roleColor: '',
-      });
-      closeModal();
-    }, 600);
+    const rgbaString = `rgba(${data?.color?.r}, ${data?.color?.g}, ${data?.color?.b}, ${data?.color?.a})`;
+    const values = {
+      name: data.name,
+      color: rgbaString,
+    };
+    dispatch(createRole(values)).then((action: any) => {
+      if (createRole.fulfilled.match(action)) {
+        toast.success('Role created successfully');
+        closeModal();
+      } else {
+        console.log('action.payload.errors', action.payload.errors);
+      }
+    });
   };
 
   const handleCopyToClipboard = (rgba: string) => {
     copyToClipboard(rgba);
-
     setIsCopied(() => true);
     setTimeout(() => {
       setIsCopied(() => false);
-    }, 3000); // 3 seconds
+    }, 3000);
   };
 
   return (
@@ -54,10 +53,8 @@ export default function CreateRole() {
       className="flex flex-grow flex-col gap-6 p-6 @container [&_.rizzui-input-label]:font-medium [&_.rizzui-input-label]:text-gray-900"
     >
       {({ register, control, watch, formState: { errors } }) => {
-        const getColor = watch('roleColor');
-        const colorCode = `rgba(${getColor?.r ?? 0}, ${getColor?.g ?? 0}, ${
-          getColor?.b ?? 0
-        }, ${getColor?.a ?? 0})`;
+        const getColor = watch('color');
+        const colorCode = `rgba(${getColor?.r ?? 1}, ${getColor?.g ?? 1}, ${getColor?.b ?? 1}, ${getColor?.a ?? 1})`;
         return (
           <>
             <div className="flex items-center justify-between">
@@ -68,12 +65,7 @@ export default function CreateRole() {
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
-            <Input
-              label="Role Name"
-              placeholder="Role name"
-              {...register('roleName')}
-              error={errors.roleName?.message}
-            />
+            <Input label="Role Name" placeholder="Role name" {...register('name')} error={errors.name?.message} />
             <Input
               label="Role Color"
               placeholder="Role Color"
@@ -92,11 +84,7 @@ export default function CreateRole() {
                     onClick={() => handleCopyToClipboard(colorCode)}
                     className="-mr-3"
                   >
-                    {isCopied ? (
-                      <PiChecksBold className="h-[18px] w-[18px]" />
-                    ) : (
-                      <PiFilesBold className="h-4 w-4" />
-                    )}
+                    {isCopied ? <PiChecksBold className="h-[18px] w-[18px]" /> : <PiFilesBold className="h-4 w-4" />}
                   </ActionIcon>
                 </Tooltip>
               }
@@ -104,25 +92,15 @@ export default function CreateRole() {
             />
             <Controller
               control={control}
-              name="roleColor"
-              render={({ field: { onChange, value } }) => (
-                <RgbaColorPicker color={value} onChange={onChange} />
-              )}
+              name="color"
+              render={({ field: { onChange, value } }) => <RgbaColorPicker color={value} onChange={onChange} />}
             />
 
             <div className="flex items-center justify-end gap-4">
-              <Button
-                variant="outline"
-                onClick={closeModal}
-                className="w-full @xl:w-auto"
-              >
+              <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
                 Cancel
               </Button>
-              <Button
-                type="submit"
-                isLoading={isLoading}
-                className="w-full @xl:w-auto"
-              >
+              <Button type="submit" isLoading={createLoading} className="w-full @xl:w-auto">
                 Create Role
               </Button>
             </div>

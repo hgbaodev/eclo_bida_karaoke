@@ -56,7 +56,7 @@ export const me = createAsyncThunk('auth/me', async () => {
 
 const updateAuthState = (state: any, action: any) => {
   const result = action.payload.data;
-  state.isLoaded = true;
+  state.isLoaded = false;
   state.isAuthenticated = true;
   state.first_name = result.first_name;
   state.last_name = result.last_name;
@@ -67,37 +67,37 @@ const updateAuthState = (state: any, action: any) => {
   setAuthCookie('accessToken', result.accessToken);
 };
 
-const authSlice = createSlice({
+const authSlice: any = createSlice({
   name: 'auth',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(signIn.pending, (state) => {
-        state.isLoaded = false;
+        state.isLoaded = true;
       })
       .addCase(signIn.fulfilled, (state, action) => {
         updateAuthState(state, action);
       })
-      .addCase(signIn.rejected, (state: any, action) => {
-        state.isLoaded = true;
+      .addCase(signIn.rejected, (state, action) => {
+        state.isLoaded = false;
         state.isAuthenticated = false;
       })
       .addCase(me.pending, (state) => {
-        state.isLoaded = false;
+        state.isLoaded = true;
       })
       .addCase(me.fulfilled, (state, action) => {
         updateAuthState(state, action);
       })
       .addCase(me.rejected, (state: any) => {
-        state.isLoaded = true;
+        state.isLoaded = false;
         state.isAuthenticated = false;
       })
       .addCase(signOut.pending, (state) => {
-        state.isLoaded = false;
+        state.isLoaded = true;
       })
       .addCase(signOut.fulfilled, (state) => {
-        state.isLoaded = true;
+        state.isLoaded = false;
         state.isAuthenticated = false;
         state.first_name = '';
         state.last_name = '';
@@ -111,7 +111,7 @@ const authSlice = createSlice({
         setCookie('accessToken', '');
       })
       .addCase(signOut.rejected, (state: any) => {
-        state.isLoaded = true;
+        state.isLoaded = false;
         state.isAuthenticated = false;
       });
   },

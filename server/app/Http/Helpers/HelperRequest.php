@@ -11,8 +11,15 @@ class HelperRequest extends FormRequest
 {
     protected function failedValidation(Validator $validator)
     {
+        $errors = $validator->errors()->toArray();
+
+        $formattedErrors = [];
+        foreach ($errors as $field => $messages) {
+            $formattedErrors[$field] = $messages[0]; 
+        }
+
         throw new HttpResponseException(response()->json([
-            'errors' => $validator->errors(),
+            'errors' => $formattedErrors,
         ], Response::HTTP_UNPROCESSABLE_ENTITY));
     }
 }

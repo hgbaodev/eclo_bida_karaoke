@@ -16,7 +16,7 @@ class Controller extends BaseController
             'data' => $data,
             'message' => $message,
             'status' => $status
-        ]);
+        ], $status);
     }
 
     public function sentErrorResponse($errorMessage = '', $message='error',$status = 400){
@@ -24,6 +24,6 @@ class Controller extends BaseController
             'errors' => $errorMessage,
             'message' => $message,
             'status' => $status
-        ]);
+        ], $status);
     }
 }

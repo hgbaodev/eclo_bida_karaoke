@@ -15,6 +15,8 @@ export interface authType {
 export interface roleType {
   fetchData: any[];
   fetchDataLoading: boolean;
+  createLoading: boolean;
+  updateLoading: boolean;
 }
 
 export interface RootState {

@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Functional;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class FuncationalSeeder extends Seeder
@@ -14,10 +13,13 @@ class FuncationalSeeder extends Seeder
     public function run(): void
     {
         Functional::create([
-            'name' => 'account',
+            'name' => 'user',
         ]);
         Functional::create([
-            'name' => 'role',
+            'name' => 'customer',
+        ]);
+        Functional::create([
+            'name' => 'area',
         ]);
     }
 }
