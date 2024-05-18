@@ -10,4 +10,5 @@ Route::group([
     require __DIR__.'/api/role.php';
     require __DIR__.'/api/user.php';
     require __DIR__.'/api/customer.php';
+    require __DIR__.'/api/supplier.php';
 });
