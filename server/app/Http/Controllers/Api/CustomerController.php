@@ -70,10 +70,6 @@ class CustomerController extends Controller
         return $this->sentSuccessResponse($this->customerRepository->updateCustomerById($id, $validatedData));
     }
 
-    public function test(Request $request){
-
-    }
-
     /**
      * Remove the specified resource from storage.
      */
