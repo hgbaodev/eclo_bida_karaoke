@@ -29,5 +29,18 @@ class UserSeeder extends Seeder
             'image' => 'https://avatars.githubusercontent.com/u/120194990?v=4',
             'role_id' => 2
         ]);
+
+        User::create([
+            'first_name' => 'Nguyen',
+            'last_name' => 'Phong',
+            'email' => 'Ngt.phongg.vn@gmail.com',
+            'password' => '123456',
+            'image' => 'https://avatars.githubusercontent.com/u/120194990?v=4',
+            'role_id' => 2
+        ]);
+
+        //
+        // Create 30 more users using the factory
+        User::factory()->count(30)->create();
     }
 }

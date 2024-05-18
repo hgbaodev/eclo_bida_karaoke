@@ -14,13 +14,13 @@ import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
 import { createRole } from '@/store/slices/roleSlice';
 import toast from 'react-hot-toast';
+import { set } from 'lodash';
 
 export default function CreateRole() {
   const { closeModal } = useModal();
   const { createLoading } = useSelector((state: RootState) => state.role);
   const [isCopied, setIsCopied] = useState(false);
   const [state, copyToClipboard] = useCopyToClipboard();
-
   const onSubmit: SubmitHandler<CreateRoleInput> = (data) => {
     const rgbaString = `rgba(${data?.color?.r}, ${data?.color?.g}, ${data?.color?.b}, ${data?.color?.a})`;
     const values = {
@@ -47,12 +47,11 @@ export default function CreateRole() {
 
   return (
     <Form<CreateRoleInput>
-      // resetValues={reset}
       onSubmit={onSubmit}
       validationSchema={createRoleSchema}
       className="flex flex-grow flex-col gap-6 p-6 @container [&_.rizzui-input-label]:font-medium [&_.rizzui-input-label]:text-gray-900"
     >
-      {({ register, control, watch, formState: { errors } }) => {
+      {({ setError, register, control, watch, formState: { errors } }) => {
         const getColor = watch('color');
         const colorCode = `rgba(${getColor?.r ?? 1}, ${getColor?.g ?? 1}, ${getColor?.b ?? 1}, ${getColor?.a ?? 1})`;
         return (

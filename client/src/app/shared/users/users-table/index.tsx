@@ -1,12 +1,17 @@
 'use client';
 
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { useTable } from '@/hooks/use-table';
 import { useColumn } from '@/hooks/use-column';
 import ControlledTable from '@/components/controlled-table';
-import { getColumns } from '@/app/shared/roles-permissions/users-table/columns';
-const FilterElement = dynamic(() => import('@/app/shared/roles-permissions/users-table/filter-element'), {
+import { getColumns } from '@/app/shared/users/users-table/columns';
+import { User } from '@/data/users-data';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store/types';
+import { dispatch } from '@/store';
+import { fetchAllUsers } from '@/store/slices/userSlice';
+const FilterElement = dynamic(() => import('@/app/shared/users/users-table/filter-element'), {
   ssr: false,
 });
 const TableFooter = dynamic(() => import('@/app/shared/table-footer'), {
@@ -18,20 +23,16 @@ const filterState = {
   status: '',
 };
 
-export default function UsersTable({ data = [] }: { data: any[] }) {
+export default function UsersTable() {
   const [pageSize, setPageSize] = useState(10);
+  const { fetchData } = useSelector((state: RootState) => state.user);
 
-  const onHeaderCellClick = (value: string) => ({
-    onClick: () => {
-      handleSort(value);
-    },
-  });
-
-  const onDeleteItem = useCallback((id: string) => {
-    handleDelete(id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    const fetch = async () => {
+      await dispatch(fetchAllUsers());
+    };
+    fetch();
   }, []);
-
   const {
     isLoading,
     isFiltered,
@@ -51,12 +52,22 @@ export default function UsersTable({ data = [] }: { data: any[] }) {
     handleSelectAll,
     handleDelete,
     handleReset,
-  } = useTable(data, pageSize, filterState);
+  } = useTable<User>(fetchData);
 
+  const onHeaderCellClick = (value: string) => ({
+    onClick: () => {
+      handleSort(value);
+    },
+  });
+
+  const onDeleteItem = useCallback((id: string) => {
+    handleDelete(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const columns = useMemo(
     () =>
       getColumns({
-        data,
+        data: fetchData,
         sortConfig,
         checkedItems: selectedRowKeys,
         onHeaderCellClick,
@@ -77,7 +88,6 @@ export default function UsersTable({ data = [] }: { data: any[] }) {
   );
 
   const { visibleColumns, checkedColumns, setCheckedColumns } = useColumn(columns);
-
   return (
     <div className="mt-0">
       <FilterElement

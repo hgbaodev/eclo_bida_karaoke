@@ -5,16 +5,9 @@ import { PiXBold } from 'react-icons/pi';
 import { Controller, SubmitHandler } from 'react-hook-form';
 import { Form } from '@/components/ui/form';
 import { Input, Button, ActionIcon, Title, Select } from 'rizzui';
-import {
-  CreateUserInput,
-  createUserSchema,
-} from '@/utils/validators/create-user.schema';
+import { CreateUserInput, createUserSchema } from '@/utils/validators/create-user.schema';
 import { useModal } from '@/app/shared/modal-views/use-modal';
-import {
-  permissions,
-  roles,
-  statuses,
-} from '@/app/shared/roles-permissions/utils';
+import { permissions, roles, statuses } from '@/app/shared/roles-permissions/utils';
 export default function CreateUser() {
   const { closeModal } = useModal();
   const [reset, setReset] = useState({});
@@ -48,7 +41,7 @@ export default function CreateUser() {
       validationSchema={createUserSchema}
       className="grid grid-cols-1 gap-6 p-6 @container md:grid-cols-2 [&_.rizzui-input-label]:font-medium [&_.rizzui-input-label]:text-gray-900"
     >
-      {({ register, control, watch, formState: { errors } }) => {
+      {({ setError, register, control, watch, formState: { errors } }) => {
         return (
           <>
             <div className="col-span-full flex items-center justify-between">
@@ -89,8 +82,7 @@ export default function CreateUser() {
                   error={errors?.status?.message}
                   getOptionValue={(option) => option.value}
                   displayValue={(selected: string) =>
-                    roles.find((option) => option.value === selected)?.label ??
-                    selected
+                    roles.find((option) => option.value === selected)?.label ?? selected
                   }
                   dropdownClassName="!z-[1]"
                   inPortal={false}
@@ -110,10 +102,7 @@ export default function CreateUser() {
                   label="Status"
                   error={errors?.status?.message}
                   getOptionValue={(option) => option.value}
-                  displayValue={(selected: string) =>
-                    statuses.find((option) => option.value === selected)
-                      ?.label ?? ''
-                  }
+                  displayValue={(selected: string) => statuses.find((option) => option.value === selected)?.label ?? ''}
                   dropdownClassName="!z-[1]"
                   inPortal={false}
                 />
@@ -133,8 +122,7 @@ export default function CreateUser() {
                   error={errors?.status?.message}
                   getOptionValue={(option) => option.value}
                   displayValue={(selected: string) =>
-                    permissions.find((option) => option.value === selected)
-                      ?.label ?? ''
+                    permissions.find((option) => option.value === selected)?.label ?? ''
                   }
                   dropdownClassName="!z-[1]"
                   inPortal={false}
@@ -143,18 +131,10 @@ export default function CreateUser() {
             />
 
             <div className="col-span-full flex items-center justify-end gap-4">
-              <Button
-                variant="outline"
-                onClick={closeModal}
-                className="w-full @xl:w-auto"
-              >
+              <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
                 Cancel
               </Button>
-              <Button
-                type="submit"
-                isLoading={isLoading}
-                className="w-full @xl:w-auto"
-              >
+              <Button type="submit" isLoading={isLoading} className="w-full @xl:w-auto">
                 Create User
               </Button>
             </div>

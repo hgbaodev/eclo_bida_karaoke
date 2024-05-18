@@ -22,4 +22,10 @@ export interface roleType {
 export interface RootState {
   auth: authType;
   role: roleType;
+  user: userType;
+}
+
+export interface userType {
+  fetchData: any[];
+  fetchDataLoading: boolean;
 }

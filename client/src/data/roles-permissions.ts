@@ -35,42 +35,17 @@ export const users = [
 
 export const rolesList = [
   {
-    name: ROLES.Administrator,
+    name: ROLES.User,
     color: '#2465FF',
     users,
   },
   {
-    name: ROLES.Manager,
-    color: '#F5A623',
-    users,
-  },
-  {
-    name: ROLES.Sales,
-    color: '#FF1A1A',
-    users,
-  },
-  {
-    name: ROLES.Support,
-    color: '#8A63D2',
-    users,
-  },
-  {
-    name: ROLES.Developer,
-    color: '#FF1A1A',
-    users,
-  },
-  {
-    name: ROLES.HRD,
-    color: '#11A849',
-    users,
-  },
-  {
-    name: ROLES.RestrictedUser,
-    color: '#4E36F5',
-    users,
-  },
-  {
     name: ROLES.Customer,
+    color: '#0070F3',
+    users,
+  },
+  {
+    name: ROLES.Area,
     color: '#0070F3',
     users,
   },
