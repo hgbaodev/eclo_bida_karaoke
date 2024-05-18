@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Customer\StoreCustomerRequest;
 use App\Http\Requests\Customer\UpdateCustomerRequest;
 use App\Interface\CustomerRepositoryInterface;
+use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 
@@ -30,7 +31,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        
+
     }
 
     /**
@@ -39,7 +40,7 @@ class CustomerController extends Controller
     public function store(StoreCustomerRequest $request)
     {
         $validated_data = $request->validated();
-        return $this->sentSuccessResponse($this->customerRepository->createCustomer($validated_data), 'Customer has been created successfully!!!', 200);
+        return $this->sentSuccessResponse($this->customerRepository->createCustomer($validated_data), 'The customer has been created successfully!!!', 200);
     }
 
     /**
@@ -61,9 +62,16 @@ class CustomerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCustomerRequest $request, $id)
-    {
-        
+    public function update(UpdateCustomerRequest $request, $id){
+        $validatedData = $request->validated();
+        if(!$this->customerRepository->getCustomerById($id)){
+            return $this->sentErrorResponse('Customer not found', 'error', 404);
+        }
+        return $this->sentSuccessResponse($this->customerRepository->updateCustomerById($id, $validatedData));
+    }
+
+    public function test(Request $request){
+
     }
 
     /**
@@ -72,8 +80,8 @@ class CustomerController extends Controller
     public function destroy($id)
     {
         if(!$this->customerRepository->getCustomerById($id)){
-            return $this->sentErrorResponse('Customer is not found', 'error', 404);
+            return $this->sentErrorResponse('Customer '.$id. ' is not found', 'error', 404);
         }
-        return $this->sentSuccessResponse($this->customerRepository->deleteCustomerById($id));
+        return $this->sentSuccessResponse($this->customerRepository->deleteCustomerById($id), 'customer '.$id.' is deleted', 200);
     }
 }

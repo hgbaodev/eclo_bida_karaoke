@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests\Customer;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Helpers\HelperRequest;
 
-class UpdateCustomerRequest extends FormRequest
+class UpdateCustomerRequest extends HelperRequest
+
 {
     /**
      * Determine if the user is authorized to make this request.
