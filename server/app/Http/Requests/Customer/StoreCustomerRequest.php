@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Role;
+namespace App\Http\Requests\Customer;
 
 use App\Http\Helpers\HelperRequest;
 
-class UpdateRoleRequest extends HelperRequest
+class StoreCustomerRequest extends HelperRequest
+
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +23,9 @@ class UpdateRoleRequest extends HelperRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|unique:roles,name,'.$this->id,
-            'color' => 'required',
-            'functionals' => 'required|array',
+            'name' => 'required',
+            'phone' => 'required|unique:customers|regex:/^[0-9]{10,}$/',
+            'email' => 'required|email|unique:customers',
         ];
     }
 }

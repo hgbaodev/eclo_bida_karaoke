@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Role;
+namespace App\Http\Requests\Supplier;
 
+use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Helpers\HelperRequest;
 
-class UpdateRoleRequest extends HelperRequest
+class StoreSupplierRequest extends HelperRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,10 +22,10 @@ class UpdateRoleRequest extends HelperRequest
      */
     public function rules(): array
     {
-        return [
-            'name' => 'required|unique:roles,name,'.$this->id,
-            'color' => 'required',
-            'functionals' => 'required|array',
+        return  [
+            'name' => 'required|unique:suppliers',
+            'address' => 'required',
+            'phone' => 'required|unique:customers|regex:/^[0-9]{10,}$/',
         ];
     }
 }
