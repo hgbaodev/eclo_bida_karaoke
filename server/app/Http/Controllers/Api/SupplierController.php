@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Supplier\StoreSupplierRequest;
+use App\Http\Requests\Supplier\UpdateSupplierRequest;
 use App\Interface\SupplierRepositoryInterface;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
@@ -44,9 +45,9 @@ class SupplierController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Supplier $supplier)
+    public function show($id)
     {
-        //
+        return $this->sentSuccessResponse($this->supplierRepository->getSupplierById($id));
     }
 
     /**
@@ -60,16 +61,23 @@ class SupplierController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Supplier $supplier)
+    public function update(UpdateSupplierRequest $request,$id)
     {
-        //
+        $validated_data = $request->validated();
+        if(!$this->supplierRepository->getSupplierById($id)){
+            return $this->sentErrorResponse("Supllier ".$id.' is not found', "error", 400);
+        }
+        return $this->sentSuccessResponse($this->supplierRepository->updateSupplierById($id, $validated_data), 'The supplier '. $id. ' has been updated!!!', 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Supplier $supplier)
+    public function destroy($id)
     {
-        //
+        if(!$this->supplierRepository->getSupplierById($id)){
+            return $this->sentErrorResponse("Supllier ".$id.' is not found', "error", 400);
+        }
+        return $this->sentSuccessResponse($this->supplierRepository->deleteSupplierById($id), 'The supplier '.$id.' has been deleted!!!');
     }
 }
