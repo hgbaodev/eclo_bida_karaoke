@@ -1,126 +1,64 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import dynamic from 'next/dynamic';
-import { useTable } from '@/hooks/use-table';
 import { useColumn } from '@/hooks/use-column';
 import ControlledTable from '@/components/controlled-table';
 import { getColumns } from '@/app/shared/users/users-table/columns';
-import { User } from '@/data/users-data';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
-import { fetchAllUsers } from '@/store/slices/userSlice';
+import { fetchAllUsers, setPage, setPageSize } from '@/store/slices/userSlice';
+import { useModal } from '../../modal-views/use-modal';
 const FilterElement = dynamic(() => import('@/app/shared/users/users-table/filter-element'), {
   ssr: false,
 });
-const TableFooter = dynamic(() => import('@/app/shared/table-footer'), {
-  ssr: false,
-});
-
-const filterState = {
-  role: '',
-  status: '',
-};
 
 export default function UsersTable() {
-  const [pageSize, setPageSize] = useState(10);
-  const { fetchData } = useSelector((state: RootState) => state.user);
+  const { openModal } = useModal();
+  const { data, isLoading, pageSize, page, totalRow, query, status, role } = useSelector(
+    (state: RootState) => state.user,
+  );
 
   useEffect(() => {
     const fetch = async () => {
-      await dispatch(fetchAllUsers());
+      await dispatch(fetchAllUsers({ page, pageSize, query, status, role }));
     };
     fetch();
-  }, []);
-  const {
-    isLoading,
-    isFiltered,
-    tableData,
-    currentPage,
-    totalItems,
-    handlePaginate,
-    filters,
-    updateFilter,
-    searchTerm,
-    handleSearch,
-    sortConfig,
-    handleSort,
-    selectedRowKeys,
-    setSelectedRowKeys,
-    handleRowSelect,
-    handleSelectAll,
-    handleDelete,
-    handleReset,
-  } = useTable<User>(fetchData);
+  }, [page, pageSize, query, role, status]);
 
-  const onHeaderCellClick = (value: string) => ({
-    onClick: () => {
-      handleSort(value);
-    },
-  });
-
-  const onDeleteItem = useCallback((id: string) => {
-    handleDelete(id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
   const columns = useMemo(
-    () =>
-      getColumns({
-        data: fetchData,
-        sortConfig,
-        checkedItems: selectedRowKeys,
-        onHeaderCellClick,
-        onDeleteItem,
-        onChecked: handleRowSelect,
-        handleSelectAll,
-      }),
+    () => getColumns(openModal),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [
-      selectedRowKeys,
-      onHeaderCellClick,
-      sortConfig.key,
-      sortConfig.direction,
-      onDeleteItem,
-      handleRowSelect,
-      handleSelectAll,
-    ],
+    [],
   );
 
-  const { visibleColumns, checkedColumns, setCheckedColumns } = useColumn(columns);
+  const handleChangePageSize = (size: any) => {
+    dispatch(setPageSize(size));
+  };
+
+  const handlePaginate = (page: number) => {
+    dispatch(setPage(page));
+  };
+
+  const { visibleColumns } = useColumn(columns);
   return (
     <div className="mt-0">
-      <FilterElement
-        isFiltered={isFiltered}
-        filters={filters}
-        updateFilter={updateFilter}
-        handleReset={handleReset}
-        onSearch={handleSearch}
-        searchTerm={searchTerm}
-      />
+      <FilterElement />
       <ControlledTable
         variant="modern"
-        data={tableData}
+        data={data}
         isLoading={isLoading}
-        showLoadingText={true}
+        showLoadingText={false}
         // @ts-ignore
         columns={visibleColumns}
         paginatorOptions={{
           pageSize,
-          setPageSize,
-          total: totalItems,
-          current: currentPage,
+          setPageSize: handleChangePageSize,
+          total: totalRow,
+          current: page,
           onChange: (page: number) => handlePaginate(page),
         }}
-        tableFooter={
-          <TableFooter
-            checkedItems={selectedRowKeys}
-            handleDelete={(ids: string[]) => {
-              setSelectedRowKeys([]);
-              handleDelete(ids);
-            }}
-          />
-        }
         className="rounded-md border border-muted text-sm shadow-sm [&_.rc-table-placeholder_.rc-table-expanded-row-fixed>div]:h-60 [&_.rc-table-placeholder_.rc-table-expanded-row-fixed>div]:justify-center [&_.rc-table-row:last-child_td.rc-table-cell]:border-b-0 [&_thead.rc-table-thead]:border-t-0"
       />
     </div>

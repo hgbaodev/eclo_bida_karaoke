@@ -26,6 +26,7 @@ class UpdateUserRequest extends HelperRequest
             'last_name' => 'required',
             'email' => 'required|unique:users,email,'.$this->id,
             'role_id' => 'required|exists:roles,id',
+            'status' => 'required|in:1,2',
         ];
     }
 }

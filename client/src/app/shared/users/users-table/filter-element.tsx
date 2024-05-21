@@ -2,81 +2,57 @@
 
 import { PiTrashDuotone, PiMagnifyingGlassBold } from 'react-icons/pi';
 import StatusField from '@/components/controlled-table/status-field';
-import { Badge, Text, Title, Button, Input } from 'rizzui';
-import { STATUSES } from '@/data/users-data';
-import { rolesList } from '@/data/roles-permissions';
+import { Badge, Text, Button, Input } from 'rizzui';
+import { dispatch } from '@/store';
+import { setQuery, setReset, setRole, setStatus } from '@/store/slices/userSlice';
+import { RootState } from '@/store/types';
+import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import useDebounce from '@/hooks/use-debounce';
+import { STATUS, roles, statusOptions } from '../type';
 
-const statusOptions = [
-  {
-    value: STATUSES.Active,
-    label: STATUSES.Active,
-  },
-  {
-    value: STATUSES.Deactivated,
-    label: STATUSES.Deactivated,
-  },
-  {
-    value: STATUSES.Pending,
-    label: STATUSES.Pending,
-  },
-];
+export default function FilterElement() {
+  const { status, role, isFiltered, query } = useSelector((state: RootState) => state.user);
+  const [searchTerm, setSearchTerm] = useState(query);
+  const debounceSearchTerm = useDebounce(searchTerm, 1000);
 
-type FilterElementProps = {
-  isFiltered: boolean;
-  filters: { [key: string]: any };
-  updateFilter: (columnId: string, filterValue: string | any[]) => void;
-  handleReset: () => void;
-  onSearch: (searchTerm: string) => void;
-  searchTerm: string;
-};
+  useEffect(() => {
+    dispatch(setQuery(debounceSearchTerm));
+  }, [debounceSearchTerm]);
 
-const roles = rolesList.map((role) => ({
-  label: role.name,
-  value: role.name,
-}));
-
-export default function FilterElement({
-  isFiltered,
-  handleReset,
-  filters,
-  updateFilter,
-  onSearch,
-  searchTerm,
-}: FilterElementProps) {
   return (
     <>
       <div className="relative z-50 mb-4 flex flex-wrap items-center justify-between gap-2.5 @container ">
         <StatusField
-          className=" -order-3 w-full @[25rem]:w-[calc(calc(100%_-_10px)_/_2)] @4xl:-order-5 @4xl:w-auto"
+          className=" -order-9 w-full @[25rem]:w-[calc(calc(100%_-_10px)_/_2)] @4xl:-order-5 @4xl:w-auto"
           options={statusOptions}
           dropdownClassName="!z-10"
-          value={filters['status']}
-          onChange={(value: string) => {
-            updateFilter('status', value);
+          value={status}
+          onChange={(value: any) => {
+            dispatch(setStatus(value));
           }}
           placeholder="Filter by Status"
           getOptionValue={(option: { value: any }) => option.value}
-          getOptionDisplayValue={(option: { value: any }) => renderOptionDisplayValue(option.value as string)}
-          displayValue={(selected: string) => renderOptionDisplayValue(selected)}
+          getOptionDisplayValue={(option: { value: any }) => renderOptionDisplayValue(option.value as any)}
+          displayValue={(selected: any) => renderOptionDisplayValue(selected)}
         />
-
         <StatusField
           options={roles}
           dropdownClassName="!z-10 w-48"
-          value={filters['role']}
+          value={role}
           placeholder="Filter by Role"
-          className=" @4xl:-auto -order-2 w-full min-w-[160px] @[25rem]:w-[calc(calc(100%_-_10px)_/_2)] @4xl:-order-4 @4xl:w-auto"
+          className=" @4xl:-auto -order-3 w-full min-w-[160px] @[25rem]:w-[calc(calc(100%_-_10px)_/_2)] @4xl:-order-4 @4xl:w-auto"
           getOptionValue={(option: { value: any }) => option.value}
-          onChange={(value: string) => {
-            updateFilter('role', value);
+          onChange={(value: any) => {
+            dispatch(setRole(value));
           }}
-          displayValue={(selected: string) => roles.find((option) => option.value === selected)?.value ?? selected}
+          displayValue={(selected: number) => roles.find((option) => option.value === selected)?.label ?? selected}
         />
 
         {isFiltered && (
           <Button
             size="sm"
-            onClick={handleReset}
+            onClick={() => dispatch(setReset())}
             className="-order-1 h-8 w-full bg-gray-200/70 @4xl:-order-4 @4xl:w-auto"
             variant="flat"
           >
@@ -88,32 +64,32 @@ export default function FilterElement({
           type="search"
           placeholder="Search for users..."
           value={searchTerm}
-          onClear={() => onSearch('')}
-          onChange={(event) => onSearch(event.target.value)}
+          onClear={() => setSearchTerm('')}
+          onChange={(event) => setSearchTerm(event.target.value)}
           prefix={<PiMagnifyingGlassBold className="h-4 w-4" />}
           rounded="lg"
           clearable
-          className="-order-4 w-full @xl:-order-5 @xl:ms-auto @xl:w-auto @4xl:-order-2 @4xl:w-[230px] @5xl:w-auto"
+          className="-order-2 w-full @xl:-order-5 @xl:ms-auto @xl:w-auto @4xl:-order-2 @4xl:w-[230px] @5xl:w-auto"
         />
       </div>
     </>
   );
 }
 
-function renderOptionDisplayValue(value: string) {
+export function renderOptionDisplayValue(value: any) {
   switch (value) {
-    case STATUSES.Active:
+    case STATUS.Active:
       return (
         <div className="flex items-center">
           <Badge color="success" renderAsDot />
-          <Text className="ms-2 font-medium capitalize text-green-dark">{value}</Text>
+          <Text className="ms-2 font-medium capitalize text-green-dark">Active</Text>
         </div>
       );
-    case STATUSES.Deactivated:
+    case STATUS.Deactivated:
       return (
         <div className="flex items-center">
           <Badge color="danger" renderAsDot />
-          <Text className="ms-2 font-medium capitalize text-red-dark">{value}</Text>
+          <Text className="ms-2 font-medium capitalize text-red-dark">Deactivated</Text>
         </div>
       );
     default:

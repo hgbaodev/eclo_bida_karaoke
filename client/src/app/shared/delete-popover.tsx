@@ -8,11 +8,7 @@ type DeletePopoverProps = {
   onDelete: () => void;
 };
 
-export default function DeletePopover({
-  title,
-  description,
-  onDelete,
-}: DeletePopoverProps) {
+export default function DeletePopover({ title, description, onDelete }: DeletePopoverProps) {
   return (
     <Popover placement="left">
       <Popover.Trigger>
@@ -28,25 +24,22 @@ export default function DeletePopover({
       <Popover.Content className="z-0">
         {({ setOpen }) => (
           <div className="w-56 pb-2 pt-1 text-left rtl:text-right">
-            <Title
-              as="h6"
-              className="mb-0.5 flex items-start text-sm text-gray-700 sm:items-center"
-            >
+            <Title as="h6" className="mb-0.5 flex items-start text-sm text-gray-700 sm:items-center">
               <PiTrashFill className="me-1 h-[17px] w-[17px]" /> {title}
             </Title>
-            <Text className="mb-2 leading-relaxed text-gray-500">
-              {description}
-            </Text>
+            <Text className="mb-2 leading-relaxed text-gray-500">{description}</Text>
             <div className="flex items-center justify-end">
-              <Button size="sm" className="me-1.5 h-7" onClick={onDelete}>
-                Yes
-              </Button>
               <Button
                 size="sm"
-                variant="outline"
-                className="h-7"
-                onClick={() => setOpen(false)}
+                className="me-1.5 h-7"
+                onClick={() => {
+                  onDelete();
+                  setOpen(false);
+                }}
               >
+                Yes
+              </Button>
+              <Button size="sm" variant="outline" className="h-7" onClick={() => setOpen(false)}>
                 No
               </Button>
             </div>

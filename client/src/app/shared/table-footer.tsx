@@ -3,8 +3,8 @@
 import { Button, Title, Text } from 'rizzui';
 
 interface TableFooterProps {
-  checkedItems: string[];
-  handleDelete: (ids: string[]) => void;
+  checkedItems: number[];
+  handleDelete: (ids: number[]) => void;
 }
 
 export default function TableFooter({

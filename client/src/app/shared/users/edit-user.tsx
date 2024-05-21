@@ -4,57 +4,56 @@ import { useState } from 'react';
 import { PiXBold } from 'react-icons/pi';
 import { Controller, SubmitHandler } from 'react-hook-form';
 import { Form } from '@/components/ui/form';
-import { Input, Button, ActionIcon, Title, Select, Password } from 'rizzui';
-import { CreateUserInput, createUserSchema } from '@/utils/validators/create-user.schema';
+import { Input, Button, ActionIcon, Title, Select } from 'rizzui';
 import { useModal } from '@/app/shared/modal-views/use-modal';
 import { roles, statusOptions } from './type';
 import { renderOptionDisplayValue } from './users-table/filter-element';
 import { dispatch } from '@/store';
-import { createUser, fetchAllUsers } from '@/store/slices/userSlice';
+import { fetchAllUsers, updateUser } from '@/store/slices/userSlice';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
+import { EditUserInput, editUserSchema } from '@/utils/validators/edit-user.schema';
 
-export default function CreateUser() {
+export default function EditUser({ user, id }: { user: EditUserInput; id: number }) {
   const { closeModal } = useModal();
-  const [reset, setReset] = useState({});
+  const [reset, setReset] = useState<any>(user);
   const [errors, setErrors] = useState<any>({});
-  const { pageSize, page, query, status, role, isCreateLoading } = useSelector((state: RootState) => state.user);
-  const onSubmit: SubmitHandler<CreateUserInput> = async (data) => {
-    const result: any = await dispatch(createUser(data));
-
-    if (createUser.fulfilled.match(result)) {
+  const { pageSize, page, query, status, role, isUpdateLoading } = useSelector((state: RootState) => state.user);
+  const onSubmit: SubmitHandler<EditUserInput> = async (data) => {
+    const result: any = await dispatch(updateUser({ user: data, id: id }));
+    if (updateUser.fulfilled.match(result)) {
       setReset({
         first_name: '',
         last_name: '',
         email: '',
         role_id: '',
         status: '',
-        password: '',
       });
       setErrors({});
       closeModal();
       await dispatch(fetchAllUsers({ page, pageSize, query, status, role }));
-      toast.success('User created successfully');
+      toast.success('User update successfully');
     } else {
       setErrors(result?.payload?.errors);
     }
   };
 
   return (
-    <Form<CreateUserInput>
+    <Form<EditUserInput>
       resetValues={reset}
       onSubmit={onSubmit}
-      validationSchema={createUserSchema}
+      validationSchema={editUserSchema}
       serverError={errors}
       className="grid grid-cols-1 gap-6 p-6 @container md:grid-cols-2 [&_.rizzui-input-label]:font-medium [&_.rizzui-input-label]:text-gray-900"
     >
       {({ setError, register, control, watch, formState: { errors } }) => {
+        console.log('errors', errors);
         return (
           <>
             <div className="col-span-full flex items-center justify-between">
               <Title as="h4" className="font-semibold">
-                Add a new User
+                Update user
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
@@ -127,19 +126,12 @@ export default function CreateUser() {
                 />
               )}
             />
-            <Password
-              label="Password"
-              placeholder="Enter your passwoord"
-              className="col-span-full"
-              {...register('password')}
-              error={errors.password?.message}
-            />
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
                 Cancel
               </Button>
-              <Button type="submit" isLoading={isCreateLoading} className="w-full @xl:w-auto">
-                Create User
+              <Button type="submit" isLoading={isUpdateLoading} className="w-full @xl:w-auto">
+                Update User
               </Button>
             </div>
           </>
