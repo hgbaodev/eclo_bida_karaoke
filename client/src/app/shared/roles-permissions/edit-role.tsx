@@ -26,9 +26,9 @@ export default function EditRole({
 }) {
   const { closeModal } = useModal();
   const { updateLoading } = useSelector((state: RootState) => state.role);
+  const [errors, setErrors] = useState({} as any);
 
   const onSubmit: SubmitHandler<RolePermissionInput> = (data) => {
-    // set timeout ony required to display loading state of the create category button
     const values = {
       id: id,
       functionals: data,
@@ -38,7 +38,7 @@ export default function EditRole({
         toast.success('Role update successfully');
         closeModal();
       } else {
-        toast.error('Role update errors');
+        setErrors(action.payload.errors);
       }
     });
   };
@@ -50,6 +50,7 @@ export default function EditRole({
       useFormProps={{
         defaultValues: functionals,
       }}
+      serverError={errors}
       className="grid grid-cols-1 gap-6 p-6  @container [&_.rizzui-input-label]:font-medium [&_.rizzui-input-label]:text-gray-900"
     >
       {({ register, control, watch, formState: { errors } }) => {

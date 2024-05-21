@@ -12,6 +12,7 @@ import { signIn } from '@/store/slices/authSlice';
 import { dispatch } from '@/store';
 import { RootState } from '@/store/types';
 import { useSelector } from 'react-redux';
+import toast from 'react-hot-toast';
 
 const initialValues: LoginSchema = {
   email: '',
@@ -24,7 +25,18 @@ export default function SignInForm() {
   const { isLoaded } = useSelector((state: RootState) => state.auth);
 
   const onSubmit: SubmitHandler<LoginSchema> = async (data) => {
-    await dispatch(signIn(data));
+    const result: any = await dispatch(signIn(data));
+
+    if (signIn.fulfilled.match(result)) {
+      setReset({
+        email: '',
+        password: '',
+        rememberMe: false,
+      });
+      toast.success('Login successfully');
+    } else {
+      toast.error('Account not found or password is incorrect');
+    }
   };
 
   return (

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { PiChecksBold, PiFilesBold, PiXBold } from 'react-icons/pi';
 import { RgbaColorPicker } from 'react-colorful';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { Controller, SubmitHandler } from 'react-hook-form';
 import { Form } from '@/components/ui/form';
 import { Input, Button, Tooltip, ActionIcon, Title } from 'rizzui';
 import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard';
@@ -14,13 +14,13 @@ import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
 import { createRole } from '@/store/slices/roleSlice';
 import toast from 'react-hot-toast';
-import { set } from 'lodash';
 
 export default function CreateRole() {
   const { closeModal } = useModal();
   const { createLoading } = useSelector((state: RootState) => state.role);
   const [isCopied, setIsCopied] = useState(false);
   const [state, copyToClipboard] = useCopyToClipboard();
+  const [errors, setErrors] = useState({} as any);
   const onSubmit: SubmitHandler<CreateRoleInput> = (data) => {
     const rgbaString = `rgba(${data?.color?.r}, ${data?.color?.g}, ${data?.color?.b}, ${data?.color?.a})`;
     const values = {
@@ -32,7 +32,7 @@ export default function CreateRole() {
         toast.success('Role created successfully');
         closeModal();
       } else {
-        console.log('action.payload.errors', action.payload.errors);
+        setErrors(action.payload.errors);
       }
     });
   };
@@ -49,6 +49,7 @@ export default function CreateRole() {
     <Form<CreateRoleInput>
       onSubmit={onSubmit}
       validationSchema={createRoleSchema}
+      serverError={errors}
       className="flex flex-grow flex-col gap-6 p-6 @container [&_.rizzui-input-label]:font-medium [&_.rizzui-input-label]:text-gray-900"
     >
       {({ setError, register, control, watch, formState: { errors } }) => {
