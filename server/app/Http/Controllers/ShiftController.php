@@ -33,7 +33,8 @@ class ShiftController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validated();
+        return $this->sentSuccessResponse($this->shiftRepository->createShift($validatedData));
     }
 
     /**
@@ -61,7 +62,12 @@ class ShiftController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validatedData = $request->validated();
+        if(!$this->shiftRepository->getShiftById($id))
+        {
+            return $this->sentErrorResponse('Shift '. $id . ' is not found',"error",404);
+        }
+        return $this->sentSuccessResponse($this->shiftRepository->updateShiftById($id,$validatedData),"Shift is updated successfully",200);
     }
 
     /**
