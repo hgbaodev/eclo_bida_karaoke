@@ -9,7 +9,6 @@ class Staff extends Model
 {
     use HasFactory;
     protected $fillable = [
-        "staff_id",
         "staff_name",
         "staff_birthday",
         "staff_image",
