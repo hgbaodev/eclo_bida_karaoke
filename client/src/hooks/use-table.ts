@@ -27,8 +27,8 @@ export function useTable<T extends AnyObject>(
   /*
    * Handle row selection
    */
-  const [selectedRowKeys, setSelectedRowKeys] = useState<string[]>([]);
-  const handleRowSelect = (recordKey: string) => {
+  const [selectedRowKeys, setSelectedRowKeys] = useState<number[]>([]);
+  const handleRowSelect = (recordKey: number) => {
     const selectedKeys = [...selectedRowKeys];
     if (selectedKeys.includes(recordKey)) {
       setSelectedRowKeys(selectedKeys.filter((key) => key !== recordKey));
@@ -101,7 +101,7 @@ export function useTable<T extends AnyObject>(
   /*
    * Handle delete
    */
-  function handleDelete(id: string | string[]) {
+  function handleDelete(id: number | number[]) {
     const updatedData = Array.isArray(id)
       ? data.filter((item) => !id.includes(item.id))
       : data.filter((item) => item.id !== id);

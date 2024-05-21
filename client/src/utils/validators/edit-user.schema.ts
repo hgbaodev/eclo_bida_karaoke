@@ -3,14 +3,13 @@ import { messages } from '@/config/messages';
 import { validateEmail } from '@/utils/validators/common-rules';
 
 // form zod validation schema
-export const createUserSchema = z.object({
+export const editUserSchema = z.object({
   first_name: z.string().min(1, { message: messages.fullNameIsRequired }),
   last_name: z.string().min(1, { message: messages.fullNameIsRequired }),
   email: validateEmail,
   role_id: z.number().min(1, { message: messages.roleIsRequired }),
   status: z.number().min(1, { message: messages.statusIsRequired }),
-  password: z.string().min(6, { message: messages.passwordLengthMin }),
 });
 
 // generate form types from zod validation schema
-export type CreateUserInput = z.infer<typeof createUserSchema>;
+export type EditUserInput = z.infer<typeof editUserSchema>;

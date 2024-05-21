@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Interface\UserRepositoryInterface;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -16,9 +17,9 @@ class UserController extends Controller
         $this->userRepository = $userRepository;
     }
     
-    public function index()
+    public function index(Request $request)
     {
-        $data = $this->userRepository->getAll();
+        $data = $this->userRepository->getAll($request);
         return $this->sentSuccessResponse($data);
     }
 

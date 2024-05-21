@@ -33,6 +33,7 @@ class UserFactory extends Factory
             'password' => Hash::make('123456'), // Hash password for security
             'image' => $this->faker->imageUrl,
             'role_id' => $this->faker->numberBetween(1, 2),
+            'status' => $this->faker->numberBetween(0,2),
         ];
     }
 }

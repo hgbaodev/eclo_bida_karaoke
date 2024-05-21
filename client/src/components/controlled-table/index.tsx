@@ -8,14 +8,8 @@ import { Title, Loader } from 'rizzui';
 import cn from '@/utils/class-names';
 import type { TableFilterProps } from '@/components/controlled-table/table-filter';
 import type { TablePaginationProps } from '@/components/controlled-table/table-pagination';
-const TableFilter = dynamic(
-  () => import('@/components/controlled-table/table-filter'),
-  { ssr: false }
-);
-const TablePagination = dynamic(
-  () => import('@/components/controlled-table/table-pagination'),
-  { ssr: false }
-);
+const TableFilter = dynamic(() => import('@/components/controlled-table/table-filter'), { ssr: false });
+const TablePagination = dynamic(() => import('@/components/controlled-table/table-pagination'), { ssr: false });
 
 type ControlledTableProps = {
   isLoading?: boolean;
@@ -54,27 +48,15 @@ export default function ControlledTable({
 
   return (
     <>
-      {!isEmpty(filterOptions) && (
-        <TableFilter {...filterOptions}>{filterElement}</TableFilter>
-      )}
+      {!isEmpty(filterOptions) && <TableFilter {...filterOptions}>{filterElement}</TableFilter>}
 
       <div className="relative">
-        <Table
-          scroll={{ x: 1300 }}
-          rowKey={(record) => record.id}
-          className={cn(className)}
-          {...tableProps}
-        />
+        <Table scroll={{ x: 1000 }} rowKey={(record) => record.id} className={cn(className)} {...tableProps} />
 
         {tableFooter ? tableFooter : null}
       </div>
 
-      {!isEmpty(paginatorOptions) && (
-        <TablePagination
-          paginatorClassName={paginatorClassName}
-          {...paginatorOptions}
-        />
-      )}
+      {!isEmpty(paginatorOptions) && <TablePagination paginatorClassName={paginatorClassName} {...paginatorOptions} />}
     </>
   );
 }

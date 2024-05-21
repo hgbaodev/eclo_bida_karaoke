@@ -1,14 +1,14 @@
 'use client';
 import PageHeader from '@/app/shared/page-header';
 import ModalButton from '@/app/shared/modal-button';
-import CreateUser from '@/app/shared/users/create-user';
 import UsersTable from '@/app/shared/users/users-table';
+import CreateUser from '@/app/shared/users/create-user';
 
 const pageHeader = {
   title: 'Users',
   breadcrumb: [
     {
-      href: '/',
+      href: '/admin',
       name: 'Analytics',
     },
     {

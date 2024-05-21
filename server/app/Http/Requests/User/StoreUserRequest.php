@@ -27,6 +27,7 @@ class StoreUserRequest extends HelperRequest
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6',
             'role_id' => 'required|exists:roles,id',
+            'status' => 'required|in:1,2',
         ];
     }
 }

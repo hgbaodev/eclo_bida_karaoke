@@ -26,6 +26,16 @@ export interface RootState {
 }
 
 export interface userType {
-  fetchData: any[];
-  fetchDataLoading: boolean;
+  data: [];
+  isLoading: boolean;
+  isFiltered: boolean;
+  page: number;
+  pageSize: number;
+  totalRow: number;
+  query: string;
+  role: any;
+  status: any;
+  errors: any;
+  isCreateLoading: boolean;
+  isUpdateLoading: boolean;
 }
