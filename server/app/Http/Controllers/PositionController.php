@@ -19,7 +19,7 @@ class PositionController extends Controller
      */
     public function index()
     {
-        return $this->sentSuccessResponse($this->positionRepository->getAllPosition());
+        return $this->sentSuccessResponse($this->positionRepository->getAllPositions());
     }
 
     /**

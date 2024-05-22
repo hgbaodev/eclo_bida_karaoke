@@ -17,7 +17,7 @@ class ShiftController extends Controller
      */
     public function index()
     {
-        return $this->sentSuccessResponse($this->shiftRepository->getAllShift());
+        return $this->sentSuccessResponse($this->shiftRepository->getAllShifts());
     }
 
     /**
