@@ -10,7 +10,7 @@ class ServiceType extends Model
 {
     use HasFactory, SoftDeletes;
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [
       'name',

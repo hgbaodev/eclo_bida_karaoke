@@ -21,7 +21,7 @@ class DeviceFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'description' => $this->faker->text(),
-            'status' => $this->faker->numberBetween(),
+            'status' => $this->faker->numberBetween(1,20),
         ];
     }
 }

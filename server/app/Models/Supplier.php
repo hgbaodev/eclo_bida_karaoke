@@ -10,7 +10,10 @@ class Supplier extends Model
 {
     use HasFactory, SoftDeletes;
 
-    public $timestamps = false;
+    public $timestamps = true;
 
-    protected $fillable = ['name', 'address', 'phone'];
+    protected $fillable = [
+        'name',
+        'address',
+        'phone'];
 }
