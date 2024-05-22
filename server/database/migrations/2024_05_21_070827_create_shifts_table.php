@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id("id");
             $table->time("time_in");
             $table->time("time_out");
+            $table->timestamps(true);
         });
     }
 
