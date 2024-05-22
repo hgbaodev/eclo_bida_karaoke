@@ -17,6 +17,7 @@ return new class extends Migration
             $table->longText('description');
             $table->integer('status')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

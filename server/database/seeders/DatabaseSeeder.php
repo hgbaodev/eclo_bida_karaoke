@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             FuncationalSeeder::class,
             RoleFunctionalPermissionSeeder::class,
             UserSeeder::class,
+            AreaSeeder::class,
             ShiftSeeder::class,
             StaffSeeder::class,
             PositionSeeder::class
