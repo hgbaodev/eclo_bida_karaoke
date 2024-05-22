@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
 
 use App\Interface\ShiftRepositoryInterface;
 use Illuminate\Http\Request;
@@ -42,9 +44,8 @@ class ShiftController extends Controller
      */
     public function show(string $id)
     {
-        if(!$this->shiftRepository->getShiftById($id))
-        {
-            return $this->sentErrorResponse('Shift' .$id. ' is not found',"error",404);
+        if (!$this->shiftRepository->getShiftById($id)) {
+            return $this->sentErrorResponse('Shift' . $id . ' is not found', "error", 404);
         }
         return $this->sentSuccessResponse($this->shiftRepository->getShiftById($id));
     }
@@ -63,11 +64,10 @@ class ShiftController extends Controller
     public function update(Request $request, string $id)
     {
         $validatedData = $request->validated();
-        if(!$this->shiftRepository->getShiftById($id))
-        {
-            return $this->sentErrorResponse('Shift '. $id . ' is not found',"error",404);
+        if (!$this->shiftRepository->getShiftById($id)) {
+            return $this->sentErrorResponse('Shift ' . $id . ' is not found', "error", 404);
         }
-        return $this->sentSuccessResponse($this->shiftRepository->updateShiftById($id,$validatedData),"Shift is updated successfully",200);
+        return $this->sentSuccessResponse($this->shiftRepository->updateShiftById($id, $validatedData), "Shift is updated successfully", 200);
     }
 
     /**
@@ -75,10 +75,9 @@ class ShiftController extends Controller
      */
     public function destroy(string $id)
     {
-        if(!$this->shiftRepository->getShiftById($id))
-        {
-            return $this->sentErrorResponse('Shift' .$id. ' is not found',"error",404);
+        if (!$this->shiftRepository->getShiftById($id)) {
+            return $this->sentErrorResponse('Shift' . $id . ' is not found', "error", 404);
         }
-        return $this->sentSuccessResponse($this->shiftRepository->deleteShiftById($id),"Shift is deleted successfully",200);
+        return $this->sentSuccessResponse($this->shiftRepository->deleteShiftById($id), "Shift is deleted successfully", 200);
     }
 }
