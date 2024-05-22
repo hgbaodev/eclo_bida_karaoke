@@ -13,8 +13,8 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         User::create([
-            'first_name' => 'Trần',
-            'last_name' => 'Nhật Sinh',
+            'first_name' => 'Trần Nhật',
+            'last_name' => 'Sinh',
             'email' => 'transinh085@gmail.com',
             'password' => '123456',
             'image' => 'https://avatars.githubusercontent.com/u/45101901?v=4',
@@ -22,8 +22,8 @@ class UserSeeder extends Seeder
         ]);
 
         User::create([
-            'first_name' => 'Hoàng',
-            'last_name' => 'Gia Bảo',
+            'first_name' => 'Hoàng Gia',
+            'last_name' => 'Bảo',
             'email' => 'musicanime2501@gmail.com',
             'password' => '123456',
             'image' => 'https://avatars.githubusercontent.com/u/120194990?v=4',

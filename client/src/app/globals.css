@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @import 'react-big-calendar/lib/css/react-big-calendar.css';
+@import 'react-calendar/dist/Calendar.css';
 
 @layer base {
   /* default theme */
@@ -1314,4 +1315,108 @@ div[style='z-index: 1000001;'],
 }
 .pos-all-items-top-slider .swiper-pagination span.swiper-pagination-bullet-active {
   @apply !w-4 !bg-gray-400;
+}
+
+/* react calendar customize style */
+.react-calendar__navigation__prev2-button,
+.react-calendar__navigation__next2-button {
+  @apply hidden;
+}
+.react-calendar__navigation {
+  @apply items-center;
+}
+.react-calendar__navigation__prev-button,
+.react-calendar__navigation__next-button {
+  @apply h-7 w-7 !min-w-[28px] rounded-md !border !border-solid !border-gray-200 !bg-transparent;
+}
+.react-calendar__navigation__label {
+  @apply text-sm font-semibold text-gray-800 disabled:!bg-transparent lg:text-base;
+}
+.react-calendar__month-view__days {
+  @apply gap-x-1 gap-y-2;
+}
+.react-calendar__month-view__days__day {
+  @apply flex h-9 w-9 items-center justify-center rounded-full;
+}
+.react-calendar__month-view__weekdays {
+  @apply mb-4 !text-sm !capitalize;
+}
+.react-calendar__month-view__weekdays__weekday > abbr {
+  @apply font-semibold text-gray-500 no-underline;
+}
+.react-calendar__tile {
+  @apply !basis-[calc(14.2857%-4px)] !text-sm;
+}
+.react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+  @apply !bg-transparent;
+}
+.react-calendar__tile--active,
+.react-calendar__tile--now {
+  @apply !bg-[#2B7F75];
+}
+.react-calendar__tile--now {
+  @apply !text-gray-0;
+}
+.react-calendar__month-view__days__day--weekend {
+  @apply !text-red-dark;
+}
+
+/* job dashboard calender style  */
+.job-schedule-calendar {
+  @apply !w-full !border-none dark:bg-transparent;
+}
+.job-schedule-calendar .react-calendar__navigation {
+  @apply justify-between px-5 lg:px-7;
+}
+.job-schedule-calendar .react-calendar__navigation__arrow {
+  @apply inline-flex items-center justify-center text-[22px] leading-none;
+}
+.job-schedule-calendar .react-calendar__navigation__next2-button,
+.job-schedule-calendar .react-calendar__navigation__prev2-button {
+  @apply hidden;
+}
+.job-schedule-calendar .react-calendar__month-view__weekdays {
+  @apply mb-0;
+}
+.job-schedule-calendar .react-calendar__month-view__weekdays > div {
+  @apply mb-0 border border-r-0 border-gray-200 bg-gray-50 py-4 font-inter first:border-l-0;
+}
+.job-schedule-calendar .react-calendar__month-view__days {
+  @apply !grid !grid-cols-7 gap-0;
+}
+.job-schedule-calendar .react-calendar__month-view__days > button {
+  @apply h-full !w-full rounded-none border border-s-0 border-t-0 border-solid border-gray-200 px-0 py-4 font-inter dark:hover:!bg-gray-100 dark:focus:!bg-gray-100 [&:nth-child(7n)]:border-r-0;
+}
+.job-schedule-calendar button.react-calendar__tile--active,
+.job-schedule-calendar button.react-calendar__tile--hasActive,
+.job-schedule-calendar button.react-calendar__tile--now {
+  @apply !bg-transparent !text-gray-600  hover:!bg-[#e6e6e6] dark:hover:!bg-gray-100;
+}
+.job-schedule-calendar button.react-calendar__month-view__days__day {
+  @apply relative;
+}
+
+/* job schedule calendar months view */
+.job-schedule-calendar .react-calendar__year-view__months {
+  @apply !grid !grid-cols-4 gap-0 border-t border-gray-200;
+}
+.job-schedule-calendar .react-calendar__year-view__months > button {
+  @apply border border-s-0 border-t-0 border-solid border-gray-200 dark:hover:bg-gray-100 dark:focus:bg-gray-100 [&:nth-child(4n)]:border-r-0;
+}
+
+/* job schedule calendar decades view */
+.job-schedule-calendar .react-calendar__decade-view__years {
+  @apply !grid !grid-cols-5 gap-0 border-t border-gray-200;
+}
+.job-schedule-calendar .react-calendar__decade-view__years > button {
+  @apply border border-s-0 border-t-0 border-solid border-gray-200 dark:hover:bg-gray-100 dark:focus:bg-gray-100 dark:disabled:bg-gray-100 [&:nth-child(5n)]:border-r-0;
+}
+
+/* job schedule calendar century view */
+.job-schedule-calendar .react-calendar__century-view__decades {
+  @apply !grid !grid-cols-4 gap-0 border-t border-gray-200;
+}
+.job-schedule-calendar .react-calendar__century-view__decades > button {
+  @apply border border-s-0 border-t-0 border-solid border-gray-200 dark:hover:bg-gray-100 dark:focus:bg-gray-100 dark:disabled:bg-gray-100 [&:nth-child(4n)]:border-r-0;
 }
