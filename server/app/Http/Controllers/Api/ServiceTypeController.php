@@ -16,20 +16,10 @@ class ServiceTypeController extends Controller
     {
         $this->serviceTypeRepository = $serviceTypeRepository;
     }
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         return $this->sentSuccessResponse($this->serviceTypeRepository->getAllServiceTypes());
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -50,19 +40,15 @@ class ServiceTypeController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(UpdateServiceTypeRequest $request, string $id)
     {
-        //
+        $validated_data = $request->validated();
+        if(!$this->serviceTypeRepository->getServiceTypeById($id)){
+            return $this->sentErrorResponse('The service type is not found');
+        }
+        return $this->sentSuccessResponse($this->serviceTypeRepository->updateServiceTypeById($id, $validated_data), 'Service type '.$id.' updated', 200);
     }
 
     /**
@@ -70,6 +56,9 @@ class ServiceTypeController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        if(!$this->serviceTypeRepository->getServiceTypeById($id)){
+            return $this->sentErrorResponse('The service type is not found');
+        }
+        return $this->sentSuccessResponse($this->serviceTypeRepository->deleteServiceTypeById($id), 'Service type '.$id.' deleted', 200);
     }
 }
