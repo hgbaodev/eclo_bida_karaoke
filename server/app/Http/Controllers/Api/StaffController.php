@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-
 use App\Http\Requests\StaffRequest;
 use App\Models\Staff;
 use App\Interface\StaffRepositoryInterface;
