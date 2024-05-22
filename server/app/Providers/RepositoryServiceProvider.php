@@ -7,6 +7,7 @@ use App\Interface\CustomerRepositoryInterface;
 use App\Interface\DeviceRepositoryInterface;
 use App\Interface\RoleFunctionalPermissionRepositoryInterface;
 use App\Interface\RoleRepositoryInterface;
+use App\Interface\ServiceTypeRepositoryInterface;
 use App\Interface\SupplierRepositoryInterface;
 use App\Interface\UserRepositoryInterface;
 use App\Repositories\AreaRepository;
@@ -17,7 +18,7 @@ use App\Repositories\RoleRepository;
 use App\Repositories\SupplierRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Support\ServiceProvider;
-
+use App\Repositories\ServiceTypeRepository;
 class RepositoryServiceProvider extends ServiceProvider
 {
     /**
@@ -32,6 +33,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(SupplierRepositoryInterface::class, SupplierRepository::class);
         $this->app->bind(AreaRepositoryInterface::class, AreaRepository::class);
         $this->app->bind(DeviceRepositoryInterface::class, DeviceRepository::class);
+        $this->app->bind(ServiceTypeRepositoryInterface::class, ServiceTypeRepository::class);
     }
 
     /**
