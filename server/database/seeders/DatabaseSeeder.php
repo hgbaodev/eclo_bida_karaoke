@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Shift;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -18,7 +19,10 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
             FuncationalSeeder::class,
             RoleFunctionalPermissionSeeder::class,
-            UserSeeder::class
+            UserSeeder::class,
+            ShiftSeeder::class,
+            StaffSeeder::class,
+            PositionSeeder::class
         ]);
     }
 }
