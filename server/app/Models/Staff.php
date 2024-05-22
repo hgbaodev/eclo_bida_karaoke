@@ -19,7 +19,8 @@ class Staff extends Model
         "position_id"
         // "staff_salary",
     ];
-    public function position(){
+    public function position()
+    {
         return $this->hasOne(Position::class);
     }
 }
