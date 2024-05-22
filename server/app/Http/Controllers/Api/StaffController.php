@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StaffRequest;
 use App\Models\Staff;
 use App\Interface\StaffRepositoryInterface;
@@ -36,7 +37,7 @@ class StaffController extends Controller
     public function store(Request $request)
     {
         $validatedDate = $request->validated();
-        return $this->sentSuccessResponse($this->staffRepository->createStaff($validatedDate),"Staff is created successfully",200);
+        return $this->sentSuccessResponse($this->staffRepository->createStaff($validatedDate), "Staff is created successfully", 200);
     }
 
     /**
@@ -61,10 +62,10 @@ class StaffController extends Controller
     public function update(StaffRequest $request, $id)
     {
         $validatedDate = $request->validated();
-        if(!$this->staffRepository->getStaffById($id)){
-            return $this->sentErrorResponse('Staff'. $id . 'is not found',"error",404);
+        if (!$this->staffRepository->getStaffById($id)) {
+            return $this->sentErrorResponse('Staff' . $id . 'is not found', "error", 404);
         }
-        return $this->sentSuccessResponse($this->staffRepository->updateStaffById($id,$validatedDate),"Staff is updated successfully",200);
+        return $this->sentSuccessResponse($this->staffRepository->updateStaffById($id, $validatedDate), "Staff is updated successfully", 200);
     }
 
     /**
@@ -72,9 +73,9 @@ class StaffController extends Controller
      */
     public function destroy($id)
     {
-        if(!$this->staffRepository->getStaffById($id)){
-            return $this->sentErrorResponse('Staff' . $id . 'is not found','error',404);
+        if (!$this->staffRepository->getStaffById($id)) {
+            return $this->sentErrorResponse('Staff' . $id . 'is not found', 'error', 404);
         }
-        return $this->sentSuccessResponse($this->staffRepository->deleteStaffById($id),'Staff' .$id.'is deleted successfully',200);
+        return $this->sentSuccessResponse($this->staffRepository->deleteStaffById($id), 'Staff' . $id . 'is deleted successfully', 200);
     }
 }
