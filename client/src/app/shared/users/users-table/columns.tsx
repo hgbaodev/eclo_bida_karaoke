@@ -12,7 +12,8 @@ import { deleteUser, fetchAllUsers } from '@/store/slices/userSlice';
 import toast from 'react-hot-toast';
 import EditUser from '../edit-user';
 
-function getStatusBadge(status: User['status']) {
+export function getStatusBadge(status: User['status']) {
+  status = parseInt(status);
   switch (status) {
     case STATUSES.Deactivated:
       return (

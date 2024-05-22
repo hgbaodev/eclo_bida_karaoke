@@ -1,5 +1,9 @@
 export const statusOptions = [
   {
+    value: 0,
+    label: 'Pending',
+  },
+  {
     value: 1,
     label: 'Active',
   },

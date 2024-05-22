@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import useDebounce from '@/hooks/use-debounce';
 import { STATUS, roles, statusOptions } from '../type';
+import { getStatusBadge } from './columns';
 
 export default function FilterElement() {
   const { status, role, isFiltered, query } = useSelector((state: RootState) => state.user);
@@ -33,8 +34,8 @@ export default function FilterElement() {
           }}
           placeholder="Filter by Status"
           getOptionValue={(option: { value: any }) => option.value}
-          getOptionDisplayValue={(option: { value: any }) => renderOptionDisplayValue(option.value as any)}
-          displayValue={(selected: any) => renderOptionDisplayValue(selected)}
+          getOptionDisplayValue={(option: { value: any }) => getStatusBadge(option.value as any)}
+          displayValue={(selected: any) => getStatusBadge(selected)}
         />
         <StatusField
           options={roles}
@@ -74,30 +75,4 @@ export default function FilterElement() {
       </div>
     </>
   );
-}
-
-export function renderOptionDisplayValue(value: any) {
-  switch (value) {
-    case STATUS.Active:
-      return (
-        <div className="flex items-center">
-          <Badge color="success" renderAsDot />
-          <Text className="ms-2 font-medium capitalize text-green-dark">Active</Text>
-        </div>
-      );
-    case STATUS.Deactivated:
-      return (
-        <div className="flex items-center">
-          <Badge color="danger" renderAsDot />
-          <Text className="ms-2 font-medium capitalize text-red-dark">Deactivated</Text>
-        </div>
-      );
-    default:
-      return (
-        <div className="flex items-center">
-          <Badge renderAsDot className="bg-gray-400" />
-          <Text className="ms-2 font-medium capitalize text-gray-600">{value}</Text>
-        </div>
-      );
-  }
 }

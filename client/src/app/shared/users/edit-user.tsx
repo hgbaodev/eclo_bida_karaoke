@@ -7,13 +7,13 @@ import { Form } from '@/components/ui/form';
 import { Input, Button, ActionIcon, Title, Select } from 'rizzui';
 import { useModal } from '@/app/shared/modal-views/use-modal';
 import { roles, statusOptions } from './type';
-import { renderOptionDisplayValue } from './users-table/filter-element';
 import { dispatch } from '@/store';
 import { fetchAllUsers, updateUser } from '@/store/slices/userSlice';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { EditUserInput, editUserSchema } from '@/utils/validators/edit-user.schema';
+import { getStatusBadge } from './users-table/columns';
 
 export default function EditUser({ user, id }: { user: EditUserInput; id: number }) {
   const { closeModal } = useModal();
@@ -119,8 +119,8 @@ export default function EditUser({ user, id }: { user: EditUserInput; id: number
                   className="col-span-full"
                   error={errors?.status?.message}
                   getOptionValue={(option: { value: any }) => option.value}
-                  getOptionDisplayValue={(option: { value: any }) => renderOptionDisplayValue(option.value as any)}
-                  displayValue={(selected: any) => renderOptionDisplayValue(selected)}
+                  getOptionDisplayValue={(option: { value: any }) => getStatusBadge(option.value as any)}
+                  displayValue={(selected: any) => getStatusBadge(selected)}
                   dropdownClassName="!z-[1]"
                   inPortal={false}
                 />

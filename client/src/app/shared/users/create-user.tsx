@@ -8,12 +8,12 @@ import { Input, Button, ActionIcon, Title, Select, Password } from 'rizzui';
 import { CreateUserInput, createUserSchema } from '@/utils/validators/create-user.schema';
 import { useModal } from '@/app/shared/modal-views/use-modal';
 import { roles, statusOptions } from './type';
-import { renderOptionDisplayValue } from './users-table/filter-element';
 import { dispatch } from '@/store';
 import { createUser, fetchAllUsers } from '@/store/slices/userSlice';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
+import { getStatusBadge } from './users-table/columns';
 
 export default function CreateUser() {
   const { closeModal } = useModal();
@@ -120,8 +120,8 @@ export default function CreateUser() {
                   className="col-span-full"
                   error={errors?.status?.message}
                   getOptionValue={(option: { value: any }) => option.value}
-                  getOptionDisplayValue={(option: { value: any }) => renderOptionDisplayValue(option.value as any)}
-                  displayValue={(selected: any) => renderOptionDisplayValue(selected)}
+                  getOptionDisplayValue={(option: { value: any }) => getStatusBadge(option.value as any)}
+                  displayValue={(selected: any) => getStatusBadge(selected)}
                   dropdownClassName="!z-[1]"
                   inPortal={false}
                 />
