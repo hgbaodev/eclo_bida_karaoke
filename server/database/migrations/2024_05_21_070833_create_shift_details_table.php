@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('shift_details', function (Blueprint $table) {
-            $table->id('shift_detail_id');
-            $table->foreignId('shift_id')->constrained('shift');
+            $table->id('id');
+            $table->foreignId('shift_id')->constrained('shifts');
             $table->string('day_of_week');
             $table->integer("quantity_of_staff");
         });

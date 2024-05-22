@@ -9,7 +9,7 @@ class ShiftDetail extends Model
 {
     use HasFactory;
     protected $fillable=[
-        "shift_detail_id",
+        "id",
         "shift_id",
         "day_of_week",
         "quantity_of_staff"

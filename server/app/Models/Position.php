@@ -9,8 +9,11 @@ class Position extends Model
 {
     use HasFactory;
     protected $fillable =[
-        "position_id",
-        "position_name",
-        "position_salary"
+        "id",
+        "name",
+        "salary"
     ];
+    public function staff(){
+        return $this->belongsTo(Staff::class);
+    }
 }

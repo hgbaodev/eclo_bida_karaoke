@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('shift_user_details', function (Blueprint $table) {
-            $table->id();
+            $table->primary(['staff_id', 'shift_detail_id']);
             $table->foreignId('staff_id')->constrained('staff');
-            $table->foreignId('shift_detail_id')->constrained('shift_detail');
+            $table->foreignId('shift_detail_id')->constrained('shift_details');
         });
     }
 

@@ -9,14 +9,17 @@ class Staff extends Model
 {
     use HasFactory;
     protected $fillable = [
-        "staff_name",
-        "staff_birthday",
-        "staff_image",
-        "staff_phone",
-        "staff_idcard",
-        "staff_address",
+        "name",
+        "birthday",
+        "image",
+        "phone",
+        "idcard",
+        "address",
         // "user_id",
         "position_id"
         // "staff_salary",
     ];
+    public function position(){
+        return $this->hasOne(Position::class);
+    }
 }
