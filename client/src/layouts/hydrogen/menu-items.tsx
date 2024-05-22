@@ -1,6 +1,5 @@
 import { routes } from '@/config/routes';
-import { DUMMY_ID } from '@/config/constants';
-import { PiPackageDuotone, PiChartBarDuotone, PiFolderLockDuotone } from 'react-icons/pi';
+import { PiPackageDuotone, PiChartBarDuotone, PiFolderLockDuotone, PiShapesDuotone } from 'react-icons/pi';
 import { HiOutlineUsers } from 'react-icons/hi2';
 // Note: do not add href in the label object, it is rendering as label
 export const menuItems = [
@@ -15,23 +14,29 @@ export const menuItems = [
     icon: <PiChartBarDuotone />,
     badge: '',
   },
+  {
+    name: 'Job Board',
+    href: routes.admin.jobBoard,
+    icon: <PiShapesDuotone />,
+    badge: 'NEW',
+  },
   // label start
   {
     name: 'Apps Kit',
   },
   // label end
   {
-    name: 'Logistics',
+    name: 'Services',
     href: '#',
     icon: <PiPackageDuotone />,
     dropdownItems: [
       {
-        name: 'Shipment List',
-        href: routes.logistics.shipmentList,
+        name: 'Table & Rooms',
+        href: routes.admin.services.tableandrooms,
       },
       {
-        name: 'Shipment Details',
-        href: routes.logistics.shipmentDetails(DUMMY_ID),
+        name: 'Devices',
+        href: routes.admin.services.devices,
       },
     ],
   },
