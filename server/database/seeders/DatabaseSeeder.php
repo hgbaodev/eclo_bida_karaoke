@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
             FuncationalSeeder::class,
             RoleFunctionalPermissionSeeder::class,
-            UserSeeder::class
+            UserSeeder::class,
+            AreaSeeder::class,
         ]);
     }
 }
