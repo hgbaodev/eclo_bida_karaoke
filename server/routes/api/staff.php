@@ -1,16 +1,18 @@
 <?php
 
-use App\Http\Controllers\StaffController;
+use App\Http\Controllers\Api\StaffController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(
-  ['prefix' => 'staffs',
+  [
+    'prefix' => 'staffs',
     // 'middleware' => 'auth:api'
-], function(){
-  Route::get('/', [StaffController::class, 'index']);
-  Route::get('/{id}', [StaffController::class, 'show']);
-  Route::post('/', [StaffController::class, 'store']);
-  Route::put('/{id}', [StaffController::class, 'update']);
-  Route::delete('/{id}', [StaffController::class, 'destroy']);
-}
+  ],
+  function () {
+    Route::get('/', [StaffController::class, 'index']);
+    Route::get('/{id}', [StaffController::class, 'show']);
+    Route::post('/', [StaffController::class, 'store']);
+    Route::put('/{id}', [StaffController::class, 'update']);
+    Route::delete('/{id}', [StaffController::class, 'destroy']);
+  }
 );

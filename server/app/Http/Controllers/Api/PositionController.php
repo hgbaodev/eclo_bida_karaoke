@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
 
 use App\Http\Requests\PositionRequest;
 use App\Interface\PositionRepositoryInterface;
@@ -36,7 +38,7 @@ class PositionController extends Controller
     public function store(PositionRequest $request)
     {
         $validatedData = $request->validated();
-        return $this->sentSuccessResponse($this->positionRepository->createPosition($validatedData),'Position is created successfully',200);
+        return $this->sentSuccessResponse($this->positionRepository->createPosition($validatedData), 'Position is created successfully', 200);
     }
 
     /**
@@ -58,13 +60,13 @@ class PositionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(PositionRequest $request,$id)
+    public function update(PositionRequest $request, $id)
     {
         $validatedData = $request->validated();
-        if(!$this->positionRepository->getPositionById($id)){
-            return $this->sentErrorResponse('Position ' . $id . ' is not found',"error",404);
+        if (!$this->positionRepository->getPositionById($id)) {
+            return $this->sentErrorResponse('Position ' . $id . ' is not found', "error", 404);
         }
-        return $this->sentSuccessResponse($this->positionRepository->updatePositionById($id,$validatedData),"Position is update successfully",200);
+        return $this->sentSuccessResponse($this->positionRepository->updatePositionById($id, $validatedData), "Position is update successfully", 200);
     }
 
     /**
@@ -72,9 +74,9 @@ class PositionController extends Controller
      */
     public function destroy($id)
     {
-        if(!$this->positionRepository->getPositionById($id)){
-            return $this->sentErrorResponse('Position '.$id.' is not found',"error",404);
+        if (!$this->positionRepository->getPositionById($id)) {
+            return $this->sentErrorResponse('Position ' . $id . ' is not found', "error", 404);
         }
-        return $this->sentSuccessResponse($this->positionRepository->deletePositionById($id),"Position is deteled successfully",200);
+        return $this->sentSuccessResponse($this->positionRepository->deletePositionById($id), "Position is deteled successfully", 200);
     }
 }
