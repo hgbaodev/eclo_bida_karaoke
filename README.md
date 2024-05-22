@@ -5,13 +5,13 @@
 1. Change into the project directory
 
    ```bash
-   git clone https://github.com/hgbaodev/chat-app.git
+   git clone https://github.com/hgbaodev/eclo_bida_karaoke.git
    ```
 
 2. Navigate to the project directory
 
    ```bash
-   cd chat-app
+   cd eclo_bida_karaoke
    ```
 
 ## Start Client

@@ -19,7 +19,7 @@ class StaffController extends Controller
      */
     public function index()
     {
-        return $this->sentSuccessResponse($this->staffRepository->getAllStaff());
+        return $this->sentSuccessResponse($this->staffRepository->getAllStaffs());
     }
 
     /**

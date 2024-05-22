@@ -6,17 +6,17 @@ use App\Interface\ShiftRepositoryInterface;
 use App\Models\Shift;
 
 class ShiftRepository implements ShiftRepositoryInterface{
-    public function getAllShift()
+    public function getAllShifts()
     {
-        Shift::all();
+        return Shift::all();
     }
     public function getShiftById($id)
     {
-        Shift::find($id);
+        return Shift::find($id);
     }
     public function createShift(array $data)
     {
-        Shift::create($data);
+        return Shift::create($data);
     }
     public function updateShiftById($id, array $data)
     {

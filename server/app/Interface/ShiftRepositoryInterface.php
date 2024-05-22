@@ -4,7 +4,7 @@ namespace App\Interface;
 
 
 interface ShiftRepositoryInterface {
-    public function getAllShift();
+    public function getAllShifts();
     public function getShiftById($id);
     public function createShift(array $data);
     public function updateShiftById($id,array $data);

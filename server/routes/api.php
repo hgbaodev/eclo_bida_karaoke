@@ -14,4 +14,7 @@ Route::group([
     require __DIR__.'/api/area.php';
     require __DIR__.'/api/device.php';
     require __DIR__.'/api/service_type.php';
+    require __DIR__.'/api/staff.php';
+    require __DIR__.'/api/shift.php';
+    require __DIR__.'/api/position.php';
 });

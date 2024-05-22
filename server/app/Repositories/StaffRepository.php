@@ -6,17 +6,17 @@ use App\Interface\StaffRepositoryInterface;
 use App\Models\Staff;
 
 class StaffRepository implements StaffRepositoryInterface{
-    public function getAllStaff()
+    public function getAllStaffs()
     {
-        Staff::all();
+        return Staff::all();
     }
     public function getStaffById($id)
     {
-        Staff::find($id);
+        return Staff::find($id);
     }
     public function createStaff(array $data)
     {
-        Staff::create($data);
+        return Staff::create($data);
     }
     public function updateStaffById($id, array $data)
     {
