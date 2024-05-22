@@ -21,8 +21,8 @@ class DatabaseSeeder extends Seeder
             RoleFunctionalPermissionSeeder::class,
             UserSeeder::class,
             ShiftSeeder::class,
-            StaffSeeder::class,
-            PositionSeeder::class
+            PositionSeeder::class,
+            StaffSeeder::class
         ]);
     }
 }

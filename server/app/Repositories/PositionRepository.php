@@ -6,17 +6,17 @@ use App\Interface\PositionRepositoryInterface;
 use App\Models\Position;
 
 class PositionRepository implements PositionRepositoryInterface{
-    public function getAllPosition()
+    public function getAllPositions()
     {
-        Position::all();
+        return Position::all();
     }
     public function getPositionById($id)
     {
-        Position::find($id);
+        return Position::find($id);
     }
     public function createPosition(array $data)
     {
-        Position::create($data);
+        return Position::create($data);
     }
     public function updatePositionById($id, array $data)
     {
