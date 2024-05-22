@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 
 class MigrateFreshWithPassport extends Command
 {
-    protected $signature = 'migrate:freshPassport';
+    protected $signature = 'migrate:refreshPassport';
 
     protected $description = 'Fresh migrate the database and install Passport';
 
