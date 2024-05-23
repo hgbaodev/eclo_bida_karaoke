@@ -8,7 +8,7 @@ import { getColumns } from '@/app/shared/users/users-table/columns';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
-import { fetchAllUsers, setPage, setPageSize } from '@/store/slices/userSlice';
+import { getUsers, setPage, setPageSize } from '@/store/slices/userSlice';
 import { useModal } from '../../modal-views/use-modal';
 const FilterElement = dynamic(() => import('@/app/shared/users/users-table/filter-element'), {
   ssr: false,
@@ -22,7 +22,7 @@ export default function UsersTable() {
 
   useEffect(() => {
     const fetch = async () => {
-      await dispatch(fetchAllUsers({ page, pageSize, query, status, role }));
+      await dispatch(getUsers({ page, pageSize, query, status, role }));
     };
     fetch();
   }, [page, pageSize, query, role, status]);

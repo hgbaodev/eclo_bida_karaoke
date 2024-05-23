@@ -35,4 +35,5 @@ class SupplierRepository implements SupplierRepositoryInterface {
         $supplier->delete();
         return $supplier;
     }
+    
 }

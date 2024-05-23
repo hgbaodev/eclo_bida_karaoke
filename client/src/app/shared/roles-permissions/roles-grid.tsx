@@ -2,7 +2,7 @@
 import RoleCard from '@/app/shared/roles-permissions/role-card';
 import { rolesList } from '@/data/roles-permissions';
 import { dispatch } from '@/store';
-import { fetchAllRoles } from '@/store/slices/roleSlice';
+import { getRoles } from '@/store/slices/roleSlice';
 import { RootState } from '@/store/types';
 import cn from '@/utils/class-names';
 import { useEffect } from 'react';
@@ -18,7 +18,7 @@ export default function RolesGrid({ className, gridClassName }: RolesGridProps) 
 
   useEffect(() => {
     const fetchData = async () => {
-      await dispatch(fetchAllRoles());
+      await dispatch(getRoles());
     };
     fetchData();
   }, []);

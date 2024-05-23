@@ -20,7 +20,7 @@ const initialState: userType = {
   isUpdateLoading: false,
 };
 
-export const fetchAllUsers = createAsyncThunk(
+export const getUsers = createAsyncThunk(
   'users',
   async ({
     page,
@@ -62,9 +62,9 @@ export const createUser = createAsyncThunk('users/createUser', async (data: any,
   }
 });
 
-export const deleteUser = createAsyncThunk('users/deleteUser', async (id: number, { rejectWithValue }) => {
+export const deleteUser = createAsyncThunk('users/deleteUser', async (active: string, { rejectWithValue }) => {
   try {
-    const response = await axiosInstance.delete(`users/${id}`);
+    const response = await axiosInstance.delete(`users/${active}`);
     return response.data;
   } catch (error: any) {
     if (!error.response) {
@@ -76,9 +76,9 @@ export const deleteUser = createAsyncThunk('users/deleteUser', async (id: number
 
 export const updateUser = createAsyncThunk(
   'users/updateUser',
-  async ({ user, id }: { user: EditUserInput; id: number }, { rejectWithValue }) => {
+  async ({ user, active }: { user: EditUserInput; active: string }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.put(`users/${id}`, user);
+      const response = await axiosInstance.put(`users/${active}`, user);
       return response.data;
     } catch (error: any) {
       if (!error.response) {
@@ -121,16 +121,16 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchAllUsers.pending, (state: userType) => {
+      .addCase(getUsers.pending, (state: userType) => {
         state.isLoading = true;
       })
-      .addCase(fetchAllUsers.fulfilled, (state, action) => {
+      .addCase(getUsers.fulfilled, (state, action) => {
         const result = action.payload.data;
         state.isLoading = false;
         state.data = result.result;
         state.totalRow = result.meta.total;
       })
-      .addCase(fetchAllUsers.rejected, (state) => {
+      .addCase(getUsers.rejected, (state) => {
         state.isLoading = false;
       })
       .addCase(createUser.pending, (state: userType) => {

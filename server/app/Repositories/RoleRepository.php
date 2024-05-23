@@ -9,56 +9,60 @@ use App\Models\Role;
 class RoleRepository implements RoleRepositoryInterface
 {
 
-  public function getAllRoles()
+  public function getRoles($request)
   {
-      $roles = Role::with([
-          'roleFunctionalPermissions.functional',
-          'roleFunctionalPermissions.permission',
-          'users'
-      ])->get();
+    $all = $request->input('all');
+    if ($all) {
+      return Role::all();
+    }
+    $roles = Role::with([
+      'roleFunctionalPermissions.functional',
+      'roleFunctionalPermissions.permission',
+      'users'
+    ])->get();
 
-      $rolesData = $roles->map(function($role) {
-          $rolePermissions = [];
+    $rolesData = $roles->map(function ($role) {
+      $rolePermissions = [];
 
-          // Tạo mảng các chức năng và khởi tạo mảng rỗng cho permissions
-          foreach ($role->roleFunctionalPermissions as $rfp) {
-              $functionName = $rfp->functional->name;
-              $permissionName = $rfp->permission->name;
+      // Tạo mảng các chức năng và khởi tạo mảng rỗng cho permissions
+      foreach ($role->roleFunctionalPermissions as $rfp) {
+        $functionName = $rfp->functional->name;
+        $permissionName = $rfp->permission->name;
 
-              if (!isset($rolePermissions[$functionName])) {
-                  $rolePermissions[$functionName] = [];
-              }
+        if (!isset($rolePermissions[$functionName])) {
+          $rolePermissions[$functionName] = [];
+        }
 
-              $rolePermissions[$functionName][] = $permissionName;
-          }
+        $rolePermissions[$functionName][] = $permissionName;
+      }
 
-          $uniqueFunctionals = Functional::all();
-          foreach ($uniqueFunctionals as $functionName) {
-              if (!isset($rolePermissions[$functionName['name']])) {
-                  $rolePermissions[$functionName['name']] = [];
-              }
-          }
+      $uniqueFunctionals = Functional::all();
+      foreach ($uniqueFunctionals as $functionName) {
+        if (!isset($rolePermissions[$functionName['name']])) {
+          $rolePermissions[$functionName['name']] = [];
+        }
+      }
 
-          $users = $role->users->map(function($user) {
-              return [
-                  'id' => $user->id,
-                  'first_name' => $user->first_name,
-                  'last_name' => $user->last_name,
-                  'email' => $user->email,
-                  'image' => $user->image,
-              ];
-          });
-
-          return [
-              'id' => $role->id,
-              'name' => $role->name,
-              'color' => $role->color,
-              'functionals' => $rolePermissions,
-              'users' => $users,
-          ];
+      $users = $role->users->map(function ($user) {
+        return [
+          'id' => $user->id,
+          'first_name' => $user->first_name,
+          'last_name' => $user->last_name,
+          'email' => $user->email,
+          'image' => $user->image,
+        ];
       });
 
-      return $rolesData;
+      return [
+        'id' => $role->id,
+        'name' => $role->name,
+        'color' => $role->color,
+        'functionals' => $rolePermissions,
+        'users' => $users,
+      ];
+    });
+
+    return $rolesData;
   }
 
 
@@ -74,15 +78,22 @@ class RoleRepository implements RoleRepositoryInterface
     return $role;
   }
 
-  public function updateRoleById($id, array $data){
+  public function updateRoleById($id, array $data)
+  {
     $role = Role::find($id);
     $role->update($data);
     return $role;
   }
 
-  public function deleteRoleById($id){
+  public function deleteRoleById($id)
+  {
     $role = Role::find($id);
     $role->delete();
     return $role;
+  }
+
+  public function getRoleByActive($active)
+  {
+    return Role::where('active', $active)->first();
   }
 }

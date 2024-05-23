@@ -8,31 +8,32 @@ import { Input, Button, ActionIcon, Title, Select } from 'rizzui';
 import { useModal } from '@/app/shared/modal-views/use-modal';
 import { roles, statusOptions } from './type';
 import { dispatch } from '@/store';
-import { fetchAllUsers, updateUser } from '@/store/slices/userSlice';
+import { getUsers, updateUser } from '@/store/slices/userSlice';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { EditUserInput, editUserSchema } from '@/utils/validators/edit-user.schema';
 import { getStatusBadge } from './users-table/columns';
 
-export default function EditUser({ user, id }: { user: EditUserInput; id: number }) {
+export default function EditUser({ user, active }: { user: EditUserInput; active: string }) {
   const { closeModal } = useModal();
   const [reset, setReset] = useState<any>(user);
   const [errors, setErrors] = useState<any>({});
   const { pageSize, page, query, status, role, isUpdateLoading } = useSelector((state: RootState) => state.user);
+  const { listRoles } = useSelector((state: RootState) => state.role);
   const onSubmit: SubmitHandler<EditUserInput> = async (data) => {
-    const result: any = await dispatch(updateUser({ user: data, id: id }));
+    const result: any = await dispatch(updateUser({ user: data, active }));
     if (updateUser.fulfilled.match(result)) {
       setReset({
         first_name: '',
         last_name: '',
         email: '',
-        role_id: '',
+        role: '',
         status: '',
       });
       setErrors({});
       closeModal();
-      await dispatch(fetchAllUsers({ page, pageSize, query, status, role }));
+      await dispatch(getUsers({ page, pageSize, query, status, role }));
       toast.success('User update successfully');
     } else {
       setErrors(result?.payload?.errors);
@@ -83,11 +84,11 @@ export default function EditUser({ user, id }: { user: EditUserInput; id: number
             />
 
             <Controller
-              name="role_id"
+              name="role"
               control={control}
               render={({ field: { name, onChange, value } }) => (
                 <Select
-                  options={roles}
+                  options={listRoles}
                   value={value}
                   onChange={onChange}
                   name={name}
@@ -95,9 +96,10 @@ export default function EditUser({ user, id }: { user: EditUserInput; id: number
                   className="col-span-full"
                   placeholder="Select a role"
                   error={errors?.status?.message}
-                  getOptionValue={(option) => option.value}
-                  displayValue={(selected: number) =>
-                    roles.find((option) => option.value === selected)?.label ?? selected
+                  getOptionValue={(option) => option.active}
+                  getOptionDisplayValue={(option) => option.name}
+                  displayValue={(selected: string) =>
+                    listRoles.find((role) => role.active === selected)?.name || selected
                   }
                   dropdownClassName="!z-[1]"
                   inPortal={false}

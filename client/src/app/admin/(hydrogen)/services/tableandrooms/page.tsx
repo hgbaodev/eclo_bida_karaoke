@@ -1,8 +1,9 @@
 'use client';
 import PageHeader from '@/app/shared/page-header';
 import ModalButton from '@/app/shared/modal-button';
-import UsersTable from '@/app/shared/users/users-table';
 import CreateUser from '@/app/shared/users/create-user';
+import RoomAndTablesTable from '@/app/shared/tableandrooms/tableandrooms-table';
+import CreateTableAndRoom from '@/app/shared/tableandrooms/create-tableandroom';
 
 const pageHeader = {
   title: 'Table & Rooms',
@@ -21,9 +22,11 @@ export default function BlankPage() {
   return (
     <>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb}>
-        <ModalButton label="Add new table/room" view={<CreateUser />} customSize="600px" className="mt-0" />
+        <div className="flex flex-wrap gap-1">
+          <ModalButton label="Add new" view={<CreateTableAndRoom />} customSize="600px" className="mt-0" />
+        </div>
       </PageHeader>
-      <UsersTable />
+      <RoomAndTablesTable />
     </>
   );
 }

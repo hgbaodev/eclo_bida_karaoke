@@ -1,15 +1,11 @@
 export const statusOptions = [
   {
-    value: 0,
-    label: 'Pending',
-  },
-  {
-    value: 1,
+    value: 'A',
     label: 'Active',
   },
   {
-    value: 2,
-    label: 'Deactivated',
+    value: 'D',
+    label: 'InActive',
   },
 ];
 

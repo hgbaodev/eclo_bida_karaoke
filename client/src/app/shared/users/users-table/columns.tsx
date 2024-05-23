@@ -8,19 +8,18 @@ import AvatarCard from '@/components/ui/avatar-card';
 import DateCell from '@/components/ui/date-cell';
 import DeletePopover from '@/app/shared/delete-popover';
 import { dispatch } from '@/store';
-import { deleteUser, fetchAllUsers } from '@/store/slices/userSlice';
+import { deleteUser, getUsers } from '@/store/slices/userSlice';
 import toast from 'react-hot-toast';
 import EditUser from '../edit-user';
 
 export function getStatusBadge(status: User['status']) {
-  status = parseInt(status);
   switch (status) {
-    case STATUSES.Deactivated:
+    case STATUSES.InActive:
       return (
         <div className="flex items-center">
           <Badge color="danger" renderAsDot />
 
-          <Text className="ms-2 font-medium text-red-dark">Deactivated</Text>
+          <Text className="ms-2 font-medium text-red-dark">InActive</Text>
         </div>
       );
     case STATUSES.Active:
@@ -28,13 +27,6 @@ export function getStatusBadge(status: User['status']) {
         <div className="flex items-center">
           <Badge color="success" renderAsDot />
           <Text className="ms-2 font-medium text-green-dark">Active</Text>
-        </div>
-      );
-    case STATUSES.Pending:
-      return (
-        <div className="flex items-center">
-          <Badge renderAsDot className="bg-gray-400" />
-          <Text className="ms-2 font-medium text-gray-600">Pending</Text>
         </div>
       );
     default:
@@ -53,7 +45,7 @@ export const getColumns = (openModal: (args: any) => void) => [
     dataIndex: 'id',
     key: 'id',
     width: 50,
-    render: (_: any, user: User) => <div className="inline-flex ps-3">{user.id}</div>,
+    render: (_: any, user: User, index: number) => <div className="inline-flex ps-3">{index + 1}</div>,
   },
   {
     title: <HeaderCell title="Name" />,
@@ -99,11 +91,11 @@ export const getColumns = (openModal: (args: any) => void) => [
                 first_name: user.first_name,
                 last_name: user.last_name,
                 email: user.email,
-                role_id: user.role_id,
+                role: user.role.active,
                 status: user.status,
               };
               openModal({
-                view: <EditUser user={data} id={user.id} />,
+                view: <EditUser user={data} active={user.active} />,
               });
             }}
             as="span"
@@ -116,14 +108,14 @@ export const getColumns = (openModal: (args: any) => void) => [
         </Tooltip>
         <DeletePopover
           title={`Delete this user`}
-          description={`Are you sure you want to delete this #${user.id} user?`}
+          description={`Are you sure you want to delete this #${user.last_name} user?`}
           onDelete={async () => {
-            const result = await dispatch(deleteUser(user.id)); // Remove the .then() block
+            const result = await dispatch(deleteUser(user.active)); // Remove the .then() block
             if (deleteUser.fulfilled.match(result)) {
-              await dispatch(fetchAllUsers({ page: 1, pageSize: 5, query: '', role: '', status: '' }));
-              toast.success(`User #${user.id} has been deleted successfully.`);
+              await dispatch(getUsers({ page: 1, pageSize: 5, query: '', role: '', status: '' }));
+              toast.success(`User #${user.first_name} ${user.last_name} has been deleted successfully.`);
             } else {
-              toast.error(`Failed to delete user #${user.id}.`);
+              toast.error(`Failed to delete user #${user.active}.`);
             }
           }}
         />
@@ -133,24 +125,21 @@ export const getColumns = (openModal: (args: any) => void) => [
 ];
 
 export interface User {
-  id: number;
+  active: string;
   first_name: string;
   last_name: string;
   email: string;
-  email_verified_at: any;
   image: string;
   status: any;
-  role_id: any;
   role: {
-    id: number;
     name: string;
     color: string;
+    active: string;
   };
   created_at: string;
 }
 
 export const STATUSES = {
-  Pending: 0,
-  Active: 1,
-  Deactivated: 2,
+  Active: 'A',
+  InActive: 'D',
 } as const;
