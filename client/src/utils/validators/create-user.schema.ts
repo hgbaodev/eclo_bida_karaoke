@@ -7,8 +7,8 @@ export const createUserSchema = z.object({
   first_name: z.string().min(1, { message: messages.fullNameIsRequired }),
   last_name: z.string().min(1, { message: messages.fullNameIsRequired }),
   email: validateEmail,
-  role_id: z.number().min(1, { message: messages.roleIsRequired }),
-  status: z.number().min(1, { message: messages.statusIsRequired }),
+  role: z.string().min(1, { message: messages.roleIsRequired }),
+  status: z.string().min(1, { message: messages.statusIsRequired }),
   password: z.string().min(6, { message: messages.passwordLengthMin }),
 });
 

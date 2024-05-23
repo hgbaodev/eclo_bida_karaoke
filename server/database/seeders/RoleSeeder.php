@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Role;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class RoleSeeder extends Seeder
 {
@@ -14,12 +15,13 @@ class RoleSeeder extends Seeder
     {
         Role::create([
             'name' => 'Admin',
-            'color' => 'rgba(23, 13, 102, 1)'
+            'color' => 'rgba(23, 13, 102, 1)',
+
         ]);
 
         Role::create([
             'name' => 'User',
-            'color' => 'rgba(20, 159, 10, 1)'
+            'color' => 'rgba(20, 159, 10, 1)',
         ]);
     }
 }

@@ -17,6 +17,7 @@ export interface roleType {
   fetchDataLoading: boolean;
   createLoading: boolean;
   updateLoading: boolean;
+  listRoles: any[];
 }
 
 export interface RootState {

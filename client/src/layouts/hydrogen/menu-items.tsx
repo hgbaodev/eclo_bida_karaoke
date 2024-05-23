@@ -35,6 +35,10 @@ export const menuItems = [
         href: routes.admin.services.tableandrooms,
       },
       {
+        name: 'Areas',
+        href: routes.admin.services.areas,
+      },
+      {
         name: 'Devices',
         href: routes.admin.services.devices,
       },

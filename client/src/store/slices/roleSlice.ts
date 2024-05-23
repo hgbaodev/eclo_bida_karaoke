@@ -8,11 +8,21 @@ const initialState: roleType = {
   fetchDataLoading: false,
   createLoading: false,
   updateLoading: false,
+  listRoles: [],
 };
 
-export const fetchAllRoles = createAsyncThunk('roles', async () => {
+export const getRoles = createAsyncThunk('roles', async () => {
   try {
     const response = await axiosInstance.get(`roles`);
+    return response.data;
+  } catch (error: any) {
+    throw error;
+  }
+});
+
+export const getAllRoles = createAsyncThunk('roles/getAllRoles', async () => {
+  try {
+    const response = await axiosInstance.get(`roles?all=true`);
     return response.data;
   } catch (error: any) {
     throw error;
@@ -64,14 +74,14 @@ const roleSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchAllRoles.pending, (state) => {
+      .addCase(getRoles.pending, (state) => {
         state.fetchDataLoading = true;
       })
-      .addCase(fetchAllRoles.fulfilled, (state, action) => {
+      .addCase(getRoles.fulfilled, (state, action) => {
         state.fetchDataLoading = false;
         state.fetchData = action.payload.data;
       })
-      .addCase(fetchAllRoles.rejected, (state) => {
+      .addCase(getRoles.rejected, (state) => {
         state.fetchDataLoading = false;
       })
       .addCase(createRole.pending, (state) => {
@@ -102,6 +112,9 @@ const roleSlice = createSlice({
       })
       .addCase(updateRole.rejected, (state) => {
         state.updateLoading = false;
+      })
+      .addCase(getAllRoles.fulfilled, (state, action) => {
+        state.listRoles = action.payload.data;
       });
   },
 });

@@ -3,6 +3,8 @@
 namespace App\Http\Requests\User;
 
 use App\Http\Helpers\HelperRequest;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Rule;
 
 class UpdateUserRequest extends HelperRequest
 {
@@ -21,12 +23,14 @@ class UpdateUserRequest extends HelperRequest
      */
     public function rules(): array
     {
+        $active = $this->route('active');
+        Log::info('adfdsfasdfActive: ' . $active);
         return [
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => 'required|unique:users,email,'.$this->id,
-            'role_id' => 'required|exists:roles,id',
-            'status' => 'required|in:1,2',
+            'email' => ['required', 'email', Rule::unique('users')->ignore($active, 'active')],
+            'role' => 'required|exists:roles,active',
+            'status' => 'required|in:A,D',
         ];
     }
 }

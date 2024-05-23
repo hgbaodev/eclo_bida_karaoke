@@ -16,7 +16,7 @@ class MigrateFreshWithPassport extends Command
             '--seed' => true,
             '--force' => true
         ]);
-        $this->call('jwt:secret');
+        // $this->call('jwt:secret');
         $this->info('Database fresh migrated with Passport installed.');
     }
 }

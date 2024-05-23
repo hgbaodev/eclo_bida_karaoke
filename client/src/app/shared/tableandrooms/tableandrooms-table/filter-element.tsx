@@ -4,18 +4,14 @@ import { PiTrashDuotone, PiMagnifyingGlassBold } from 'react-icons/pi';
 import StatusField from '@/components/controlled-table/status-field';
 import { Button, Input } from 'rizzui';
 import { dispatch } from '@/store';
-import { setQuery, setReset, setRole, setStatus } from '@/store/slices/userSlice';
+import { setQuery, setReset, setStatus } from '@/store/slices/userSlice';
 import { RootState } from '@/store/types';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import useDebounce from '@/hooks/use-debounce';
-import { STATUS, roles, statusOptions } from '../type';
-import { getStatusBadge } from './columns';
-import { getAllRoles } from '@/store/slices/roleSlice';
 
 export default function FilterElement() {
-  const { status, role, isFiltered, query } = useSelector((state: RootState) => state.user);
-  const { listRoles } = useSelector((state: RootState) => state.role);
+  const { status, isFiltered, query } = useSelector((state: RootState) => state.user);
   const [searchTerm, setSearchTerm] = useState(query);
   const debounceSearchTerm = useDebounce(searchTerm, 1000);
 
@@ -23,16 +19,12 @@ export default function FilterElement() {
     dispatch(setQuery(debounceSearchTerm));
   }, [debounceSearchTerm]);
 
-  useEffect(() => {
-    dispatch(getAllRoles());
-  }, []);
-
   return (
     <>
       <div className="relative z-50 mb-4 flex flex-wrap items-center justify-between gap-2.5 @container ">
         <StatusField
           className=" -order-9 w-full @[25rem]:w-[calc(calc(100%_-_10px)_/_2)] @4xl:-order-5 @4xl:w-auto"
-          options={statusOptions}
+          options={[{ value: '', label: 'All' }]}
           dropdownClassName="!z-10"
           value={status}
           onChange={(value: any) => {
@@ -40,21 +32,8 @@ export default function FilterElement() {
           }}
           placeholder="Filter by Status"
           getOptionValue={(option: { value: any }) => option.value}
-          getOptionDisplayValue={(option: { value: any }) => getStatusBadge(option.value as any)}
-          displayValue={(selected: any) => getStatusBadge(selected)}
-        />
-        <StatusField
-          options={listRoles}
-          dropdownClassName="!z-10 w-48"
-          value={role}
-          placeholder="Filter by Role"
-          className=" @4xl:-auto -order-3 w-full min-w-[160px] @[25rem]:w-[calc(calc(100%_-_10px)_/_2)] @4xl:-order-4 @4xl:w-auto"
-          getOptionValue={(option) => option.active}
-          getOptionDisplayValue={(option) => option.name}
-          onChange={(value: any) => {
-            dispatch(setRole(value));
-          }}
-          displayValue={(selected: string) => listRoles.find((role) => role.active === selected)?.name || selected}
+          getOptionDisplayValue={(option: { value: any }) => option.value}
+          displayValue={(selected: any) => selected}
         />
 
         {isFiltered && (
@@ -70,7 +49,7 @@ export default function FilterElement() {
 
         <Input
           type="search"
-          placeholder="Search for users..."
+          placeholder="Search for tables/rooms..."
           value={searchTerm}
           onClear={() => setSearchTerm('')}
           onChange={(event) => setSearchTerm(event.target.value)}
