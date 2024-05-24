@@ -70,27 +70,6 @@ export const getColumns = () => [
     width: 50,
     render: (value: Date) => <DateCell date={value} />,
   },
-  {
-    title: <></>,
-    dataIndex: '',
-    key: '',
-    width: 10,
-    render: (_: string, logger: Logger) => (
-      <div className="flex items-center justify-end gap-3 pe-3">
-        <Tooltip size="sm" content={'Edit User'} placement="top" color="invert">
-          <ActionIcon
-            onClick={() => {}}
-            as="span"
-            size="sm"
-            variant="outline"
-            className="hover:!border-gray-900 hover:text-gray-700 cursor-pointer"
-          >
-            <PencilIcon className="h-4 w-4" />
-          </ActionIcon>
-        </Tooltip>
-      </div>
-    ),
-  },
 ];
 
 export interface User {
