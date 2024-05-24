@@ -44,10 +44,10 @@ class ShiftController extends Controller
      */
     public function show(string $id)
     {
-        if (!$this->shiftRepository->getShiftById($id)) {
+        if (!$this->shiftRepository->getShiftByActive($id)) {
             return $this->sentErrorResponse('Shift' . $id . ' is not found', "error", 404);
         }
-        return $this->sentSuccessResponse($this->shiftRepository->getShiftById($id));
+        return $this->sentSuccessResponse($this->shiftRepository->getShiftByActive($id));
     }
 
     /**
@@ -64,10 +64,10 @@ class ShiftController extends Controller
     public function update(Request $request, string $id)
     {
         $validatedData = $request->validated();
-        if (!$this->shiftRepository->getShiftById($id)) {
+        if (!$this->shiftRepository->getShiftByActive($id)) {
             return $this->sentErrorResponse('Shift ' . $id . ' is not found', "error", 404);
         }
-        return $this->sentSuccessResponse($this->shiftRepository->updateShiftById($id, $validatedData), "Shift is updated successfully", 200);
+        return $this->sentSuccessResponse($this->shiftRepository->updateShiftByActive($id, $validatedData), "Shift is updated successfully", 200);
     }
 
     /**
@@ -75,9 +75,9 @@ class ShiftController extends Controller
      */
     public function destroy(string $id)
     {
-        if (!$this->shiftRepository->getShiftById($id)) {
+        if (!$this->shiftRepository->getShiftByActive($id)) {
             return $this->sentErrorResponse('Shift' . $id . ' is not found', "error", 404);
         }
-        return $this->sentSuccessResponse($this->shiftRepository->deleteShiftById($id), "Shift is deleted successfully", 200);
+        return $this->sentSuccessResponse($this->shiftRepository->deleteShiftByActive($id), "Shift is deleted successfully", 200);
     }
 }

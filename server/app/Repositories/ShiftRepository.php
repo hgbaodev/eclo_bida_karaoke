@@ -13,7 +13,7 @@ class ShiftRepository implements ShiftRepositoryInterface
     }
     public function getShiftByActive($active)
     {
-        return Shift::find($active);
+        return Shift::where("active", $active)->get();
     }
     public function createShift(array $data)
     {
@@ -21,13 +21,13 @@ class ShiftRepository implements ShiftRepositoryInterface
     }
     public function updateShiftByActive($active, array $data)
     {
-        $shift = Shift::find($active);
+        $shift = Shift::where("active", $active)->get();
         $shift->update($data);
         return $shift;
     }
     public function deleteShiftByActive($active)
     {
-        $shift = Shift::find($active);
+        $shift = Shift::where("active", $active)->get();
         $shift->delete();
         return $shift;
     }

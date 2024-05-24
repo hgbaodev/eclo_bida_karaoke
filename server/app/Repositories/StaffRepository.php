@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Http\Collections\CollectionCustom;
 use App\Interface\StaffRepositoryInterface;
 use App\Models\Staff;
 
@@ -42,7 +43,7 @@ class StaffRepository implements StaffRepositoryInterface
     }
     public function getStaffByActive($active)
     {
-        return Staff::find($active);
+        return Staff::where("active", $active)->get();
     }
     public function createStaff(array $data)
     {
@@ -50,13 +51,13 @@ class StaffRepository implements StaffRepositoryInterface
     }
     public function updateStaffByActive($active, array $data)
     {
-        $staff = Staff::find($active);
+        $staff = Staff::where("active", $active)->get();
         $staff->update($data);
         return $staff;
     }
     public function deleteStaffByActive($active)
     {
-        $staff = Staff::find($active);
+        $staff = Staff::where("active", $active)->get();
         $staff->delete();
         return $staff;
     }

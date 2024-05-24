@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Traits\GeneratesUniqueActive;
 
 class Staff extends Model
 {
-    use HasFactory;
+    use HasFactory, GeneratesUniqueActive;
     use SoftDeletes;
     protected $fillable = [
         "name",
