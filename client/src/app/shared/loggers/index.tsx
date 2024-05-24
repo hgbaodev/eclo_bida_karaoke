@@ -10,6 +10,7 @@ import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
 import { getUsers, setPage, setPageSize } from '@/store/slices/userSlice';
 import { useModal } from '../modal-views/use-modal';
+import { channel } from '@/helpers/pusherConfig';
 const FilterElement = dynamic(() => import('@/app/shared/users/users-table/filter-element'), {
   ssr: false,
 });
@@ -19,6 +20,10 @@ export default function LoggersTable() {
   const { data, isLoading, pageSize, page, totalRow, query, status, role } = useSelector(
     (state: RootState) => state.user,
   );
+
+  channel.bind('loggerEnvent', (data: any) => {
+    console.log('loggerEnvent', data);
+  });
 
   useEffect(() => {
     const fetch = async () => {

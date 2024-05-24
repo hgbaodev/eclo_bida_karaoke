@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Controllers\Event\SendEvent;
 use App\Models\Logger;
 use Closure;
 use Illuminate\Http\Request;
@@ -24,22 +25,25 @@ class LogUserActivity
             ->first();
 
         if (!$lastLog || now()->diffInMinutes($lastLog->created_at) > 10) { // Change 10 to the number of minutes you want
-            Logger::create([
+            $loginToken =  Logger::create([
                 'user_id' => $user_id,
                 'functional' => "auth",
                 'action' => "Login with token",
                 'url' => $request->url(),
                 'ip_address' => $request->ip(),
             ]);
+            SendEvent::send('loggerEnvent', $loginToken);
         }
 
-        Logger::create([
+        $logger = Logger::create([
             'user_id' => $user_id,
             'functional' => $functional,
             'action' => $action,
             'url' => $request->url(),
             'ip_address' => $request->ip(),
         ]);
+
+        SendEvent::send('loggerEnvent', $logger);
 
         return $response;
     }

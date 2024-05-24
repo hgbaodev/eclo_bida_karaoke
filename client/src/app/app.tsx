@@ -1,15 +1,25 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { me } from '@/store/slices/authSlice';
+import { dispatch } from '@/store';
+import Pusher from 'pusher-js';
+import env from '@/env';
 
 const App = ({ children }: { children: React.ReactNode }) => {
-  const dispatch = useDispatch();
+  var pusher = new Pusher(env.PUSHER_APP_ID, {
+    cluster: env.PUSHER_APP_CLUSTER,
+  });
+
+  var channel = pusher.subscribe('my-channel');
+  channel.bind('my-event', function (data: any) {
+    alert(JSON.stringify(data));
+  });
+
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    dispatch(me() as Promise<void>).finally(() => setIsLoaded(true));
-  }, [dispatch]);
+    dispatch(me()).finally(() => setIsLoaded(true));
+  }, []);
 
   if (!isLoaded) {
     return null;

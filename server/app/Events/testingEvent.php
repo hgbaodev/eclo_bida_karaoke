@@ -14,23 +14,27 @@ class testingEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $title;
+
+    public $message;
     /**
      * Create a new event instance.
+     *
+     * @return void
      */
-    public function __construct()
+    public function __construct($data)
     {
-        //
+        $this->title = $data['title'];
+        $this->message  = $data['content'];
     }
 
     /**
      * Get the channels the event should broadcast on.
      *
-     * @return array<int, \Illuminate\Broadcasting\Channel>
+     * @return \Illuminate\Broadcasting\Channel|array
      */
-    public function broadcastOn(): array
+    public function broadcastOn()
     {
-        return [
-            new Channel('testChannel')
-        ];
+        return new PrivateChannel('send-message');
     }
 }
