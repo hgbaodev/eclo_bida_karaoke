@@ -5,28 +5,29 @@ namespace App\Repositories;
 use App\Interface\ShiftRepositoryInterface;
 use App\Models\Shift;
 
-class ShiftRepository implements ShiftRepositoryInterface{
+class ShiftRepository implements ShiftRepositoryInterface
+{
     public function getAllShifts()
     {
         return Shift::all();
     }
-    public function getShiftById($id)
+    public function getShiftByActive($active)
     {
-        return Shift::find($id);
+        return Shift::find($active);
     }
     public function createShift(array $data)
     {
         return Shift::create($data);
     }
-    public function updateShiftById($id, array $data)
+    public function updateShiftByActive($active, array $data)
     {
-        $shift = Shift::find($id);
+        $shift = Shift::find($active);
         $shift->update($data);
         return $shift;
     }
-    public function deleteShiftById($id)
+    public function deleteShiftByActive($active)
     {
-        $shift = Shift::find($id);
+        $shift = Shift::find($active);
         $shift->delete();
         return $shift;
     }

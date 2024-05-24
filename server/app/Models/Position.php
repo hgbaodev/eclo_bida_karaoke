@@ -4,16 +4,28 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Position extends Model
 {
     use HasFactory;
-    protected $fillable =[
+    use SoftDeletes;
+    protected $fillable = [
         "id",
         "name",
         "salary"
     ];
-    public function staff(){
+    public function staff()
+    {
         return $this->belongsTo(Staff::class);
+    }
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($model) {
+            if (empty($model->active)) {
+                $model->active = self::generateUniqueActive();
+            }
+        });
     }
 }
