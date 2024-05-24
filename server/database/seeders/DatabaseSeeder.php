@@ -23,7 +23,11 @@ class DatabaseSeeder extends Seeder
             AreaSeeder::class,
             ShiftSeeder::class,
             PositionSeeder::class,
-            StaffSeeder::class
+            StaffSeeder::class,
+            CustomerSeeder::class,
+            DeviceSeeder::class,
+            SupplierSeeder::class,
+            ServiceTypeSeeder::class,
         ]);
     }
 }
