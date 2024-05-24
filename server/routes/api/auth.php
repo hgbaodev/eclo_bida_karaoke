@@ -12,8 +12,8 @@ Route::group([
     Route::group([
         'middleware' => 'auth:api'
     ], function () {
-        Route::post('refresh', [AuthController::class, 'refresh']);
-        Route::post('singout', [AuthController::class, 'signout']);
-        Route::get('me', [AuthController::class, 'me']);
+        Route::post('refresh', [AuthController::class, 'refresh'])->middleware('logger:auth,refresh');
+        Route::post('singout', [AuthController::class, 'signout'])->middleware('logger:auth,signout');
+        Route::get('me', [AuthController::class, 'me'])->middleware('logger:auth,me');
     });
 });

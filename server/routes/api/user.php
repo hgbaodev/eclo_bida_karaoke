@@ -8,8 +8,8 @@ Route::group([
     'middleware' => 'auth:api'
 ], function () {
     Route::get('/', [UserController::class, 'index'])->middleware('logger:users,view');
-    Route::get('/{active}', [UserController::class, 'show']);
-    Route::post('/', [UserController::class, 'store']);
-    Route::put('/{active}', [UserController::class, 'update']);
-    Route::delete('/{active}', [UserController::class, 'destroy']);
+    Route::get('/{active}', [UserController::class, 'show'])->middleware('logger:users,view');
+    Route::post('/', [UserController::class, 'store'])->middleware('logger:users,create');
+    Route::put('/{active}', [UserController::class, 'update'])->middleware('logger:users,update');
+    Route::delete('/{active}', [UserController::class, 'destroy'])->middleware('logger:users,delete');
 });
