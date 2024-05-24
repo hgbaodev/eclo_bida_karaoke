@@ -4,36 +4,34 @@ import { useEffect, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import { useColumn } from '@/hooks/use-column';
 import ControlledTable from '@/components/controlled-table';
-import { getColumns } from '@/app/shared/users/users-table/columns';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
-import { getUsers, setPage, setPageSize } from '@/store/slices/userSlice';
-import { useModal } from '../modal-views/use-modal';
 import { channel } from '@/helpers/pusherConfig';
+import { getLoggers, setPage, setPageSize } from '@/store/slices/loggerSlice';
+import { getColumns } from './columns';
+import usePusher from '@/hooks/use-pusher';
 const FilterElement = dynamic(() => import('@/app/shared/users/users-table/filter-element'), {
   ssr: false,
 });
 
 export default function LoggersTable() {
-  const { openModal } = useModal();
-  const { data, isLoading, pageSize, page, totalRow, query, status, role } = useSelector(
-    (state: RootState) => state.user,
-  );
+  const { data, isLoading, pageSize, page, totalRow, query } = useSelector((state: RootState) => state.logger);
 
-  channel.bind('loggerEnvent', (data: any) => {
-    console.log('loggerEnvent', data);
+  usePusher('loggerEvent', (data: any) => {
+    console.log('usePusher', data);
   });
 
   useEffect(() => {
     const fetch = async () => {
-      await dispatch(getUsers({ page, pageSize, query, status, role }));
+      await dispatch(getLoggers({ page, pageSize, query }));
     };
     fetch();
-  }, [page, pageSize, query, role, status]);
+  }, [page, pageSize, query]);
+  console.log('data', data);
 
   const columns = useMemo(
-    () => getColumns(openModal),
+    () => getColumns(),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
@@ -49,7 +47,6 @@ export default function LoggersTable() {
   const { visibleColumns } = useColumn(columns);
   return (
     <div className="mt-0">
-      <FilterElement />
       <ControlledTable
         variant="modern"
         data={data}

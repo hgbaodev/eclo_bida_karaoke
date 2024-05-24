@@ -32,7 +32,8 @@ class LogUserActivity
                 'url' => $request->url(),
                 'ip_address' => $request->ip(),
             ]);
-            SendEvent::send('loggerEnvent', $loginToken);
+            $log = Logger::with(['user.role'])->find($loginToken->id);
+            SendEvent::send('loggerEnvent', $log);
         }
 
         $logger = Logger::create([
@@ -43,7 +44,8 @@ class LogUserActivity
             'ip_address' => $request->ip(),
         ]);
 
-        SendEvent::send('loggerEnvent', $logger);
+        $log = Logger::with(['user.role'])->find($logger->id);
+        SendEvent::send('loggerEnvent', $log);
 
         return $response;
     }

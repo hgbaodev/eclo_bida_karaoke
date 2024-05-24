@@ -1,3 +1,9 @@
+export interface RootState {
+  auth: authType;
+  role: roleType;
+  user: userType;
+  logger: loggerType;
+}
 export interface authType {
   isAuthenticated: boolean;
   isLoaded: boolean;
@@ -20,12 +26,6 @@ export interface roleType {
   listRoles: any[];
 }
 
-export interface RootState {
-  auth: authType;
-  role: roleType;
-  user: userType;
-}
-
 export interface userType {
   data: [];
   isLoading: boolean;
@@ -39,4 +39,14 @@ export interface userType {
   errors: any;
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
+}
+
+export interface loggerType {
+  data: any[];
+  isLoading: boolean;
+  isFiltered: boolean;
+  page: number;
+  pageSize: number;
+  totalRow: number;
+  query: string;
 }
