@@ -3,17 +3,22 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-
+use App\Interface\ShiftUserDetailRepositoryInterface;
 use Illuminate\Http\Request;
 
 class ShiftUserDetailController extends Controller
 {
+    protected $shiftUserDetailRes;
+    public function __construct(ShiftUserDetailRepositoryInterface $shiftUserDetailRepositoryInterface)
+    {
+        $this->shiftUserDetailRes = $shiftUserDetailRepositoryInterface;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return $this->sentSuccessResponse($this->shiftUserDetailRes->getAllShiftUserDetail());
     }
 
     /**

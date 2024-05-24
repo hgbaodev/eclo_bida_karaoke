@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Shift;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -23,7 +23,7 @@ class ShiftRequest extends FormRequest
     {
         return [
             "time_in" => "required",
-            "time_out" => "required" 
+            "time_out" => "required"
         ];
     }
 }

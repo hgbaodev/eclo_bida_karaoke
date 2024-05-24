@@ -3,17 +3,22 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-
+use App\Interface\ShiftDetailRepositoryInterface;
 use Illuminate\Http\Request;
 
 class ShiftDetailController extends Controller
 {
+    protected $shiftDetailRespository;
+    public function __construct(ShiftDetailRepositoryInterface $shiftDetailRepositoryInterface)
+    {
+        $this->shiftDetailRespository = $shiftDetailRepositoryInterface;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return $this->sentSuccessResponse($this->shiftDetailRespository->getAllShiftDetail());
     }
 
     /**
@@ -29,7 +34,6 @@ class ShiftDetailController extends Controller
      */
     public function store(Request $request)
     {
-        //
     }
 
     /**
@@ -61,6 +65,9 @@ class ShiftDetailController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        if (!$this->shiftDetailRespository->getShiftDetailByActive($id)) {
+            return $this->sentErrorResponse("Shift detail is not found", "error", 404);
+        }
+        return $this->sentSuccessResponse($this->shiftDetailRespository->deleteShiftDetailByActive($id), "Delete successfully", 200);
     }
 }

@@ -23,6 +23,10 @@ class Staff extends Model
         "active"
         // "staff_salary",
     ];
+    protected $hidden = [
+        "id",
+        "position_id"
+    ];
     protected static function boot()
     {
         parent::boot();

@@ -10,9 +10,9 @@ Route::group(
   ],
   function () {
     Route::get('/', [ShiftController::class, 'index']);
-    Route::get('/{id}', [ShiftController::class, 'show']);
+    Route::get('/{active}', [ShiftController::class, 'show']);
     Route::post('/', [ShiftController::class, 'store']);
-    Route::put('/{id}', [ShiftController::class, 'update']);
-    Route::delete('/{id}', [ShiftController::class, 'destroy']);
+    Route::put('/{active}', [ShiftController::class, 'update']);
+    Route::delete('/{active}', [ShiftController::class, 'destroy']);
   }
 );

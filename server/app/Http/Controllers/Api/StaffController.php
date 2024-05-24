@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StaffRequest;
+use App\Http\Requests\Staff\StaffRequest;
 use App\Models\Staff;
 use App\Interface\StaffRepositoryInterface;
 use Illuminate\Http\Request;
@@ -18,9 +18,9 @@ class StaffController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->sentSuccessResponse($this->staffRepository->getAllStaffs());
+        return $this->sentSuccessResponse($this->staffRepository->getStaffs($request));
     }
 
     /**
@@ -34,7 +34,7 @@ class StaffController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StaffRequest $request)
     {
         $validatedDate = $request->validated();
         return $this->sentSuccessResponse($this->staffRepository->createStaff($validatedDate), "Staff is created successfully", 200);
@@ -43,9 +43,9 @@ class StaffController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show($active)
     {
-        return $this->sentSuccessResponse($this->staffRepository->getStaffByActive($id));
+        return $this->sentSuccessResponse($this->staffRepository->getStaffByActive($active));
     }
 
     /**
@@ -59,23 +59,23 @@ class StaffController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StaffRequest $request, $id)
+    public function update(StaffRequest $request, $active)
     {
         $validatedDate = $request->validated();
-        if (!$this->staffRepository->getStaffByActive($id)) {
-            return $this->sentErrorResponse('Staff' . $id . 'is not found', "error", 404);
+        if (!$this->staffRepository->getStaffByActive($active)) {
+            return $this->sentErrorResponse('Staff is not found', "error", 404);
         }
-        return $this->sentSuccessResponse($this->staffRepository->updateStaffByActive($id, $validatedDate), "Staff is updated successfully", 200);
+        return $this->sentSuccessResponse($this->staffRepository->updateStaffByActive($active, $validatedDate), "Staff is updated successfully", 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy($active)
     {
-        if (!$this->staffRepository->getStaffByActive($id)) {
-            return $this->sentErrorResponse('Staff' . $id . 'is not found', 'error', 404);
+        if (!$this->staffRepository->getStaffByActive($active)) {
+            return $this->sentErrorResponse('Staff is not found', 'error', 404);
         }
-        return $this->sentSuccessResponse($this->staffRepository->deleteStaffByActive($id), 'Staff' . $id . 'is deleted successfully', 200);
+        return $this->sentSuccessResponse($this->staffRepository->deleteStaffByActive($active), 'Staff is deleted successfully', 200);
     }
 }

@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-
-use App\Http\Requests\PositionRequest;
+use App\Http\Requests\Position\PositionRequest;
 use App\Interface\PositionRepositoryInterface;
 use App\Models\Position;
 use Illuminate\Http\Request;
@@ -19,9 +18,9 @@ class PositionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->sentSuccessResponse($this->positionRepository->getAllPositions());
+        return $this->sentSuccessResponse($this->positionRepository->getPositions($request));
     }
 
     /**
@@ -35,18 +34,18 @@ class PositionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PositionRequest $request)
+    public function store(PositionRequest $positionRequest)
     {
-        $validatedData = $request->validated();
+        $validatedData = $positionRequest->validated();
         return $this->sentSuccessResponse($this->positionRepository->createPosition($validatedData), 'Position is created successfully', 200);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show($active)
     {
-        return $this->sentSuccessResponse($this->positionRepository->getPositionById($id));
+        return $this->sentSuccessResponse($this->positionRepository->getPositionByActive($active));
     }
 
     /**
@@ -60,23 +59,23 @@ class PositionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(PositionRequest $request, $id)
+    public function update(PositionRequest $request, $active)
     {
         $validatedData = $request->validated();
-        if (!$this->positionRepository->getPositionById($id)) {
-            return $this->sentErrorResponse('Position ' . $id . ' is not found', "error", 404);
+        if (!$this->positionRepository->getPositionByActive($active)) {
+            return $this->sentErrorResponse('Position is not found', "error", 404);
         }
-        return $this->sentSuccessResponse($this->positionRepository->updatePositionById($id, $validatedData), "Position is update successfully", 200);
+        return $this->sentSuccessResponse($this->positionRepository->updatePositionByActive($active, $validatedData), "Position is update successfully", 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy($active)
     {
-        if (!$this->positionRepository->getPositionById($id)) {
-            return $this->sentErrorResponse('Position ' . $id . ' is not found', "error", 404);
+        if (!$this->positionRepository->getPositionByActive($active)) {
+            return $this->sentErrorResponse('Position is not found', "error", 404);
         }
-        return $this->sentSuccessResponse($this->positionRepository->deletePositionById($id), "Position is deteled successfully", 200);
+        return $this->sentSuccessResponse($this->positionRepository->deletePositionByActive($active), "Position is deteled successfully", 200);
     }
 }
