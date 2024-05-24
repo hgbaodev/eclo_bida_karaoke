@@ -2,8 +2,6 @@
 
 namespace App\Http\Resources\Auth;
 
-use App\Models\Functional;
-use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Http\Resources\Json\JsonResource;
 
