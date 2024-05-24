@@ -7,6 +7,8 @@ use App\Interface\CustomerRepositoryInterface;
 use App\Interface\DeviceRepositoryInterface;
 use App\Interface\LoggerRepositoryInterface;
 use App\Interface\PositionRepositoryInterface;
+use App\Interface\ProductImportInterface;
+use App\Interface\ProductImppDetailInterface;
 use App\Interface\RoleFunctionalPermissionRepositoryInterface;
 use App\Interface\RoleRepositoryInterface;
 use App\Interface\ServiceTypeRepositoryInterface;
@@ -19,6 +21,7 @@ use App\Repositories\CustomerRepository;
 use App\Repositories\DeviceRepository;
 use App\Repositories\LoggerRepository;
 use App\Repositories\PositionRepository;
+use App\Repositories\ProductImpRepository;
 use App\Repositories\RoleFunctionalPermissionRepository;
 use App\Repositories\RoleRepository;
 use App\Repositories\SupplierRepository;
@@ -47,6 +50,8 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(ShiftRepositoryInterface::class, ShiftRepository::class);
         $this->app->bind(PositionRepositoryInterface::class, PositionRepository::class);
         $this->app->bind(LoggerRepositoryInterface::class, LoggerRepository::class);
+        $this->app->bind(ProductImportInterface::class, LoggerRepository::class);
+        $this->app->bind(ProductImppDetailInterface::class, LoggerRepository::class);
     }
 
     /**
