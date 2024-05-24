@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('salary');
             $table->softDeletes();
+            $table->string('active')->unique();
             $table->timestamps();
         });
     }

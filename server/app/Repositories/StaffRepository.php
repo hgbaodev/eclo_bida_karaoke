@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Http\Collections\CollectionCustom;
 use App\Interface\StaffRepositoryInterface;
 use App\Models\Staff;
 

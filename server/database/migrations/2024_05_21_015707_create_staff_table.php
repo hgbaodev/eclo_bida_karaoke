@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('idcard')->unique();
             $table->string('address');
             $table->foreignId('position_id')->constrained('positions');
+            $table->string('active')->unique();
             $table->softDeletes();
             // $table->string('staff_salary');
             $table->timestamps();

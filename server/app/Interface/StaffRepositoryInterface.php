@@ -8,6 +8,6 @@ interface StaffRepositoryInterface
     public function getAllStaffs();
     public function getStaffByActive($active);
     public function createStaff(array $data);
-    public function updateStaffById($id, array $data);
-    public function deleteStaffById($id);
+    public function updateStaffByActive($id, array $data);
+    public function deleteStaffByActive($id);
 }
