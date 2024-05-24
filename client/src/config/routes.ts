@@ -18,6 +18,7 @@ export const routes = {
       devices: '/admin/services/devices',
     },
     jobBoard: '/admin/job-board',
+    loggers: '/admin/loggers',
   },
   auth: {
     signIn: '/auth/signin',

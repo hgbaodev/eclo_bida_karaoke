@@ -8,10 +8,12 @@
         "php": "^8.2",
         "cloudinary/cloudinary_php": "^2",
         "laravel/framework": "^11.0",
+        "laravel/reverb": "@beta",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "paragonie/constant_time_encoding": "^3.0",
-        "php-open-source-saver/jwt-auth": "^2.2"
+        "php-open-source-saver/jwt-auth": "^2.2",
+        "pusher/pusher-php-server": "^7.2"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

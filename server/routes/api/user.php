@@ -5,9 +5,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::group([
     'prefix' => 'users',
-    // 'middleware' => 'auth:api'
+    'middleware' => 'auth:api'
 ], function () {
-    Route::get('/', [UserController::class, 'index']);
+    Route::get('/', [UserController::class, 'index'])->middleware('logger:users,view');
     Route::get('/{active}', [UserController::class, 'show']);
     Route::post('/', [UserController::class, 'store']);
     Route::put('/{active}', [UserController::class, 'update']);
