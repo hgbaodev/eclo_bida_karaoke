@@ -21,9 +21,11 @@ class CustomerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->sentSuccessResponse($this->customerRepository->getAllCustomers());
+//        return $this->sentSuccessResponse($this->customerRepository->getAllCustomers());
+        $data = $this->customerRepository->getCustomers($request);
+        return $this->sentSuccessResponse($data);
     }
 
     /**

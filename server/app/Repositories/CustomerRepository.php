@@ -2,11 +2,48 @@
 
 namespace App\Repositories;
 
+use App\Http\Collections\CollectionCustom;
 use App\Interface\CustomerRepositoryInterface;
 use App\Models\Customer;
 
 class CustomerRepository implements CustomerRepositoryInterface {
-  
+
+  function getCustomers($request)
+  {
+      $all = $request->input('all');
+      $perPage = $request->input('perPage');
+      $id = $request->input('id');
+      $name = $request->input('name');
+      $email = $request->input('email');
+      $phone = $request->input('phone');
+      $query = $request->input('query');
+
+      $customers = Customer::query();
+      if ($query) {
+          $customers->where('name', 'LIKE', "%$query%")
+              ->orWhere('phone', 'LIKE', "%$query%")
+              ->orWhere('email', 'LIKE', "%$query%");
+      }
+      if($id){
+          $customers->where('id', $id);
+      }
+      if($name){
+          $customers->where('name','LIKE', "%$name%");
+      }
+      if($email){
+          $customers->where('email','LIKE', "%$email%");
+      }
+      if ($phone){
+          $customers->where('phone','LIKE', "%$phone%");
+      }
+      if($all){
+          $customers = $customers->get();
+      } else {
+          $customers = $customers->paginate($perPage);
+      }
+      return new CollectionCustom($customers);
+  }
+
   function getAllCustomers()
   {
     return Customer::all();
