@@ -40,29 +40,29 @@ class CustomerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show($active)
     {
-        return $this->sentSuccessResponse($this->customerRepository->getCustomerById($id));
+        return $this->sentSuccessResponse($this->customerRepository->getCustomerByActive($active));
     }
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCustomerRequest $request, $id){
+    public function update(UpdateCustomerRequest $request, $active){
         $validatedData = $request->validated();
-        if(!$this->customerRepository->getCustomerById($id)){
+        if(!$this->customerRepository->getCustomerByActive($active)){
             return $this->sentErrorResponse('Customer not found', 'error', 404);
         }
-        return $this->sentSuccessResponse($this->customerRepository->updateCustomerById($id, $validatedData));
+        return $this->sentSuccessResponse($this->customerRepository->updateCustomerByActive($active, $validatedData));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy($active)
     {
-        if(!$this->customerRepository->getCustomerById($id)){
-            return $this->sentErrorResponse('Customer '.$id. ' is not found', 'error', 404);
+        if(!$this->customerRepository->getCustomerByActive($active)){
+            return $this->sentErrorResponse('Customer '.$active. ' is not found', 'error', 404);
         }
-        return $this->sentSuccessResponse($this->customerRepository->deleteCustomerById($id), 'customer '.$id.' is deleted', 200);
+        return $this->sentSuccessResponse($this->customerRepository->deleteCustomerByActive($active), 'customer '.$active.' is deleted', 200);
     }
 }

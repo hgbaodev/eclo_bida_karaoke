@@ -17,6 +17,7 @@ export const routes = {
       areas: '/admin/services/devices',
       devices: '/admin/services/devices',
     },
+    customers: '/admin/customers',
     jobBoard: '/admin/job-board',
     loggers: '/admin/loggers',
   },

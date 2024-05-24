@@ -136,6 +136,7 @@ export interface User {
     color: string;
     active: string;
   };
+  1;
   created_at: string;
 }
 
