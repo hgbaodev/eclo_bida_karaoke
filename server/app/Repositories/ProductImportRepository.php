@@ -2,38 +2,34 @@
 
 namespace App\Repositories;
 
-use App\Interface\SupplierRepositoryInterface;
-use App\Models\Supplier;
+use App\Interface\ProductImportInterface;
+use App\Models\ProductImport;
 
-class SupplierRepository implements SupplierRepositoryInterface
+
+class ProductImportRepository implements ProductImportInterface
 {
-
-    function getAllSuppliers()
+    public function getAllProductImport()
     {
-        return Supplier::all();
+        return ProductImport::all();
     }
-
-    function getSupplierById($id)
+    public function create(array $data)
     {
-        return Supplier::find($id);
+        return ProductImport::create($data);
     }
-
-    function createSupplier(array $data)
+    public function updateProductImportByActive($active, array $data)
     {
-        return Supplier::create($data);
+        $product_import = ProductImport::where("active", $active)->get();
+        $product_import->update($data);
+        return $product_import;
     }
-
-    function updateSupplierById($id, array $data)
+    public function getProductImportByActive($active)
     {
-        $supplier = Supplier::find($id);
-        $supplier->update($data);
-        return $supplier;
+        return ProductImport::where("active", $active)->get();
     }
-
-    function deleteSupplierById($id)
+    public function deleteByActive($active)
     {
-        $supplier = Supplier::find($id);
-        $supplier->delete();
-        return $supplier;
+        $product_import = ProductImport::where("active", $active)->get();
+        $product_import->delete();
+        return $product_import;
     }
 }

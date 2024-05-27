@@ -28,6 +28,10 @@ class ProductImpDetail extends Model
     {
         return $this->belongsTo(Supplier::class);
     }
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
     protected static function boot()
     {
         parent::boot();

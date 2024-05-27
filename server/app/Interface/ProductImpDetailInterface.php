@@ -5,13 +5,11 @@ namespace App\Interface;
 use App\Models\ProductImpDetail;
 
 
-interface ProductImppDetailInterface
+interface ProductImpDetailInterface
 {
-    public function getProductImppDetailAll();
-    public function getProductImppDetailAllById($id);
-    public function create(array $data);
-    public function updateProductImppDetailById($id, array $data);
-    public function deleteProductImppDetailById($id);
+    function getAllProductImppDetail();
     public function getProductImppDetailByActive($active);
+    function create(array $data);
+    function updateProductImppDetailByActive($active, array $data);
     public function deleteByActive($active);
 }

@@ -4,19 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class ProductImport extends Model
+class Product extends Model
 {
-
     public $timestamps = false;
     use HasFactory;
     protected $fillable = [
-        'total_cost',
-        'create_time',
-        'receive_time',
-        'status',
+        'name',
+        'description',
+        'cost_price',
+        'selling_price',
         'active',
+        'unit',
+        'quantity',
     ];
     protected $hidden = [
         'id',

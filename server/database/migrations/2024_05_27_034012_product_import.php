@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('suppliers', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('address');
-            $table->string('phone');
+        Schema::create('product_imports', function (Blueprint $table) {
+            $table->id('id');
+            $table->double('total_cost');
+            $table->date('create_time');
+            $table->date('receive_time');
+            $table->string('active')->unique();
+            $table->string('status');
             $table->softDeletes();
         });
     }
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('suppliers');
+        Schema::dropIfExists('product_imports');
     }
 };
