@@ -28,4 +28,8 @@ class Shift extends Model
             }
         });
     }
+    public function shiftDetail()
+    {
+        return $this->belongsTo(ShiftDetail::class);
+    }
 }

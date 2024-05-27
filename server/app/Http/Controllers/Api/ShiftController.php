@@ -64,10 +64,11 @@ class ShiftController extends Controller
     public function update(ShiftRequest $request, string $active)
     {
         $validatedData = $request->validated();
-        if (!$this->shiftRepository->getShiftByActive($active)) {
+        $shift = $this->shiftRepository->getShiftByActive($active);
+        if (!$shift) {
             return $this->sentErrorResponse('Shift is not found', "error", 404);
         }
-        return $this->sentSuccessResponse($this->shiftRepository->updateShiftByActive($active, $validatedData), "Shift is updated successfully", 200);
+        return $this->sentSuccessResponse($this->shiftRepository->updateShiftByActive($shift->id, $validatedData), "Shift is updated successfully", 200);
     }
 
     /**

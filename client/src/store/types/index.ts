@@ -24,6 +24,8 @@ export interface RootState {
   auth: authType;
   role: roleType;
   user: userType;
+  position: positionType;
+  staff: staffType;
 }
 
 export interface userType {
@@ -39,4 +41,26 @@ export interface userType {
   errors: any;
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
+}
+
+export interface staffType {
+  data: [];
+  isLoading: boolean;
+  isFiltered: boolean;
+  page: number;
+  pageSize: number;
+  totalRow: number;
+  query: string;
+  status: any;
+  errors: any;
+  isCreateLoading: boolean;
+  isUpdateLoading: boolean;
+}
+
+export interface positionType {
+  fetchData: any[];
+  fetchDataLoading: boolean;
+  createLoading: boolean;
+  updateLoading: boolean;
+  listPositions: any[];
 }

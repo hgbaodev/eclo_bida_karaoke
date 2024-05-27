@@ -64,8 +64,12 @@ class ShiftUserDetailController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $active)
     {
-        //
+        $shiftUserDetail = $this->shiftUserDetailRes->getShiftUserDetailByActive($active);
+        if (!$shiftUserDetail) {
+            return $this->sentErrorResponse("Shift User Detail is not found", "error", 404);
+        }
+        return $this->sentSuccessResponse($shiftUserDetail, "Deleted successfully!", 200);
     }
 }

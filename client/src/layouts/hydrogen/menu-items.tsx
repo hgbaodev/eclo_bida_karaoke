@@ -60,4 +60,9 @@ export const menuItems = [
     href: routes.admin.loggers,
     icon: <FaUniversalAccess />,
   },
+  {
+    name: 'Staffs',
+    href: routes.admin.staffs,
+    icon: <HiOutlineUsers />,
+  },
 ];

@@ -63,11 +63,11 @@ class ShiftDetailController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $active)
     {
-        if (!$this->shiftDetailRespository->getShiftDetailByActive($id)) {
+        if (!$this->shiftDetailRespository->getShiftDetailByActive($active)) {
             return $this->sentErrorResponse("Shift detail is not found", "error", 404);
         }
-        return $this->sentSuccessResponse($this->shiftDetailRespository->deleteShiftDetailByActive($id), "Delete successfully", 200);
+        return $this->sentSuccessResponse($this->shiftDetailRespository->deleteShiftDetailByActive($active), "Delete successfully", 200);
     }
 }

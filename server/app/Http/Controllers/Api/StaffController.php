@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Staff\StaffRequest;
+use App\Interface\PositionRepositoryInterface;
 use App\Models\Staff;
 use App\Interface\StaffRepositoryInterface;
 use Illuminate\Http\Request;
@@ -11,9 +12,11 @@ use Illuminate\Http\Request;
 class StaffController extends Controller
 {
     protected $staffRepository;
-    public function __construct(StaffRepositoryInterface $staffRepositoryInterface)
+    protected $positionRepository;
+    public function __construct(StaffRepositoryInterface $staffRepositoryInterface, PositionRepositoryInterface $positionRepositoryInterface)
     {
         $this->staffRepository = $staffRepositoryInterface;
+        $this->positionRepository = $positionRepositoryInterface;
     }
     /**
      * Display a listing of the resource.
@@ -36,8 +39,14 @@ class StaffController extends Controller
      */
     public function store(StaffRequest $request)
     {
-        $validatedDate = $request->validated();
-        return $this->sentSuccessResponse($this->staffRepository->createStaff($validatedDate), "Staff is created successfully", 200);
+        $validatedData = $request->validated();
+        $positon = $this->positionRepository->getPositionByActive($validatedData['position']);
+        if (!$positon) {
+            return $this->sentErrorResponse("Position is not found", "error", 404);
+        }
+        $validatedData["postion_id"] = $positon->id;
+        unset($validatedData['position']);
+        return $this->sentSuccessResponse($this->staffRepository->createStaff($validatedData), "Staff is created successfully", 200);
     }
 
     /**
@@ -45,7 +54,11 @@ class StaffController extends Controller
      */
     public function show($active)
     {
-        return $this->sentSuccessResponse($this->staffRepository->getStaffByActive($active));
+        $data = $this->staffRepository->getStaffByActive($active);
+        if (!$data) {
+            return $this->sentErrorResponse("Staff is not found", "error", 404);
+        }
+        return $this->sentSuccessResponse($data);
     }
 
     /**
@@ -61,11 +74,18 @@ class StaffController extends Controller
      */
     public function update(StaffRequest $request, $active)
     {
-        $validatedDate = $request->validated();
-        if (!$this->staffRepository->getStaffByActive($active)) {
+        $validatedData = $request->validated();
+        $positon = $this->positionRepository->getPositionByActive($validatedData['position']);
+        $staff = $this->staffRepository->getStaffByActive($active);
+        if (!$staff) {
             return $this->sentErrorResponse('Staff is not found', "error", 404);
         }
-        return $this->sentSuccessResponse($this->staffRepository->updateStaffByActive($active, $validatedDate), "Staff is updated successfully", 200);
+        if (!$positon) {
+            return $this->sentErrorResponse("Position is not found", "error", 404);
+        }
+        $validatedData["postion_id"] = $positon->id;
+        unset($validatedData['position']);
+        return $this->sentSuccessResponse($this->staffRepository->updateStaffByActive($staff->id, $validatedData), "Staff is updated successfully", 200);
     }
 
     /**

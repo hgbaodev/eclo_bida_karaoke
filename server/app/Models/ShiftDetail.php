@@ -31,4 +31,13 @@ class ShiftDetail extends Model
             }
         });
     }
+
+    public function shift()
+    {
+        return $this->belongsTo(Shift::class);
+    }
+    public function shiftUserDetail()
+    {
+        return $this->hasMany(ShiftUserDetail::class);
+    }
 }

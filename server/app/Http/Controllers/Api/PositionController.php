@@ -45,7 +45,11 @@ class PositionController extends Controller
      */
     public function show($active)
     {
-        return $this->sentSuccessResponse($this->positionRepository->getPositionByActive($active));
+        $data = $this->positionRepository->getPositionByActive($active);
+        if (!$data) {
+            return $this->sentErrorResponse("Position is not found", "error", 404);
+        }
+        return $this->sentSuccessResponse($data);
     }
 
     /**
@@ -62,10 +66,11 @@ class PositionController extends Controller
     public function update(PositionRequest $request, $active)
     {
         $validatedData = $request->validated();
-        if (!$this->positionRepository->getPositionByActive($active)) {
+        $position = $this->positionRepository->getPositionByActive($active);
+        if (!$position) {
             return $this->sentErrorResponse('Position is not found', "error", 404);
         }
-        return $this->sentSuccessResponse($this->positionRepository->updatePositionByActive($active, $validatedData), "Position is update successfully", 200);
+        return $this->sentSuccessResponse($this->positionRepository->updatePositionByActive($position->id, $validatedData), "Position is update successfully", 200);
     }
 
     /**

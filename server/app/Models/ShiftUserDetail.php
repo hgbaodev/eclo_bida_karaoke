@@ -24,4 +24,12 @@ class ShiftUserDetail extends Model
             }
         });
     }
+    public function staff()
+    {
+        return $this->belongsTo(Staff::class);
+    }
+    public function shiftDetail()
+    {
+        return $this->belongsTo(ShiftDetail::class);
+    }
 }
