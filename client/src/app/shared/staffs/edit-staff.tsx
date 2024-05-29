@@ -14,11 +14,11 @@ import { RootState } from '@/store/types';
 import { EditStaffInput, editStaffSchema } from '@/utils/validators/edit-staff.schema';
 import { getStatusBadge } from '../users/users-table/columns';
 
-export default function CreateStaff({ staff, active }: { staff: EditStaffInput; active: string }) {
+export default function EditStaff({ staff, active }: { staff: EditStaffInput; active: string }) {
   const { closeModal } = useModal();
-  const [reset, setReset] = useState({});
+  const [reset, setReset] = useState<any>(staff);
   const [errors, setErrors] = useState<any>({});
-  const { pageSize, page, query, status, isUpdateLoading } = useSelector((state: RootState) => state.staff);
+  const { pageSize, page, query, isUpdateLoading, position } = useSelector((state: RootState) => state.staff);
   const { listPositions } = useSelector((state: RootState) => state.position);
   const onSubmit: SubmitHandler<CreateStaffInput> = async (data) => {
     const result: any = await dispatch(updateStaff({ staff: data, active }));
@@ -34,7 +34,7 @@ export default function CreateStaff({ staff, active }: { staff: EditStaffInput; 
       });
       setErrors({});
       closeModal();
-      await dispatch(getStaffs({ page, pageSize, query, status }));
+      await dispatch(getStaffs({ page, pageSize, query, position }));
       toast.success('User created successfully');
     } else {
       setErrors(result?.payload?.errors);
@@ -44,7 +44,7 @@ export default function CreateStaff({ staff, active }: { staff: EditStaffInput; 
     <Form<EditStaffInput>
       resetValues={reset}
       onSubmit={onSubmit}
-      validationSchema={createStaffSchema}
+      validationSchema={editStaffSchema}
       serverError={errors}
       className="grid grid-cols-1 gap-6 p-6 @container md:grid-cols-2 [&_.rizzui-input-label]:font-medium [&_.rizzui-input-label]:text-gray-900"
     >
@@ -70,7 +70,7 @@ export default function CreateStaff({ staff, active }: { staff: EditStaffInput; 
             <Input
               label="Birthday"
               placeholder="Enter staff birthday"
-              {...register('name')}
+              {...register('birthday')}
               className="col-span-[1/2]"
               error={errors.birthday?.message}
             />
@@ -115,7 +115,7 @@ export default function CreateStaff({ staff, active }: { staff: EditStaffInput; 
                   getOptionValue={(option) => option.active}
                   getOptionDisplayValue={(option) => option.name}
                   displayValue={(selected: string) =>
-                    listPositions.find((option) => option.active === selected)?.name ?? selected
+                    listPositions.find((position) => position.active === selected)?.name ?? selected
                   }
                   dropdownClassName="!z-[1]"
                   inPortal={false}
@@ -127,7 +127,7 @@ export default function CreateStaff({ staff, active }: { staff: EditStaffInput; 
                 Cancel
               </Button>
               <Button type="submit" isLoading={isUpdateLoading} className="w-full @xl:w-auto">
-                Create Staff
+                Edit Staff
               </Button>
             </div>
           </>

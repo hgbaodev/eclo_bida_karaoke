@@ -38,6 +38,6 @@ class Staff extends Model
     }
     public function position()
     {
-        return $this->hasOne(Position::class);
+        return $this->belongsTo(Position::class);
     }
 }

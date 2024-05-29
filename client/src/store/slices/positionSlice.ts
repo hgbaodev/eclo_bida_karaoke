@@ -13,7 +13,7 @@ const initialState: positionType = {
 
 export const getPositions = createAsyncThunk('positions', async () => {
   try {
-    const response = await axiosInstance.get(`positions`);
+    const response = await axiosInstance.get('positions');
     return response.data;
   } catch (error: any) {
     throw error;
@@ -71,7 +71,8 @@ const positionSlice = createSlice({
       .addCase(getPositions.fulfilled, (state, action) => {
         state.fetchDataLoading = false;
         state.fetchData = action.payload.data;
-        state.listPositions = action.payload.data;
+        const result = action.payload.data;
+        state.listPositions = result.result;
       })
       .addCase(getPositions.rejected, (state) => {
         state.fetchDataLoading = false;

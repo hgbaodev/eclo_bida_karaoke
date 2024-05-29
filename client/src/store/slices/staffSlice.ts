@@ -12,6 +12,7 @@ const initialState: staffType = {
   page: 1,
   pageSize: 5,
   query: '',
+  position: '',
   status: '',
   errors: null,
   isCreateLoading: false,
@@ -20,12 +21,12 @@ const initialState: staffType = {
 
 export const getStaffs = createAsyncThunk(
   'staffs',
-  async ({ page, pageSize, query, status }: { page: number; pageSize: number; query: string; status: string }) => {
+  async ({ page, pageSize, query, position }: { page: number; pageSize: number; query: string; position: string }) => {
     const url = new URL('/api/v1/staffs', env.NEXT_API_URL);
     url.searchParams.set('page', `${page}`);
     url.searchParams.set('perPage', `${pageSize}`);
     url.searchParams.set('query', query);
-    url.searchParams.set('status', `${status}`);
+    url.searchParams.set('position', `${position}`);
     try {
       const response = await axiosInstance.get(url.href);
       return response.data;
@@ -87,7 +88,8 @@ const staffSlice = createSlice({
     setQuery: (state, action) => {
       state.query = action.payload;
     },
-    setRole: (state, action) => {
+    setPosition: (state, action) => {
+      state.position = action.payload;
       state.isFiltered = true;
     },
     setStatus: (state, action) => {
@@ -95,6 +97,7 @@ const staffSlice = createSlice({
       state.isFiltered = true;
     },
     setReset: (state) => {
+      state.position = '';
       state.status = '';
       state.isFiltered = false;
     },
@@ -137,6 +140,6 @@ const staffSlice = createSlice({
   },
 });
 
-export const { setPage, setPageSize, setReset, setStatus, setRole, setQuery, setErrors } = staffSlice.actions;
+export const { setPage, setPageSize, setReset, setStatus, setPosition, setQuery, setErrors } = staffSlice.actions;
 
 export default staffSlice.reducer;

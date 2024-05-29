@@ -51,6 +51,7 @@ export interface staffType {
   pageSize: number;
   totalRow: number;
   query: string;
+  position: any;
   status: any;
   errors: any;
   isCreateLoading: boolean;

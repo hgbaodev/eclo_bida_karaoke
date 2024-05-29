@@ -16,7 +16,7 @@ export default function CreateStaff() {
   const { closeModal } = useModal();
   const [reset, setReset] = useState({});
   const [errors, setErrors] = useState<any>({});
-  const { pageSize, page, query, status, isCreateLoading } = useSelector((state: RootState) => state.staff);
+  const { pageSize, page, query, isCreateLoading, position } = useSelector((state: RootState) => state.staff);
   const { listPositions } = useSelector((state: RootState) => state.position);
   const onSubmit: SubmitHandler<CreateStaffInput> = async (data) => {
     const result: any = await dispatch(createStaff(data));
@@ -32,8 +32,8 @@ export default function CreateStaff() {
       });
       setErrors({});
       closeModal();
-      await dispatch(getStaffs({ page, pageSize, query, status }));
-      toast.success('User created successfully');
+      await dispatch(getStaffs({ page, pageSize, query, position }));
+      toast.success('Staff created successfully');
     } else {
       setErrors(result?.payload?.errors);
     }
