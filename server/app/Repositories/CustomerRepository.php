@@ -72,4 +72,23 @@ class CustomerRepository implements CustomerRepositoryInterface {
     $customer->delete();
     return $customer;
   }
+
+  function getCustomerByActive($active)
+  {
+      return Customer::where('active', $active)->first();
+  }
+
+  public function deleteCustomerByActive($active)
+  {
+      $customer = Customer::where('active', $active)->first();
+      $customer->delete();
+      return $customer;
+  }
+
+  public function updateCustomerByActive($active, array $data)
+  {
+      $customer = Customer::where('active', $active)->first();
+      $customer->update($data);
+      return $customer;
+  }
 }

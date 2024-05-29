@@ -1,5 +1,5 @@
 import { routes } from '@/config/routes';
-import { PiPackageDuotone, PiChartBarDuotone, PiFolderLockDuotone, PiShapesDuotone } from 'react-icons/pi';
+import { PiPackageDuotone, PiChartBarDuotone, PiFolderLockDuotone, PiShapesDuotone, PiUserList } from 'react-icons/pi';
 import { FaUniversalAccess } from 'react-icons/fa';
 import { HiOutlineUsers } from 'react-icons/hi2';
 // Note: do not add href in the label object, it is rendering as label
@@ -50,6 +50,11 @@ export const menuItems = [
     name: 'Roles & Permissions',
     href: routes.admin.rolesPermissions,
     icon: <PiFolderLockDuotone />,
+  },
+  {
+    name: 'Customers',
+    href: routes.admin.customers,
+    icon: <PiUserList />,
   },
   {
     name: 'Loggers',

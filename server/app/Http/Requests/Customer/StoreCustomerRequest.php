@@ -23,7 +23,8 @@ class StoreCustomerRequest extends HelperRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
             'phone' => 'required|unique:customers|regex:/^[0-9]{10,}$/',
             'email' => 'required|email|unique:customers',
         ];
