@@ -12,6 +12,7 @@ class Position extends Model
     use HasFactory, GeneratesUniqueActive;
     use SoftDeletes;
     protected $fillable = [
+        "id",
         "name",
         "salary"
     ];

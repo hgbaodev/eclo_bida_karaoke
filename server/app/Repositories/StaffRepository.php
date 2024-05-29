@@ -28,7 +28,6 @@ class StaffRepository implements StaffRepositoryInterface
             $staffs->whereHas('position', function ($query) use ($position) {
                 $query->where("active", $position);
             });
-            $staffs->where('position_id', $position);
         }
         if ($idcard) {
             $staffs->where('idcard', $idcard);
@@ -46,7 +45,7 @@ class StaffRepository implements StaffRepositoryInterface
     }
     public function getStaffByActive($active)
     {
-        return Staff::where("active", $active)->get();
+        return Staff::where("active", $active)->first();
     }
     public function createStaff(array $data)
     {
@@ -54,13 +53,13 @@ class StaffRepository implements StaffRepositoryInterface
     }
     public function updateStaffByActive($active, array $data)
     {
-        $staff = Staff::where("active", $active);
+        $staff = Staff::where("active", $active)->first();
         $staff->update($data);
         return $staff;
     }
     public function deleteStaffByActive($active)
     {
-        $staff = Staff::where("active", $active);
+        $staff = Staff::where("active", $active)->first();
         $staff->delete();
         return $staff;
     }

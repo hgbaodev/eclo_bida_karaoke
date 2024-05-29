@@ -4,12 +4,12 @@ import { PiTrashDuotone, PiMagnifyingGlassBold } from 'react-icons/pi';
 import StatusField from '@/components/controlled-table/status-field';
 import { Button, Input } from 'rizzui';
 import { dispatch } from '@/store';
-import { setQuery, setReset, setRole, setStatus } from '@/store/slices/userSlice';
 import { RootState } from '@/store/types';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import useDebounce from '@/hooks/use-debounce';
 import { getPositions } from '@/store/slices/positionSlice';
+import { setPosition, setQuery, setReset } from '@/store/slices/staffSlice';
 
 export default function FilterElement() {
   const { isFiltered, query, position } = useSelector((state: RootState) => state.staff);
@@ -37,9 +37,11 @@ export default function FilterElement() {
           getOptionValue={(option) => option.active}
           getOptionDisplayValue={(option) => option.name}
           onChange={(value: any) => {
-            dispatch(setRole(value));
+            dispatch(setPosition(value));
           }}
-          displayValue={(selected: string) => listPositions.find((role) => role.active === selected)?.name || selected}
+          displayValue={(selected: string) =>
+            listPositions.find((position) => position.active === selected)?.name || selected
+          }
         />
 
         {isFiltered && (

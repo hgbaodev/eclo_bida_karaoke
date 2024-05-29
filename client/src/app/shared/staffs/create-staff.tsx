@@ -74,6 +74,7 @@ export default function CreateStaff() {
             />
 
             <Input
+              type="date"
               label="Birthday"
               placeholder="Enter staff birthday"
               {...register('birthday')}

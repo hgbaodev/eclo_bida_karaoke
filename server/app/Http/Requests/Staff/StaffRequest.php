@@ -2,16 +2,16 @@
 
 namespace App\Http\Requests\Staff;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Helpers\HelperRequest;
 
-class StaffRequest extends FormRequest
+class StaffRequest extends HelperRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,9 +22,13 @@ class StaffRequest extends FormRequest
     public function rules(): array
     {
         return [
-            // 'staff_name' => 'required',
-            // 'staff_phone' => 'required|regex:/^[0-9]{10}$/',
-            // 'staff_idcard' => 'required|regex:/^[0-9]{12}$/',
+            'name' => 'required',
+            'phone' => 'required|unique:staff|regex:/^[0-9]{10}$/',
+            'idcard' => 'required|unique:staff|regex:/^[0-9]{12}$/',
+            'birthday' => 'required',
+            'address' => 'required',
+            'position' => 'required',
+
         ];
     }
 }

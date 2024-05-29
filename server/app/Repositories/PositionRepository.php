@@ -39,7 +39,7 @@ class PositionRepository implements PositionRepositoryInterface
     }
     public function getPositionByActive($active)
     {
-        return Position::where("active", $active)->get();
+        return Position::where("active", $active)->first();
     }
     public function createPosition(array $data)
     {
@@ -47,13 +47,13 @@ class PositionRepository implements PositionRepositoryInterface
     }
     public function updatePositionByActive($active, array $data)
     {
-        $position = Position::where("active", $active)->get();
+        $position = Position::where("active", $active)->first();
         $position->update($data);
         return $position;
     }
     public function deletePositionByActive($active)
     {
-        $position = Position::where("active", $active)->get();
+        $position = Position::where("active", $active)->first();
         $position->delete();
         return $position;
     }

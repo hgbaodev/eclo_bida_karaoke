@@ -75,13 +75,6 @@ export default function EditStaff({ staff, active }: { staff: EditStaffInput; ac
               className="col-span-[1/2]"
               error={errors.name?.message}
             />
-            <Input
-              label="Birthday"
-              placeholder="Enter staff birthday"
-              {...register('birthday')}
-              className="col-span-full"
-              error={errors.birthday?.message}
-            />
 
             <Input
               label="Phone"
@@ -89,6 +82,15 @@ export default function EditStaff({ staff, active }: { staff: EditStaffInput; ac
               className="col-span-full"
               {...register('phone')}
               error={errors.phone?.message}
+            />
+
+            <Input
+              type="date"
+              label="Birthday"
+              placeholder="Enter staff birthday"
+              {...register('birthday')}
+              className="col-span-full"
+              error={errors.birthday?.message}
             />
 
             <Textarea

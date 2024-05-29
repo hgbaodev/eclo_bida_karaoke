@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests\Position;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Helpers\HelperRequest;
 
-class PositionRequest extends FormRequest
+
+class PositionRequest extends HelperRequest
 {
     /**
      * Determine if the user is authorized to make this request.
