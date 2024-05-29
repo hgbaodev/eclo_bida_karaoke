@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { PiXBold } from 'react-icons/pi';
 import { Controller, SubmitHandler } from 'react-hook-form';
 import { Form } from '@/components/ui/form';
-import { Input, Button, ActionIcon, Title, Select, Password } from 'rizzui';
+import { Input, Button, ActionIcon, Title, Select, Password, Textarea } from 'rizzui';
 import { useModal } from '@/app/shared/modal-views/use-modal';
 import { updateStaff, getStaffs } from '@/store/slices/staffSlice';
 import { CreateStaffInput, createStaffSchema } from '@/utils/validators/create-staff.schema';
@@ -61,6 +61,14 @@ export default function EditStaff({ staff, active }: { staff: EditStaffInput; ac
               </ActionIcon>
             </div>
             <Input
+              label="IDCard"
+              placeholder="Enter staff idcard"
+              className="col-span-[1/2]"
+              {...register('idcard')}
+              error={errors.idcard?.message}
+            />
+
+            <Input
               label="Name"
               placeholder="Enter staff name"
               {...register('name')}
@@ -71,7 +79,7 @@ export default function EditStaff({ staff, active }: { staff: EditStaffInput; ac
               label="Birthday"
               placeholder="Enter staff birthday"
               {...register('birthday')}
-              className="col-span-[1/2]"
+              className="col-span-full"
               error={errors.birthday?.message}
             />
 
@@ -83,15 +91,8 @@ export default function EditStaff({ staff, active }: { staff: EditStaffInput; ac
               error={errors.phone?.message}
             />
 
-            <Input
-              label="IDCard"
-              placeholder="Enter staff idcard"
-              className="col-span-full"
-              {...register('idcard')}
-              error={errors.idcard?.message}
-            />
-
-            <Input
+            <Textarea
+              rows={2}
               label="Address"
               placeholder="Enter staff address"
               className="col-span-full"

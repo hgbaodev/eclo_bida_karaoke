@@ -54,13 +54,13 @@ class StaffRepository implements StaffRepositoryInterface
     }
     public function updateStaffByActive($active, array $data)
     {
-        $staff = Staff::where("active", $active)->get();
+        $staff = Staff::where("active", $active);
         $staff->update($data);
         return $staff;
     }
     public function deleteStaffByActive($active)
     {
-        $staff = Staff::where("active", $active)->get();
+        $staff = Staff::where("active", $active);
         $staff->delete();
         return $staff;
     }

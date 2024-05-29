@@ -31,7 +31,7 @@ export const getColumns = (openModal: (args: any) => void) => [
     title: <HeaderCell title="Position" />,
     dataIndex: 'position',
     key: 'position',
-    width: 50,
+    width: 100,
     render: (_: string, staff: Staff) => staff.position.name,
   },
   {
@@ -47,13 +47,6 @@ export const getColumns = (openModal: (args: any) => void) => [
     key: 'phone',
     width: 50,
     render: (_: string, staff: Staff) => staff.phone,
-  },
-  {
-    title: <HeaderCell title="Address" />,
-    dataIndex: 'address',
-    key: 'address',
-    width: 50,
-    render: (_: string, staff: Staff) => staff.address,
   },
   {
     title: <HeaderCell title="Created" />,

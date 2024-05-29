@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { PiXBold } from 'react-icons/pi';
 import { Controller, SubmitHandler } from 'react-hook-form';
 import { Form } from '@/components/ui/form';
-import { Input, Button, ActionIcon, Title, Select } from 'rizzui';
+import { Input, Button, ActionIcon, Title, Select, Textarea } from 'rizzui';
 import { useModal } from '@/app/shared/modal-views/use-modal';
 import { createStaff, getStaffs } from '@/store/slices/staffSlice';
 import { CreateStaffInput, createStaffSchema } from '@/utils/validators/create-staff.schema';
@@ -59,17 +59,25 @@ export default function CreateStaff() {
               </ActionIcon>
             </div>
             <Input
+              label="IDCard"
+              placeholder="Enter staff idcard"
+              className="col-span-[1/2]"
+              {...register('idcard')}
+              error={errors.idcard?.message}
+            />
+            <Input
               label="Name"
               placeholder="Enter staff name"
               {...register('name')}
               className="col-span-[1/2]"
               error={errors.name?.message}
             />
+
             <Input
               label="Birthday"
               placeholder="Enter staff birthday"
-              {...register('name')}
-              className="col-span-[1/2]"
+              {...register('birthday')}
+              className="col-span-full"
               error={errors.birthday?.message}
             />
 
@@ -81,15 +89,8 @@ export default function CreateStaff() {
               error={errors.phone?.message}
             />
 
-            <Input
-              label="IDCard"
-              placeholder="Enter staff idcard"
-              className="col-span-full"
-              {...register('idcard')}
-              error={errors.idcard?.message}
-            />
-
-            <Input
+            <Textarea
+              rows={2}
               label="Address"
               placeholder="Enter staff address"
               className="col-span-full"

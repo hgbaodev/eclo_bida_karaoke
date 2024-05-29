@@ -22,9 +22,9 @@ class StaffRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'staff_name' => 'required',
-            'staff_phone' => 'required|regex:/^[0-9]{10}$/',
-            'staff_idcard' => 'required|regex:/^[0-9]{12}$/',
+            // 'staff_name' => 'required',
+            // 'staff_phone' => 'required|regex:/^[0-9]{10}$/',
+            // 'staff_idcard' => 'required|regex:/^[0-9]{12}$/',
         ];
     }
 }
