@@ -12,13 +12,15 @@ class Position extends Model
     use HasFactory, GeneratesUniqueActive;
     use SoftDeletes;
     protected $fillable = [
-        "id",
         "name",
         "salary"
     ];
+    protected $hidden = [
+        "id"
+    ];
     public function staff()
     {
-        return $this->belongsTo(Staff::class);
+        return $this->hasOne(Staff::class);
     }
     protected static function boot()
     {

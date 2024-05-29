@@ -52,9 +52,15 @@ export const menuItems = [
     icon: <PiFolderLockDuotone />,
   },
   {
+
+    name: 'Staffs',
+    href: routes.admin.staffs,
+    icon: <HiOutlineUsers />,
+
     name: 'Customers',
     href: routes.admin.customers,
     icon: <PiUserList />,
+
   },
   {
     name: 'Loggers',

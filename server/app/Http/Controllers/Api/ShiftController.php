@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-
+use App\Http\Requests\Shift\ShiftRequest;
 use App\Interface\ShiftRepositoryInterface;
 use Illuminate\Http\Request;
 
@@ -17,9 +17,9 @@ class ShiftController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->sentSuccessResponse($this->shiftRepository->getAllShifts());
+        return $this->sentSuccessResponse($this->shiftRepository->getShifts($request));
     }
 
     /**
@@ -33,7 +33,7 @@ class ShiftController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ShiftRequest $request)
     {
         $validatedData = $request->validated();
         return $this->sentSuccessResponse($this->shiftRepository->createShift($validatedData));
@@ -42,12 +42,12 @@ class ShiftController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $active)
     {
-        if (!$this->shiftRepository->getShiftByActive($id)) {
-            return $this->sentErrorResponse('Shift' . $id . ' is not found', "error", 404);
+        if (!$this->shiftRepository->getShiftByActive($active)) {
+            return $this->sentErrorResponse('Shift is not found', "error", 404);
         }
-        return $this->sentSuccessResponse($this->shiftRepository->getShiftByActive($id));
+        return $this->sentSuccessResponse($this->shiftRepository->getShiftByActive($active));
     }
 
     /**
@@ -61,23 +61,24 @@ class ShiftController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ShiftRequest $request, string $active)
     {
         $validatedData = $request->validated();
-        if (!$this->shiftRepository->getShiftByActive($id)) {
-            return $this->sentErrorResponse('Shift ' . $id . ' is not found', "error", 404);
+        $shift = $this->shiftRepository->getShiftByActive($active);
+        if (!$shift) {
+            return $this->sentErrorResponse('Shift is not found', "error", 404);
         }
-        return $this->sentSuccessResponse($this->shiftRepository->updateShiftByActive($id, $validatedData), "Shift is updated successfully", 200);
+        return $this->sentSuccessResponse($this->shiftRepository->updateShiftByActive($shift->id, $validatedData), "Shift is updated successfully", 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $active)
     {
-        if (!$this->shiftRepository->getShiftByActive($id)) {
-            return $this->sentErrorResponse('Shift' . $id . ' is not found', "error", 404);
+        if (!$this->shiftRepository->getShiftByActive($active)) {
+            return $this->sentErrorResponse('Shift is not found', "error", 404);
         }
-        return $this->sentSuccessResponse($this->shiftRepository->deleteShiftByActive($id), "Shift is deleted successfully", 200);
+        return $this->sentSuccessResponse($this->shiftRepository->deleteShiftByActive($active), "Shift is deleted successfully", 200);
     }
 }

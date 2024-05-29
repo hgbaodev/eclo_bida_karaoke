@@ -5,28 +5,32 @@ namespace App\Repositories;
 use App\Interface\ShiftDetailRepositoryInterface;
 use App\Models\ShiftDetail;
 
-class ShiftDetailRepository implements ShiftDetailRepositoryInterface{
+class ShiftDetailRepository implements ShiftDetailRepositoryInterface
+{
+    public function getShiftDetails($request)
+    {
+    }
     public function getAllShiftDetail()
     {
-        ShiftDetail::all();
+        return ShiftDetail::all();
     }
-    public function getShiftDetailById($id)
+    public function getShiftDetailByActive($active)
     {
-        ShiftDetail::find($id);
+        return ShiftDetail::where("active", $active)->get();
     }
     public function createShiftDetail(array $data)
     {
-        ShiftDetail::create($data);
+        return ShiftDetail::create($data);
     }
-    public function updateShiftDetailById($id, array $data)
+    public function updateShiftDetailByActive($active, array $data)
     {
-        $shiftDetail = ShiftDetail::find($id);
+        $shiftDetail = ShiftDetail::where("active", $active);
         $shiftDetail->update($data);
         return $shiftDetail;
     }
-    public function deleteShiftDetailById($id)
+    public function deleteShiftDetailByActive($active)
     {
-        $shiftDetail = ShiftDetail::find($id);
+        $shiftDetail = ShiftDetail::where("active", $active);
         $shiftDetail->delete();
         return $shiftDetail;
     }
