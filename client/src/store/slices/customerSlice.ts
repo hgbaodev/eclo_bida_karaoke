@@ -67,6 +67,10 @@ const customerSlice = createSlice({
     setErrors: (state, action) => {
       state.errors = action.payload;
     },
+    setReset: (state) => {
+      state.status = '';
+      state.isFiltered = false;
+    },
     setStatus: (state, action) => {
       state.status = action.payload;
       state.isFiltered = true;
@@ -98,6 +102,6 @@ const customerSlice = createSlice({
   },
 });
 
-export const { setPage, setPageSize, setQuery, setStatus, setErrors } = customerSlice.actions;
+export const { setPage, setPageSize, setReset, setQuery, setStatus, setErrors } = customerSlice.actions;
 
 export default customerSlice.reducer;
