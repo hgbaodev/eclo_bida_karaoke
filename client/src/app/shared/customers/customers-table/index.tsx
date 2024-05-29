@@ -16,18 +16,20 @@ const FilterElement = dynamic(() => import('@/app/shared/customers/customers-tab
 
 export default function CustomersTable() {
   const { openModal } = useModal();
-  const { data, isLoading, pageSize, page, totalRow, query } = useSelector((state: RootState) => state.customer);
+  const { data, isLoading, pageSize, page, totalRow, status, query } = useSelector(
+    (state: RootState) => state.customer,
+  );
 
   useEffect(() => {
     const fetch = async () => {
       try {
-        await dispatch(getCustomers({ page, pageSize, query }));
+        await dispatch(getCustomers({ page, pageSize, query, status }));
       } catch (error) {
         console.error('Error:', error);
       }
     };
     fetch();
-  }, [page, pageSize, query]);
+  }, [page, pageSize, query, status]);
 
   const columns = useMemo(
     () => getColumns(openModal),

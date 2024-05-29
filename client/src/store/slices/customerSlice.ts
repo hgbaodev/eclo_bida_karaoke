@@ -26,7 +26,7 @@ export const getCustomers = createAsyncThunk(
     url.searchParams.set('page', `${page}`);
     url.searchParams.set('perPage', `${pageSize}`);
     url.searchParams.set('query', query);
-    // url.searchParams.set('status', `${status}`);
+    url.searchParams.set('status', `${status}`);
     try {
       const response = await axiosInstance.get(url.href);
       return response.data;
