@@ -10,6 +10,9 @@ import position from './positionSlice';
 
 import logger from './loggerSlice';
 import area from './areaSlice';
+
+import customer from './customerSlice';
+
 import device from './deviceSlice';
 
 // ==============================|| COMBINE REDUCERS ||============================== //
@@ -21,6 +24,7 @@ const reducers = combineReducers({
   staff,
   position,
   logger,
+  customer,
   area,
   device,
 });

@@ -47,6 +47,11 @@ export const menuItems = [
     icon: <HiOutlineUsers />,
   },
   {
+    name: 'Customers',
+    href: routes.admin.customers,
+    icon: <HiOutlineUsers />,
+  },
+  {
     name: 'Roles & Permissions',
     href: routes.admin.rolesPermissions,
     icon: <PiFolderLockDuotone />,

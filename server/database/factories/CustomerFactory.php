@@ -19,11 +19,11 @@ class CustomerFactory extends Factory
     public function definition(): array
     {
         return [
-            'first_name' => $this->faker->firstName(),
-            'last_name' => $this->faker->lastName(),
+            'first_name' => $this->faker->name(),
+            'last_name' => $this->faker->name(),
             'phone' => $this->faker->phoneNumber(),
             'email' => $this->faker->safeEmail(),
-            'email' => $this->faker->safeEmail(),
+            'status' => $this->faker->randomElement(['A', 'D']),
         ];
     }
 }

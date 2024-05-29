@@ -7,9 +7,9 @@ interface CustomerRepositoryInterface{
     public function getAllCustomers();
     public function createCustomer(array $data);
     public function getCustomerById($id);
-    public function updateCustomerById($id, array $data);
-    public function deleteCustomerById($id);
     public function getCustomerByActive($active);
+    public function updateCustomerById($id, array $data);
     public function updateCustomerByActive($active, array $data);
+    public function deleteCustomerById($id);
     public function deleteCustomerByActive($active);
 }

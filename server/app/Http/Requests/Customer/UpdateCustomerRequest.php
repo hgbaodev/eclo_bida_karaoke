@@ -27,6 +27,7 @@ class UpdateCustomerRequest extends HelperRequest
             'last_name' => 'required',
             'phone' => 'required|unique:customers|regex:/^[0-9]{10,}$/',
             'email' => 'required|email|unique:customers',
+            'status' => 'required|in:A,D',
         ];
     }
 }
