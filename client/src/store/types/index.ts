@@ -3,6 +3,7 @@ export interface RootState {
   role: roleType;
   user: userType;
   logger: loggerType;
+  area: areaType;
 }
 export interface authType {
   isAuthenticated: boolean;
@@ -49,4 +50,15 @@ export interface loggerType {
   pageSize: number;
   totalRow: number;
   query: string;
+}
+
+interface area {
+  name: string;
+  description: string;
+  active: string;
+}
+export interface areaType {
+  data: any[];
+  isCreateLoading: boolean;
+  isEditLoading: boolean;
 }
