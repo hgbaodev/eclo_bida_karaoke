@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Shift;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PositionRequest extends FormRequest
+class ShiftRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,8 @@ class PositionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "position_name" => "required",
-            "position_salary" => "required|regex:/^[0-9]{7,}$/"
+            "time_in" => "required",
+            "time_out" => "required"
         ];
     }
 }

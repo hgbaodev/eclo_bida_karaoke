@@ -16,7 +16,7 @@ class StaffRepository implements StaffRepositoryInterface
         $id = $request->input('id');
         $idcard = $request->input('idcard');
         $position = $request->input('position');
-        $staffs = Staff::query();
+        $staffs = Staff::query()->with(['position']);
         if ($query) {
             $staffs->where("id", "LIKE", "%$query%")
                 ->orWhere("name", "LIKE", "%$query%");
@@ -25,6 +25,9 @@ class StaffRepository implements StaffRepositoryInterface
             $staffs->where('id', $id);
         }
         if ($position) {
+            $staffs->whereHas('position', function ($query) use ($position) {
+                $query->where("active", $position);
+            });
             $staffs->where('position_id', $position);
         }
         if ($idcard) {
@@ -51,13 +54,13 @@ class StaffRepository implements StaffRepositoryInterface
     }
     public function updateStaffByActive($active, array $data)
     {
-        $staff = Staff::where("active", $active)->get();
+        $staff = Staff::where("active", $active);
         $staff->update($data);
         return $staff;
     }
     public function deleteStaffByActive($active)
     {
-        $staff = Staff::where("active", $active)->get();
+        $staff = Staff::where("active", $active);
         $staff->delete();
         return $staff;
     }

@@ -5,6 +5,8 @@ export interface RootState {
   logger: loggerType;
   area: areaType;
   device: deviceType;
+  position: positionType;
+  staff: staffType;
 }
 export interface authType {
   isAuthenticated: boolean;
@@ -67,4 +69,26 @@ export interface deviceType {
   pageSize: number;
   totalRow: number;
   query: string;
+}
+export interface staffType {
+  data: [];
+  isLoading: boolean;
+  isFiltered: boolean;
+  page: number;
+  pageSize: number;
+  totalRow: number;
+  query: string;
+  position: any;
+  status: any;
+  errors: any;
+  isCreateLoading: boolean;
+  isUpdateLoading: boolean;
+}
+
+export interface positionType {
+  fetchData: any[];
+  fetchDataLoading: boolean;
+  createLoading: boolean;
+  updateLoading: boolean;
+  listPositions: any[];
 }
