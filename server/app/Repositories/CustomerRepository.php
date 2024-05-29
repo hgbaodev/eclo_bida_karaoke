@@ -17,12 +17,14 @@ class CustomerRepository implements CustomerRepositoryInterface {
       $email = $request->input('email');
       $phone = $request->input('phone');
       $query = $request->input('query');
+      $status = $request->input('status');
 
       $customers = Customer::query();
       if ($query) {
           $customers->where('name', 'LIKE', "%$query%")
               ->orWhere('phone', 'LIKE', "%$query%")
-              ->orWhere('email', 'LIKE', "%$query%");
+              ->orWhere('email', 'LIKE', "%$query%")
+              ->orWhere('status', 'LIKE', "%$query%");
       }
       if($id){
           $customers->where('id', $id);
@@ -35,6 +37,9 @@ class CustomerRepository implements CustomerRepositoryInterface {
       }
       if ($phone){
           $customers->where('phone','LIKE', "%$phone%");
+      }
+      if ($status) {
+          $customers->where('status', $status);
       }
       if($all){
           $customers = $customers->get();
@@ -54,6 +59,11 @@ class CustomerRepository implements CustomerRepositoryInterface {
     return Customer::find($id);
   }
 
+    function getCustomerByActive($active)
+    {
+        return Customer::where('active', $active);
+    }
+
   function createCustomer(array $data)
   {
     return Customer::create($data);
@@ -66,10 +76,23 @@ class CustomerRepository implements CustomerRepositoryInterface {
     return $customer;
   }
 
+    function updateCustomerByActive($active, array $data)
+    {
+        $customer = Customer::where('active', $active);
+        $customer->update($data);
+        return $customer;
+    }
+
   function deleteCustomerById($id)
   {
     $customer = Customer::find($id);
     $customer->delete();
     return $customer;
   }
+    function deleteCustomerByActive($active)
+    {
+        $customer = Customer::where('active', $active);
+        $customer->delete();
+        return $customer;
+    }
 }

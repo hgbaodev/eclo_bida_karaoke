@@ -17,6 +17,7 @@ export const routes = {
       devices: '/admin/services/devices',
     },
     jobBoard: '/admin/job-board',
+    customers: '/admin/customers',
     loggers: '/admin/loggers',
   },
   auth: {

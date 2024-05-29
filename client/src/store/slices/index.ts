@@ -6,6 +6,7 @@ import role from './roleSlice';
 import user from './userSlice';
 import logger from './loggerSlice';
 import area from './areaSlice';
+import customer from './customerSlice';
 
 // ==============================|| COMBINE REDUCERS ||============================== //
 
@@ -14,6 +15,7 @@ const reducers = combineReducers({
   role,
   user,
   logger,
+  customer,
   area,
 });
 

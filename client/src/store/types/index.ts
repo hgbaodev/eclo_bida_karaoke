@@ -3,6 +3,7 @@ export interface RootState {
   role: roleType;
   user: userType;
   logger: loggerType;
+  customer: customerType;
   area: areaType;
 }
 export interface authType {
@@ -37,6 +38,20 @@ export interface userType {
   query: string;
   role: any;
   status: any;
+  errors: any;
+  isCreateLoading: boolean;
+  isUpdateLoading: boolean;
+}
+
+export interface customerType {
+  data: [];
+  isLoading: boolean;
+  isFiltered: boolean;
+  page: number;
+  pageSize: number;
+  totalRow: number;
+  status: any;
+  query: string;
   errors: any;
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
