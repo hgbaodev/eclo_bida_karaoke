@@ -4,6 +4,7 @@ export interface RootState {
   user: userType;
   logger: loggerType;
   area: areaType;
+  device: deviceType;
 }
 export interface authType {
   isAuthenticated: boolean;
@@ -52,13 +53,18 @@ export interface loggerType {
   query: string;
 }
 
-interface area {
-  name: string;
-  description: string;
-  active: string;
-}
 export interface areaType {
   data: any[];
   isCreateLoading: boolean;
   isEditLoading: boolean;
+}
+
+export interface deviceType {
+  data: any[];
+  isLoading: boolean;
+  isFiltered: boolean;
+  page: number;
+  pageSize: number;
+  totalRow: number;
+  query: string;
 }

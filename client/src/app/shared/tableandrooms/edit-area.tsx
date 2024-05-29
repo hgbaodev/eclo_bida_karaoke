@@ -73,6 +73,9 @@ export default function EditArea({ name, description, active }: { name: string; 
               <Button type="submit" isLoading={isEditLoading} className="w-full @xl:w-auto">
                 Edit Area
               </Button>
+              <Button type="submit" className="w-full @xl:w-auto" color="danger">
+                Delete
+              </Button>
             </div>
           </>
         );

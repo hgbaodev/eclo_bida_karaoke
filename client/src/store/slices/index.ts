@@ -6,6 +6,7 @@ import role from './roleSlice';
 import user from './userSlice';
 import logger from './loggerSlice';
 import area from './areaSlice';
+import device from './deviceSlice';
 
 // ==============================|| COMBINE REDUCERS ||============================== //
 
@@ -15,6 +16,7 @@ const reducers = combineReducers({
   user,
   logger,
   area,
+  device,
 });
 
 export default reducers;

@@ -121,7 +121,7 @@ export default function CreateTableAndRoom() {
                 Cancel
               </Button>
               <Button type="submit" isLoading={isCreateLoading} className="w-full @xl:w-auto">
-                Create User
+                Create Service
               </Button>
             </div>
           </>
