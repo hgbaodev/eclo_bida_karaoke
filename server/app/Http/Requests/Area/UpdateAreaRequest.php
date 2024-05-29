@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Area;
 
 use App\Http\Helpers\HelperRequest;
-use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateAreaRequest extends HelperRequest
 {
@@ -22,10 +22,10 @@ class UpdateAreaRequest extends HelperRequest
      */
     public function rules(): array
     {
+        $active = $this->route('active');
         return [
-            'name' => 'required|unique:areas',
+            'name' => ['required', Rule::unique('areas')->ignore($active, 'active')],
             'description' => 'required',
-            'isDeleted'
         ];
     }
 }

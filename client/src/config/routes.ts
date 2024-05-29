@@ -14,9 +14,9 @@ export const routes = {
     rolesPermissions: '/admin/roles-permissions',
     services: {
       tableandrooms: '/admin/services/tableandrooms',
-      areas: '/admin/services/devices',
       devices: '/admin/services/devices',
     },
+    customers: '/admin/customers',
     jobBoard: '/admin/job-board',
     loggers: '/admin/loggers',
     staffs: '/admin/staffs',

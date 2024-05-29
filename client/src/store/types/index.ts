@@ -1,3 +1,12 @@
+export interface RootState {
+  auth: authType;
+  role: roleType;
+  user: userType;
+  logger: loggerType;
+  area: areaType;
+  position: positionType;
+  staff: staffType;
+}
 export interface authType {
   isAuthenticated: boolean;
   isLoaded: boolean;
@@ -20,14 +29,6 @@ export interface roleType {
   listRoles: any[];
 }
 
-export interface RootState {
-  auth: authType;
-  role: roleType;
-  user: userType;
-  position: positionType;
-  staff: staffType;
-}
-
 export interface userType {
   data: [];
   isLoading: boolean;
@@ -43,6 +44,26 @@ export interface userType {
   isUpdateLoading: boolean;
 }
 
+export interface loggerType {
+  data: any[];
+  isLoading: boolean;
+  isFiltered: boolean;
+  page: number;
+  pageSize: number;
+  totalRow: number;
+  query: string;
+}
+
+interface area {
+  name: string;
+  description: string;
+  active: string;
+}
+export interface areaType {
+  data: any[];
+  isCreateLoading: boolean;
+  isEditLoading: boolean;
+}
 export interface staffType {
   data: [];
   isLoading: boolean;

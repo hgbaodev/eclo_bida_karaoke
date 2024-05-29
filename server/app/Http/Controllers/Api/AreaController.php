@@ -44,13 +44,14 @@ class AreaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateAreaRequest $request,$id)
+    public function update(UpdateAreaRequest $request, $active)
     {
         $validated_data = $request->validated();
-        if (!$this->areaRepository->getAreaById($id)){
-            return $this->sentErrorResponse('Area '.$id. ' is not found');
+        $foundArea = $this->areaRepository->getAreaByActive($active);
+        if (!$foundArea) {
+            return $this->sentErrorResponse('Area ' . $active . ' is not found');
         }
-        return $this->sentSuccessResponse($this->areaRepository->updateAreaById($id, $validated_data), 'The area '.$id.' has been updated!!!', 200);
+        return $this->sentSuccessResponse($this->areaRepository->updateAreaById($foundArea->id, $validated_data), 'The area ' . $active . ' has been updated!!!', 200);
     }
 
     /**
@@ -58,9 +59,9 @@ class AreaController extends Controller
      */
     public function destroy($id)
     {
-        if (!$this->areaRepository->getAreaById($id)){
-            return $this->sentErrorResponse('Area '.$id. ' is not found');
+        if (!$this->areaRepository->getAreaById($id)) {
+            return $this->sentErrorResponse('Area ' . $id . ' is not found');
         }
-        return $this->sentSuccessResponse($this->areaRepository->deleteAreaById($id), 'The area '.$id.' has been deleted!!!', 200);
+        return $this->sentSuccessResponse($this->areaRepository->deleteAreaById($id), 'The area ' . $id . ' has been deleted!!!', 200);
     }
 }

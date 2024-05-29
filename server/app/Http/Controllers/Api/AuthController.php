@@ -8,11 +8,13 @@ use App\Http\Requests\Auth\SignupRequest;
 use App\Http\Resources\Auth\SigninResource;
 use App\Interface\UserRepositoryInterface;
 
-class AuthController extends Controller {
-    
+class AuthController extends Controller
+{
+
     protected $userRepository;
 
-    public function __construct(UserRepositoryInterface $userRepository) {
+    public function __construct(UserRepositoryInterface $userRepository)
+    {
         $this->userRepository = $userRepository;
     }
 
@@ -21,7 +23,8 @@ class AuthController extends Controller {
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function signup(SignupRequest $signupRequest) {
+    public function signup(SignupRequest $signupRequest)
+    {
         $validatedData = $signupRequest->validated();
         $validatedData['password'] = bcrypt($validatedData['password']);
         $validatedData['image'] = 'https://avatars.githubusercontent.com/u/120194990?v=4';
@@ -34,7 +37,9 @@ class AuthController extends Controller {
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function signin(SigninRequest $signinRequest) {
+    public function signin(SigninRequest $signinRequest)
+    {
+
         $validatedData = $signinRequest->validated();
         if (!$token = auth()->attempt($validatedData)) {
             return $this->sentErrorResponse('Unauthorized', 'error', 401);
@@ -49,7 +54,8 @@ class AuthController extends Controller {
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function me() {
+    public function me()
+    {
         $user = auth()->user();
         $token = auth()->login($user);
         $user->accessToken = $token;
@@ -61,7 +67,8 @@ class AuthController extends Controller {
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function signout() {
+    public function signout()
+    {
         auth()->logout();
         return $this->sentSuccessResponse('Successfully logged out');
     }
@@ -71,8 +78,8 @@ class AuthController extends Controller {
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function refresh() {
+    public function refresh()
+    {
         return $this->sentSuccessResponse(auth()->refresh());
     }
-    
 }

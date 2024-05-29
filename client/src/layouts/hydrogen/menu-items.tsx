@@ -1,5 +1,5 @@
 import { routes } from '@/config/routes';
-import { PiPackageDuotone, PiChartBarDuotone, PiFolderLockDuotone, PiShapesDuotone } from 'react-icons/pi';
+import { PiPackageDuotone, PiChartBarDuotone, PiFolderLockDuotone, PiShapesDuotone, PiUserList } from 'react-icons/pi';
 import { FaUniversalAccess } from 'react-icons/fa';
 import { HiOutlineUsers } from 'react-icons/hi2';
 // Note: do not add href in the label object, it is rendering as label
@@ -36,10 +36,6 @@ export const menuItems = [
         href: routes.admin.services.tableandrooms,
       },
       {
-        name: 'Areas',
-        href: routes.admin.services.areas,
-      },
-      {
         name: 'Devices',
         href: routes.admin.services.devices,
       },
@@ -56,9 +52,15 @@ export const menuItems = [
     icon: <PiFolderLockDuotone />,
   },
   {
+
     name: 'Staffs',
     href: routes.admin.staffs,
     icon: <HiOutlineUsers />,
+
+    name: 'Customers',
+    href: routes.admin.customers,
+    icon: <PiUserList />,
+
   },
   {
     name: 'Loggers',
