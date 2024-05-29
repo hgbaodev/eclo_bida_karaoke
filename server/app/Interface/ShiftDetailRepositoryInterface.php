@@ -1,13 +1,14 @@
-<?php 
+<?php
 
 namespace App\Interface;
 
 
-interface ShiftDetailRepositoryInterface {
+interface ShiftDetailRepositoryInterface
+{
+    public function getShiftDetails($request);
     public function getAllShiftDetail();
-    public function getShiftDetailById($id);
+    public function getShiftDetailByActive($active);
     public function createShiftDetail(array $data);
-    public function updateShiftDetailById($id,array $data);
-    public function deleteShiftDetailById($id);
-
+    public function updateShiftDetailByActive($active, array $data);
+    public function deleteShiftDetailByActive($active);
 }

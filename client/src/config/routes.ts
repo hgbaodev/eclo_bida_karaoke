@@ -16,9 +16,12 @@ export const routes = {
       tableandrooms: '/admin/services/tableandrooms',
       devices: '/admin/services/devices',
     },
+    customers: '/admin/customers',
     jobBoard: '/admin/job-board',
     customers: '/admin/customers',
     loggers: '/admin/loggers',
+    staffs: '/admin/staffs',
+    positions: '/admin/positions',
   },
   auth: {
     signIn: '/auth/signin',

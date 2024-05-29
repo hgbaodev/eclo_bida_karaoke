@@ -144,3 +144,4 @@ export const STATUSES = {
   Active: 'A',
   InActive: 'D',
 } as const;
+

@@ -19,6 +19,7 @@ class Customer extends Model
         'email',
         'phone',
         'status',
+        'active',
     ];
 
     protected static function boot()

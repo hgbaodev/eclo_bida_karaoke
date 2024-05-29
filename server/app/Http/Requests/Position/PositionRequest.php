@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Position;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StaffRequest extends FormRequest
+class PositionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,8 @@ class StaffRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'staff_name' => 'required',
-            'staff_phone' => 'required|regex:/^[0-9]{10}$/',
-            'staff_idcard' => 'required|regex:/^[0-9]{12}$/',
+            "position_name" => "required",
+            "position_salary" => "required|regex:/^[0-9]{7,}$/"
         ];
     }
 }

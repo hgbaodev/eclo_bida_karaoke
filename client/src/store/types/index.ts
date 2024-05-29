@@ -5,6 +5,9 @@ export interface RootState {
   logger: loggerType;
   customer: customerType;
   area: areaType;
+  device: deviceType;
+  position: positionType;
+  staff: staffType;
 }
 export interface authType {
   isAuthenticated: boolean;
@@ -67,13 +70,40 @@ export interface loggerType {
   query: string;
 }
 
-interface area {
-  name: string;
-  description: string;
-  active: string;
-}
 export interface areaType {
   data: any[];
   isCreateLoading: boolean;
   isEditLoading: boolean;
+}
+
+export interface deviceType {
+  data: any[];
+  isLoading: boolean;
+  isFiltered: boolean;
+  page: number;
+  pageSize: number;
+  totalRow: number;
+  query: string;
+}
+export interface staffType {
+  data: [];
+  isLoading: boolean;
+  isFiltered: boolean;
+  page: number;
+  pageSize: number;
+  totalRow: number;
+  query: string;
+  position: any;
+  status: any;
+  errors: any;
+  isCreateLoading: boolean;
+  isUpdateLoading: boolean;
+}
+
+export interface positionType {
+  fetchData: any[];
+  fetchDataLoading: boolean;
+  createLoading: boolean;
+  updateLoading: boolean;
+  listPositions: any[];
 }

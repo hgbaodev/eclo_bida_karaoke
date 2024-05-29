@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Staff;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ShiftRequest extends FormRequest
+class StaffRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,9 @@ class ShiftRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "time_in" => "required",
-            "time_out" => "required" 
+            // 'staff_name' => 'required',
+            // 'staff_phone' => 'required|regex:/^[0-9]{10}$/',
+            // 'staff_idcard' => 'required|regex:/^[0-9]{12}$/',
         ];
     }
 }

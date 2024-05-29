@@ -20,8 +20,8 @@ class DeviceFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'description' => $this->faker->text(),
-            'status' => $this->faker->numberBetween(1,20),
+            'description' => $this->faker->text(10),
+            'status' => $this->faker->randomElement(['A', 'D'])
         ];
     }
 }

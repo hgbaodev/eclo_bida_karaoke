@@ -63,6 +63,6 @@ class CustomerController extends Controller
         if(!$this->customerRepository->getCustomerByActive($active)){
             return $this->sentErrorResponse('Customer '.$active. ' is not found', 'error', 404);
         }
-        return $this->sentSuccessResponse($this->customerRepository->deleteCustomerByActive($active), 'customer '.$id.' is deleted', 200);
+        return $this->sentSuccessResponse($this->customerRepository->deleteCustomerByActive($active), 'customer '.$active.' is deleted', 200);
     }
 }

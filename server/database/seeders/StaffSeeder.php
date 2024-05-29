@@ -13,7 +13,6 @@ class StaffSeeder extends Seeder
     public function run(): void
     {
         Staff::create([
-            "id" => "1",
             "name" => "Ly Kien Huy",
             "birthday" => "2002-11-14",
             "image" => "",
@@ -22,5 +21,6 @@ class StaffSeeder extends Seeder
             "address" => "Q5",
             "position_id" => 3
         ]);
+        Staff::factory()->count(30)->create();
     }
 }
