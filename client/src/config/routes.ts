@@ -19,6 +19,7 @@ export const routes = {
     },
     jobBoard: '/admin/job-board',
     loggers: '/admin/loggers',
+    products: '/admin/products'
   },
   auth: {
     signIn: '/auth/signin',

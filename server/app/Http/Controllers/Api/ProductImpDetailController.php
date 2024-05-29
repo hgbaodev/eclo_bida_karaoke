@@ -39,7 +39,7 @@ class ProductImpDetailController extends Controller
     }
     public function destroy($active)
     {
-        if (!$this->product_import_Repository->getProductImportByActive($active)) {
+        if (!$this->product_import_Repository->getProductImppDetailByActive($active)) {
             return $this->sentErrorResponse($active . 'is not found', 'error', 404);
         }
         return $this->sentSuccessResponse($this->product_import_Repository->deleteByActive($active), $active . 'is deleted successfully', 200);

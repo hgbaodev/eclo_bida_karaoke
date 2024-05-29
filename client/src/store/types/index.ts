@@ -3,6 +3,7 @@ export interface RootState {
   role: roleType;
   user: userType;
   logger: loggerType;
+  product: productType;
 }
 export interface authType {
   isAuthenticated: boolean;
@@ -49,4 +50,17 @@ export interface loggerType {
   pageSize: number;
   totalRow: number;
   query: string;
+}
+
+export interface productType {
+  data: [];
+  isLoading: boolean;
+  isFiltered: boolean;
+  page: number;
+  pageSize: number;
+  totalRow: number;
+  query: string;
+  errors: any;
+  isCreateLoading: boolean;
+  isUpdateLoading: boolean;
 }

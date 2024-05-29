@@ -18,9 +18,9 @@ class ProductController extends Controller
         $this->productRepository = $productRepository;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return $this->sentSuccessResponse($this->productRepository->getAllProduct());
+        return $this->sentSuccessResponse($this->productRepository->getProducts($request));
     }
 
     /**
