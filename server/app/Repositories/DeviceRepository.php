@@ -8,7 +8,6 @@ use App\Models\Device;
 
 class DeviceRepository implements DeviceRepositoryInterface
 {
-
     function getDevices($request)
     {
         $all = $request->input('all');
@@ -17,15 +16,16 @@ class DeviceRepository implements DeviceRepositoryInterface
         $deivies = Device::query();
         if ($query) {
             $deivies->where("id", "LIKE", "%$query%")
-                ->orWhere("name", "LIKE", "%$query%")
-                ->orWhere("description", "LIKE", "%$query%");
+                ->where("name", "LIKE", "%$query%")
+                ->where("description", "LIKE", "%$query%");
         }
+        $deivies->orderBy('id', 'desc');
         if ($all && $all == true) {
             $deivies = $deivies->get();
-          } else {
+        } else {
             $deivies = $deivies->paginate($perPage ?? 10);
-          }
-          return new CollectionCustom($deivies);
+        }
+        return new CollectionCustom($deivies);
     }
 
     function getDeviceById($id)
