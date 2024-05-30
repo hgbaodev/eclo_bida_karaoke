@@ -3,11 +3,15 @@ export interface RootState {
   role: roleType;
   user: userType;
   logger: loggerType;
+
+  product: productType;
+
   customer: customerType;
   area: areaType;
   device: deviceType;
   position: positionType;
   staff: staffType;
+
 }
 export interface authType {
   isAuthenticated: boolean;
@@ -70,6 +74,19 @@ export interface loggerType {
   query: string;
 }
 
+
+export interface productType {
+    data: [];
+    isLoading: boolean;
+    isFiltered: boolean;
+    page: number;
+    pageSize: number;
+    totalRow: number;
+    query: string;
+    errors: any;
+    isCreateLoading: boolean;
+    isUpdateLoading: boolean;
+}
 export interface areaType {
   data: any[];
   isCreateLoading: boolean;
@@ -86,6 +103,7 @@ export interface deviceType {
   query: string;
 }
 export interface staffType {
+
   data: [];
   isLoading: boolean;
   isFiltered: boolean;

@@ -20,6 +20,7 @@ export const routes = {
     jobBoard: '/admin/job-board',
     customers: '/admin/customers',
     loggers: '/admin/loggers',
+    products: '/admin/products'
     staffs: '/admin/staffs',
     positions: '/admin/positions',
   },

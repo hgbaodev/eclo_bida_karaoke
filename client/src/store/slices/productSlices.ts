@@ -1,11 +1,10 @@
-// userSlice.js
+// staffSlice.js
 import axiosInstance from '@/api/axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { userType } from '../types';
+import { productType } from '../types';
 import env from '@/env';
-import { EditUserInput } from '@/utils/validators/edit-user.schema';
-
-const initialState: userType = {
+import { EditProductInput } from '@/utils/validators/edit-product.schema';
+const initialState: productType = {
   data: [],
   isLoading: false,
   isFiltered: false,
@@ -13,34 +12,19 @@ const initialState: userType = {
   page: 1,
   pageSize: 5,
   query: '',
-  role: '',
-  status: '',
   errors: null,
   isCreateLoading: false,
   isUpdateLoading: false,
 };
 
-export const getUsers = createAsyncThunk(
-  'users',
-  async ({
-    page,
-    pageSize,
-    query,
-    status,
-    role,
-  }: {
-    page: number;
-    pageSize: number;
-    query: string;
-    status: string;
-    role: string;
-  }) => {
-    const url = new URL('/api/v1/users', env.NEXT_API_URL);
+export const getProducts= createAsyncThunk(
+  'products',
+  async ({ page, pageSize, query }: { page: number; pageSize: number; query: string }) => {
+    const url = new URL('/api/v1/products', env.NEXT_API_URL);
     url.searchParams.set('page', `${page}`);
     url.searchParams.set('perPage', `${pageSize}`);
     url.searchParams.set('query', query);
-    url.searchParams.set('status', `${status}`);
-    url.searchParams.set('role', `${role}`);
+ 
     try {
       const response = await axiosInstance.get(url.href);
       return response.data;
@@ -50,9 +34,9 @@ export const getUsers = createAsyncThunk(
   },
 );
 
-export const createUser = createAsyncThunk('users/createUser', async (data: any, { rejectWithValue }) => {
+export const createProduct = createAsyncThunk('products/createProduct', async (data: any, { rejectWithValue }) => {
   try {
-    const response = await axiosInstance.post(`users`, data);
+    const response = await axiosInstance.post(`products`, data);
     return response.data;
   } catch (error: any) {
     if (!error.response) {
@@ -62,9 +46,9 @@ export const createUser = createAsyncThunk('users/createUser', async (data: any,
   }
 });
 
-export const deleteUser = createAsyncThunk('users/deleteUser', async (active: string, { rejectWithValue }) => {
+export const deleteProduct = createAsyncThunk('products/deleteProduct', async (active: string, { rejectWithValue }) => {
   try {
-    const response = await axiosInstance.delete(`users/${active}`);
+    const response = await axiosInstance.delete(`products/${active}`);
     return response.data;
   } catch (error: any) {
     if (!error.response) {
@@ -74,11 +58,9 @@ export const deleteUser = createAsyncThunk('users/deleteUser', async (active: st
   }
 });
 
-export const updateUser = createAsyncThunk(
-  'users/updateUser',
-  async ({ user, active }: { user: EditUserInput; active: string }, { rejectWithValue }) => {
+export const updateProduct = createAsyncThunk('products/updateProduct',async ({ product, active }: { product: EditProductInput; active: string }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.put(`users/${active}`, user);
+      const response = await axiosInstance.put(`products/${active}`, product);
       return response.data;
     } catch (error: any) {
       if (!error.response) {
@@ -89,8 +71,8 @@ export const updateUser = createAsyncThunk(
   },
 );
 
-const userSlice = createSlice({
-  name: 'user',
+const productSlices = createSlice({
+  name: 'product',
   initialState,
   reducers: {
     setPage: (state, action) => {
@@ -102,17 +84,8 @@ const userSlice = createSlice({
     setQuery: (state, action) => {
       state.query = action.payload;
     },
-    setRole: (state, action) => {
-      state.role = action.payload;
-      state.isFiltered = true;
-    },
-    setStatus: (state, action) => {
-      state.status = action.payload;
-      state.isFiltered = true;
-    },
     setReset: (state) => {
-      state.role = '';
-      state.status = '';
+      
       state.isFiltered = false;
     },
     setErrors: (state, action) => {
@@ -121,41 +94,39 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getUsers.pending, (state: userType) => {
+      .addCase(getProducts.pending, (state: productType) => {
         state.isLoading = true;
       })
-      .addCase(getUsers.fulfilled, (state, action) => {
+      .addCase(getProducts.fulfilled, (state, action) => {
         const result = action.payload.data;
         state.isLoading = false;
         state.data = result.result;
         state.totalRow = result.meta.total;
-        console.log(result);
-        
       })
-      .addCase(getUsers.rejected, (state) => {
+      .addCase(getProducts.rejected, (state) => {
         state.isLoading = false;
       })
-      .addCase(createUser.pending, (state: userType) => {
+      .addCase(createProduct.pending, (state: productType) => {
         state.isCreateLoading = true;
       })
-      .addCase(createUser.fulfilled, (state, action) => {
+      .addCase(createProduct.fulfilled, (state,action) => {
         state.isCreateLoading = false;
       })
-      .addCase(createUser.rejected, (state) => {
+      .addCase(createProduct.rejected, (state) => {
         state.isCreateLoading = false;
       })
-      .addCase(updateUser.pending, (state: userType) => {
+      .addCase(updateProduct.pending, (state: productType) => {
         state.isUpdateLoading = true;
       })
-      .addCase(updateUser.fulfilled, (state, action) => {
+      .addCase(updateProduct.fulfilled, (state, action) => {
         state.isUpdateLoading = false;
       })
-      .addCase(updateUser.rejected, (state) => {
+      .addCase(updateProduct.rejected, (state) => {
         state.isUpdateLoading = false;
       });
   },
 });
 
-export const { setPage, setPageSize, setReset, setStatus, setRole, setQuery, setErrors } = userSlice.actions;
+export const { setPage, setPageSize, setReset, setQuery, setErrors } = productSlices.actions;
 
-export default userSlice.reducer;
+export default productSlices.reducer;
