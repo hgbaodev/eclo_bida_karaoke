@@ -4,11 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Traits\GeneratesUniqueActive;
 
 class Product extends Model
 {
     public $timestamps = false;
-    use HasFactory;
+    use HasFactory, GeneratesUniqueActive;
+    use SoftDeletes;
     protected $fillable = [
         'name',
         'description',

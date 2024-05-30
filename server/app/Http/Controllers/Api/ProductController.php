@@ -36,7 +36,7 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $validated = $request->validated();
-        return $this->sentSuccessResponse($this->productRepository->create($validated));
+        return $this->sentSuccessResponse($this->productRepository->create($validated), "product is created successfully", 200);
     }
 
     /**

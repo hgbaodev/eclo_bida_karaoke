@@ -8,9 +8,9 @@ import AvatarCard from '@/components/ui/avatar-card';
 import DateCell from '@/components/ui/date-cell';
 import DeletePopover from '@/app/shared/delete-popover';
 import { dispatch } from '@/store';
-import {  getProducts } from '@/store/slices/productSlices';
+import { deleteProduct,getProducts } from '@/store/slices/productSlices';
 import toast from 'react-hot-toast';
-// import EditStaff from '../edit-staff';
+import EditProduct from '../edit-product';
 
 export const getColumns = (openModal: (args: any) => void) => [
   {
@@ -59,14 +59,13 @@ export const getColumns = (openModal: (args: any) => void) => [
           <ActionIcon
             onClick={() => {
               const data = {
-                product_name: product.name,
+                name: product.name,
                 cost_price: product.cost_price,
                 selling_price: product.selling_price,
                 quantity: product.quantity,
-                unit: product.unit,
               };
               openModal({
-                // view: <EditStaff staff={data} active={staff.active} />,
+                view: <EditProduct product={data} active={product.active} />,
               });
             }}
             as="span"
@@ -77,19 +76,19 @@ export const getColumns = (openModal: (args: any) => void) => [
             <PencilIcon className="h-4 w-4" />
           </ActionIcon>
         </Tooltip>
-        {/* <DeletePopover
+        <DeletePopover
           title={`Delete this user`}
-          description={`Are you sure you want to delete this #${staff.name} staff?`}
+          description={`Are you sure you want to delete this #${product.name} staff?`}
           onDelete={async () => {
-            const result = await dispatch(deleteStaff(staff.active)); // Remove the .then() block
-            if (deleteStaff.fulfilled.match(result)) {
-              await dispatch(getStaffs({ page: 1, pageSize: 5, query: '', position: '' }));
-              toast.success(`Staff #${staff.name} has been deleted successfully.`);
+            const result = await dispatch(deleteProduct(product.active)); // Remove the .then() block
+            if (deleteProduct.fulfilled.match(result)) {
+              await dispatch(getProducts({ page: 1, pageSize: 5, query: ''}));
+              toast.success(`Staff #${product.name} has been deleted successfully.`);
             } else {
-              toast.error(`Failed to delete staff #${staff.active}.`);
+              toast.error(`Failed to delete staff #${product.active}.`);
             }
           }}
-        /> */}
+        />
       </div>
     ),
   },
@@ -112,9 +111,9 @@ export const getColumns = (openModal: (args: any) => void) => [
 export interface Product {
     active: string;
     name: string;
-    description: string;
+    
     cost_price: string;
     selling_price: string;
     quantity: string;
-    unit: string;
+   
   }

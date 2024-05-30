@@ -20,11 +20,9 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            "name" => $this->faker->text(['Sting', 'C2', 'Olong', '7Up', 'Warrior', 'Aquafina', '247']),
-            'description' => $this->faker->sentence,
+            "name" => $this->faker->randomElement(['Sting', 'C2', 'Olong', '7Up']),
             "cost_price" => $this->faker->randomFloat(2, 1, 1000),
             "selling_price" => $this->faker->randomFloat(2, 1, 1000),
-            'unit' => $this->faker->randomElement(['kg', 'g', 'lb', 'oz']),
             'quantity' => $this->faker->numberBetween(1, 1000),
             'active' => base64_encode($this->faker->unique()->word),
         ];

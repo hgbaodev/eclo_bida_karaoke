@@ -2,16 +2,17 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Helpers\HelperRequest;
+use Symfony\Component\Console\Helper\Helper;
 
-class ProductRequest extends FormRequest
+class ProductRequest extends HelperRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,11 +24,8 @@ class ProductRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'description' => 'required',
             'cost_price' => 'required',
             'selling_price' => 'required',
-            'unit' => 'required',
-            'quantity' => 'required',
         ];
     }
 }

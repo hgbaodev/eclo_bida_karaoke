@@ -3,7 +3,7 @@ import axiosInstance from '@/api/axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { productType } from '../types';
 import env from '@/env';
-// import { EditStaffInput } from '@/utils/validators/edit-user.schema';
+import { EditProductInput } from '@/utils/validators/edit-product.schema';
 const initialState: productType = {
   data: [],
   isLoading: false,
@@ -34,44 +34,42 @@ export const getProducts= createAsyncThunk(
   },
 );
 
-// export const createStaff = createAsyncThunk('staffs/createStaff', async (data: any, { rejectWithValue }) => {
-//   try {
-//     const response = await axiosInstance.post(`staffs`, data);
-//     return response.data;
-//   } catch (error: any) {
-//     if (!error.response) {
-//       throw error;
-//     }
-//     return rejectWithValue(error.response.data);
-//   }
-// });
+export const createProduct = createAsyncThunk('products/createProduct', async (data: any, { rejectWithValue }) => {
+  try {
+    const response = await axiosInstance.post(`products`, data);
+    return response.data;
+  } catch (error: any) {
+    if (!error.response) {
+      throw error;
+    }
+    return rejectWithValue(error.response.data);
+  }
+});
 
-// export const deleteStaff = createAsyncThunk('staffs/deleteStaff', async (active: string, { rejectWithValue }) => {
-//   try {
-//     const response = await axiosInstance.delete(`staffs/${active}`);
-//     return response.data;
-//   } catch (error: any) {
-//     if (!error.response) {
-//       throw error;
-//     }
-//     return rejectWithValue(error.response.data);
-//   }
-// });
+export const deleteProduct = createAsyncThunk('products/deleteProduct', async (active: string, { rejectWithValue }) => {
+  try {
+    const response = await axiosInstance.delete(`products/${active}`);
+    return response.data;
+  } catch (error: any) {
+    if (!error.response) {
+      throw error;
+    }
+    return rejectWithValue(error.response.data);
+  }
+});
 
-// export const updateStaff = createAsyncThunk(
-//   'staffs/updateStaff',
-//   async ({ staff, active }: { staff: EditStaffInput; active: string }, { rejectWithValue }) => {
-//     try {
-//       const response = await axiosInstance.put(`staffs/${active}`, staff);
-//       return response.data;
-//     } catch (error: any) {
-//       if (!error.response) {
-//         throw error;
-//       }
-//       return rejectWithValue(error.response.data);
-//     }
-//   },
-// );
+export const updateProduct = createAsyncThunk('products/updateProduct',async ({ product, active }: { product: EditProductInput; active: string }, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.put(`products/${active}`, product);
+      return response.data;
+    } catch (error: any) {
+      if (!error.response) {
+        throw error;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
 
 const productSlices = createSlice({
   name: 'product',
@@ -86,8 +84,6 @@ const productSlices = createSlice({
     setQuery: (state, action) => {
       state.query = action.payload;
     },
-  
-   
     setReset: (state) => {
       
       state.isFiltered = false;
@@ -106,29 +102,28 @@ const productSlices = createSlice({
         state.isLoading = false;
         state.data = result.result;
         state.totalRow = result.meta.total;
-        console.log(result);
       })
       .addCase(getProducts.rejected, (state) => {
         state.isLoading = false;
+      })
+      .addCase(createProduct.pending, (state: productType) => {
+        state.isCreateLoading = true;
+      })
+      .addCase(createProduct.fulfilled, (state,action) => {
+        state.isCreateLoading = false;
+      })
+      .addCase(createProduct.rejected, (state) => {
+        state.isCreateLoading = false;
+      })
+      .addCase(updateProduct.pending, (state: productType) => {
+        state.isUpdateLoading = true;
+      })
+      .addCase(updateProduct.fulfilled, (state, action) => {
+        state.isUpdateLoading = false;
+      })
+      .addCase(updateProduct.rejected, (state) => {
+        state.isUpdateLoading = false;
       });
-      // .addCase(createStaff.pending, (state: productType) => {
-      //   state.isCreateLoading = true;
-      // })
-      // .addCase(createStaff.fulfilled, (state, action) => {
-      //   state.isCreateLoading = false;
-      // })
-      // .addCase(createStaff.rejected, (state) => {
-      //   state.isCreateLoading = false;
-      // })
-      // .addCase(updateStaff.pending, (state: productType) => {
-      //   state.isUpdateLoading = true;
-      // })
-      // .addCase(updateStaff.fulfilled, (state, action) => {
-      //   state.isUpdateLoading = false;
-      // })
-      // .addCase(updateStaff.rejected, (state) => {
-      //   state.isUpdateLoading = false;
-      // });
   },
 });
 

@@ -50,8 +50,8 @@ class ProductRepository implements ProductRepositoryInterface
     }
     public function deleteByActive($active)
     {
-        $product = Product::where("active", $active)->get();
-        $product->delete($active);
+        $product = Product::where("active", $active)->first();
+        $product->delete();
         return $product;
     }
 }
