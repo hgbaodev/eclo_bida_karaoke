@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Customer;
 
 use App\Http\Helpers\HelperRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateCustomerRequest extends HelperRequest
 
@@ -22,12 +23,14 @@ class UpdateCustomerRequest extends HelperRequest
      */
     public function rules(): array
     {
+        $active = $this->route('active');
         return [
             'first_name' => 'required',
             'last_name' => 'required',
-            'phone' => 'required|unique:customers|regex:/^[0-9]{10,}$/',
-            'email' => 'required|email|unique:customers',
+            'phone' => ['required', 'regex:/^[0-9]{10,}$/', Rule::unique('customers')->ignore($active, 'active')],
+            'email' => ['required', 'email', Rule::unique('customers')->ignore($active, 'active')],
             'status' => 'required|in:A,D',
         ];
     }
+
 }
