@@ -22,6 +22,7 @@ class SupplierFactory extends Factory
             'name' => $this->faker->name(),
             'address' => $this->faker->address(),
             'phone' => $this->faker->phoneNumber(),
+            'status' => $this->faker->randomElement(['A', 'D']),
         ];
     }
 }

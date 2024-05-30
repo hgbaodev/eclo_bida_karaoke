@@ -47,7 +47,7 @@ class CustomerRepository implements CustomerRepositoryInterface {
 
     function getCustomerByActive($active)
     {
-        return Customer::where('active', $active);
+        return Customer::where('active', $active)->firstOrFail();
     }
 
   function createCustomer(array $data)
@@ -64,7 +64,7 @@ class CustomerRepository implements CustomerRepositoryInterface {
 
     function updateCustomerByActive($active, array $data)
     {
-        $customer = Customer::where('active', $active);
+        $customer = Customer::where('active', $active)->firstOrFail();
         $customer->update($data);
         return $customer;
     }
@@ -79,7 +79,7 @@ class CustomerRepository implements CustomerRepositoryInterface {
 
   public function deleteCustomerByActive($active)
   {
-      $customer = Customer::where('active', $active)->first();
+      $customer = Customer::where('active', $active)->firstOrFail();
       $customer->delete();
       return $customer;
   }

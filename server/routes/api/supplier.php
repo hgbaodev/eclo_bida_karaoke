@@ -9,9 +9,9 @@ Route::group(
         // 'middleware' => 'auth:api'
     ], function(){
     Route::get('/', [SupplierController::class, 'index']);
-    Route::get('/{id}', [SupplierController::class, 'show']);
+    Route::get('/{active}', [SupplierController::class, 'show']);
     Route::post('/', [SupplierController::class, 'store']);
-    Route::put('/{id}', [SupplierController::class, 'update']);
-    Route::delete('/{id}', [SupplierController::class, 'destroy']);
+    Route::put('/{active}', [SupplierController::class, 'update']);
+    Route::delete('/{active}', [SupplierController::class, 'destroy']);
 }
 );
