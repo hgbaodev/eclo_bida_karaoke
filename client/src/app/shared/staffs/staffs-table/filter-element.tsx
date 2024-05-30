@@ -4,15 +4,17 @@ import { PiTrashDuotone, PiMagnifyingGlassBold } from 'react-icons/pi';
 import StatusField from '@/components/controlled-table/status-field';
 import { Button, Input } from 'rizzui';
 import { dispatch } from '@/store';
-import { setQuery, setReset, setRole, setStatus } from '@/store/slices/userSlice';
 import { RootState } from '@/store/types';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import useDebounce from '@/hooks/use-debounce';
+import { statusOptions } from '../type';
+import { getStatusBadge } from './columns';
 import { getPositions } from '@/store/slices/positionSlice';
+import { setPosition, setQuery, setReset, setStatus } from '@/store/slices/staffSlice';
 
 export default function FilterElement() {
-  const { isFiltered, query, position } = useSelector((state: RootState) => state.staff);
+  const { isFiltered, query, position, status } = useSelector((state: RootState) => state.staff);
   const { listPositions } = useSelector((state: RootState) => state.position);
   const [searchTerm, setSearchTerm] = useState(query);
   const debounceSearchTerm = useDebounce(searchTerm, 1000);
@@ -29,6 +31,19 @@ export default function FilterElement() {
     <>
       <div className="relative z-50 mb-4 flex flex-wrap items-center justify-between gap-2.5 @container ">
         <StatusField
+          className=" -order-9 w-full @[25rem]:w-[calc(calc(100%_-_10px)_/_2)] @4xl:-order-5 @4xl:w-auto"
+          options={statusOptions}
+          dropdownClassName="!z-10"
+          value={status}
+          onChange={(value: any) => {
+            dispatch(setStatus(value));
+          }}
+          placeholder="Filter by Status"
+          getOptionValue={(option: { value: any }) => option.value}
+          getOptionDisplayValue={(option: { value: any }) => getStatusBadge(option.value as any)}
+          displayValue={(selected: any) => getStatusBadge(selected)}
+        />
+        <StatusField
           options={listPositions}
           dropdownClassName="!z-10 w-48"
           value={position}
@@ -37,9 +52,11 @@ export default function FilterElement() {
           getOptionValue={(option) => option.active}
           getOptionDisplayValue={(option) => option.name}
           onChange={(value: any) => {
-            dispatch(setRole(value));
+            dispatch(setPosition(value));
           }}
-          displayValue={(selected: string) => listPositions.find((role) => role.active === selected)?.name || selected}
+          displayValue={(selected: string) =>
+            listPositions.find((position) => position.active === selected)?.name || selected
+          }
         />
 
         {isFiltered && (

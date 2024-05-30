@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Shift;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Helpers\HelperRequest;
 
-class ShiftRequest extends FormRequest
+class ShiftRequest extends HelperRequest
 {
     /**
      * Determine if the user is authorized to make this request.

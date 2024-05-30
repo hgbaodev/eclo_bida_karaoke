@@ -3,8 +3,9 @@
 namespace App\Http\Requests\Staff;
 
 use App\Http\Helpers\HelperRequest;
+use Illuminate\Validation\Rule;
 
-class StaffRequest extends HelperRequest
+class UpdateStaffRequest extends HelperRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,10 +22,11 @@ class StaffRequest extends HelperRequest
      */
     public function rules(): array
     {
+        $active = $this->route('active');
         return [
             'name' => 'required',
-            'phone' => 'required|unique:staff|regex:/^[0-9]{10}$/',
-            'idcard' => 'required|unique:staff|regex:/^[0-9]{12}$/',
+            'phone' => ['required', 'regex:/^[0-9]{10}$/', Rule::unique('staff')->ignore($active, 'active')],
+            'idcard' => ['required', 'regex:/^[0-9]{12}$/', Rule::unique('staff')->ignore($active, 'active')],
             'birthday' => 'required',
             'address' => 'required',
             'position' => 'required',

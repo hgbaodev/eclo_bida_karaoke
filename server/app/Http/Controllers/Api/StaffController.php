@@ -4,10 +4,14 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Staff\StaffRequest;
+use App\Http\Requests\Staff\UpdateStaffRequest;
 use App\Interface\PositionRepositoryInterface;
 use App\Models\Staff;
 use App\Interface\StaffRepositoryInterface;
+use App\Models\Logger;
 use Illuminate\Http\Request;
+use Laravel\Reverb\Loggers\Log;
+use Psy\Readline\Hoa\Console;
 
 class StaffController extends Controller
 {
@@ -44,7 +48,7 @@ class StaffController extends Controller
         if (!$positon) {
             return $this->sentErrorResponse("Position is not found", "error", 404);
         }
-        $validatedData["postion_id"] = $positon->id;
+        $validatedData["position_id"] = $positon->id;
         unset($validatedData['position']);
         return $this->sentSuccessResponse($this->staffRepository->createStaff($validatedData), "Staff is created successfully", 200);
     }
@@ -72,20 +76,22 @@ class StaffController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StaffRequest $request, $active)
+    public function update(UpdateStaffRequest $request, $active)
     {
         $validatedData = $request->validated();
-        $positon = $this->positionRepository->getPositionByActive($validatedData['position']);
+
         $staff = $this->staffRepository->getStaffByActive($active);
+
         if (!$staff) {
             return $this->sentErrorResponse('Staff is not found', "error", 404);
         }
-        if (!$positon) {
+        $position = $this->positionRepository->getPositionByActive($validatedData['position']);
+        if (!$position) {
             return $this->sentErrorResponse("Position is not found", "error", 404);
         }
-        $validatedData["postion_id"] = $positon->id;
+        $validatedData["position_id"] = $position->id;
         unset($validatedData['position']);
-        return $this->sentSuccessResponse($this->staffRepository->updateStaffByActive($staff->id, $validatedData), "Staff is updated successfully", 200);
+        return $this->sentSuccessResponse($this->staffRepository->updateStaffByActive($active, $validatedData), "Staff is updated successfully", 200);
     }
 
     /**

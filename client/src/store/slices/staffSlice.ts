@@ -21,12 +21,25 @@ const initialState: staffType = {
 
 export const getStaffs = createAsyncThunk(
   'staffs',
-  async ({ page, pageSize, query, position }: { page: number; pageSize: number; query: string; position: string }) => {
+  async ({
+    page,
+    pageSize,
+    query,
+    position,
+    status,
+  }: {
+    page: number;
+    pageSize: number;
+    query: string;
+    position: string;
+    status: string;
+  }) => {
     const url = new URL('/api/v1/staffs', env.NEXT_API_URL);
     url.searchParams.set('page', `${page}`);
     url.searchParams.set('perPage', `${pageSize}`);
     url.searchParams.set('query', query);
     url.searchParams.set('position', `${position}`);
+    url.searchParams.set('status', `${status}`);
     try {
       const response = await axiosInstance.get(url.href);
       return response.data;
@@ -86,6 +99,7 @@ const staffSlice = createSlice({
       state.pageSize = action.payload;
     },
     setQuery: (state, action) => {
+      state.page = 1;
       state.query = action.payload;
     },
     setPosition: (state, action) => {
@@ -93,10 +107,12 @@ const staffSlice = createSlice({
       state.isFiltered = true;
     },
     setStatus: (state, action) => {
+      state.page = 1;
       state.status = action.payload;
       state.isFiltered = true;
     },
     setReset: (state) => {
+      state.page = 1;
       state.position = '';
       state.status = '';
       state.isFiltered = false;

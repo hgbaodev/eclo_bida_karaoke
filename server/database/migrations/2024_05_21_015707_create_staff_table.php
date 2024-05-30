@@ -15,10 +15,11 @@ return new class extends Migration
             $table->id("id");
             $table->string('name');
             $table->date('birthday');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->string('phone')->unique();
             $table->string('idcard')->unique();
             $table->string('address');
+            $table->string('status');
             $table->foreignId('position_id')->constrained('positions');
             $table->string('active')->unique();
             $table->softDeletes();

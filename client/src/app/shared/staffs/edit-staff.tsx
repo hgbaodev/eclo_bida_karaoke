@@ -9,6 +9,7 @@ import { updateStaff, getStaffs } from '@/store/slices/staffSlice';
 import { CreateStaffInput, createStaffSchema } from '@/utils/validators/create-staff.schema';
 import { dispatch } from '@/store';
 import toast from 'react-hot-toast';
+import { statusOptions } from './type';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { EditStaffInput, editStaffSchema } from '@/utils/validators/edit-staff.schema';
@@ -18,7 +19,7 @@ export default function EditStaff({ staff, active }: { staff: EditStaffInput; ac
   const { closeModal } = useModal();
   const [reset, setReset] = useState<any>(staff);
   const [errors, setErrors] = useState<any>({});
-  const { pageSize, page, query, isUpdateLoading, position } = useSelector((state: RootState) => state.staff);
+  const { pageSize, page, query, isUpdateLoading, position, status } = useSelector((state: RootState) => state.staff);
   const { listPositions } = useSelector((state: RootState) => state.position);
   const onSubmit: SubmitHandler<CreateStaffInput> = async (data) => {
     const result: any = await dispatch(updateStaff({ staff: data, active }));
@@ -34,7 +35,7 @@ export default function EditStaff({ staff, active }: { staff: EditStaffInput; ac
       });
       setErrors({});
       closeModal();
-      await dispatch(getStaffs({ page, pageSize, query, position }));
+      await dispatch(getStaffs({ page, pageSize, query, position, status }));
       toast.success('User created successfully');
     } else {
       setErrors(result?.payload?.errors);
@@ -75,13 +76,6 @@ export default function EditStaff({ staff, active }: { staff: EditStaffInput; ac
               className="col-span-[1/2]"
               error={errors.name?.message}
             />
-            <Input
-              label="Birthday"
-              placeholder="Enter staff birthday"
-              {...register('birthday')}
-              className="col-span-full"
-              error={errors.birthday?.message}
-            />
 
             <Input
               label="Phone"
@@ -89,6 +83,15 @@ export default function EditStaff({ staff, active }: { staff: EditStaffInput; ac
               className="col-span-full"
               {...register('phone')}
               error={errors.phone?.message}
+            />
+
+            <Input
+              type="date"
+              label="Birthday"
+              placeholder="Enter staff birthday"
+              {...register('birthday')}
+              className="col-span-full"
+              error={errors.birthday?.message}
             />
 
             <Textarea
@@ -110,7 +113,7 @@ export default function EditStaff({ staff, active }: { staff: EditStaffInput; ac
                   onChange={onChange}
                   name={name}
                   label="Position"
-                  className="col-span-full"
+                  className="col-span-[1/2]"
                   placeholder="Select a position"
                   error={errors?.position?.message}
                   getOptionValue={(option) => option.active}
@@ -118,6 +121,27 @@ export default function EditStaff({ staff, active }: { staff: EditStaffInput; ac
                   displayValue={(selected: string) =>
                     listPositions.find((position) => position.active === selected)?.name ?? selected
                   }
+                  dropdownClassName="!z-[1]"
+                  inPortal={false}
+                />
+              )}
+            />
+            <Controller
+              name="status"
+              control={control}
+              render={({ field: { name, onChange, value } }) => (
+                <Select
+                  options={statusOptions}
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                  label="Status"
+                  placeholder="Select a status"
+                  className="col-span-[1/2]"
+                  error={errors?.status?.message}
+                  getOptionValue={(option: { value: any }) => option.value}
+                  getOptionDisplayValue={(option: { value: any }) => getStatusBadge(option.value as any)}
+                  displayValue={(selected: any) => getStatusBadge(selected)}
                   dropdownClassName="!z-[1]"
                   inPortal={false}
                 />
