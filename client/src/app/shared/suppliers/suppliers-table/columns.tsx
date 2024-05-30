@@ -6,14 +6,15 @@ import { HeaderCell } from '@/components/ui/table';
 import PencilIcon from '@/components/icons/pencil';
 import AvatarCard from '@/components/ui/avatar-card';
 import DateCell from '@/components/ui/date-cell';
-import EditCustomer from '../edit-customer';
+// import EditCustomer from '../edit-customer';
 
 import DeletePopover from '@/app/shared/delete-popover';
 import { dispatch } from '@/store';
-import { getCustomers, deleteCustomer } from '@/store/slices/customerSlice';
+import { getSuppliers, deleteSupplier } from '@/store/slices/supplierSlice';
 import toast from 'react-hot-toast';
+import EditSupplier from '../edit-supplier';
 
-export function getStatusBadge(status: Customer['status']) {
+export function getStatusBadge(status: Supplier['status']) {
   switch (status) {
     case STATUSES.InActive:
       return (
@@ -46,19 +47,15 @@ export const getColumns = (openModal: (args: any) => void) => [
     dataIndex: 'no.',
     key: 'no.',
     width: 50,
-    render: (_: any, customer: Customer, index: number) => <div className="inline-flex ps-3">{index + 1}</div>,
+    render: (_: any, supplier: Supplier, index: number) => <div className="inline-flex ps-3">{index + 1}</div>,
   },
   {
     title: <HeaderCell title="Name" />,
     dataIndex: 'fullName',
     key: 'fullName',
     width: 50,
-    render: (_: string, customer: Customer) => (
-      <AvatarCard
-        src={customer.image}
-        name={customer.first_name + ' ' + customer.last_name}
-        description={customer.email}
-      />
+    render: (_: string, supplier: Supplier) => (
+      <AvatarCard src={supplier.image} name={supplier.name} description={supplier.address} />
     ),
   },
   {
@@ -66,7 +63,7 @@ export const getColumns = (openModal: (args: any) => void) => [
     dataIndex: 'phone',
     key: 'phone',
     width: 50,
-    render: (_: string, customer: Customer) => customer.phone,
+    render: (_: string, supplier: Supplier) => supplier.phone,
   },
   {
     title: <HeaderCell title="Created" />,
@@ -80,27 +77,26 @@ export const getColumns = (openModal: (args: any) => void) => [
     dataIndex: 'status',
     key: 'status',
     width: 10,
-    render: (status: Customer['status']) => getStatusBadge(status),
+    render: (status: Supplier['status']) => getStatusBadge(status),
   },
   {
     title: <></>,
     dataIndex: 'action',
     key: 'action',
     width: 10,
-    render: (_: string, customer: Customer) => (
+    render: (_: string, supplier: Supplier) => (
       <div className="flex items-center justify-end gap-3 pe-3">
         <Tooltip size="sm" content={'Edit Customer'} placement="top" color="invert">
           <ActionIcon
             onClick={() => {
               const data = {
-                first_name: customer.first_name,
-                last_name: customer.last_name,
-                email: customer.email,
-                phone: customer.phone,
-                status: customer.status,
+                name: supplier.name,
+                address: supplier.address,
+                phone: supplier.phone,
+                status: supplier.status,
               };
               openModal({
-                view: <EditCustomer customer={data} active={customer.active} />,
+                view: <EditSupplier supplier={data} active={supplier.active} />,
               });
             }}
             as="span"
@@ -112,15 +108,15 @@ export const getColumns = (openModal: (args: any) => void) => [
           </ActionIcon>
         </Tooltip>
         <DeletePopover
-          title={`Delete this customer`}
-          description={`Are you sure you want to delete this #${customer.last_name} customer?`}
+          title={`Delete this supplier`}
+          description={`Are you sure you want to delete this #${supplier.name} supplier?`}
           onDelete={async () => {
-            const result = await dispatch(deleteCustomer(customer.active)); // Remove the .then() block
-            if (deleteCustomer.fulfilled.match(result)) {
-              await dispatch(getCustomers({ page: 1, pageSize: 5, query: '', status: '' }));
-              toast.success(`Supplier #${customer.first_name} ${customer.last_name} has been deleted successfully.`);
+            const result = await dispatch(deleteSupplier(supplier.active)); // Remove the .then() block
+            if (deleteSupplier.fulfilled.match(result)) {
+              await dispatch(getSuppliers({ page: 1, pageSize: 5, query: '', status: '' }));
+              toast.success(`Supplier #${supplier.name} has been deleted successfully.`);
             } else {
-              toast.error(`Failed to delete customer #${customer.active}.`);
+              toast.error(`Failed to delete supplier #${supplier.active}.`);
             }
           }}
         />
@@ -129,11 +125,10 @@ export const getColumns = (openModal: (args: any) => void) => [
   },
 ];
 
-export interface Customer {
+export interface Supplier {
   active: string;
-  first_name: string;
-  last_name: string;
-  email: string;
+  name: string;
+  address: string;
   status: any;
   image: string;
   phone: string;
