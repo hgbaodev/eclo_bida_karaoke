@@ -74,4 +74,9 @@ export const messages = {
   ProductNameIsRequired:'Product Name is required',
   CostPriceIsRequired: 'Must have cost price',
   SellingPriceIsRequired: 'Must have selling price',
+  maxlenghtAddress: "Your length's address is 50 characters",
+  phoneIsRequired: 'Phone is Required (10 number)',
+  idcardIsRequired: 'IDcard is Required (12 number)',
+  birthdayIsRequired: 'Birthday is Required',
+  positionIsRequired: 'Staff position is required',
 };

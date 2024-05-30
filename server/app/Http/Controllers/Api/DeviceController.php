@@ -19,9 +19,9 @@ class DeviceController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->sentSuccessResponse($this->deviceRepository->getAllDevices());
+        return $this->sentSuccessResponse($this->deviceRepository->getDevices($request));
     }
 
     /**
@@ -44,13 +44,13 @@ class DeviceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateDeviceRequest $request,$id)
+    public function update(UpdateDeviceRequest $request, $id)
     {
         $validated_data = $request->validated();
-        if (!$this->deviceRepository->getDeviceById($id)){
-            return $this->sentErrorResponse('Device '. $id. ' is not found');
+        if (!$this->deviceRepository->getDeviceById($id)) {
+            return $this->sentErrorResponse('Device ' . $id . ' is not found');
         }
-        return $this->sentSuccessResponse($this->deviceRepository->updateDeviceById($id, $validated_data), 'The device '.$id.' has been updated!!!', 200);
+        return $this->sentSuccessResponse($this->deviceRepository->updateDeviceById($id, $validated_data), 'The device ' . $id . ' has been updated!!!', 200);
     }
 
     /**
@@ -58,9 +58,9 @@ class DeviceController extends Controller
      */
     public function destroy($id)
     {
-        if (!$this->deviceRepository->getDeviceById($id)){
-            return $this->sentErrorResponse('Device '. $id. ' is not found');
+        if (!$this->deviceRepository->getDeviceById($id)) {
+            return $this->sentErrorResponse('Device ' . $id . ' is not found');
         }
-        return $this->sentSuccessResponse($this->deviceRepository->deleteDeviceById($id), 'The device '.$id.' has been deleted!!!', 200);
+        return $this->sentSuccessResponse($this->deviceRepository->deleteDeviceById($id), 'The device ' . $id . ' has been deleted!!!', 200);
     }
 }

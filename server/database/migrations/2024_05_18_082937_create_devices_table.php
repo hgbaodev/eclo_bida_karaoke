@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('devices', function (Blueprint $table) {
             $table->id();
+            $table->string('active')->unique();
             $table->string('name');
             $table->longText('description');
-            $table->integer('status')->default(0);
-            $table->timestamps(true);
+            $table->string('image')->default('deviceDefault.png');
+            $table->string('status')->default('A');
             $table->softDeletes();
         });
     }

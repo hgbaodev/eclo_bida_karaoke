@@ -13,14 +13,15 @@ class StaffSeeder extends Seeder
     public function run(): void
     {
         Staff::create([
-            "id" => "1",
             "name" => "Ly Kien Huy",
             "birthday" => "2002-11-14",
             "image" => "",
             "phone" => "0923465389",
             "idcard" => "076234567356",
             "address" => "Q5",
+            "status" => "A",
             "position_id" => 3
         ]);
+        Staff::factory()->count(30)->create();
     }
 }

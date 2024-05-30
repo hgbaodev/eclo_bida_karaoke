@@ -24,7 +24,6 @@ class UpdateUserRequest extends HelperRequest
     public function rules(): array
     {
         $active = $this->route('active');
-        Log::info('adfdsfasdfActive: ' . $active);
         return [
             'first_name' => 'required',
             'last_name' => 'required',

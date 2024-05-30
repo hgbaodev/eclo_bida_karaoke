@@ -6,7 +6,8 @@ namespace App\Repositories;
 use App\Interface\AreaRepositoryInterface;
 use App\Models\Area;
 
-class AreaRepository implements AreaRepositoryInterface {
+class AreaRepository implements AreaRepositoryInterface
+{
 
     function getAllAreas()
     {
@@ -34,6 +35,12 @@ class AreaRepository implements AreaRepositoryInterface {
     {
         $area = Area::find($id);
         $area->delete();
+        return $area;
+    }
+
+    public function getAreaByActive($active)
+    {
+        $area = Area::where('active', $active)->first();
         return $area;
     }
 }

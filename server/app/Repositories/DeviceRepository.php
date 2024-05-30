@@ -2,14 +2,30 @@
 
 namespace App\Repositories;
 
+use App\Http\Collections\CollectionCustom;
 use App\Interface\DeviceRepositoryInterface;
 use App\Models\Device;
 
-class DeviceRepository implements DeviceRepositoryInterface {
+class DeviceRepository implements DeviceRepositoryInterface
+{
 
-    function getAllDevices()
+    function getDevices($request)
     {
-        return Device::all();
+        $all = $request->input('all');
+        $perPage = $request->input('perPage');
+        $query = $request->input('query');
+        $deivies = Device::query();
+        if ($query) {
+            $deivies->where("id", "LIKE", "%$query%")
+                ->orWhere("name", "LIKE", "%$query%")
+                ->orWhere("description", "LIKE", "%$query%");
+        }
+        if ($all && $all == true) {
+            $deivies = $deivies->get();
+          } else {
+            $deivies = $deivies->paginate($perPage ?? 10);
+          }
+          return new CollectionCustom($deivies);
     }
 
     function getDeviceById($id)

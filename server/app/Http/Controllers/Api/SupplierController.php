@@ -20,9 +20,9 @@ class SupplierController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->sentSuccessResponse($this->supplierRepository->getAllSuppliers());
+        return $this->sentSuccessResponse($this->supplierRepository->getAllSuppliers($request));
     }
 
     /**
@@ -37,31 +37,32 @@ class SupplierController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show($active)
     {
-        return $this->sentSuccessResponse($this->supplierRepository->getSupplierById($id));
+        return $this->sentSuccessResponse($this->supplierRepository->getSupplierByActive($active));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSupplierRequest $request,$id)
+    public function update(UpdateSupplierRequest $request, $active)
     {
         $validated_data = $request->validated();
-        if(!$this->supplierRepository->getSupplierById($id)){
-            return $this->sentErrorResponse("Supllier ".$id.' is not found', "error", 400);
+        if(!$this->supplierRepository->getSupplierByActive($active)){
+            return $this->sentErrorResponse("Supllier ".$active.' is not found', "error", 400);
         }
-        return $this->sentSuccessResponse($this->supplierRepository->updateSupplierById($id, $validated_data), 'The supplier '. $id. ' has been updated!!!', 200);
+        $updatedData = $this->supplierRepository->updateSupplierByActive($active, $validated_data);
+        return $this->sentSuccessResponse($updatedData, 'The supplier '. $active. ' has been updated!!!', 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy($active)
     {
-        if(!$this->supplierRepository->getSupplierById($id)){
-            return $this->sentErrorResponse("Supllier ".$id.' is not found', "error", 400);
+        if(!$this->supplierRepository->getSupplierByActive($active)){
+            return $this->sentErrorResponse("Supllier ".$active.' is not found', "error", 400);
         }
-        return $this->sentSuccessResponse($this->supplierRepository->deleteSupplierById($id), 'The supplier '.$id.' has been deleted!!!');
+        return $this->sentSuccessResponse($this->supplierRepository->deleteSupplierByActive($active), 'The supplier '.$active.' has been deleted!!!');
     }
 }

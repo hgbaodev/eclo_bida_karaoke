@@ -20,8 +20,13 @@ class Staff extends Model
         "address",
         // "user_id",
         "position_id",
+        "status",
         "active"
         // "staff_salary",
+    ];
+    protected $hidden = [
+        "id",
+        "position_id"
     ];
     protected static function boot()
     {
@@ -34,6 +39,6 @@ class Staff extends Model
     }
     public function position()
     {
-        return $this->hasOne(Position::class);
+        return $this->belongsTo(Position::class);
     }
 }

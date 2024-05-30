@@ -9,7 +9,7 @@ import { RootState } from '@/store/types';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import useDebounce from '@/hooks/use-debounce';
-import { STATUS, roles, statusOptions } from '../type';
+import { statusOptions } from '../type';
 import { getStatusBadge } from './columns';
 import { getAllRoles } from '@/store/slices/roleSlice';
 

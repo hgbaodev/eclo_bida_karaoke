@@ -3,7 +3,15 @@ export interface RootState {
   role: roleType;
   user: userType;
   logger: loggerType;
+
   product: productType;
+
+  customer: customerType;
+  area: areaType;
+  device: deviceType;
+  position: positionType;
+  staff: staffType;
+
 }
 export interface authType {
   isAuthenticated: boolean;
@@ -42,6 +50,20 @@ export interface userType {
   isUpdateLoading: boolean;
 }
 
+export interface customerType {
+  data: [];
+  isLoading: boolean;
+  isFiltered: boolean;
+  page: number;
+  pageSize: number;
+  totalRow: number;
+  status: any;
+  query: string;
+  errors: any;
+  isCreateLoading: boolean;
+  isUpdateLoading: boolean;
+}
+
 export interface loggerType {
   data: any[];
   isLoading: boolean;
@@ -52,7 +74,36 @@ export interface loggerType {
   query: string;
 }
 
+
 export interface productType {
+    data: [];
+    isLoading: boolean;
+    isFiltered: boolean;
+    page: number;
+    pageSize: number;
+    totalRow: number;
+    query: string;
+    errors: any;
+    isCreateLoading: boolean;
+    isUpdateLoading: boolean;
+}
+export interface areaType {
+  data: any[];
+  isCreateLoading: boolean;
+  isEditLoading: boolean;
+}
+
+export interface deviceType {
+  data: any[];
+  isLoading: boolean;
+  isFiltered: boolean;
+  page: number;
+  pageSize: number;
+  totalRow: number;
+  query: string;
+}
+export interface staffType {
+
   data: [];
   isLoading: boolean;
   isFiltered: boolean;
@@ -60,7 +111,17 @@ export interface productType {
   pageSize: number;
   totalRow: number;
   query: string;
+  position: any;
+  status: any;
   errors: any;
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
+}
+
+export interface positionType {
+  fetchData: any[];
+  fetchDataLoading: boolean;
+  createLoading: boolean;
+  updateLoading: boolean;
+  listPositions: any[];
 }

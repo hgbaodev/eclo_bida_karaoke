@@ -128,6 +128,7 @@ export default function EditUser({ user, active }: { user: EditUserInput; active
                 />
               )}
             />
+
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
                 Cancel

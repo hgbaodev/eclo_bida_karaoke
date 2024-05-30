@@ -52,7 +52,7 @@ export default function CreateTableAndRoom() {
           <>
             <div className="col-span-full flex items-center justify-between">
               <Title as="h4" className="font-semibold">
-                Add a new Room or Table
+                Add a new Service
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
@@ -72,7 +72,6 @@ export default function CreateTableAndRoom() {
               className="col-span-[1/2]"
               error={errors.last_name?.message}
             />
-
             <Input
               label="Email"
               placeholder="Enter user's Email Address"
@@ -122,7 +121,7 @@ export default function CreateTableAndRoom() {
                 Cancel
               </Button>
               <Button type="submit" isLoading={isCreateLoading} className="w-full @xl:w-auto">
-                Create User
+                Create Service
               </Button>
             </div>
           </>

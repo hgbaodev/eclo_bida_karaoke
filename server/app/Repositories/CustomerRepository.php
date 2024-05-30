@@ -12,29 +12,20 @@ class CustomerRepository implements CustomerRepositoryInterface {
   {
       $all = $request->input('all');
       $perPage = $request->input('perPage');
-      $id = $request->input('id');
-      $name = $request->input('name');
+      $first_name = $request->input('first_name');
+      $last_name = $request->input('last_name');
       $email = $request->input('email');
       $phone = $request->input('phone');
       $query = $request->input('query');
+      $status = $request->input('status');
 
       $customers = Customer::query();
+      $customers->latest();
       if ($query) {
-          $customers->where('name', 'LIKE', "%$query%")
-              ->orWhere('phone', 'LIKE', "%$query%")
-              ->orWhere('email', 'LIKE', "%$query%");
+          $customers->whereRaw("CONCAT(first_name, ' ', last_name, ' ', email, ' ', phone) LIKE '%$query%'");
       }
-      if($id){
-          $customers->where('id', $id);
-      }
-      if($name){
-          $customers->where('name','LIKE', "%$name%");
-      }
-      if($email){
-          $customers->where('email','LIKE', "%$email%");
-      }
-      if ($phone){
-          $customers->where('phone','LIKE', "%$phone%");
+      if ($status) {
+          $customers->where('status', $status);
       }
       if($all){
           $customers = $customers->get();
@@ -54,6 +45,11 @@ class CustomerRepository implements CustomerRepositoryInterface {
     return Customer::find($id);
   }
 
+    function getCustomerByActive($active)
+    {
+        return Customer::where('active', $active)->firstOrFail();
+    }
+
   function createCustomer(array $data)
   {
     return Customer::create($data);
@@ -66,10 +62,25 @@ class CustomerRepository implements CustomerRepositoryInterface {
     return $customer;
   }
 
+    function updateCustomerByActive($active, array $data)
+    {
+        $customer = Customer::where('active', $active)->firstOrFail();
+        $customer->update($data);
+        return $customer;
+    }
+
   function deleteCustomerById($id)
   {
     $customer = Customer::find($id);
     $customer->delete();
     return $customer;
+  }
+
+
+  public function deleteCustomerByActive($active)
+  {
+      $customer = Customer::where('active', $active)->firstOrFail();
+      $customer->delete();
+      return $customer;
   }
 }

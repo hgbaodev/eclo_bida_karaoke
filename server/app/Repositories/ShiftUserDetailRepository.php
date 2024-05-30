@@ -5,28 +5,32 @@ namespace App\Repositories;
 use App\Interface\ShiftUserDetailRepositoryInterface;
 use App\Models\ShiftUserDetail;
 
-class ShiftUserDetailRepository implements ShiftUserDetailRepositoryInterface{
+class ShiftUserDetailRepository implements ShiftUserDetailRepositoryInterface
+{
+    public function getShiftUserDetail($request)
+    {
+    }
     public function getAllShiftUserDetail()
     {
-        ShiftUserDetail::all();
+        return ShiftUserDetail::all();
     }
-    public function getShiftUserDetailById($id)
+    public function getShiftUserDetailByActive($active)
     {
-        ShiftUserDetail::find($id);
+        return ShiftUserDetail::where("active", $active);
     }
     public function createShiftUserDetail(array $data)
     {
-        ShiftUserDetail::create($data);
+        return ShiftUserDetail::create($data);
     }
-    public function updateShiftUserDetailById($id, array $data)
+    public function updateShiftUserDetailByActive($active, array $data)
     {
-        $shiftUserDetail = ShiftUserDetail::find($id);
+        $shiftUserDetail = ShiftUserDetail::where("active", $active);
         $shiftUserDetail->update($data);
         return $shiftUserDetail;
     }
-    public function deleteShiftUserDetailById($id)
+    public function deleteShiftUserDetailByActive($active)
     {
-        $shiftUserDetail = ShiftUserDetail::find($id);
+        $shiftUserDetail = ShiftUserDetail::where("active", $active);
         $shiftUserDetail->delete();
         return $shiftUserDetail;
     }

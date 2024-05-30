@@ -1,13 +1,14 @@
-<?php 
+<?php
 
 namespace App\Interface;
 
 
-interface PositionRepositoryInterface {
+interface PositionRepositoryInterface
+{
+    public function getPositions($request);
     public function getAllPositions();
-    public function getPositionById($id);
+    public function getPositionByActive($active);
     public function createPosition(array $data);
-    public function updatePositionById($id,array $data);
-    public function deletePositionById($id);
-
+    public function updatePositionByActive($active, array $data);
+    public function deletePositionByActive($active);
 }

@@ -14,12 +14,15 @@ export const routes = {
     rolesPermissions: '/admin/roles-permissions',
     services: {
       tableandrooms: '/admin/services/tableandrooms',
-      areas: '/admin/services/devices',
       devices: '/admin/services/devices',
     },
+    customers: '/admin/customers',
     jobBoard: '/admin/job-board',
+    customers: '/admin/customers',
     loggers: '/admin/loggers',
     products: '/admin/products'
+    staffs: '/admin/staffs',
+    positions: '/admin/positions',
   },
   auth: {
     signIn: '/auth/signin',
