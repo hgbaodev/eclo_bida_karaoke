@@ -18,8 +18,21 @@ class DeviceFactory extends Factory
      */
     public function definition(): array
     {
+        static $deviceNames = [
+            'Smartphone',
+            'Laptop',
+            'Tablet',
+            'Smartwatch',
+            'Desktop Computer',
+            'Router',
+            'Printer',
+            'Scanner',
+            'Webcam',
+            'Monitor'
+        ];
+
         return [
-            'name' => $this->faker->name(),
+            'name' => $this->faker->unique()->randomElement($deviceNames),
             'description' => $this->faker->text(10),
             'status' => $this->faker->randomElement(['A', 'D'])
         ];

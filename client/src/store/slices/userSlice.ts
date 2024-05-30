@@ -97,16 +97,20 @@ const userSlice = createSlice({
       state.page = action.payload;
     },
     setPageSize: (state, action) => {
+      state.page = 1;
       state.pageSize = action.payload;
     },
     setQuery: (state, action) => {
+      state.page = 1;
       state.query = action.payload;
     },
     setRole: (state, action) => {
+      state.page = 1;
       state.role = action.payload;
       state.isFiltered = true;
     },
     setStatus: (state, action) => {
+      state.page = 1;
       state.status = action.payload;
       state.isFiltered = true;
     },

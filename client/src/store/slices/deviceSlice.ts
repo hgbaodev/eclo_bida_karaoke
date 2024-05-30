@@ -12,6 +12,7 @@ const initialState: deviceType = {
   page: 1,
   pageSize: 5,
   query: '',
+  isCreateLoading: false,
 };
 
 export const getDevices = createAsyncThunk(
@@ -29,6 +30,18 @@ export const getDevices = createAsyncThunk(
     }
   },
 );
+
+export const createDevice = createAsyncThunk('areas/createDevice', async (data: any, { rejectWithValue }) => {
+  try {
+    const response = await axiosInstance.post('/devices', data);
+    return response.data;
+  } catch (error: any) {
+    if (!error.response) {
+      throw error;
+    }
+    return rejectWithValue(error.response.data);
+  }
+});
 
 const deviceSlice = createSlice({
   name: 'device',
@@ -57,6 +70,15 @@ const deviceSlice = createSlice({
       })
       .addCase(getDevices.rejected, (state) => {
         state.isLoading = false;
+      })
+      .addCase(createDevice.pending, (state) => {
+        state.isCreateLoading = true;
+      })
+      .addCase(createDevice.fulfilled, (state) => {
+        state.isCreateLoading = false;
+      })
+      .addCase(createDevice.rejected, (state) => {
+        state.isCreateLoading = false;
       });
   },
 });

@@ -84,6 +84,7 @@ export interface deviceType {
   pageSize: number;
   totalRow: number;
   query: string;
+  isCreateLoading: boolean;
 }
 export interface staffType {
   data: [];

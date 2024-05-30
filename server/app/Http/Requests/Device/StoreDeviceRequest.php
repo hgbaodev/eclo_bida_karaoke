@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Device;
 
 use App\Http\Helpers\HelperRequest;
-use Illuminate\Foundation\Http\FormRequest;
 
 class StoreDeviceRequest extends HelperRequest
 {
@@ -25,7 +24,7 @@ class StoreDeviceRequest extends HelperRequest
         return [
             'name' => 'required|unique:devices',
             'description' => 'required',
-            'status' => 'required|integer|min:0|max:1000'
+            'image' => 'required|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 }
