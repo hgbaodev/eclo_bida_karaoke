@@ -18,6 +18,7 @@ export const routes = {
     },
     customers: '/admin/customers',
     jobBoard: '/admin/job-board',
+    suppliers: '/admin/suppliers',
     loggers: '/admin/loggers',
     products: '/admin/products',
     staffs: '/admin/staffs',

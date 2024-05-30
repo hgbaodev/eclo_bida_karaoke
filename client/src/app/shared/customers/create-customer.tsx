@@ -62,14 +62,14 @@ export default function CreateCustomer() {
             </div>
             <Input
               label="First Name"
-              placeholder="Enter user first name"
+              placeholder="Enter customer's first name"
               {...register('first_name')}
               className="col-span-[1/2]"
               error={errors.first_name?.message}
             />
             <Input
               label="Last Name"
-              placeholder="Enter user last name"
+              placeholder="Enter customer's last name"
               {...register('last_name')}
               className="col-span-[1/2]"
               error={errors.last_name?.message}
@@ -77,7 +77,7 @@ export default function CreateCustomer() {
 
             <Input
               label="Email"
-              placeholder="Enter user's Email Address"
+              placeholder="Enter customer's email address"
               className="col-span-full"
               {...register('email')}
               error={errors.email?.message}
@@ -85,7 +85,7 @@ export default function CreateCustomer() {
 
             <Input
               label="Phone"
-              placeholder="Enter user's phone"
+              placeholder="Enter customer's phone"
               className="col-span-full"
               {...register('phone')}
               error={errors.phone?.message}
