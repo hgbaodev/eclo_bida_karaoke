@@ -4,6 +4,7 @@ namespace App\Http\Requests\Supplier;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Helpers\HelperRequest;
+use Illuminate\Validation\Rule;
 
 class StoreSupplierRequest extends HelperRequest
 {
@@ -23,9 +24,10 @@ class StoreSupplierRequest extends HelperRequest
     public function rules(): array
     {
         return  [
-            'name' => 'required|unique:suppliers',
-            'address' => 'required',
-            'phone' => 'required|unique:customers|regex:/^[0-9]{10,}$/',
+            'name' => 'required',
+            'phone' => ['required', 'regex:/^[0-9]{10,}$/'],
+            'address' => ['required'],
+            'status' => 'required|in:A,D',
         ];
     }
 }

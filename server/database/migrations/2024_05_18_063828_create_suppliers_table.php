@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('address');
             $table->string('phone');
+            $table->string('status')->default('A');
+            $table->string('active')->unique();
             $table->timestamps(true);
             $table->softDeletes();
         });
