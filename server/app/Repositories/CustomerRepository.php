@@ -12,31 +12,17 @@ class CustomerRepository implements CustomerRepositoryInterface {
   {
       $all = $request->input('all');
       $perPage = $request->input('perPage');
-      $id = $request->input('id');
-      $name = $request->input('name');
+      $first_name = $request->input('first_name');
+      $last_name = $request->input('last_name');
       $email = $request->input('email');
       $phone = $request->input('phone');
       $query = $request->input('query');
       $status = $request->input('status');
 
       $customers = Customer::query();
+      $customers->latest();
       if ($query) {
-          $customers->where('name', 'LIKE', "%$query%")
-              ->orWhere('phone', 'LIKE', "%$query%")
-              ->orWhere('email', 'LIKE', "%$query%")
-              ->orWhere('status', 'LIKE', "%$query%");
-      }
-      if($id){
-          $customers->where('id', $id);
-      }
-      if($name){
-          $customers->where('name','LIKE', "%$name%");
-      }
-      if($email){
-          $customers->where('email','LIKE', "%$email%");
-      }
-      if ($phone){
-          $customers->where('phone','LIKE', "%$phone%");
+          $customers->whereRaw("CONCAT(first_name, ' ', last_name, ' ', email, ' ', phone) LIKE '%$query%'");
       }
       if ($status) {
           $customers->where('status', $status);

@@ -10,7 +10,7 @@ import EditCustomer from '../edit-customer';
 
 import DeletePopover from '@/app/shared/delete-popover';
 import { dispatch } from '@/store';
-import { getCustomers } from '@/store/slices/customerSlice';
+import { getCustomers, deleteCustomer } from '@/store/slices/customerSlice';
 import toast from 'react-hot-toast';
 
 export function getStatusBadge(status: Customer['status']) {
@@ -111,19 +111,19 @@ export const getColumns = (openModal: (args: any) => void) => [
             <PencilIcon className="h-4 w-4" />
           </ActionIcon>
         </Tooltip>
-        {/* <DeletePopover
-          title={`Delete this user`}
-          description={`Are you sure you want to delete this #${user.last_name} user?`}
+        <DeletePopover
+          title={`Delete this customer`}
+          description={`Are you sure you want to delete this #${customer.last_name} customer?`}
           onDelete={async () => {
-            const result = await dispatch(deleteUser(user.active)); // Remove the .then() block
-            if (deleteUser.fulfilled.match(result)) {
-              await dispatch(getUsers({ page: 1, pageSize: 5, query: '', role: '', status: '' }));
-              toast.success(`User #${user.first_name} ${user.last_name} has been deleted successfully.`);
+            const result = await dispatch(deleteCustomer(customer.active)); // Remove the .then() block
+            if (deleteCustomer.fulfilled.match(result)) {
+              await dispatch(getCustomers({ page: 1, pageSize: 5, query: '', status: '' }));
+              toast.success(`User #${customer.first_name} ${customer.last_name} has been deleted successfully.`);
             } else {
-              toast.error(`Failed to delete user #${user.active}.`);
+              toast.error(`Failed to delete customer #${customer.active}.`);
             }
           }}
-        /> */}
+        />
       </div>
     ),
   },

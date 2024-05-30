@@ -36,11 +36,38 @@ export const getCustomers = createAsyncThunk(
   },
 );
 
+export const createCustomer = createAsyncThunk('customers/createCustomer', async (data: any, { rejectWithValue }) => {
+  try {
+    const response = await axiosInstance.post(`customers`, data);
+    return response.data;
+  } catch (error: any) {
+    if (!error.response) {
+      throw error;
+    }
+    return rejectWithValue(error.response.data);
+  }
+});
+
 export const updateCustomer = createAsyncThunk(
   'customers/updateCustomer',
   async ({ customer, active }: { customer: EditCustomerInput; active: string }, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.put(`customers/${active}`, customer);
+      return response.data;
+    } catch (error: any) {
+      if (!error.response) {
+        throw error;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
+
+export const deleteCustomer = createAsyncThunk(
+  'customers/deleteCustomer',
+  async (active: string, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.delete(`customers/${active}`);
       return response.data;
     } catch (error: any) {
       if (!error.response) {
@@ -68,10 +95,12 @@ const customerSlice = createSlice({
       state.errors = action.payload;
     },
     setReset: (state) => {
+      state.page = 1;
       state.status = '';
       state.isFiltered = false;
     },
     setStatus: (state, action) => {
+      state.page = 1;
       state.status = action.payload;
       state.isFiltered = true;
     },
