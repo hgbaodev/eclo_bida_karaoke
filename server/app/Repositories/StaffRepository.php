@@ -13,17 +13,12 @@ class StaffRepository implements StaffRepositoryInterface
         $all = $request->input('all');
         $perPage = $request->input('perPage');
         $query = $request->input('query');
-        $id = $request->input('id');
         $idcard = $request->input('idcard');
         $status = $request->input('status');
         $position = $request->input('position');
         $staffs = Staff::query()->with(['position']);
         if ($query) {
-            $staffs->where("id", "LIKE", "%$query%")
-                ->orWhere("name", "LIKE", "%$query%");
-        }
-        if ($id) {
-            $staffs->where('id', $id);
+            $staffs->whereRaw("CONCAT(name, ' ', phone, ' ', idcard) LIKE '%$query%'");
         }
         if ($status) {
             $staffs->where('status', $status);

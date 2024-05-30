@@ -99,6 +99,7 @@ const staffSlice = createSlice({
       state.pageSize = action.payload;
     },
     setQuery: (state, action) => {
+      state.page = 1;
       state.query = action.payload;
     },
     setPosition: (state, action) => {
@@ -106,10 +107,12 @@ const staffSlice = createSlice({
       state.isFiltered = true;
     },
     setStatus: (state, action) => {
+      state.page = 1;
       state.status = action.payload;
       state.isFiltered = true;
     },
     setReset: (state) => {
+      state.page = 1;
       state.position = '';
       state.status = '';
       state.isFiltered = false;

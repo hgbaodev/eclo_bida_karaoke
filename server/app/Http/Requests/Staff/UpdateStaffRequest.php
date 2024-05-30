@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests\Staff;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Helpers\HelperRequest;
 use Illuminate\Validation\Rule;
 
-class UpdateStaffRequest extends FormRequest
+class UpdateStaffRequest extends HelperRequest
 {
     /**
      * Determine if the user is authorized to make this request.
