@@ -7,6 +7,7 @@ export interface RootState {
   area: areaType;
   device: deviceType;
   position: positionType;
+  supplier: supplierType;
   staff: staffType;
 }
 export interface authType {
@@ -47,6 +48,20 @@ export interface userType {
 }
 
 export interface customerType {
+  data: [];
+  isLoading: boolean;
+  isFiltered: boolean;
+  page: number;
+  pageSize: number;
+  totalRow: number;
+  status: any;
+  query: string;
+  errors: any;
+  isCreateLoading: boolean;
+  isUpdateLoading: boolean;
+}
+
+export interface supplierType {
   data: [];
   isLoading: boolean;
   isFiltered: boolean;

@@ -14,6 +14,7 @@ import area from './areaSlice';
 import customer from './customerSlice';
 
 import device from './deviceSlice';
+import supplier from './supplierSlice';
 
 // ==============================|| COMBINE REDUCERS ||============================== //
 
@@ -26,6 +27,7 @@ const reducers = combineReducers({
   logger,
   customer,
   area,
+  supplier,
   device,
 });
 

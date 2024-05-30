@@ -7,42 +7,42 @@ import { Form } from '@/components/ui/form';
 import { Input, Button, ActionIcon, Title, Select } from 'rizzui';
 import { useModal } from '@/app/shared/modal-views/use-modal';
 import { dispatch } from '@/store';
-import { getCustomers, updateCustomer } from '@/store/slices/customerSlice';
+import { getSuppliers, updateSupplier } from '@/store/slices/supplierSlice';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
-import { EditCustomerInput, editCustomerSchema } from '@/utils/validators/edit-customer.schema';
-import { getStatusBadge } from './customers-table/columns';
+import { EditSupplierInput, EditSupplierSchema } from '@/utils/validators/edit-supplier.schema';
+import { getStatusBadge } from './suppliers-table/columns';
 import { statusOptions } from './type';
 
-export default function EditCustomer({ customer, active }: { customer: EditCustomerInput; active: string }) {
+export default function EditSupplier({ supplier, active }: { supplier: EditSupplierInput; active: string }) {
   const { closeModal } = useModal();
-  const [reset, setReset] = useState<any>(customer);
+  const [reset, setReset] = useState<any>(supplier);
   const [errors, setErrors] = useState<any>({});
-  const { pageSize, page, query, status, isUpdateLoading } = useSelector((state: RootState) => state.customer);
-  const onSubmit: SubmitHandler<EditCustomerInput> = async (data) => {
-    const result: any = await dispatch(updateCustomer({ customer: data, active }));
-    if (updateCustomer.fulfilled.match(result)) {
+  const { pageSize, page, query, status, isUpdateLoading } = useSelector((state: RootState) => state.supplier);
+  const onSubmit: SubmitHandler<EditSupplierInput> = async (data) => {
+    const result: any = await dispatch(updateSupplier({ supplier: data, active }));
+    if (updateSupplier.fulfilled.match(result)) {
       setReset({
-        first_name: '',
-        last_name: '',
+        name: '',
         phone: '',
+        address: '',
         status: '',
       });
       setErrors({});
       closeModal();
-      await dispatch(getCustomers({ page, pageSize, query, status }));
-      toast.success('Customer update successfully');
+      await dispatch(getSuppliers({ page, pageSize, query, status }));
+      toast.success('Supplier update successfully');
     } else {
       setErrors(result?.payload?.errors);
     }
   };
 
   return (
-    <Form<EditCustomerInput>
+    <Form<EditSupplierInput>
       resetValues={reset}
       onSubmit={onSubmit}
-      validationSchema={editCustomerSchema}
+      validationSchema={EditSupplierSchema}
       serverError={errors}
       className="grid grid-cols-1 gap-6 p-6 @container md:grid-cols-2 [&_.rizzui-input-label]:font-medium [&_.rizzui-input-label]:text-gray-900"
     >
@@ -52,41 +52,33 @@ export default function EditCustomer({ customer, active }: { customer: EditCusto
           <>
             <div className="col-span-full flex items-center justify-between">
               <Title as="h4" className="font-semibold">
-                Update customer
+                Update supplier
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
             <Input
-              label="First Name"
-              placeholder="Enter customer's first name"
-              {...register('first_name')}
+              label="Name"
+              placeholder="Enter supplier's name"
+              {...register('name')}
               className="col-span-[1/2]"
-              error={errors.first_name?.message}
-            />
-            <Input
-              label="Last Name"
-              placeholder="Enter customer's last name"
-              {...register('last_name')}
-              className="col-span-[1/2]"
-              error={errors.last_name?.message}
+              error={errors.name?.message}
             />
             <Input
               label="Phone"
-              placeholder="Enter customer's phone"
+              placeholder="Enter supplier's phone"
               className="col-span-full"
               {...register('phone')}
               error={errors.phone?.message}
             />
             <Input
-              label="Email"
-              placeholder="Enter customer's email"
+              label="Address"
+              placeholder="Enter supplier's address"
               className="col-span-full"
-              {...register('email')}
-              error={errors.email?.message}
+              {...register('address')}
+              error={errors.address?.message}
             />
-
             <Controller
               name="status"
               control={control}

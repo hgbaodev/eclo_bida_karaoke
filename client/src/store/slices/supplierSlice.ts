@@ -1,11 +1,11 @@
 // userSlice.js
 import axiosInstance from '@/api/axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { customerType } from '../types';
-import { EditCustomerInput } from '@/utils/validators/edit-customer.schema';
+import { supplierType } from '../types';
+import { EditSupplierInput } from '@/utils/validators/edit-supplier.schema';
 import env from '@/env';
 
-const initialState: customerType = {
+const initialState: supplierType = {
   data: [],
   isLoading: false,
   isFiltered: false,
@@ -19,10 +19,10 @@ const initialState: customerType = {
   isUpdateLoading: false,
 };
 
-export const getCustomers = createAsyncThunk(
-  'customers',
+export const getSuppliers = createAsyncThunk(
+  'suppliers',
   async ({ page, pageSize, query, status }: { page: number; pageSize: number; query: string; status: string }) => {
-    const url = new URL('/api/v1/customers', env.NEXT_API_URL);
+    const url = new URL('/api/v1/suppliers', env.NEXT_API_URL);
     url.searchParams.set('page', `${page}`);
     url.searchParams.set('perPage', `${pageSize}`);
     url.searchParams.set('query', query);
@@ -36,9 +36,9 @@ export const getCustomers = createAsyncThunk(
   },
 );
 
-export const createCustomer = createAsyncThunk('customers/createCustomer', async (data: any, { rejectWithValue }) => {
+export const createSupplier = createAsyncThunk('suppliers/createSupplier', async (data: any, { rejectWithValue }) => {
   try {
-    const response = await axiosInstance.post(`customers`, data);
+    const response = await axiosInstance.post(`suppliers`, data);
     return response.data;
   } catch (error: any) {
     if (!error.response) {
@@ -48,11 +48,11 @@ export const createCustomer = createAsyncThunk('customers/createCustomer', async
   }
 });
 
-export const updateCustomer = createAsyncThunk(
-  'customers/updateCustomer',
-  async ({ customer, active }: { customer: EditCustomerInput; active: string }, { rejectWithValue }) => {
+export const updateSupplier = createAsyncThunk(
+  'suppliers/updateSupplier',
+  async ({ supplier, active }: { supplier: EditSupplierInput; active: string }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.put(`customers/${active}`, customer);
+      const response = await axiosInstance.put(`suppliers/${active}`, supplier);
       return response.data;
     } catch (error: any) {
       if (!error.response) {
@@ -63,11 +63,11 @@ export const updateCustomer = createAsyncThunk(
   },
 );
 
-export const deleteCustomer = createAsyncThunk(
-  'customers/deleteCustomer',
+export const deleteSupplier = createAsyncThunk(
+  'suppliers/deleteSupplier',
   async (active: string, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.delete(`customers/${active}`);
+      const response = await axiosInstance.delete(`suppliers/${active}`);
       return response.data;
     } catch (error: any) {
       if (!error.response) {
@@ -78,8 +78,8 @@ export const deleteCustomer = createAsyncThunk(
   },
 );
 
-const customerSlice = createSlice({
-  name: 'customer',
+const supplierSlice = createSlice({
+  name: 'supplier',
   initialState,
   reducers: {
     setPage: (state, action) => {
@@ -107,39 +107,39 @@ const customerSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getCustomers.pending, (state: customerType) => {
+      .addCase(getSuppliers.pending, (state: supplierType) => {
         state.isLoading = true;
       })
-      .addCase(getCustomers.fulfilled, (state, action) => {
+      .addCase(getSuppliers.fulfilled, (state, action) => {
         const result = action.payload.data;
         state.isLoading = false;
         state.data = result.result;
         state.totalRow = result.meta.total;
       })
-      .addCase(getCustomers.rejected, (state) => {
+      .addCase(getSuppliers.rejected, (state) => {
         state.isLoading = false;
       })
-      .addCase(createCustomer.pending, (state: customerType) => {
+      .addCase(createSupplier.pending, (state: supplierType) => {
         state.isCreateLoading = true;
       })
-      .addCase(createCustomer.fulfilled, (state, action) => {
+      .addCase(createSupplier.fulfilled, (state, action) => {
         state.isCreateLoading = false;
       })
-      .addCase(createCustomer.rejected, (state) => {
+      .addCase(createSupplier.rejected, (state) => {
         state.isCreateLoading = false;
       })
-      .addCase(updateCustomer.pending, (state: customerType) => {
+      .addCase(updateSupplier.pending, (state: supplierType) => {
         state.isUpdateLoading = true;
       })
-      .addCase(updateCustomer.fulfilled, (state, action) => {
+      .addCase(updateSupplier.fulfilled, (state, action) => {
         state.isUpdateLoading = false;
       })
-      .addCase(updateCustomer.rejected, (state) => {
+      .addCase(updateSupplier.rejected, (state) => {
         state.isUpdateLoading = false;
       });
   },
 });
 
-export const { setPage, setPageSize, setReset, setQuery, setStatus, setErrors } = customerSlice.actions;
+export const { setPage, setPageSize, setReset, setQuery, setStatus, setErrors } = supplierSlice.actions;
 
-export default customerSlice.reducer;
+export default supplierSlice.reducer;
