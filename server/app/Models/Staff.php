@@ -20,6 +20,7 @@ class Staff extends Model
         "address",
         // "user_id",
         "position_id",
+        "status",
         "active"
         // "staff_salary",
     ];

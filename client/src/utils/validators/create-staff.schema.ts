@@ -10,6 +10,7 @@ export const createStaffSchema = z.object({
   idcard: z.string().length(12, { message: messages.idcardIsRequired }),
   address: z.string().min(1, { message: messages.addressIsRequired }).max(50, { message: messages.maxlenghtAddress }),
   position: z.string().min(1, { message: messages.positionIsRequired }),
+  status: z.string().min(1, { message: messages.statusIsRequired }),
 });
 
 // generate form types from zod validation schema

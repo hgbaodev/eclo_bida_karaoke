@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('phone')->unique();
             $table->string('idcard')->unique();
             $table->string('address');
+            $table->string('status');
             $table->foreignId('position_id')->constrained('positions');
             $table->string('active')->unique();
             $table->softDeletes();

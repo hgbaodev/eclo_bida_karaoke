@@ -16,14 +16,16 @@ const FilterElement = dynamic(() => import('@/app/shared/staffs/staffs-table/fil
 
 export default function StaffsTable() {
   const { openModal } = useModal();
-  const { data, isLoading, pageSize, page, totalRow, query, position } = useSelector((state: RootState) => state.staff);
+  const { data, isLoading, pageSize, page, totalRow, query, position, status } = useSelector(
+    (state: RootState) => state.staff,
+  );
 
   useEffect(() => {
     const fetch = async () => {
-      await dispatch(getStaffs({ page, pageSize, query, position }));
+      await dispatch(getStaffs({ page, pageSize, query, position, status }));
     };
     fetch();
-  }, [page, pageSize, query, position]);
+  }, [page, pageSize, query, position, status]);
 
   const columns = useMemo(
     () => getColumns(openModal),

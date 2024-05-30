@@ -12,6 +12,32 @@ import { deleteStaff, getStaffs } from '@/store/slices/staffSlice';
 import toast from 'react-hot-toast';
 import EditStaff from '../edit-staff';
 
+export function getStatusBadge(status: Staff['status']) {
+  switch (status) {
+    case STATUSES.InActive:
+      return (
+        <div className="flex items-center">
+          <Badge color="danger" renderAsDot />
+
+          <Text className="ms-2 font-medium text-red-dark">InActive</Text>
+        </div>
+      );
+    case STATUSES.Active:
+      return (
+        <div className="flex items-center">
+          <Badge color="success" renderAsDot />
+          <Text className="ms-2 font-medium text-green-dark">Active</Text>
+        </div>
+      );
+    default:
+      return (
+        <div className="flex items-center">
+          <Badge renderAsDot className="bg-gray-400" />
+          <Text className="ms-2 font-medium text-gray-600">{status}</Text>
+        </div>
+      );
+  }
+}
 export const getColumns = (openModal: (args: any) => void) => [
   {
     title: <HeaderCell title="Id" />,
@@ -49,6 +75,13 @@ export const getColumns = (openModal: (args: any) => void) => [
     render: (_: string, staff: Staff) => staff.phone,
   },
   {
+    title: <HeaderCell title="Status" />,
+    dataIndex: 'status',
+    key: 'status',
+    width: 10,
+    render: (status: Staff['status']) => getStatusBadge(status),
+  },
+  {
     title: <HeaderCell title="Created" />,
     dataIndex: 'created_at',
     key: 'created_at',
@@ -71,6 +104,7 @@ export const getColumns = (openModal: (args: any) => void) => [
                 idcard: staff.idcard,
                 position: staff.position.active,
                 phone: staff.phone,
+                status: staff.status,
                 address: staff.address,
               };
               openModal({
@@ -91,7 +125,7 @@ export const getColumns = (openModal: (args: any) => void) => [
           onDelete={async () => {
             const result = await dispatch(deleteStaff(staff.active)); // Remove the .then() block
             if (deleteStaff.fulfilled.match(result)) {
-              await dispatch(getStaffs({ page: 1, pageSize: 5, query: '', position: '' }));
+              await dispatch(getStaffs({ page: 1, pageSize: 5, query: '', position: '', status: '' }));
               toast.success(`Staff #${staff.name} has been deleted successfully.`);
             } else {
               toast.error(`Failed to delete staff #${staff.active}.`);
@@ -110,6 +144,7 @@ export interface Staff {
   image: string;
   idcard: string;
   birthday: string;
+  status: any;
   address: string;
   position: {
     name: string;
@@ -117,3 +152,7 @@ export interface Staff {
   };
   created_at: string;
 }
+export const STATUSES = {
+  Active: 'A',
+  InActive: 'D',
+} as const;

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Staff\StaffRequest;
+use App\Http\Requests\Staff\UpdateStaffRequest;
 use App\Interface\PositionRepositoryInterface;
 use App\Models\Staff;
 use App\Interface\StaffRepositoryInterface;
@@ -75,7 +76,7 @@ class StaffController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StaffRequest $request, $active)
+    public function update(UpdateStaffRequest $request, $active)
     {
         $validatedData = $request->validated();
 
