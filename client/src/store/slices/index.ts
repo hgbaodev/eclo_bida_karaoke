@@ -9,12 +9,15 @@ import staff from './staffSlice';
 import position from './positionSlice';
 
 import logger from './loggerSlice';
+
+import product from './productSlices';
 import area from './areaSlice';
 
 import customer from './customerSlice';
 
 import device from './deviceSlice';
 import supplier from './supplierSlice';
+
 
 // ==============================|| COMBINE REDUCERS ||============================== //
 
@@ -25,10 +28,14 @@ const reducers = combineReducers({
   staff,
   position,
   logger,
+
+  product,
+
   customer,
   area,
   supplier,
   device,
+
 });
 
 export default reducers;

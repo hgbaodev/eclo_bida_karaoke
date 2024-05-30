@@ -3,6 +3,7 @@ import { PiPackageDuotone, PiChartBarDuotone, PiFolderLockDuotone, PiShapesDuoto
 import { FaUniversalAccess, FaUserTie } from 'react-icons/fa';
 import { TbPackages } from 'react-icons/tb';
 import { HiOutlineUsers } from 'react-icons/hi2';
+import {FaProductHunt} from 'react-icons/fa'
 // Note: do not add href in the label object, it is rendering as label
 export const menuItems = [
   // label start
@@ -71,5 +72,10 @@ export const menuItems = [
     name: 'Loggers',
     href: routes.admin.loggers,
     icon: <FaUniversalAccess />,
+  },
+  {
+    name: 'Products',
+    href: routes.admin.products,
+    icon: <FaProductHunt />,
   },
 ];

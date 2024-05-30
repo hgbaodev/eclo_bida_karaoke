@@ -30,7 +30,13 @@ class DeviceController extends Controller
     public function store(StoreDeviceRequest $request)
     {
         $validated_data = $request->validated();
-        return $this->sentSuccessResponse($this->deviceRepository->createDevice($validated_data), 'The device has been created!!!', 200);
+        if ($request->hasFile('image')) {
+            $filePath = $request->file('image')->store('public/uploads');
+            $fileName = basename($filePath);
+            $validated_data['image'] = $fileName;
+        }
+        $device = $this->deviceRepository->createDevice($validated_data);
+        return $this->sentSuccessResponse($device, 'The device has been created!!!', 200);
     }
 
     /**
