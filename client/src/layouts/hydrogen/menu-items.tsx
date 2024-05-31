@@ -2,6 +2,7 @@ import { routes } from '@/config/routes';
 import { PiPackageDuotone, PiChartBarDuotone, PiFolderLockDuotone, PiShapesDuotone, PiUserList } from 'react-icons/pi';
 import { FaUniversalAccess, FaUserTie } from 'react-icons/fa';
 import { HiOutlineUsers } from 'react-icons/hi2';
+import { MdOutlineBadge } from 'react-icons/md';
 // Note: do not add href in the label object, it is rendering as label
 export const menuItems = [
   // label start
@@ -59,7 +60,7 @@ export const menuItems = [
   {
     name: 'Positions',
     href: routes.admin.positions,
-    icon: <FaUserTie />,
+    icon: <MdOutlineBadge />,
   },
   {
     name: 'Customers',
