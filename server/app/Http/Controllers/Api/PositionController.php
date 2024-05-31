@@ -70,7 +70,7 @@ class PositionController extends Controller
         if (!$position) {
             return $this->sentErrorResponse('Position is not found', "error", 404);
         }
-        return $this->sentSuccessResponse($this->positionRepository->updatePositionByActive($position->id, $validatedData), "Position is update successfully", 200);
+        return $this->sentSuccessResponse($this->positionRepository->updatePositionByActive($active, $validatedData), "Position is update successfully", 200);
     }
 
     /**

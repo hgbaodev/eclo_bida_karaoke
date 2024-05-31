@@ -8,6 +8,7 @@ export interface RootState {
   device: deviceType;
   position: positionType;
   staff: staffType;
+  shift: shiftType;
 }
 export interface authType {
   isAuthenticated: boolean;
@@ -113,4 +114,18 @@ export interface positionType {
   query: string;
   errors: any;
   listPositions: any[];
+}
+
+export interface shiftType {
+  data: [];
+  isLoading: boolean;
+  isFiltered: boolean;
+  page: number;
+  pageSize: number;
+  totalRow: number;
+  query: string;
+  status: any;
+  errors: any;
+  isCreateLoading: boolean;
+  isUpdateLoading: boolean;
 }

@@ -21,5 +21,17 @@ class ShiftSeeder extends Seeder
             "time_in" => "15:00",
             "time_out" => "22:00"
         ]);
+        Shift::create([
+            "time_in" => "12:00",
+            "time_out" => "19:00"
+        ]);
+        Shift::create([
+            "time_in" => "10:00",
+            "time_out" => "17:00"
+        ]);
+        Shift::create([
+            "time_in" => "14:00",
+            "time_out" => "21:00"
+        ]);
     }
 }
