@@ -21,7 +21,7 @@ export default function EditStaff({ staff, active }: { staff: EditStaffInput; ac
   const [errors, setErrors] = useState<any>({});
   const { pageSize, page, query, isUpdateLoading, position, status } = useSelector((state: RootState) => state.staff);
   const { listPositions } = useSelector((state: RootState) => state.position);
-  const onSubmit: SubmitHandler<CreateStaffInput> = async (data) => {
+  const onSubmit: SubmitHandler<EditStaffInput> = async (data) => {
     const result: any = await dispatch(updateStaff({ staff: data, active }));
 
     if (updateStaff.fulfilled.match(result)) {
@@ -36,7 +36,7 @@ export default function EditStaff({ staff, active }: { staff: EditStaffInput; ac
       setErrors({});
       closeModal();
       await dispatch(getStaffs({ page, pageSize, query, position, status }));
-      toast.success('User created successfully');
+      toast.success('Staff edited successfully');
     } else {
       setErrors(result?.payload?.errors);
     }

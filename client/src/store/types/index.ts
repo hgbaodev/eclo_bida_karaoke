@@ -101,9 +101,16 @@ export interface staffType {
 }
 
 export interface positionType {
-  fetchData: any[];
+  data: [];
   fetchDataLoading: boolean;
   createLoading: boolean;
   updateLoading: boolean;
+  isFiltered: boolean;
+  page: number;
+  pageSize: number;
+  totalRow: number;
+  status: any;
+  query: string;
+  errors: any;
   listPositions: any[];
 }

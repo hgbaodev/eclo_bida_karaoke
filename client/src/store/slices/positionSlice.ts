@@ -2,16 +2,39 @@
 import axiosInstance from '@/api/axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { positionType } from '../types';
-
+import env from '@/env';
+import { EditPositionInput } from '@/utils/validators/edit-position.schema';
 const initialState: positionType = {
-  fetchData: [],
+  data: [],
   fetchDataLoading: false,
   createLoading: false,
   updateLoading: false,
+  isFiltered: false,
+  page: 1,
+  pageSize: 5,
+  totalRow: 0,
+  status: '',
+  query: '',
+  errors: '',
   listPositions: [],
 };
-
-export const getPositions = createAsyncThunk('positions', async () => {
+export const getAllPositions = createAsyncThunk(
+  'positions',
+  async ({ page, pageSize, query, status }: { page: number; pageSize: number; query: string; status: string }) => {
+    const url = new URL('/api/v1/positions', env.NEXT_API_URL);
+    url.searchParams.set('page', `${page}`);
+    url.searchParams.set('perPage', `${pageSize}`);
+    url.searchParams.set('query', query);
+    url.searchParams.set('status', `${status}`);
+    try {
+      const response = await axiosInstance.get(url.href);
+      return response.data;
+    } catch (error: any) {
+      throw error;
+    }
+  },
+);
+export const getPositions = createAsyncThunk('positions/getAllPosition', async () => {
   try {
     const response = await axiosInstance.get('positions');
     return response.data;
@@ -32,23 +55,26 @@ export const createPosition = createAsyncThunk('positions/createPosition', async
   }
 });
 
-export const deletePosition = createAsyncThunk('positions/deletePosition', async (id: number, { rejectWithValue }) => {
-  try {
-    const response = await axiosInstance.delete(`positions/${id}`);
-    return response.data;
-  } catch (error: any) {
-    if (!error.response) {
-      throw error;
+export const deletePosition = createAsyncThunk(
+  'positions/deletePosition',
+  async (active: string, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.delete(`positions/${active}`);
+      return response.data;
+    } catch (error: any) {
+      if (!error.response) {
+        throw error;
+      }
+      return rejectWithValue(error.response.data);
     }
-    return rejectWithValue(error.response.data);
-  }
-});
+  },
+);
 
 export const updatePosition = createAsyncThunk(
   'positions/updatePosition',
-  async (value: { id: number; functionals: any }, { rejectWithValue }) => {
+  async ({ position, active }: { position: EditPositionInput; active: string }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.put(`positions/${value.id}`, value);
+      const response = await axiosInstance.put(`positions/${active}`, position);
       return response.data;
     } catch (error: any) {
       if (!error.response) {
@@ -62,7 +88,32 @@ export const updatePosition = createAsyncThunk(
 const positionSlice = createSlice({
   name: 'position',
   initialState,
-  reducers: {},
+  reducers: {
+    setPage: (state, action) => {
+      state.page = action.payload;
+    },
+    setPageSize: (state, action) => {
+      state.pageSize = action.payload;
+    },
+    setQuery: (state, action) => {
+      state.page = 1;
+      state.query = action.payload;
+    },
+    setStatus: (state, action) => {
+      state.page = 1;
+      state.status = action.payload;
+      state.isFiltered = true;
+    },
+    setReset: (state) => {
+      state.page = 1;
+      state.status = '';
+      state.isFiltered = false;
+    },
+    setErrors: (state, action) => {
+      state.errors = action.payload;
+    },
+  },
+
   extraReducers: (builder) => {
     builder
       .addCase(getPositions.pending, (state) => {
@@ -70,43 +121,45 @@ const positionSlice = createSlice({
       })
       .addCase(getPositions.fulfilled, (state, action) => {
         state.fetchDataLoading = false;
-        state.fetchData = action.payload.data;
         const result = action.payload.data;
         state.listPositions = result.result;
+        state.data = result.result;
       })
       .addCase(getPositions.rejected, (state) => {
         state.fetchDataLoading = false;
       })
-      .addCase(createPosition.pending, (state) => {
+      .addCase(createPosition.pending, (state: positionType) => {
         state.createLoading = true;
       })
       .addCase(createPosition.fulfilled, (state, action) => {
         state.createLoading = false;
-        state.fetchData = [...state.fetchData, action.payload.data];
       })
       .addCase(createPosition.rejected, (state) => {
         state.createLoading = false;
       })
-      .addCase(deletePosition.fulfilled, (state, action) => {
-        state.fetchData = state.fetchData.filter((position) => position.id !== action.payload.data.id);
-      })
-      .addCase(updatePosition.pending, (state) => {
+      .addCase(updatePosition.pending, (state: positionType) => {
         state.updateLoading = true;
       })
       .addCase(updatePosition.fulfilled, (state, action) => {
         state.updateLoading = false;
-        const result = action.payload.data;
-        const index = state.fetchData.findIndex((position) => position.id == result.id);
-        if (index !== -1) {
-          state.fetchData[index].functionals = result.functionals;
-        } else {
-          console.error('Position not found in state.fetchData');
-        }
       })
       .addCase(updatePosition.rejected, (state) => {
         state.updateLoading = false;
+      })
+      .addCase(getAllPositions.fulfilled, (state, action) => {
+        state.fetchDataLoading = false;
+        const result = action.payload.data;
+        state.listPositions = result.result;
+        state.data = result.result;
+      })
+      .addCase(getAllPositions.pending, (state) => {
+        state.fetchDataLoading = true;
+      })
+      .addCase(getAllPositions.rejected, (state) => {
+        state.fetchDataLoading = false;
       });
   },
 });
+export const { setPage, setPageSize, setReset, setStatus, setQuery, setErrors } = positionSlice.actions;
 
 export default positionSlice.reducer;

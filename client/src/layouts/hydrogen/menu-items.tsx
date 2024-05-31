@@ -57,6 +57,11 @@ export const menuItems = [
     icon: <FaUserTie />,
   },
   {
+    name: 'Positions',
+    href: routes.admin.positions,
+    icon: <FaUserTie />,
+  },
+  {
     name: 'Customers',
     href: routes.admin.customers,
     icon: <PiUserList />,

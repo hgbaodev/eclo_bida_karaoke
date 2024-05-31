@@ -76,4 +76,5 @@ export const messages = {
   idcardIsRequired: 'IDcard is Required (12 number)',
   birthdayIsRequired: 'Birthday is Required',
   positionIsRequired: 'Staff position is required',
+  salaryIsRequired: 'Salary position is required',
 };

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('id');
             $table->string('name');
             $table->string('salary');
+            $table->string('status');
             $table->softDeletes();
             $table->string('active')->unique();
             $table->timestamps();
