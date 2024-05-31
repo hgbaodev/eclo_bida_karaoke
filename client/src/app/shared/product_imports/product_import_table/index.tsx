@@ -4,11 +4,11 @@ import { useEffect, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import { useColumn } from '@/hooks/use-column';
 import ControlledTable from '@/components/controlled-table';
-import { getColumns } from '@/app/shared/products/product_table/columns';
+import { getColumns } from '@/app/shared/product_imports/product_import_table/columns';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
-import { getProducts, setPage, setPageSize } from '@/store/slices/productSlices';
+import { getProductImports, setPage, setPageSize } from '@/store/slices/product_importSlice';
 import { useModal } from '../../modal-views/use-modal';
 const FilterElement = dynamic(() => import('@/app/shared/products/product_table/filter-elements'), {
   ssr: false,
@@ -17,10 +17,10 @@ const FilterElement = dynamic(() => import('@/app/shared/products/product_table/
 export default function StaffsTable() {
  
   const { openModal } = useModal();
-  const { data, isLoading, pageSize, page, totalRow, query } = useSelector((state: RootState) => state.product);
+  const { data, isLoading, pageSize, page, totalRow, query } = useSelector((state: RootState) => state.product_import);
   useEffect(() => {
     const fetch = async () => {
-      await dispatch(getProducts({ page, pageSize, query }));
+      await dispatch(getProductImports({ page, pageSize, query }));
     };
     fetch();
   }, [page, pageSize, query]);

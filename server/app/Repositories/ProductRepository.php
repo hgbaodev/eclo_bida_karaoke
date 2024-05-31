@@ -17,18 +17,17 @@ class ProductRepository implements ProductRepositoryInterface
         $id = $request->input('id');
         $product = Product::query();
         if ($query) {
-            $product->where("id", "LIKE", "%$query%")
-                ->orWhere("name", "LIKE", "%$query%");
+            $product->whereRaw("name LIKE '%$query%'");
         }
         if ($id) {
             $product->where('id', $id);
         }
         if ($all && $all == true) {
-            $staffs = $product->get();
+            $product = $product->get();
         } else {
-            $staffs = $product->paginate($perPage);
+            $product = $product->paginate($perPage);
         }
-        return new CollectionCustom($staffs);
+        return new CollectionCustom($product);
     }
     public function getAllProduct()
     {

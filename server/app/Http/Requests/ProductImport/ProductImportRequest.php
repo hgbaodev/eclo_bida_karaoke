@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\ProductImport;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Helpers\HelperRequest;
 
-class ProductImportRequest extends FormRequest
+class ProductImportRequest extends HelperRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
