@@ -12,6 +12,7 @@ import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { EditProductInput, editProductSchema } from '@/utils/validators/edit-product.schema';
+import { number } from 'zod';
 
 
 export default function EditProduct({ product, active }: { product: EditProductInput; active: string }) {
@@ -69,6 +70,7 @@ export default function EditProduct({ product, active }: { product: EditProductI
             />
             <Input
               label="Cost Price"
+              type='number'
               placeholder="Enter cost price"
               {...register('cost_price')}
               className="col-span-full"
@@ -77,6 +79,7 @@ export default function EditProduct({ product, active }: { product: EditProductI
 
             <Input
               label="Selling Price"
+              type='number'
               placeholder="Enter staff birthday"
               {...register('selling_price')}
               className="col-span-full"

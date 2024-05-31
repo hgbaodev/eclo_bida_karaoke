@@ -32,14 +32,14 @@ export const getColumns = (openModal: (args: any) => void) => [
     dataIndex: 'cost_price',
     key: 'cost_price',
     width: 100,
-    render: (_: string,  product: Product) => product.cost_price,
+    render: (_: number,  product: Product) => product.cost_price,
   },
   {
     title: <HeaderCell title="Selling Price" />,
     dataIndex: 'selling_price',
     key: 'selling_price',
     width: 50,
-    render: (_: string,  product: Product) => product.selling_price,
+    render: (_: number,  product: Product) => product.selling_price,
   },
   {
     title: <HeaderCell title="Quantity" />,
@@ -111,7 +111,6 @@ export const getColumns = (openModal: (args: any) => void) => [
 export interface Product {
     active: string;
     name: string;
-    
     cost_price: string;
     selling_price: string;
     quantity: string;
