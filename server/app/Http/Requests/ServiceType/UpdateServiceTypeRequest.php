@@ -4,6 +4,7 @@ namespace App\Http\Requests\ServiceType;
 
 use App\Http\Helpers\HelperRequest;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateServiceTypeRequest extends HelperRequest
 {
@@ -22,9 +23,10 @@ class UpdateServiceTypeRequest extends HelperRequest
      */
     public function rules(): array
     {
+        $active = $this->route('active');
         return [
-            'name' => 'required|unique:service_types',
-            'is_deleted' => 'required',
+            'name' => ['required', Rule::unique('service_types')->ignore($active, 'active')],
+            'status' => 'required|in:A,D',
         ];
     }
 }

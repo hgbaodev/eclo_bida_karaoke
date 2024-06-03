@@ -3,9 +3,9 @@
 namespace App\Interface;
 
 interface ServiceTypeRepositoryInterface{
-    public function getAllServiceTypes();
-    public function getServiceTypeById($id);
+    public function getServiceTypes($request);
+    public function getServiceTypeByActive($active);
     public function createServiceType(array $data);
-    public function updateServiceTypeById($id, array $data);
-    public function deleteServiceTypeById($id);
+    public function updateServiceTypeByActive($active, array $data);
+    public function deleteServiceTypeByActive($active);
 }
