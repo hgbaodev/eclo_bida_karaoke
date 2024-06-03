@@ -20,6 +20,7 @@ class ServiceTypeFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
+            'status' => $this->faker->randomElement(['A', 'D']),
         ];
     }
 }
