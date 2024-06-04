@@ -18,7 +18,6 @@ export default function DevicesTable() {
     };
     fetch();
   }, [page, pageSize, query]);
-  console.log('data', data);
 
   const columns = useMemo(
     () => getColumns(),

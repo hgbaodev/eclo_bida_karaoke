@@ -4,6 +4,7 @@ namespace App\Http\Requests\Supplier;
 
 use App\Http\Helpers\HelperRequest;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateSupplierRequest extends HelperRequest
 {
@@ -22,10 +23,12 @@ class UpdateSupplierRequest extends HelperRequest
      */
     public function rules(): array
     {
+        $active = $this->route('active');
         return  [
-            'name' => 'required|unique:suppliers',
-            'address' => 'required',
-            'phone' => 'required|unique:customers|regex:/^[0-9]{10,}$/',
+            'name' => 'required',
+            'phone' => ['required', 'regex:/^[0-9]{10,}$/', Rule::unique('suppliers')->ignore($active, 'active')],
+            'address' => ['required'],
+            'status' => 'required|in:A,D',
         ];
     }
 }

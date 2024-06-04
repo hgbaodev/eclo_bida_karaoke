@@ -18,7 +18,6 @@ export function getStatusBadge(status: Staff['status']) {
       return (
         <div className="flex items-center">
           <Badge color="danger" renderAsDot />
-
           <Text className="ms-2 font-medium text-red-dark">InActive</Text>
         </div>
       );

@@ -40,6 +40,7 @@ export default function CreateUser() {
     } else {
       setErrors(result?.payload?.errors);
     }
+    console.log(data)
   };
 
   return (

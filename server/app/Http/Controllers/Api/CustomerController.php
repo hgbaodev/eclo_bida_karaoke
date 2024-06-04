@@ -42,7 +42,8 @@ class CustomerController extends Controller
      */
     public function show($active)
     {
-        return $this->sentSuccessResponse($this->customerRepository->getCustomerByActive($active));
+        $returnedData = $this->customerRepository->getCustomerByActive($active);
+        return $this->sentSuccessResponse($returnedData);
     }
     /**
      * Update the specified resource in storage.

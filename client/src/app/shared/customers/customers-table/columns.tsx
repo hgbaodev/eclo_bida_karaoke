@@ -118,7 +118,7 @@ export const getColumns = (openModal: (args: any) => void) => [
             const result = await dispatch(deleteCustomer(customer.active)); // Remove the .then() block
             if (deleteCustomer.fulfilled.match(result)) {
               await dispatch(getCustomers({ page: 1, pageSize: 5, query: '', status: '' }));
-              toast.success(`User #${customer.first_name} ${customer.last_name} has been deleted successfully.`);
+              toast.success(`Supplier #${customer.first_name} ${customer.last_name} has been deleted successfully.`);
             } else {
               toast.error(`Failed to delete customer #${customer.active}.`);
             }

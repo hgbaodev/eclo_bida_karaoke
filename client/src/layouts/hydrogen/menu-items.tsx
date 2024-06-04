@@ -1,8 +1,11 @@
 import { routes } from '@/config/routes';
 import { PiPackageDuotone, PiChartBarDuotone, PiFolderLockDuotone, PiShapesDuotone, PiUserList } from 'react-icons/pi';
 import { FaUniversalAccess, FaUserTie } from 'react-icons/fa';
+import { TbPackages } from 'react-icons/tb';
 import { HiOutlineUsers } from 'react-icons/hi2';
 import { MdOutlineBadge } from 'react-icons/md';
+import { FaProductHunt } from 'react-icons/fa';
+
 // Note: do not add href in the label object, it is rendering as label
 export const menuItems = [
   // label start
@@ -40,6 +43,10 @@ export const menuItems = [
         name: 'Devices',
         href: routes.admin.services.devices,
       },
+      {
+        name: 'Service types',
+        href: routes.admin.services.service_types,
+      },
     ],
   },
   {
@@ -73,8 +80,25 @@ export const menuItems = [
     icon: <PiUserList />,
   },
   {
+    name: 'Suppliers',
+    href: routes.admin.suppliers,
+    icon: <TbPackages />,
+  },
+  {
+
+    name: 'Products',
+    href: routes.admin.products,
+    icon: <FaProductHunt />,
+  },
+  {
+    name: 'Import',
+    href: routes.admin.product_import,
+    icon: <FaProductHunt />,
+  },
+  {
     name: 'Loggers',
     href: routes.admin.loggers,
     icon: <FaUniversalAccess />,
   },
+ 
 ];

@@ -52,7 +52,7 @@ export default function EditCustomer({ customer, active }: { customer: EditCusto
           <>
             <div className="col-span-full flex items-center justify-between">
               <Title as="h4" className="font-semibold">
-                Update user
+                Update customer
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
@@ -74,14 +74,14 @@ export default function EditCustomer({ customer, active }: { customer: EditCusto
             />
             <Input
               label="Phone"
-              placeholder="Enter user's phone"
+              placeholder="Enter customer's phone"
               className="col-span-full"
               {...register('phone')}
               error={errors.phone?.message}
             />
             <Input
               label="Email"
-              placeholder="Enter user's email"
+              placeholder="Enter customer's email"
               className="col-span-full"
               {...register('email')}
               error={errors.email?.message}

@@ -28,6 +28,8 @@ class DatabaseSeeder extends Seeder
             DeviceSeeder::class,
             SupplierSeeder::class,
             ServiceTypeSeeder::class,
+            ProductSeeder::class,
+            ProductImportSeeder::class,
         ]);
     }
 }

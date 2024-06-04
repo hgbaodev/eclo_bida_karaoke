@@ -119,6 +119,15 @@ const customerSlice = createSlice({
       .addCase(getCustomers.rejected, (state) => {
         state.isLoading = false;
       })
+      .addCase(createCustomer.pending, (state: customerType) => {
+        state.isCreateLoading = true;
+      })
+      .addCase(createCustomer.fulfilled, (state, action) => {
+        state.isCreateLoading = false;
+      })
+      .addCase(createCustomer.rejected, (state) => {
+        state.isCreateLoading = false;
+      })
       .addCase(updateCustomer.pending, (state: customerType) => {
         state.isUpdateLoading = true;
       })

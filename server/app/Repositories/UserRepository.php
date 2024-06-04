@@ -20,10 +20,7 @@ class UserRepository implements UserRepositoryInterface
     $users = User::query()
       ->with(['role']);
     if ($query) {
-      $users->where("id", "LIKE", "%$query%")
-        ->orWhere("first_name", "LIKE", "%$query%")
-        ->orWhere("last_name", "LIKE", "%$query%")
-        ->orWhereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", ["%$query%"]);
+      $users->whereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", ["%$query%"]);
     }
     if ($id) {
       $users->where('active', $id);
@@ -36,6 +33,7 @@ class UserRepository implements UserRepositoryInterface
         $query->where('active', $role);
       });
     }
+    $users->orderBy('id', 'desc');
     if ($all && $all == true) {
       $users = $users->get();
     } else {
