@@ -7,45 +7,45 @@ import { Form } from '@/components/ui/form';
 import { Input, Button, ActionIcon, Title, Select, Textarea } from 'rizzui';
 import { useModal } from '@/app/shared/modal-views/use-modal';
 import { createProduct, getProductImports } from '@/store/slices/product_importSlice';
-import { CreateProductInput, createProductSchema } from '@/utils/validators/create-product.schema';
+import { CreateProduc_ImporttInput, createProduct_ImportSchema } from '@/utils/validators/create-product_import.schema';
 import { dispatch } from '@/store';
 import toast from 'react-hot-toast';
-
+import { getStatusBadge } from './product_import_table/columns';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
-
+import { statusOptions } from './type';
 
 export default function CreateStaff() {
   const { closeModal } = useModal();
   const [reset, setReset] = useState({});
   const [errors, setErrors] = useState<any>({});
-  const { pageSize, page, query, isCreateLoading} = useSelector((state: RootState) => state.product);
+  const { pageSize, page, query, isCreateLoading} = useSelector((state: RootState) => state.product_import);
   // const { listPositions } = useSelector((state: RootState) => state.position);
-  const onSubmit: SubmitHandler<CreateProductInput> = async (data) => {
+  const onSubmit: SubmitHandler<CreateProduc_ImporttInput> = async (data) => {
     const result: any = await dispatch(createProduct(data));
 
     if (createProduct.fulfilled.match(result)) {
       setReset({
-        name: '',
-        cost_price: '',
-        selling_price: '',
-        quantity: '',
+        create_time: '',
+        receive_time: '',
+        status: '',
+        total_cost: '',
       
       });
       setErrors({});
       closeModal();
       await dispatch(getProductImports ({ page, pageSize, query }));
-      toast.success('Product created successfully');
+      toast.success('Import created successfully');
     } else {
       setErrors(result?.payload?.errors);
     }
     console.log(data);
   };
   return (
-    <Form<CreateProductInput>
+    <Form<CreateProduc_ImporttInput>
       resetValues={reset}
       onSubmit={onSubmit}
-      validationSchema={createProductSchema}
+      validationSchema={createProduct_ImportSchema}
       serverError={errors}
       className="grid grid-cols-1 gap-6 p-6 @container md:grid-cols-2 [&_.rizzui-input-label]:font-medium [&_.rizzui-input-label]:text-gray-900"
     >
@@ -55,44 +55,66 @@ export default function CreateStaff() {
           <>
             <div className="col-span-full flex items-center justify-between">
               <Title as="h4" className="font-semibold">
-                Add a new Product
+                Import Product
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
             <Input
-              label="Product Name"
-              placeholder="Enter product name"
+              type="date"
+              label="Create time"
               className="col-span-full"
-              {...register('name')}
-              error={errors.name?.message}
+              {...register('create_time')}
+              error={errors.create_time?.message}
             />
             <Input
-              label="Cost Price"
-              placeholder="Enter cost price"
-              {...register('cost_price')}
+             type="date"
+              label="Receive time"
+              {...register('receive_time')}
               className="col-span-full"
-              error={errors.cost_price?.message}
+              error={errors.receive_time?.message}
             />
 
             <Input
-              label="Selling Price"
-              placeholder="Enter selling price"
-              {...register('selling_price')}
+             type="number"
+              label="Total cost"
+              placeholder="Enter total cost"
+             
+              {...register('total_cost')}
               className="col-span-full"
-              error={errors.selling_price?.message}
+              error={errors.total_cost?.message}
             />
-
             
             
+            <Controller
+              name="status"
+              control={control}
+              render={({ field: { name, onChange, value } }) => (
+                <Select
+                  options={statusOptions}
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                  label="Status"
+                  placeholder="Select a status"
+                  className="col-span-full"
+                  error={errors?.status?.message}
+                  getOptionValue={(option: { value: any }) => option.value}
+                  getOptionDisplayValue={(option: { value: any }) => getStatusBadge(option.value as any)}
+                  displayValue={(selected: any) => getStatusBadge(selected)}
+                  dropdownClassName="!z-[1]"
+                  inPortal={false}
+                />
+              )}
+            />
 
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
                 Cancel
               </Button>
               <Button type="submit" isLoading={isCreateLoading} className="w-full @xl:w-auto">
-                Create Product
+                Create import 
              </Button>
              </div>
              </>

@@ -24,7 +24,7 @@ class ProductFactory extends Factory
             "cost_price" => $this->faker->randomFloat(2, 1, 1000),
             "selling_price" => $this->faker->randomFloat(2, 1, 1000),
             'quantity' => $this->faker->numberBetween(1, 1000),
-            'active' => base64_encode($this->faker->unique()->word),
+
         ];
     }
 }
