@@ -31,6 +31,7 @@ class StaffRepository implements StaffRepositoryInterface
         if ($idcard) {
             $staffs->where('idcard', $idcard);
         }
+        $staffs->latest();
         if ($all && $all == true) {
             $staffs = $staffs->get();
         } else {

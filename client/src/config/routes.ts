@@ -25,6 +25,7 @@ export const routes = {
     product_import: '/admin/product_imports',
     staffs: '/admin/staffs',
     positions: '/admin/positions',
+    shifts: '/admin/shifts',
   },
   auth: {
     signIn: '/auth/signin',

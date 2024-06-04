@@ -11,7 +11,7 @@ class ShiftRequest extends HelperRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,7 +23,8 @@ class ShiftRequest extends HelperRequest
     {
         return [
             "time_in" => "required",
-            "time_out" => "required"
+            "time_out" => "required",
+            "status" => "required",
         ];
     }
 }

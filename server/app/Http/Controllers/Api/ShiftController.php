@@ -68,7 +68,7 @@ class ShiftController extends Controller
         if (!$shift) {
             return $this->sentErrorResponse('Shift is not found', "error", 404);
         }
-        return $this->sentSuccessResponse($this->shiftRepository->updateShiftByActive($shift->id, $validatedData), "Shift is updated successfully", 200);
+        return $this->sentSuccessResponse($this->shiftRepository->updateShiftByActive($active, $validatedData), "Shift is updated successfully", 200);
     }
 
     /**

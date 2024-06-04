@@ -14,11 +14,12 @@ class ShiftRepository implements ShiftRepositoryInterface
         $perPage = $request->input('perPage');
         $query = $request->input('query');
         $id = $request->input('id');
+        $status = $request->input('status');
         $timein = $request->input('time_in');
         $timeout = $request->input('time_out');
         $shift = Shift::query();
         if ($query) {
-            $shift->where("time_in", "LIKE", "%$query%")->orWhere("time_out", "LIKE", "%$query%");
+            $shift->whereRaw("CONCAT(time_in, ' ', time_out) LIKE '%$query%'");
         }
         if ($id) {
             $shift->where("active", $id);
@@ -29,6 +30,10 @@ class ShiftRepository implements ShiftRepositoryInterface
         if ($timeout) {
             $shift->where("time_out", $timeout);
         }
+        if ($status) {
+            $shift->where("status", $status);
+        }
+        $shift->latest();
         if ($all && $all == true) {
             $shift = $shift->get();
         } else {
@@ -50,13 +55,13 @@ class ShiftRepository implements ShiftRepositoryInterface
     }
     public function updateShiftByActive($active, array $data)
     {
-        $shift = Shift::where("active", $active)->get();
+        $shift = Shift::where("active", $active)->first();
         $shift->update($data);
         return $shift;
     }
     public function deleteShiftByActive($active)
     {
-        $shift = Shift::where("active", $active)->get();
+        $shift = Shift::where("active", $active)->first();
         $shift->delete();
         return $shift;
     }

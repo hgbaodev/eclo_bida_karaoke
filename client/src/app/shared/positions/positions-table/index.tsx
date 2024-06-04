@@ -4,29 +4,27 @@ import { useEffect, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import { useColumn } from '@/hooks/use-column';
 import ControlledTable from '@/components/controlled-table';
-import { getColumns } from '@/app/shared/staffs/staffs-table/columns';
+import { getColumns } from '@/app/shared/positions/positions-table/columns';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
-import { getStaffs, setPage, setPageSize } from '@/store/slices/staffSlice';
+import { getAllPositions, setPage, setPageSize } from '@/store/slices/positionSlice';
 import { useModal } from '../../modal-views/use-modal';
-const FilterElement = dynamic(() => import('@/app/shared/staffs/staffs-table/filter-element'), {
+const FilterElement = dynamic(() => import('@/app/shared/positions/positions-table/filter-element'), {
   ssr: false,
 });
 
-export default function StaffsTable() {
+export default function PositionsTable() {
   const { openModal } = useModal();
-  const { data, isLoading, pageSize, page, totalRow, query, position, status } = useSelector(
-    (state: RootState) => state.staff,
+  const { data, fetchDataLoading, pageSize, page, totalRow, query, status } = useSelector(
+    (state: RootState) => state.position,
   );
-
   useEffect(() => {
     const fetch = async () => {
-      await dispatch(getStaffs({ page, pageSize, query, position, status }));
+      await dispatch(getAllPositions({ page, pageSize, query, status }));
     };
     fetch();
-  }, [page, pageSize, query, position, status]);
-
+  }, [page, pageSize, query, status]);
   const columns = useMemo(
     () => getColumns(openModal),
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -47,7 +45,7 @@ export default function StaffsTable() {
       <ControlledTable
         variant="modern"
         data={data}
-        isLoading={isLoading}
+        isLoading={fetchDataLoading}
         showLoadingText={false}
         // @ts-ignore
         columns={visibleColumns}

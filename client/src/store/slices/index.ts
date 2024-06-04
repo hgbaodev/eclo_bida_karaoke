@@ -7,6 +7,7 @@ import user from './userSlice';
 
 import staff from './staffSlice';
 import position from './positionSlice';
+import shift from './shiftSlice';
 
 import logger from './loggerSlice';
 
@@ -36,6 +37,7 @@ const reducers = combineReducers({
   area,
   supplier,
   device,
+  shift,
 });
 
 export default reducers;

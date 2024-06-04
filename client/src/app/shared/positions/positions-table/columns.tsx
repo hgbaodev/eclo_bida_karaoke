@@ -4,20 +4,20 @@
 import { Text, Badge, Tooltip, ActionIcon } from 'rizzui';
 import { HeaderCell } from '@/components/ui/table';
 import PencilIcon from '@/components/icons/pencil';
-import AvatarCard from '@/components/ui/avatar-card';
 import DateCell from '@/components/ui/date-cell';
 import DeletePopover from '@/app/shared/delete-popover';
 import { dispatch } from '@/store';
-import { deleteStaff, getStaffs } from '@/store/slices/staffSlice';
+import { deletePosition, getAllPositions } from '@/store/slices/positionSlice';
 import toast from 'react-hot-toast';
-import EditStaff from '../edit-staff';
+import EditPosition from '../edit-position';
 
-export function getStatusBadge(status: Staff['status']) {
+export function getStatusBadge(status: Position['status']) {
   switch (status) {
     case STATUSES.InActive:
       return (
         <div className="flex items-center">
           <Badge color="danger" renderAsDot />
+
           <Text className="ms-2 font-medium text-red-dark">InActive</Text>
         </div>
       );
@@ -43,42 +43,28 @@ export const getColumns = (openModal: (args: any) => void) => [
     dataIndex: 'id',
     key: 'id',
     width: 50,
-    render: (_: any, staff: Staff, index: number) => <div className="inline-flex ps-3">{index + 1}</div>,
+    render: (_: any, position: Position, index: number) => <div className="inline-flex ps-3">{index + 1}</div>,
   },
   {
     title: <HeaderCell title="Name" />,
     dataIndex: 'fullName',
     key: 'fullName',
     width: 50,
-    render: (_: string, staff: Staff) => <AvatarCard src={staff.image} name={staff.name} description={staff.idcard} />,
+    render: (_: string, position: Position) => position.name,
   },
   {
-    title: <HeaderCell title="Position" />,
-    dataIndex: 'position',
-    key: 'position',
+    title: <HeaderCell title="Salary" />,
+    dataIndex: 'salary',
+    key: 'salary',
     width: 100,
-    render: (_: string, staff: Staff) => staff.position.name,
-  },
-  {
-    title: <HeaderCell title="Birthday" />,
-    dataIndex: 'birthday',
-    key: 'birthday',
-    width: 50,
-    render: (_: string, staff: Staff) => staff.birthday,
-  },
-  {
-    title: <HeaderCell title="Phone" />,
-    dataIndex: 'phone',
-    key: 'phone',
-    width: 50,
-    render: (_: string, staff: Staff) => staff.phone,
+    render: (_: string, position: Position) => position.salary,
   },
   {
     title: <HeaderCell title="Status" />,
     dataIndex: 'status',
     key: 'status',
     width: 10,
-    render: (status: Staff['status']) => getStatusBadge(status),
+    render: (status: Position['status']) => getStatusBadge(status),
   },
   {
     title: <HeaderCell title="Created" />,
@@ -92,22 +78,18 @@ export const getColumns = (openModal: (args: any) => void) => [
     dataIndex: 'action',
     key: 'action',
     width: 10,
-    render: (_: string, staff: Staff) => (
+    render: (_: string, position: Position) => (
       <div className="flex items-center justify-end gap-3 pe-3">
-        <Tooltip size="sm" content={'Edit Staff'} placement="top" color="invert">
+        <Tooltip size="sm" content={'Edit Position'} placement="top" color="invert">
           <ActionIcon
             onClick={() => {
               const data = {
-                name: staff.name,
-                birthday: staff.birthday,
-                idcard: staff.idcard,
-                position: staff.position.active,
-                phone: staff.phone,
-                status: staff.status,
-                address: staff.address,
+                name: position.name,
+                salary: position.salary,
+                status: position.status,
               };
               openModal({
-                view: <EditStaff staff={data} active={staff.active} />,
+                view: <EditPosition position={data} active={position.active} />,
               });
             }}
             as="span"
@@ -119,15 +101,15 @@ export const getColumns = (openModal: (args: any) => void) => [
           </ActionIcon>
         </Tooltip>
         <DeletePopover
-          title={`Delete this staff`}
-          description={`Are you sure you want to delete this #${staff.name} staff?`}
+          title={`Delete this position`}
+          description={`Are you sure you want to delete this #${position.name} position?`}
           onDelete={async () => {
-            const result = await dispatch(deleteStaff(staff.active)); // Remove the .then() block
-            if (deleteStaff.fulfilled.match(result)) {
-              await dispatch(getStaffs({ page: 1, pageSize: 5, query: '', position: '', status: '' }));
-              toast.success(`Staff #${staff.name} has been deleted successfully.`);
+            const result = await dispatch(deletePosition(position.active)); // Remove the .then() block
+            if (deletePosition.fulfilled.match(result)) {
+              await dispatch(getAllPositions({ page: 1, pageSize: 5, query: '', status: '' }));
+              toast.success(`Staff #${position.name} has been deleted successfully.`);
             } else {
-              toast.error(`Failed to delete staff #${staff.active}.`);
+              toast.error(`Failed to delete staff #${position.active}.`);
             }
           }}
         />
@@ -136,19 +118,11 @@ export const getColumns = (openModal: (args: any) => void) => [
   },
 ];
 
-export interface Staff {
+export interface Position {
   active: string;
   name: string;
-  phone: string;
-  image: string;
-  idcard: string;
-  birthday: string;
+  salary: string;
   status: any;
-  address: string;
-  position: {
-    name: string;
-    active: string;
-  };
   created_at: string;
 }
 export const STATUSES = {

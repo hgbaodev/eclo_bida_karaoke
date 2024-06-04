@@ -12,6 +12,7 @@ export interface RootState {
   position: positionType;
   supplier: supplierType;
   staff: staffType;
+  shift: shiftType;
 }
 export interface authType {
   isAuthenticated: boolean;
@@ -158,9 +159,30 @@ export interface staffType {
 }
 
 export interface positionType {
-  fetchData: any[];
+  data: [];
   fetchDataLoading: boolean;
   createLoading: boolean;
   updateLoading: boolean;
+  isFiltered: boolean;
+  page: number;
+  pageSize: number;
+  totalRow: number;
+  status: any;
+  query: string;
+  errors: any;
   listPositions: any[];
+}
+
+export interface shiftType {
+  data: [];
+  isLoading: boolean;
+  isFiltered: boolean;
+  page: number;
+  pageSize: number;
+  totalRow: number;
+  query: string;
+  status: any;
+  errors: any;
+  isCreateLoading: boolean;
+  isUpdateLoading: boolean;
 }
