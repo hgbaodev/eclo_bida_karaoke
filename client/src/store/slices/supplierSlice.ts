@@ -89,9 +89,11 @@ const supplierSlice = createSlice({
       state.pageSize = action.payload;
     },
     setQuery: (state, action) => {
+      state.page = 1;
       state.query = action.payload;
     },
     setErrors: (state, action) => {
+      state.page = 1;
       state.errors = action.payload;
     },
     setReset: (state) => {

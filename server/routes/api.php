@@ -21,4 +21,5 @@ Route::group([
     require __DIR__ . '/api/product_import.php';
     require __DIR__ . '/api/product.php';
     require __DIR__ . '/api/product_import_details.php';
+    require __DIR__ . '/api/price.php';
 });
