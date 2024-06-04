@@ -10,6 +10,7 @@ export interface RootState {
   area: areaType;
   device: deviceType;
   position: positionType;
+  price: priceType;
   supplier: supplierType;
   staff: staffType;
   shift: shiftType;
@@ -46,6 +47,20 @@ export interface userType {
   query: string;
   role: any;
   status: any;
+  errors: any;
+  isCreateLoading: boolean;
+  isUpdateLoading: boolean;
+}
+
+export interface priceType {
+  data: [];
+  isLoading: boolean;
+  isFiltered: boolean;
+  page: number;
+  pageSize: number;
+  totalRow: number;
+  status: any;
+  query: string;
   errors: any;
   isCreateLoading: boolean;
   isUpdateLoading: boolean;

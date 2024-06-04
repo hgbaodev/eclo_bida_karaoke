@@ -47,6 +47,10 @@ export const menuItems = [
         name: 'Service types',
         href: routes.admin.services.service_types,
       },
+      {
+        name: 'Prices setting',
+        href: routes.admin.services.prices,
+      },
     ],
   },
   {
@@ -85,7 +89,6 @@ export const menuItems = [
     icon: <TbPackages />,
   },
   {
-
     name: 'Products',
     href: routes.admin.products,
     icon: <FaProductHunt />,
@@ -100,5 +103,4 @@ export const menuItems = [
     href: routes.admin.loggers,
     icon: <FaUniversalAccess />,
   },
- 
 ];
