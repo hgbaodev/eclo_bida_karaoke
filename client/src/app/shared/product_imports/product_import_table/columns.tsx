@@ -10,7 +10,7 @@ import DeletePopover from '@/app/shared/delete-popover';
 import { dispatch } from '@/store';
 import { deleteProduct,getProducts } from '@/store/slices/productSlices';
 import toast from 'react-hot-toast';
-import EditProduct from '../edit-product';
+import EditProduct from '../edit-product_import';
 
 export const getColumns = (openModal: (args: any) => void) => [
   {
@@ -18,54 +18,54 @@ export const getColumns = (openModal: (args: any) => void) => [
     dataIndex: 'id',
     key: 'id',
     width: 50,
-    render: (_: any,  product: Product, index: number) => <div className="inline-flex ps-3">{index + 1}</div>,
+    render: (_: any,  product_import: Product_Import, index: number) => <div className="inline-flex ps-3">{index + 1}</div>,
   },
   {
-    title: <HeaderCell title="Product name" />,
-    dataIndex: 'name',
-    key: 'name',
+    title: <HeaderCell title="Create Time" />,
+    dataIndex: 'create_time',
+    key: 'create_time',
     width: 50,
-    render: (_: string,  product: Product) => product.name,
+    render: (_: string,  product_import: Product_Import) => product_import.create_time,
   },
   {
-    title: <HeaderCell title="Cost Price" />,
-    dataIndex: 'cost_price',
-    key: 'cost_price',
+    title: <HeaderCell title="Receive Time" />,
+    dataIndex: 'receive_time',
+    key: 'receive_time',
     width: 100,
-    render: (_: number,  product: Product) => product.cost_price,
+    render: (_: number,  product_import: Product_Import) => product_import.receive_time,
   },
   {
-    title: <HeaderCell title="Selling Price" />,
-    dataIndex: 'selling_price',
-    key: 'selling_price',
+    title: <HeaderCell title="Total Cost" />,
+    dataIndex: 'total_cost',
+    key: 'total_cost',
     width: 50,
-    render: (_: number,  product: Product) => product.selling_price,
+    render: (_: number, product_import: Product_Import) => product_import.total_cost,
   },
   {
-    title: <HeaderCell title="Quantity" />,
-    dataIndex: 'quantity',
-    key: 'quantity',
+    title: <HeaderCell title="Status" />,
+    dataIndex: 'status',
+    key: 'status',
     width: 50,
-    render: (_: string,  product: Product) => product.quantity,
+    render: (_: string,  product_import: Product_Import) => product_import.status,
   },
   {
     title: <></>,
     dataIndex: 'action',
     key: 'action',
     width: 10,
-    render: (_: string, product: Product) => (
+    render: (_: string, product_import: Product_Import) => (
       <div className="flex items-center justify-end gap-3 pe-3">
         <Tooltip size="sm" content={'Edit Staff'} placement="top" color="invert">
           <ActionIcon
             onClick={() => {
               const data = {
-                name: product.name,
-                cost_price: product.cost_price,
-                selling_price: product.selling_price,
-                quantity: product.quantity,
+                create_time: product_import.create_time,
+                receive_time: product_import.receive_time,
+                total_cost: product_import.total_cost,
+                status: product_import.status,
               };
               openModal({
-                view: <EditProduct product={data} active={product.active} />,
+                // view: <EditProduct product_import={data} active={product_import.active} />,
               });
             }}
             as="span"
@@ -76,7 +76,7 @@ export const getColumns = (openModal: (args: any) => void) => [
             <PencilIcon className="h-4 w-4" />
           </ActionIcon>
         </Tooltip>
-        <DeletePopover
+        {/* <DeletePopover
           title={`Delete this user`}
           description={`Are you sure you want to delete this #${product.name} staff?`}
           onDelete={async () => {
@@ -88,31 +88,24 @@ export const getColumns = (openModal: (args: any) => void) => [
               toast.error(`Failed to delete staff #${product.active}.`);
             }
           }}
-        />
+        /> */}
       </div>
     ),
   },
 ];
 
-// export interface Staff {
-//   active: string;
-//   name: string;
-//   phone: string;
-//   image: string;
-//   idcard: string;
-//   birthday: string;
-//   address: string;
-//   position: {
-//     name: string;
+// export interface Product {
 //     active: string;
-//   };
-//   created_at: string;
-// }
-export interface Product {
-    active: string;
-    name: string;
-    cost_price: string;
-    selling_price: string;
-    quantity: string;
+//     name: string;
+//     cost_price: string;
+//     selling_price: string;
+//     quantity: string;
    
+//   }
+  export interface Product_Import {
+    active: string;
+    receive_time: string;
+    create_time: string;
+    total_cost: string;
+    status: string;
   }

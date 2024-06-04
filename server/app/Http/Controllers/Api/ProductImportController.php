@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ProductImportRequest;
+use App\Http\Requests\ProductImport\ProductImportRequest;
 use App\Interface\ProductImportInterface;
 use Illuminate\Http\Request;
 
@@ -16,9 +16,9 @@ class ProductImportController extends Controller
     {
         $this->product_import_Repository = $product_import_Repository;
     }
-    public function index()
+    public function index(Request $request)
     {
-        return $this->sentSuccessResponse($this->product_import_Repository->getAllProductImport());
+        return $this->sentSuccessResponse($this->product_import_Repository->getProductImports($request));
     }
     public function store(ProductImportRequest $request)
     {

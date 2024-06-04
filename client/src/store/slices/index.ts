@@ -11,6 +11,7 @@ import position from './positionSlice';
 import logger from './loggerSlice';
 
 import product from './productSlices';
+import product_import from './product_importSlice';
 import area from './areaSlice';
 
 import customer from './customerSlice';
@@ -30,7 +31,7 @@ const reducers = combineReducers({
   logger,
 
   product,
-
+  product_import,
   customer,
   area,
   supplier,

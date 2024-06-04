@@ -69,13 +69,20 @@ export const menuItems = [
     icon: <TbPackages />,
   },
   {
-    name: 'Loggers',
-    href: routes.admin.loggers,
-    icon: <FaUniversalAccess />,
-  },
-  {
+
     name: 'Products',
     href: routes.admin.products,
     icon: <FaProductHunt />,
   },
+  {
+    name: 'Import',
+    href: routes.admin.product_import,
+    icon: <FaProductHunt />,
+  },
+  {
+    name: 'Loggers',
+    href: routes.admin.loggers,
+    icon: <FaUniversalAccess />,
+  },
+ 
 ];

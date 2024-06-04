@@ -21,6 +21,7 @@ export const routes = {
     suppliers: '/admin/suppliers',
     loggers: '/admin/loggers',
     products: '/admin/products',
+    product_import: '/admin/product_imports',
     staffs: '/admin/staffs',
     positions: '/admin/positions',
   },

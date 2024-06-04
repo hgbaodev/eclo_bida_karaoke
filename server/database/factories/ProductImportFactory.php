@@ -18,14 +18,11 @@ class ProductImportFactory extends Factory
      */
     public function definition(): array
     {
-        $randomId = Str::random(10);
-        $encodedId = base64_encode($randomId);
         return [
             "total_cost" => $this->faker->randomFloat(2, 1, 1000),
-            "create_time" => $this->faker->dateTimeBetween('-1 year', 'now'),
+            "create_time" => $this->faker->dateTimeThisYear('now'),
             "receive_time" => $this->faker->dateTimeBetween('now', '+1 year'),
             "status" => $this->faker->randomElement(['pending', 'completed', 'cancelled']),
-            'active' => $encodedId,
         ];
     }
 }

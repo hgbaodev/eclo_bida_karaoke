@@ -5,7 +5,7 @@ export interface RootState {
   logger: loggerType;
 
   product: productType;
-
+  product_import:product_ImportType;
   customer: customerType;
   area: areaType;
   device: deviceType;
@@ -101,6 +101,18 @@ export interface productType {
     errors: any;
     isCreateLoading: boolean;
     isUpdateLoading: boolean;
+}
+export interface product_ImportType {
+  data: [];
+  isLoading: boolean;
+  isFiltered: boolean;
+  page: number;
+  pageSize: number;
+  totalRow: number;
+  query: string;
+  errors: any;
+  isCreateLoading: boolean;
+  isUpdateLoading: boolean;
 }
 export interface areaType {
   data: any[];
