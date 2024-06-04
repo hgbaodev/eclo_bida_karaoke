@@ -8,8 +8,9 @@ import DateCell from '@/components/ui/date-cell';
 
 import DeletePopover from '@/app/shared/delete-popover';
 import { dispatch } from '@/store';
-import { getServiceTypes } from '@/store/slices/serviceTypeSlice';
+import { deleteServiceType, getServiceTypes } from '@/store/slices/serviceTypeSlice';
 import toast from 'react-hot-toast';
+import EditServiceType from '../edit-service_type';
 // import EditSupplier from '../edit-supplier';
 
 export function getStatusBadge(status: ServiceType['status']) {
@@ -82,9 +83,9 @@ export const getColumns = (openModal: (args: any) => void) => [
                 name: serviceType.name,
                 status: serviceType.status,
               };
-              // openModal({
-              //   view: <EditSupplier supplier={data} active={supplier.active} />,
-              // });
+              openModal({
+                view: <EditServiceType service_type={data} active={serviceType.active} />,
+              });
             }}
             as="span"
             size="sm"
@@ -94,19 +95,19 @@ export const getColumns = (openModal: (args: any) => void) => [
             <PencilIcon className="h-4 w-4" />
           </ActionIcon>
         </Tooltip>
-        {/* <DeletePopover
-          title={`Delete this supplier`}
-          description={`Are you sure you want to delete this #${supplier.name} supplier?`}
+        <DeletePopover
+          title={`Delete this service type`}
+          description={`Are you sure you want to delete this #${serviceType.name} service type?`}
           onDelete={async () => {
-            const result = await dispatch(deleteSupplier(supplier.active)); // Remove the .then() block
-            if (deleteSupplier.fulfilled.match(result)) {
-              await dispatch(getSuppliers({ page: 1, pageSize: 5, query: '', status: '' }));
-              toast.success(`Supplier #${supplier.name} has been deleted successfully.`);
+            const result = await dispatch(deleteServiceType(serviceType.active)); // Remove the .then() block
+            if (deleteServiceType.fulfilled.match(result)) {
+              await dispatch(getServiceTypes({ page: 1, pageSize: 5, query: '', status: '' }));
+              toast.success(`Service type #${serviceType.name} has been deleted successfully.`);
             } else {
-              toast.error(`Failed to delete supplier #${supplier.active}.`);
+              toast.error(`Failed to delete service type #${serviceType.active}.`);
             }
           }}
-        /> */}
+        />
       </div>
     ),
   },

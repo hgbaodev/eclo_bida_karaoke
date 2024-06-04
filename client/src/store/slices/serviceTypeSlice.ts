@@ -2,8 +2,8 @@
 import axiosInstance from '@/api/axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { service_typeType } from '../types';
-// import { EditServiceTypeInput } from '@/utils/validators/edit-serviceType.schema';
 import env from '@/env';
+import { EditServiceTypeInput } from '@/utils/validators/edit-service_type.schema';
 
 const initialState: service_typeType = {
   data: [],
@@ -36,47 +36,50 @@ export const getServiceTypes = createAsyncThunk(
   },
 );
 
-// export const createCustomer = createAsyncThunk('customers/createCustomer', async (data: any, { rejectWithValue }) => {
-//   try {
-//     const response = await axiosInstance.post(`customers`, data);
-//     return response.data;
-//   } catch (error: any) {
-//     if (!error.response) {
-//       throw error;
-//     }
-//     return rejectWithValue(error.response.data);
-//   }
-// });
+export const createServiceType = createAsyncThunk(
+  'service_types/createService_type',
+  async (data: any, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post(`service_types`, data);
+      return response.data;
+    } catch (error: any) {
+      if (!error.response) {
+        throw error;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
 
-// export const updateCustomer = createAsyncThunk(
-//   'customers/updateCustomer',
-//   async ({ customer, active }: { customer: EditCustomerInput; active: string }, { rejectWithValue }) => {
-//     try {
-//       const response = await axiosInstance.put(`customers/${active}`, customer);
-//       return response.data;
-//     } catch (error: any) {
-//       if (!error.response) {
-//         throw error;
-//       }
-//       return rejectWithValue(error.response.data);
-//     }
-//   },
-// );
+export const updateServiceType = createAsyncThunk(
+  'service_types/updateService_type',
+  async ({ service_type, active }: { service_type: EditServiceTypeInput; active: string }, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.put(`service_types/${active}`, service_type);
+      return response.data;
+    } catch (error: any) {
+      if (!error.response) {
+        throw error;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
 
-// export const deleteCustomer = createAsyncThunk(
-//   'customers/deleteCustomer',
-//   async (active: string, { rejectWithValue }) => {
-//     try {
-//       const response = await axiosInstance.delete(`customers/${active}`);
-//       return response.data;
-//     } catch (error: any) {
-//       if (!error.response) {
-//         throw error;
-//       }
-//       return rejectWithValue(error.response.data);
-//     }
-//   },
-// );
+export const deleteServiceType = createAsyncThunk(
+  'service_types/deleteServiceType',
+  async (active: string, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.delete(`service_types/${active}`);
+      return response.data;
+    } catch (error: any) {
+      if (!error.response) {
+        throw error;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
 
 const serviceTypeSlice = createSlice({
   name: 'service_type',
@@ -120,25 +123,25 @@ const serviceTypeSlice = createSlice({
       })
       .addCase(getServiceTypes.rejected, (state) => {
         state.isLoading = false;
+      })
+      .addCase(createServiceType.pending, (state: service_typeType) => {
+        state.isCreateLoading = true;
+      })
+      .addCase(createServiceType.fulfilled, (state, action) => {
+        state.isCreateLoading = false;
+      })
+      .addCase(createServiceType.rejected, (state) => {
+        state.isCreateLoading = false;
+      })
+      .addCase(updateServiceType.pending, (state: service_typeType) => {
+        state.isUpdateLoading = true;
+      })
+      .addCase(updateServiceType.fulfilled, (state, action) => {
+        state.isUpdateLoading = false;
+      })
+      .addCase(updateServiceType.rejected, (state) => {
+        state.isUpdateLoading = false;
       });
-    // .addCase(createCustomer.pending, (state: serviceTypeType) => {
-    //   state.isCreateLoading = true;
-    // })
-    // .addCase(createCustomer.fulfilled, (state, action) => {
-    //   state.isCreateLoading = false;
-    // })
-    // .addCase(createCustomer.rejected, (state) => {
-    //   state.isCreateLoading = false;
-    // });
-    // .addCase(updateCustomer.pending, (state: serviceTypeType) => {
-    //   state.isUpdateLoading = true;
-    // })
-    // .addCase(updateCustomer.fulfilled, (state, action) => {
-    //   state.isUpdateLoading = false;
-    // })
-    // .addCase(updateCustomer.rejected, (state) => {
-    //   state.isUpdateLoading = false;
-    // });
   },
 });
 

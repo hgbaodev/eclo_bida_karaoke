@@ -2,28 +2,33 @@
 
 import { useState } from 'react';
 import { PiXBold } from 'react-icons/pi';
-import { Controller, SubmitHandler } from 'react-hook-form';
+import { SubmitHandler, Controller } from 'react-hook-form';
 import { Form } from '@/components/ui/form';
 import { Input, Button, ActionIcon, Title, Select } from 'rizzui';
-import { CreateServiceTypeInput, CreateServiceTypeSchema } from '@/utils/validators/create-service_type.schema';
 import { useModal } from '@/app/shared/modal-views/use-modal';
-import { statusOptions } from './type';
 import { dispatch } from '@/store';
-import { createServiceType, getServiceTypes } from '@/store/slices/serviceTypeSlice';
+import { getServiceTypes, updateServiceType } from '@/store/slices/serviceTypeSlice';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
+import { EditServiceTypeInput, EditServiceTypeSchema } from '@/utils/validators/edit-service_type.schema';
 import { getStatusBadge } from './service_types-table/columns';
+import { statusOptions } from './type';
 
-export default function CreateSupplier() {
+export default function EditServiceType({
+  service_type,
+  active,
+}: {
+  service_type: EditServiceTypeInput;
+  active: string;
+}) {
   const { closeModal } = useModal();
-  const [reset, setReset] = useState({});
+  const [reset, setReset] = useState<any>(service_type);
   const [errors, setErrors] = useState<any>({});
-  const { pageSize, page, query, status, isCreateLoading } = useSelector((state: RootState) => state.service_type);
-  const onSubmit: SubmitHandler<CreateServiceTypeInput> = async (data) => {
-    const result: any = await dispatch(createServiceType(data));
-
-    if (createServiceType.fulfilled.match(result)) {
+  const { pageSize, page, query, status, isUpdateLoading } = useSelector((state: RootState) => state.service_type);
+  const onSubmit: SubmitHandler<EditServiceTypeInput> = async (data) => {
+    const result: any = await dispatch(updateServiceType({ service_type: data, active }));
+    if (updateServiceType.fulfilled.match(result)) {
       setReset({
         name: '',
         status: '',
@@ -31,17 +36,17 @@ export default function CreateSupplier() {
       setErrors({});
       closeModal();
       await dispatch(getServiceTypes({ page, pageSize, query, status }));
-      toast.success('Service type created successfully');
+      toast.success('Service Type update successfully');
     } else {
       setErrors(result?.payload?.errors);
     }
   };
 
   return (
-    <Form<CreateServiceTypeInput>
+    <Form<EditServiceTypeInput>
       resetValues={reset}
       onSubmit={onSubmit}
-      validationSchema={CreateServiceTypeSchema}
+      validationSchema={EditServiceTypeSchema}
       serverError={errors}
       className="grid grid-cols-1 gap-6 p-6 @container md:grid-cols-2 [&_.rizzui-input-label]:font-medium [&_.rizzui-input-label]:text-gray-900"
     >
@@ -51,7 +56,7 @@ export default function CreateSupplier() {
           <>
             <div className="col-span-full flex items-center justify-between">
               <Title as="h4" className="font-semibold">
-                Add a new service type
+                Update service type
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
@@ -64,7 +69,6 @@ export default function CreateSupplier() {
               className="col-span-[1/2]"
               error={errors.name?.message}
             />
-
             <Controller
               name="status"
               control={control}
@@ -86,12 +90,13 @@ export default function CreateSupplier() {
                 />
               )}
             />
+
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
                 Cancel
               </Button>
-              <Button type="submit" isLoading={isCreateLoading} className="w-full @xl:w-auto">
-                Create User
+              <Button type="submit" isLoading={isUpdateLoading} className="w-full @xl:w-auto">
+                Update User
               </Button>
             </div>
           </>
