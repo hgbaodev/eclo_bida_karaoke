@@ -3,16 +3,15 @@ export interface RootState {
   role: roleType;
   user: userType;
   logger: loggerType;
-
+  service_type: service_typeType;
   product: productType;
-  product_import:product_ImportType;
+  product_import: product_ImportType;
   customer: customerType;
   area: areaType;
   device: deviceType;
   position: positionType;
   supplier: supplierType;
   staff: staffType;
-
 }
 export interface authType {
   isAuthenticated: boolean;
@@ -65,6 +64,20 @@ export interface customerType {
   isUpdateLoading: boolean;
 }
 
+export interface service_typeType {
+  data: [];
+  isLoading: boolean;
+  isFiltered: boolean;
+  page: number;
+  pageSize: number;
+  totalRow: number;
+  status: any;
+  query: string;
+  errors: any;
+  isCreateLoading: boolean;
+  isUpdateLoading: boolean;
+}
+
 export interface supplierType {
   data: [];
   isLoading: boolean;
@@ -89,18 +102,17 @@ export interface loggerType {
   query: string;
 }
 
-
 export interface productType {
-    data: [];
-    isLoading: boolean;
-    isFiltered: boolean;
-    page: number;
-    pageSize: number;
-    totalRow: number;
-    query: string;
-    errors: any;
-    isCreateLoading: boolean;
-    isUpdateLoading: boolean;
+  data: [];
+  isLoading: boolean;
+  isFiltered: boolean;
+  page: number;
+  pageSize: number;
+  totalRow: number;
+  query: string;
+  errors: any;
+  isCreateLoading: boolean;
+  isUpdateLoading: boolean;
 }
 export interface product_ImportType {
   data: [];
@@ -131,7 +143,6 @@ export interface deviceType {
   isCreateLoading: boolean;
 }
 export interface staffType {
-
   data: [];
   isLoading: boolean;
   isFiltered: boolean;

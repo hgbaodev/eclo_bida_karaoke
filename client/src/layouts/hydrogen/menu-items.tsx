@@ -3,7 +3,7 @@ import { PiPackageDuotone, PiChartBarDuotone, PiFolderLockDuotone, PiShapesDuoto
 import { FaUniversalAccess, FaUserTie } from 'react-icons/fa';
 import { TbPackages } from 'react-icons/tb';
 import { HiOutlineUsers } from 'react-icons/hi2';
-import {FaProductHunt} from 'react-icons/fa'
+import { FaProductHunt } from 'react-icons/fa';
 // Note: do not add href in the label object, it is rendering as label
 export const menuItems = [
   // label start
@@ -40,6 +40,10 @@ export const menuItems = [
       {
         name: 'Devices',
         href: routes.admin.services.devices,
+      },
+      {
+        name: 'Service types',
+        href: routes.admin.services.service_types,
       },
     ],
   },
