@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('service_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('status')->default('A');
+            $table->string('active')->unique();
             $table->timestamps(true);
             $table->softDeletes();
         });

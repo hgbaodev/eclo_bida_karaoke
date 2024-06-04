@@ -33,6 +33,7 @@ class UserRepository implements UserRepositoryInterface
         $query->where('active', $role);
       });
     }
+    $users->orderBy('id', 'desc');
     if ($all && $all == true) {
       $users = $users->get();
     } else {

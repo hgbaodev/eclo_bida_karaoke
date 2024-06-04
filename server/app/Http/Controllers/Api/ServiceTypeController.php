@@ -17,9 +17,9 @@ class ServiceTypeController extends Controller
         $this->serviceTypeRepository = $serviceTypeRepository;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return $this->sentSuccessResponse($this->serviceTypeRepository->getAllServiceTypes());
+        return $this->sentSuccessResponse($this->serviceTypeRepository->getServiceTypes($request));
     }
 
     /**
@@ -34,31 +34,31 @@ class ServiceTypeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $active)
     {
-        return $this->sentSuccessResponse($this->serviceTypeRepository->getServiceTypeById($id));
+        return $this->sentSuccessResponse($this->serviceTypeRepository->getServiceTypeByActive($active));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateServiceTypeRequest $request, string $id)
+    public function update(UpdateServiceTypeRequest $request, string $active)
     {
         $validated_data = $request->validated();
-        if(!$this->serviceTypeRepository->getServiceTypeById($id)){
+        if(!$this->serviceTypeRepository->getServiceTypeByActive($active)){
             return $this->sentErrorResponse('The service type is not found');
         }
-        return $this->sentSuccessResponse($this->serviceTypeRepository->updateServiceTypeById($id, $validated_data), 'Service type '.$id.' updated', 200);
+        return $this->sentSuccessResponse($this->serviceTypeRepository->updateServiceTypeByActive($active, $validated_data), 'Service type '.$active.' updated', 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $active)
     {
-        if(!$this->serviceTypeRepository->getServiceTypeById($id)){
+        if(!$this->serviceTypeRepository->getServiceTypeByActive($active)){
             return $this->sentErrorResponse('The service type is not found');
         }
-        return $this->sentSuccessResponse($this->serviceTypeRepository->deleteServiceTypeById($id), 'Service type '.$id.' deleted', 200);
+        return $this->sentSuccessResponse($this->serviceTypeRepository->deleteServiceTypeByActive($active), 'Service type '.$active.' deleted', 200);
     }
 }

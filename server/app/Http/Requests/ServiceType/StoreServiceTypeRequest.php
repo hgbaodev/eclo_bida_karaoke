@@ -22,9 +22,10 @@ class StoreServiceTypeRequest extends HelperRequest
      */
     public function rules(): array
     {
+        $active = $this->route('active');
         return [
-            'name' => 'required|unique:service_types',
-            'is_deleted' => 'required',
+            'name' => ['required',],
+            'status' => 'required|in:A,D',
         ];
     }
 }
