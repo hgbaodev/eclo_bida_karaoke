@@ -33,5 +33,15 @@ class PositionSeeder extends Seeder
             "salary" => "8000000",
             "status" => "A"
         ]);
+        Position::create([
+            "name" => "Đầu bếp",
+            "salary" => "14000000",
+            "status" => "A"
+        ]);
+        Position::create([
+            "name" => "Nhân viên pha chế",
+            "salary" => "14000000",
+            "status" => "A"
+        ]);
     }
 }

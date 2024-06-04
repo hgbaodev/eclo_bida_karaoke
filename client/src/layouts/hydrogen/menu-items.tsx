@@ -63,6 +63,11 @@ export const menuItems = [
     icon: <MdOutlineBadge />,
   },
   {
+    name: 'Shifts',
+    href: routes.admin.shifts,
+    icon: <MdOutlineBadge />,
+  },
+  {
     name: 'Customers',
     href: routes.admin.customers,
     icon: <PiUserList />,

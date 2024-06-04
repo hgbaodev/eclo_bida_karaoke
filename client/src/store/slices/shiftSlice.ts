@@ -3,7 +3,7 @@ import axiosInstance from '@/api/axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { shiftType } from '../types';
 import env from '@/env';
-import { EditPositionInput } from '@/utils/validators/edit-position.schema';
+import { EditShiftInput } from '@/utils/validators/edit-shift.schema';
 const initialState: shiftType = {
   data: [],
   isLoading: false,
@@ -68,9 +68,9 @@ export const deleteShift = createAsyncThunk('shifts/deleteShift', async (active:
 
 export const updateShift = createAsyncThunk(
   'shifts/updateShift',
-  async ({ position, active }: { position: EditPositionInput; active: string }, { rejectWithValue }) => {
+  async ({ shift, active }: { shift: EditShiftInput; active: string }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.put(`shifts/${active}`, position);
+      const response = await axiosInstance.put(`shifts/${active}`, shift);
       return response.data;
     } catch (error: any) {
       if (!error.response) {
@@ -119,6 +119,7 @@ const shiftSlice = createSlice({
         state.isLoading = false;
         const result = action.payload.data;
         state.data = result.result;
+        state.totalRow = result.meta.total;
       })
       .addCase(getShifts.rejected, (state) => {
         state.isLoading = false;
@@ -145,6 +146,7 @@ const shiftSlice = createSlice({
         state.isLoading = false;
         const result = action.payload.data;
         state.data = result.result;
+        state.totalRow = result.meta.total;
       })
       .addCase(getAllShifts.pending, (state) => {
         state.isLoading = true;

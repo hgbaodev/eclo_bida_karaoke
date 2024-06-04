@@ -21,6 +21,7 @@ export const routes = {
     loggers: '/admin/loggers',
     staffs: '/admin/staffs',
     positions: '/admin/positions',
+    shifts: '/admin/shifts',
   },
   auth: {
     signIn: '/auth/signin',

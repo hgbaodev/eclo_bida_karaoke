@@ -13,6 +13,7 @@ class Shift extends Model
     protected $fillable = [
         "time_in",
         "time_out",
+        "status",
         "active"
     ];
 

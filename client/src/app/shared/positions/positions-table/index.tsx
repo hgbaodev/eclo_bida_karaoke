@@ -25,7 +25,6 @@ export default function PositionsTable() {
     };
     fetch();
   }, [page, pageSize, query, status]);
-
   const columns = useMemo(
     () => getColumns(openModal),
     // eslint-disable-next-line react-hooks/exhaustive-deps

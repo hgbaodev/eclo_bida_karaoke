@@ -124,6 +124,7 @@ const positionSlice = createSlice({
         const result = action.payload.data;
         state.listPositions = result.result;
         state.data = result.result;
+        state.totalRow = result.meta.total;
       })
       .addCase(getPositions.rejected, (state) => {
         state.fetchDataLoading = false;
@@ -151,6 +152,7 @@ const positionSlice = createSlice({
         const result = action.payload.data;
         state.listPositions = result.result;
         state.data = result.result;
+        state.totalRow = result.meta.total;
       })
       .addCase(getAllPositions.pending, (state) => {
         state.fetchDataLoading = true;
