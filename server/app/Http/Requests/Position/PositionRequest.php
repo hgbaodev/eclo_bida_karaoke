@@ -12,7 +12,7 @@ class PositionRequest extends HelperRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +23,9 @@ class PositionRequest extends HelperRequest
     public function rules(): array
     {
         return [
-            "position_name" => "required",
-            "position_salary" => "required|regex:/^[0-9]{7,}$/"
+            "name" => "required",
+            "salary" => "required|regex:/^[0-9]{7,}$/",
+            "status" => "required"
         ];
     }
 }

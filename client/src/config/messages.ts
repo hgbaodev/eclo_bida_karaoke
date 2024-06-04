@@ -83,4 +83,7 @@ export const messages = {
   receivetimeIsRequired: 'Receive time is required',
   statusimportIsRequired: 'Status is required',
   totalcostimportIsRequired: 'Total cost is required',
+  salaryIsRequired: 'Salary position is required',
+  timeinIsRequired: 'Time in is required',
+  timeoutIsRequired: 'Time out is required',
 };

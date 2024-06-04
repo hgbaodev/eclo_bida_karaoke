@@ -15,10 +15,11 @@ class PositionRepository implements PositionRepositoryInterface
         $query = $request->input('query');
         $id = $request->input('id');
         $name = $request->input('name');
+        $status = $request->input('status');
         $salary = $request->input('salary');
         $position = Position::query();
         if ($query) {
-            $position->where("name", "LIKE", "%$query%")->orWhere("salary", "LIKE", "%$query%");
+            $position->whereRaw("CONCAT(name, ' ', salary) LIKE '%$query%'");
         }
         if ($name) {
             $position->where("name", "LIKE", "%$name%");
@@ -26,6 +27,10 @@ class PositionRepository implements PositionRepositoryInterface
         if ($salary) {
             $position->where("salary", $salary);
         }
+        if ($status) {
+            $position->where('status', $status);
+        }
+        $position->latest();
         if ($all && $all == true) {
             $position = $position->get();
         } else {

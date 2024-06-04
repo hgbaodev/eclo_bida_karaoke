@@ -13,6 +13,7 @@ class Shift extends Model
     protected $fillable = [
         "time_in",
         "time_out",
+        "status",
         "active"
     ];
 
@@ -30,6 +31,6 @@ class Shift extends Model
     }
     public function shiftDetail()
     {
-        return $this->belongsTo(ShiftDetail::class);
+        return $this->hasMany(ShiftDetail::class);
     }
 }

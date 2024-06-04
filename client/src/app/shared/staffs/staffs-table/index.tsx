@@ -32,7 +32,6 @@ export default function StaffsTable() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
-
   const handleChangePageSize = (size: any) => {
     dispatch(setPageSize(size));
   };

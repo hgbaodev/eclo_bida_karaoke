@@ -15,19 +15,33 @@ class PositionSeeder extends Seeder
     {
         Position::create([
             "name" => "Giám đốc",
-            "salary" => "40000000"
+            "salary" => "40000000",
+            "status" => "A"
         ]);
         Position::create([
             "name" => "Quản lý nhân sự",
-            "salary" => "15000000"
+            "salary" => "15000000",
+            "status" => "A"
         ]);
         Position::create([
             "name" => "Quản lý cửa hàng",
-            "salary" => "15000000"
+            "salary" => "15000000",
+            "status" => "A"
         ]);
         Position::create([
             "name" => "Nhân viên",
-            "salary" => "8000000"
+            "salary" => "8000000",
+            "status" => "A"
+        ]);
+        Position::create([
+            "name" => "Đầu bếp",
+            "salary" => "14000000",
+            "status" => "A"
+        ]);
+        Position::create([
+            "name" => "Nhân viên pha chế",
+            "salary" => "14000000",
+            "status" => "A"
         ]);
     }
 }

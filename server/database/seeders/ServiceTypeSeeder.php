@@ -13,6 +13,6 @@ class ServiceTypeSeeder extends Seeder
      */
     public function run(): void
     {
-        ServiceType::factory()->count(30)->create();
+        ServiceType::factory()->count(3)->create();
     }
 }

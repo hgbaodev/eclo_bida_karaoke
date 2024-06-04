@@ -119,7 +119,7 @@ export const getColumns = (openModal: (args: any) => void) => [
           </ActionIcon>
         </Tooltip>
         <DeletePopover
-          title={`Delete this user`}
+          title={`Delete this staff`}
           description={`Are you sure you want to delete this #${staff.name} staff?`}
           onDelete={async () => {
             const result = await dispatch(deleteStaff(staff.active)); // Remove the .then() block
