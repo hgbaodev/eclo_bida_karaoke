@@ -3,7 +3,7 @@ import axiosInstance from '@/api/axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { product_ImportType } from '../types';
 import env from '@/env';
-import { EditProductInput } from '@/utils/validators/edit-product.schema';
+import { EditProduc_ImporttInput } from '@/utils/validators/edit-product_import.schema';
 const initialState: product_ImportType = {
   data: [],
   isLoading: false,
@@ -58,9 +58,9 @@ export const deleteProduct = createAsyncThunk('product_imports/deleteProductImpo
   }
 });
 
-export const updateProduct = createAsyncThunk('product_imports/updateProductImport',async ({ product, active }: { product: EditProductInput; active: string }, { rejectWithValue }) => {
+export const updateProduct = createAsyncThunk('product_imports/updateProductImport',async ({ product_import, active }: { product_import: EditProduc_ImporttInput; active: string }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.put(`product_imports/${active}`, product);
+      const response = await axiosInstance.put(`product_imports/${active}`, product_import);
       return response.data;
     } catch (error: any) {
       if (!error.response) {

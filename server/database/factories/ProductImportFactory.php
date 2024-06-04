@@ -22,7 +22,7 @@ class ProductImportFactory extends Factory
             "total_cost" => $this->faker->randomFloat(2, 1, 1000),
             "create_time" => $this->faker->dateTimeThisYear('now'),
             "receive_time" => $this->faker->dateTimeBetween('now', '+1 year'),
-            "status" => $this->faker->randomElement(['pending', 'completed', 'cancelled']),
+            "status" => $this->faker->randomElement(['A', 'D']),
         ];
     }
 }

@@ -79,4 +79,8 @@ export const messages = {
   idcardIsRequired: 'IDcard is Required (12 number)',
   birthdayIsRequired: 'Birthday is Required',
   positionIsRequired: 'Staff position is required',
+  createtimeIsRequired: 'Create time is required',
+  receivetimeIsRequired: 'Receive time is required',
+  statusimportIsRequired: 'Status is required',
+  totalcostimportIsRequired: 'Total cost is required',
 };
