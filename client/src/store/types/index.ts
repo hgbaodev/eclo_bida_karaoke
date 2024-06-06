@@ -196,6 +196,8 @@ export interface shift_detailType {
   pageSize: number;
   totalRow: number;
   query: string;
+  day_of_week: string;
+  shift: any;
   errors: any;
   isCreateLoading: boolean;
   isUpdateLoading: boolean;

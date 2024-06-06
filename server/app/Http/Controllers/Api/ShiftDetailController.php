@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ShiftDetail\ShiftDetailRequest;
 use App\Interface\ShiftDetailRepositoryInterface;
 use App\Interface\ShiftRepositoryInterface;
+use Illuminate\Http\Request;
 
 class ShiftDetailController extends Controller
 {
@@ -19,9 +20,9 @@ class ShiftDetailController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->sentSuccessResponse($this->shiftDetailRespository->getAllShiftDetail());
+        return $this->sentSuccessResponse($this->shiftDetailRespository->getShiftDetails($request));
     }
 
     /**
@@ -38,12 +39,11 @@ class ShiftDetailController extends Controller
     public function store(ShiftDetailRequest $request)
     {
         $validateData = $request->validated();
-        $shift = $this->shiftRepositiory->getShiftByActive($validateData["shift"]);
+        $shift = $this->shiftRepositiory->getShiftByActive($validateData["shift_id"]);
         if (!$shift) {
             return $this->sentErrorResponse("Shift is not found", "error", 404);
         }
         $validateData["shift_id"] = $shift->id;
-        unset($validateData["shift"]);
         return $this->sentSuccessResponse($this->shiftDetailRespository->createShiftDetail($validateData), 200);
     }
 

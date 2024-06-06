@@ -23,7 +23,9 @@ export default function EditShiftDetail({
   const { closeModal } = useModal();
   const [reset, setReset] = useState<any>(shift_detail);
   const [errors, setErrors] = useState<any>({});
-  const { pageSize, page, query, isUpdateLoading } = useSelector((state: RootState) => state.shift_detail);
+  const { pageSize, page, query, isUpdateLoading, shift, day_of_week } = useSelector(
+    (state: RootState) => state.shift_detail,
+  );
   const { listShifts } = useSelector((state: RootState) => state.shift);
   const onSubmit: SubmitHandler<EditShiftDetailInput> = async (data) => {
     const result: any = await dispatch(updateShiftDetail({ shift_detail: data, active }));
@@ -36,7 +38,7 @@ export default function EditShiftDetail({
       });
       setErrors({});
       closeModal();
-      await dispatch(getAllShiftDetails({ page, pageSize, query }));
+      await dispatch(getAllShiftDetails({ page, pageSize, query, shift, day_of_week }));
       toast.success('Shift detail edited successfully');
     } else {
       setErrors(result?.payload?.errors);
@@ -84,7 +86,7 @@ export default function EditShiftDetail({
                   error={errors?.day_of_week?.message}
                   getOptionValue={(option: { value: any }) => option.value}
                   getOptionDisplayValue={(option: { value: any }) => option.value}
-                  displayValue={(selected: any) => selected.value}
+                  displayValue={(selected: any) => value}
                   dropdownClassName="!z-[1]"
                   inPortal={false}
                 />
@@ -106,7 +108,9 @@ export default function EditShiftDetail({
                   getOptionValue={(option) => option.active}
                   getOptionDisplayValue={(option) => option.time_in + '-' + option.time_out}
                   displayValue={(selected: any) =>
-                    listShifts.find((option) => option.active === selected)?.time_in.time_out ?? selected
+                    listShifts.find((shift) => shift.active === selected)?.time_in +
+                      '-' +
+                      listShifts.find((shift) => shift.active === selected)?.time_out ?? selected
                   }
                   dropdownClassName="!z-[1]"
                   inPortal={false}

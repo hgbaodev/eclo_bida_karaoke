@@ -14,15 +14,31 @@ const initialState: shift_detailType = {
   pageSize: 5,
   totalRow: 0,
   query: '',
+  day_of_week: '',
+  shift: '',
   errors: '',
 };
 export const getAllShiftDetails = createAsyncThunk(
   'shiftdetails',
-  async ({ page, pageSize, query }: { page: number; pageSize: number; query: string }) => {
+  async ({
+    page,
+    pageSize,
+    query,
+    shift,
+    day_of_week,
+  }: {
+    page: number;
+    pageSize: number;
+    query: string;
+    shift: string;
+    day_of_week: string;
+  }) => {
     const url = new URL('/api/v1/shiftdetails', env.NEXT_API_URL);
     url.searchParams.set('page', `${page}`);
     url.searchParams.set('perPage', `${pageSize}`);
     url.searchParams.set('query', query);
+    url.searchParams.set('shift', shift);
+    url.searchParams.set('day_of_week', day_of_week);
     try {
       const response = await axiosInstance.get(url.href);
       return response.data;
@@ -99,12 +115,18 @@ const shiftDetailSlice = createSlice({
       state.page = 1;
       state.query = action.payload;
     },
-    setStatus: (state, action) => {
+    setShift: (state, action) => {
+      state.shift = action.payload;
+      state.isFiltered = true;
+    },
+    setDayOfWeek: (state, action) => {
       state.page = 1;
       state.isFiltered = true;
     },
     setReset: (state) => {
       state.page = 1;
+      state.day_of_week = '';
+      state.shift = '';
       state.isFiltered = false;
     },
     setErrors: (state, action) => {
@@ -158,6 +180,6 @@ const shiftDetailSlice = createSlice({
       });
   },
 });
-export const { setPage, setPageSize, setReset, setStatus, setQuery, setErrors } = shiftDetailSlice.actions;
+export const { setShift, setPage, setPageSize, setReset, setDayOfWeek, setQuery, setErrors } = shiftDetailSlice.actions;
 
 export default shiftDetailSlice.reducer;

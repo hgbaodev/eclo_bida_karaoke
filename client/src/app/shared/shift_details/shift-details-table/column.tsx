@@ -88,7 +88,7 @@ export const getColumns = (openModal: (args: any) => void) => [
           onDelete={async () => {
             const result = await dispatch(deleteShiftDetail(shiftdetail.active)); // Remove the .then() block
             if (deleteShiftDetail.fulfilled.match(result)) {
-              await dispatch(getAllShiftDetails({ page: 1, pageSize: 5, query: '' }));
+              await dispatch(getAllShiftDetails({ page: 1, pageSize: 5, query: '', shift: '', day_of_week: '' }));
               toast.success(`Shift detail has been deleted successfully.`);
             } else {
               toast.error(`Failed to delete staff.`);

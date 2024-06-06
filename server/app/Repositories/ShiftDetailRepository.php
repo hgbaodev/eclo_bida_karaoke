@@ -13,17 +13,19 @@ class ShiftDetailRepository implements ShiftDetailRepositoryInterface
         $all = $request->input('all');
         $perPage = $request->input('perPage');
         $query = $request->input('query');
-        $id = $request->input('id');
-        $status = $request->input('status');
-        $shiftdetail = ShiftDetail::query();
+        $day_of_week = $request->input('day_of_week');
+        $shift = $request->input('shift');
+        $shiftdetail = ShiftDetail::query()->with(['shift']);
         if ($query) {
             $shiftdetail->whereRaw("CONCAT(day_of_week, ' ', quantity_of_staff) LIKE '%$query%'");
         }
-        if ($id) {
-            $shiftdetail->where("active", $id);
+        if ($day_of_week) {
+            $shiftdetail->where("day_of_week", $day_of_week);
         }
-        if ($status) {
-            $shiftdetail->where("status", $status);
+        if ($shift) {
+            $shiftdetail->whereHas('shift', function ($query) use ($shift) {
+                $query->where("active", $shift);
+            });
         }
         $shiftdetail->latest();
         if ($all && $all == true) {
