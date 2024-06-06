@@ -75,6 +75,11 @@ export const menuItems = [
     icon: <MdOutlineBadge />,
   },
   {
+    name: 'Shift Details',
+    href: routes.admin.shift_detail,
+    icon: <MdOutlineBadge />,
+  },
+  {
     name: 'Customers',
     href: routes.admin.customers,
     icon: <PiUserList />,
@@ -85,7 +90,6 @@ export const menuItems = [
     icon: <TbPackages />,
   },
   {
-
     name: 'Products',
     href: routes.admin.products,
     icon: <FaProductHunt />,
@@ -100,5 +104,4 @@ export const menuItems = [
     href: routes.admin.loggers,
     icon: <FaUniversalAccess />,
   },
- 
 ];

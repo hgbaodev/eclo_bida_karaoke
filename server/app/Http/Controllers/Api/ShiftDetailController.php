@@ -3,15 +3,18 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ShiftDetail\ShiftDetailRequest;
 use App\Interface\ShiftDetailRepositoryInterface;
-use Illuminate\Http\Request;
+use App\Interface\ShiftRepositoryInterface;
 
 class ShiftDetailController extends Controller
 {
     protected $shiftDetailRespository;
-    public function __construct(ShiftDetailRepositoryInterface $shiftDetailRepositoryInterface)
+    protected $shiftRepositiory;
+    public function __construct(ShiftDetailRepositoryInterface $shiftDetailRepositoryInterface, ShiftRepositoryInterface $shiftRepositoryInterface)
     {
         $this->shiftDetailRespository = $shiftDetailRepositoryInterface;
+        $this->shiftRepositiory = $shiftRepositoryInterface;
     }
     /**
      * Display a listing of the resource.
@@ -32,8 +35,16 @@ class ShiftDetailController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ShiftDetailRequest $request)
     {
+        $validateData = $request->validated();
+        $shift = $this->shiftRepositiory->getShiftByActive($validateData["shift"]);
+        if (!$shift) {
+            return $this->sentErrorResponse("Shift is not found", "error", 404);
+        }
+        $validateData["shift_id"] = $shift->id;
+        unset($validateData["shift"]);
+        return $this->sentSuccessResponse($this->shiftDetailRespository->createShiftDetail($validateData), 200);
     }
 
     /**
@@ -55,9 +66,20 @@ class ShiftDetailController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ShiftDetailRequest $request, string $active)
     {
-        //
+        $validateData = $request->validated();
+        $shift = $this->shiftRepositiory->getShiftByActive($validateData["shift"]);
+        $shiftDetail = $this->shiftDetailRespository->getShiftDetailByActive($active);
+        if (!$shiftDetail) {
+            return $this->sentErrorResponse("Shift Detail is not found", "error", 404);
+        }
+        if (!$shift) {
+            return $this->sentErrorResponse("Shift is not found", "error", 404);
+        }
+        $validateData["shift_id"] = $shift->id;
+        unset($validateData["shift"]);
+        return $this->sentSuccessResponse($this->shiftDetailRespository->updateShiftDetailByActive($active, $validateData), 200);
     }
 
     /**

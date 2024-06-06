@@ -16,6 +16,7 @@ const initialState: shiftType = {
   status: '',
   query: '',
   errors: '',
+  listShifts: [],
 };
 export const getAllShifts = createAsyncThunk(
   'shifts',

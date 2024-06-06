@@ -26,6 +26,7 @@ export const routes = {
     staffs: '/admin/staffs',
     positions: '/admin/positions',
     shifts: '/admin/shifts',
+    shift_detail: '/admin/shiftdetails',
   },
   auth: {
     signIn: '/auth/signin',

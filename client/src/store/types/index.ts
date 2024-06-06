@@ -13,6 +13,7 @@ export interface RootState {
   supplier: supplierType;
   staff: staffType;
   shift: shiftType;
+  shift_detail: shift_detailType;
 }
 export interface authType {
   isAuthenticated: boolean;
@@ -182,6 +183,19 @@ export interface shiftType {
   totalRow: number;
   query: string;
   status: any;
+  errors: any;
+  isCreateLoading: boolean;
+  isUpdateLoading: boolean;
+  listShifts: any[];
+}
+export interface shift_detailType {
+  data: [];
+  isLoading: boolean;
+  isFiltered: boolean;
+  page: number;
+  pageSize: number;
+  totalRow: number;
+  query: string;
   errors: any;
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
