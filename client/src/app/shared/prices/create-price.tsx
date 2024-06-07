@@ -5,45 +5,45 @@ import { PiXBold } from 'react-icons/pi';
 import { Controller, SubmitHandler } from 'react-hook-form';
 import { Form } from '@/components/ui/form';
 import { Input, Button, ActionIcon, Title, Select } from 'rizzui';
-import { CreateSupplierInput, CreateSupplierSchema } from '@/utils/validators/create-supplier.schema';
+import { CreatePriceInput, CreatePriceSchema } from '@/utils/validators/create-price.schema';
 import { useModal } from '@/app/shared/modal-views/use-modal';
 import { statusOptions } from './type';
 import { dispatch } from '@/store';
-import { createSupplier, getSuppliers } from '@/store/slices/supplierSlice';
+import { createPrice, getPrices } from '@/store/slices/priceSlice';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
-import { getStatusBadge } from './suppliers-table/columns';
+import { getStatusBadge } from './prices-table/columns';
 
-export default function CreateSupplier() {
+export default function CreatePrice() {
   const { closeModal } = useModal();
   const [reset, setReset] = useState({});
   const [errors, setErrors] = useState<any>({});
-  const { pageSize, page, query, status, isCreateLoading } = useSelector((state: RootState) => state.customer);
-  const onSubmit: SubmitHandler<CreateSupplierInput> = async (data) => {
-    const result: any = await dispatch(createSupplier(data));
+  const { pageSize, page, query, status, isCreateLoading } = useSelector((state: RootState) => state.price);
+  const onSubmit: SubmitHandler<CreatePriceInput> = async (data) => {
+    const result: any = await dispatch(createPrice(data));
 
-    if (createSupplier.fulfilled.match(result)) {
+    if (createPrice.fulfilled.match(result)) {
       setReset({
         name: '',
-        address: '',
-        phone: '',
+        pricePerHour: '',
         status: '',
       });
       setErrors({});
       closeModal();
-      await dispatch(getSuppliers({ page, pageSize, query, status }));
-      toast.success('Supplier created successfully');
+      await dispatch(getPrices({ page, pageSize, query, status }));
+      toast.success('Price created successfully');
     } else {
       setErrors(result?.payload?.errors);
     }
   };
 
   return (
-    <Form<CreateSupplierInput>
+    <Form<CreatePriceInput>
       resetValues={reset}
       onSubmit={onSubmit}
-      validationSchema={CreateSupplierSchema}
+      // @ts-ignore
+      validationSchema={CreatePriceSchema}
       serverError={errors}
       className="grid grid-cols-1 gap-6 p-6 @container md:grid-cols-2 [&_.rizzui-input-label]:font-medium [&_.rizzui-input-label]:text-gray-900"
     >
@@ -53,7 +53,7 @@ export default function CreateSupplier() {
           <>
             <div className="col-span-full flex items-center justify-between">
               <Title as="h4" className="font-semibold">
-                Add a new customer
+                Add a new price
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
@@ -61,26 +61,19 @@ export default function CreateSupplier() {
             </div>
             <Input
               label="Name"
-              placeholder="Enter supplier's name"
+              placeholder="Enter price name"
               {...register('name')}
               className="col-span-[1/2]"
               error={errors.name?.message}
             />
 
             <Input
-              label="Address"
-              placeholder="Enter supplier's address"
+              label="Price (VND/h)"
+              type="number"
+              placeholder="Enter price per hour"
               className="col-span-full"
-              {...register('address')}
-              error={errors.address?.message}
-            />
-
-            <Input
-              label="Phone"
-              placeholder="Enter supplier's phone"
-              className="col-span-full"
-              {...register('phone')}
-              error={errors.phone?.message}
+              {...register('pricePerHour')}
+              error={errors.pricePerHour?.message}
             />
 
             <Controller

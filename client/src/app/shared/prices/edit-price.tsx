@@ -66,9 +66,9 @@ export default function EditPrice({ price, active }: { price: EditPriceInput; ac
               error={errors.name?.message}
             />
             <Input
-              label="Price per hour"
+              label="Price (VND/h)"
               type="number"
-              placeholder="Enter price"
+              placeholder="Enter price per hour"
               className="col-span-full"
               {...register('pricePerHour')}
               error={errors.pricePerHour?.message}
