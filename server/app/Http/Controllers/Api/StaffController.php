@@ -29,6 +29,10 @@ class StaffController extends Controller
         return $this->sentSuccessResponse($this->staffRepository->getStaffs($request));
     }
 
+    public function list()
+    {
+        return $this->sentSuccessResponse($this->staffRepository->getAllStaffs());
+    }
     /**
      * Show the form for creating a new resource.
      */

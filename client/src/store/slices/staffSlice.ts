@@ -48,6 +48,14 @@ export const getStaffs = createAsyncThunk(
     }
   },
 );
+export const getAllStaffs = createAsyncThunk('staffs/getAllStaffs', async () => {
+  try {
+    const response = await axiosInstance.get('staffs?all=true');
+    return response.data;
+  } catch (error: any) {
+    throw error;
+  }
+});
 
 export const createStaff = createAsyncThunk('staffs/createStaff', async (data: any, { rejectWithValue }) => {
   try {
@@ -133,6 +141,18 @@ const staffSlice = createSlice({
         state.totalRow = result.meta.total;
       })
       .addCase(getStaffs.rejected, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(getAllStaffs.pending, (state: staffType) => {
+        state.isLoading = true;
+      })
+      .addCase(getAllStaffs.fulfilled, (state, action) => {
+        const returneData = action.payload.data;
+        state.isLoading = false;
+        state.data = returneData.result;
+        console.log(action.payload.data);
+      })
+      .addCase(getAllStaffs.rejected, (state) => {
         state.isLoading = false;
       })
       .addCase(createStaff.pending, (state: staffType) => {

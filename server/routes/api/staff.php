@@ -10,6 +10,7 @@ Route::group(
   ],
   function () {
     Route::get('/', [StaffController::class, 'index']);
+    Route::get('/list', [StaffController::class, 'list']);
     Route::get('/{active}', [StaffController::class, 'show']);
     Route::post('/', [StaffController::class, 'store']);
     Route::put('/{active}', [StaffController::class, 'update']);
