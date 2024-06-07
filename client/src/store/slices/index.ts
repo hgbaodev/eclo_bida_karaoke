@@ -17,6 +17,7 @@ import area from './areaSlice';
 import service_type from './serviceTypeSlice';
 
 import customer from './customerSlice';
+import price from './priceSlice';
 
 import device from './deviceSlice';
 import supplier from './supplierSlice';
@@ -36,6 +37,7 @@ const reducers = combineReducers({
   customer,
   area,
   supplier,
+  price,
   device,
   shift,
 });

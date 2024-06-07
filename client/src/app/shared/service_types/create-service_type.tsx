@@ -91,7 +91,7 @@ export default function CreateSupplier() {
                 Cancel
               </Button>
               <Button type="submit" isLoading={isCreateLoading} className="w-full @xl:w-auto">
-                Create User
+                Create service type
               </Button>
             </div>
           </>
