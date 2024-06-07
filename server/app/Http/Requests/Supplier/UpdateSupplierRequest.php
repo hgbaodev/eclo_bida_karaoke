@@ -26,9 +26,21 @@ class UpdateSupplierRequest extends HelperRequest
         $active = $this->route('active');
         return  [
             'name' => 'required',
-            'phone' => ['required', 'regex:/^[0-9]{10,}$/', Rule::unique('suppliers')->ignore($active, 'active')],
+            'phone' => ['required', 'regex:/^(0[3|5|7|8|9])+([0-9]{8})\b$/', Rule::unique('suppliers')->ignore($active, 'active')],
             'address' => ['required'],
             'status' => 'required|in:A,D',
+        ];
+    }
+
+    /**
+     * Get custom error messages for validator errors.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'phone.regex' => 'Invalid phone number. Phone number must start with "0" followed by one of the digits 3, 5, 7, 8, 9, and then must have exactly 8 digits from 0 to 9.',
         ];
     }
 }
