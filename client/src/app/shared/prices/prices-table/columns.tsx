@@ -55,8 +55,8 @@ export const getColumns = (openModal: (args: any) => void) => [
   },
   {
     title: <HeaderCell title="Price per hour" />,
-    dataIndex: 'phone',
-    key: 'phone',
+    dataIndex: 'price',
+    key: 'price',
     width: 50,
     render: (_: string, price: Price) => price.pricePerHour,
   },
@@ -86,7 +86,7 @@ export const getColumns = (openModal: (args: any) => void) => [
             onClick={() => {
               const data = {
                 name: price.name,
-                phone: price.pricePerHour,
+                price: price.pricePerHour,
                 status: price.status,
               };
               // openModal({

@@ -9,6 +9,11 @@ import { dispatch } from '@/store';
 import { getPrices, setPage, setPageSize } from '@/store/slices/priceSlice';
 import { getColumns } from './columns';
 import { useColumn } from '@/hooks/use-column';
+import dynamic from 'next/dynamic';
+
+const FilterElement = dynamic(() => import('@/app/shared/prices/prices-table/filter-element'), {
+  ssr: false,
+});
 
 export default function PricesTable() {
   const { openModal } = useModal();
@@ -41,6 +46,7 @@ export default function PricesTable() {
   return (
     <>
       <div className="mt-0">
+        <FilterElement />
         <ControlledTable
           variant="modern"
           data={data}
