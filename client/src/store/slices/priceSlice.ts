@@ -1,11 +1,11 @@
 // userSlice.js
 import axiosInstance from '@/api/axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { service_typeType } from '../types';
+import { priceType } from '../types';
+import { EditPriceInput } from '@/utils/validators/edit-price.schema';
 import env from '@/env';
-import { EditServiceTypeInput } from '@/utils/validators/edit-service_type.schema';
 
-const initialState: service_typeType = {
+const initialState: priceType = {
   data: [],
   isLoading: false,
   isFiltered: false,
@@ -19,10 +19,10 @@ const initialState: service_typeType = {
   isUpdateLoading: false,
 };
 
-export const getServiceTypes = createAsyncThunk(
-  'service_types',
+export const getPrices = createAsyncThunk(
+  'prices',
   async ({ page, pageSize, query, status }: { page: number; pageSize: number; query: string; status: string }) => {
-    const url = new URL('/api/v1/service_types', env.NEXT_API_URL);
+    const url = new URL('/api/v1/prices', env.NEXT_API_URL);
     url.searchParams.set('page', `${page}`);
     url.searchParams.set('perPage', `${pageSize}`);
     url.searchParams.set('query', query);
@@ -36,11 +36,23 @@ export const getServiceTypes = createAsyncThunk(
   },
 );
 
-export const createServiceType = createAsyncThunk(
-  'service_types/createService_type',
-  async (data: any, { rejectWithValue }) => {
+export const createPrice = createAsyncThunk('prices/createPrice', async (data: any, { rejectWithValue }) => {
+  try {
+    const response = await axiosInstance.post(`prices`, data);
+    return response.data;
+  } catch (error: any) {
+    if (!error.response) {
+      throw error;
+    }
+    return rejectWithValue(error.response.data);
+  }
+});
+
+export const updatePrice = createAsyncThunk(
+  'prices/updatePrice',
+  async ({ price, active }: { price: EditPriceInput; active: string }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post(`service_types`, data);
+      const response = await axiosInstance.put(`prices/${active}`, price);
       return response.data;
     } catch (error: any) {
       if (!error.response) {
@@ -51,44 +63,27 @@ export const createServiceType = createAsyncThunk(
   },
 );
 
-export const updateServiceType = createAsyncThunk(
-  'service_types/updateService_type',
-  async ({ service_type, active }: { service_type: EditServiceTypeInput; active: string }, { rejectWithValue }) => {
-    try {
-      const response = await axiosInstance.put(`service_types/${active}`, service_type);
-      return response.data;
-    } catch (error: any) {
-      if (!error.response) {
-        throw error;
-      }
-      return rejectWithValue(error.response.data);
+export const deletePrice = createAsyncThunk('prices/deletePrice', async (active: string, { rejectWithValue }) => {
+  try {
+    const response = await axiosInstance.delete(`prices/${active}`);
+    return response.data;
+  } catch (error: any) {
+    if (!error.response) {
+      throw error;
     }
-  },
-);
+    return rejectWithValue(error.response.data);
+  }
+});
 
-export const deleteServiceType = createAsyncThunk(
-  'service_types/deleteServiceType',
-  async (active: string, { rejectWithValue }) => {
-    try {
-      const response = await axiosInstance.delete(`service_types/${active}`);
-      return response.data;
-    } catch (error: any) {
-      if (!error.response) {
-        throw error;
-      }
-      return rejectWithValue(error.response.data);
-    }
-  },
-);
-
-const serviceTypeSlice = createSlice({
-  name: 'service_type',
+const priceSlice = createSlice({
+  name: 'price',
   initialState,
   reducers: {
     setPage: (state, action) => {
       state.page = action.payload;
     },
     setPageSize: (state, action) => {
+      state.page = 1;
       state.pageSize = action.payload;
     },
     setQuery: (state, action) => {
@@ -112,39 +107,39 @@ const serviceTypeSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getServiceTypes.pending, (state: service_typeType) => {
+      .addCase(getPrices.pending, (state: priceType) => {
         state.isLoading = true;
       })
-      .addCase(getServiceTypes.fulfilled, (state, action) => {
+      .addCase(getPrices.fulfilled, (state, action) => {
         const result = action.payload.data;
         state.isLoading = false;
         state.data = result.result;
         state.totalRow = result.meta.total;
       })
-      .addCase(getServiceTypes.rejected, (state) => {
+      .addCase(getPrices.rejected, (state) => {
         state.isLoading = false;
       })
-      .addCase(createServiceType.pending, (state: service_typeType) => {
+      .addCase(createPrice.pending, (state: priceType) => {
         state.isCreateLoading = true;
       })
-      .addCase(createServiceType.fulfilled, (state, action) => {
+      .addCase(createPrice.fulfilled, (state, action) => {
         state.isCreateLoading = false;
       })
-      .addCase(createServiceType.rejected, (state) => {
+      .addCase(createPrice.rejected, (state) => {
         state.isCreateLoading = false;
       })
-      .addCase(updateServiceType.pending, (state: service_typeType) => {
+      .addCase(updatePrice.pending, (state: priceType) => {
         state.isUpdateLoading = true;
       })
-      .addCase(updateServiceType.fulfilled, (state, action) => {
+      .addCase(updatePrice.fulfilled, (state, action) => {
         state.isUpdateLoading = false;
       })
-      .addCase(updateServiceType.rejected, (state) => {
+      .addCase(updatePrice.rejected, (state) => {
         state.isUpdateLoading = false;
       });
   },
 });
 
-export const { setPage, setPageSize, setReset, setQuery, setStatus, setErrors } = serviceTypeSlice.actions;
+export const { setPage, setPageSize, setReset, setQuery, setStatus, setErrors } = priceSlice.actions;
 
-export default serviceTypeSlice.reducer;
+export default priceSlice.reducer;

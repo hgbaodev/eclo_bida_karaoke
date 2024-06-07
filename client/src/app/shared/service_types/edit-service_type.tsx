@@ -7,42 +7,46 @@ import { Form } from '@/components/ui/form';
 import { Input, Button, ActionIcon, Title, Select } from 'rizzui';
 import { useModal } from '@/app/shared/modal-views/use-modal';
 import { dispatch } from '@/store';
-import { getCustomers, updateCustomer } from '@/store/slices/customerSlice';
+import { getServiceTypes, updateServiceType } from '@/store/slices/serviceTypeSlice';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
-import { EditCustomerInput, editCustomerSchema } from '@/utils/validators/edit-customer.schema';
-import { getStatusBadge } from './customers-table/columns';
+import { EditServiceTypeInput, EditServiceTypeSchema } from '@/utils/validators/edit-service_type.schema';
+import { getStatusBadge } from './service_types-table/columns';
 import { statusOptions } from './type';
 
-export default function EditCustomer({ customer, active }: { customer: EditCustomerInput; active: string }) {
+export default function EditServiceType({
+  service_type,
+  active,
+}: {
+  service_type: EditServiceTypeInput;
+  active: string;
+}) {
   const { closeModal } = useModal();
-  const [reset, setReset] = useState<any>(customer);
+  const [reset, setReset] = useState<any>(service_type);
   const [errors, setErrors] = useState<any>({});
-  const { pageSize, page, query, status, isUpdateLoading } = useSelector((state: RootState) => state.customer);
-  const onSubmit: SubmitHandler<EditCustomerInput> = async (data) => {
-    const result: any = await dispatch(updateCustomer({ customer: data, active }));
-    if (updateCustomer.fulfilled.match(result)) {
+  const { pageSize, page, query, status, isUpdateLoading } = useSelector((state: RootState) => state.service_type);
+  const onSubmit: SubmitHandler<EditServiceTypeInput> = async (data) => {
+    const result: any = await dispatch(updateServiceType({ service_type: data, active }));
+    if (updateServiceType.fulfilled.match(result)) {
       setReset({
-        first_name: '',
-        last_name: '',
-        phone: '',
+        name: '',
         status: '',
       });
       setErrors({});
       closeModal();
-      await dispatch(getCustomers({ page, pageSize, query, status }));
-      toast.success('Customer update successfully');
+      await dispatch(getServiceTypes({ page, pageSize, query, status }));
+      toast.success('Service Type update successfully');
     } else {
       setErrors(result?.payload?.errors);
     }
   };
 
   return (
-    <Form<EditCustomerInput>
+    <Form<EditServiceTypeInput>
       resetValues={reset}
       onSubmit={onSubmit}
-      validationSchema={editCustomerSchema}
+      validationSchema={EditServiceTypeSchema}
       serverError={errors}
       className="grid grid-cols-1 gap-6 p-6 @container md:grid-cols-2 [&_.rizzui-input-label]:font-medium [&_.rizzui-input-label]:text-gray-900"
     >
@@ -52,41 +56,19 @@ export default function EditCustomer({ customer, active }: { customer: EditCusto
           <>
             <div className="col-span-full flex items-center justify-between">
               <Title as="h4" className="font-semibold">
-                Update customer
+                Update service type
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
             <Input
-              label="First Name"
-              placeholder="Enter customer's first name"
-              {...register('first_name')}
+              label="Name"
+              placeholder="Enter service type name"
+              {...register('name')}
               className="col-span-[1/2]"
-              error={errors.first_name?.message}
+              error={errors.name?.message}
             />
-            <Input
-              label="Last Name"
-              placeholder="Enter customer's last name"
-              {...register('last_name')}
-              className="col-span-[1/2]"
-              error={errors.last_name?.message}
-            />
-            <Input
-              label="Phone"
-              placeholder="Enter customer's phone"
-              className="col-span-full"
-              {...register('phone')}
-              error={errors.phone?.message}
-            />
-            <Input
-              label="Email"
-              placeholder="Enter customer's email"
-              className="col-span-full"
-              {...register('email')}
-              error={errors.email?.message}
-            />
-
             <Controller
               name="status"
               control={control}
@@ -114,7 +96,7 @@ export default function EditCustomer({ customer, active }: { customer: EditCusto
                 Cancel
               </Button>
               <Button type="submit" isLoading={isUpdateLoading} className="w-full @xl:w-auto">
-                Update customer
+                Update service type
               </Button>
             </div>
           </>

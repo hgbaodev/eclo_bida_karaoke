@@ -16,6 +16,7 @@ export const routes = {
       tableandrooms: '/admin/services/tableandrooms',
       devices: '/admin/services/devices',
       service_types: '/admin/services/service_types',
+      prices: '/admin/services/prices',
     },
     customers: '/admin/customers',
     jobBoard: '/admin/job-board',

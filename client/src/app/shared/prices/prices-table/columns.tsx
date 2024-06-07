@@ -5,15 +5,13 @@ import { HeaderCell } from '@/components/ui/table';
 import PencilIcon from '@/components/icons/pencil';
 import AvatarCard from '@/components/ui/avatar-card';
 import DateCell from '@/components/ui/date-cell';
-
 import DeletePopover from '@/app/shared/delete-popover';
 import { dispatch } from '@/store';
-import { deleteServiceType, getServiceTypes } from '@/store/slices/serviceTypeSlice';
+import { getPrices, deletePrice } from '@/store/slices/priceSlice';
 import toast from 'react-hot-toast';
-import EditServiceType from '../edit-service_type';
-// import EditSupplier from '../edit-supplier';
+import EditPrice from '../edit-price';
 
-export function getStatusBadge(status: ServiceType['status']) {
+export function getStatusBadge(status: Price['status']) {
   switch (status) {
     case STATUSES.InActive:
       return (
@@ -46,14 +44,21 @@ export const getColumns = (openModal: (args: any) => void) => [
     dataIndex: 'no.',
     key: 'no.',
     width: 50,
-    render: (_: any, serviceType: ServiceType, index: number) => <div className="inline-flex ps-3">{index + 1}</div>,
+    render: (_: any, price: Price, index: number) => <div className="inline-flex ps-3">{index + 1}</div>,
   },
   {
     title: <HeaderCell title="Name" />,
     dataIndex: 'fullName',
     key: 'fullName',
     width: 50,
-    render: (_: string, serviceType: ServiceType) => <AvatarCard src={serviceType.image} name={serviceType.name} />,
+    render: (_: string, price: Price) => <AvatarCard src={price.image} name={price.name} />,
+  },
+  {
+    title: <HeaderCell title="Price per hour" />,
+    dataIndex: 'price',
+    key: 'price',
+    width: 50,
+    render: (_: string, price: Price) => price.pricePerHour,
   },
   {
     title: <HeaderCell title="Created" />,
@@ -67,24 +72,25 @@ export const getColumns = (openModal: (args: any) => void) => [
     dataIndex: 'status',
     key: 'status',
     width: 10,
-    render: (status: ServiceType['status']) => getStatusBadge(status),
+    render: (status: Price['status']) => getStatusBadge(status),
   },
   {
     title: <></>,
     dataIndex: 'action',
     key: 'action',
     width: 10,
-    render: (_: string, serviceType: ServiceType) => (
+    render: (_: string, price: Price) => (
       <div className="flex items-center justify-end gap-3 pe-3">
-        <Tooltip size="sm" content={'Edit Customer'} placement="top" color="invert">
+        <Tooltip size="sm" content={'Edit price'} placement="top" color="invert">
           <ActionIcon
             onClick={() => {
               const data = {
-                name: serviceType.name,
-                status: serviceType.status,
+                name: price.name,
+                pricePerHour: price.pricePerHour,
+                status: price.status,
               };
               openModal({
-                view: <EditServiceType service_type={data} active={serviceType.active} />,
+                view: <EditPrice price={data} active={price.active} />,
               });
             }}
             as="span"
@@ -96,15 +102,15 @@ export const getColumns = (openModal: (args: any) => void) => [
           </ActionIcon>
         </Tooltip>
         <DeletePopover
-          title={`Delete this service type`}
-          description={`Are you sure you want to delete this #${serviceType.name} service type?`}
+          title={`Delete this price`}
+          description={`Are you sure you want to delete this #${price.name} price?`}
           onDelete={async () => {
-            const result = await dispatch(deleteServiceType(serviceType.active)); // Remove the .then() block
-            if (deleteServiceType.fulfilled.match(result)) {
-              await dispatch(getServiceTypes({ page: 1, pageSize: 5, query: '', status: '' }));
-              toast.success(`Service type #${serviceType.name} has been deleted successfully.`);
+            const result = await dispatch(deletePrice(price.active)); // Remove the .then() block
+            if (deletePrice.fulfilled.match(result)) {
+              await dispatch(getPrices({ page: 1, pageSize: 5, query: '', status: '' }));
+              toast.success(`Price #${price.name} has been deleted successfully.`);
             } else {
-              toast.error(`Failed to delete service type #${serviceType.active}.`);
+              toast.error(`Failed to delete price #${price.active}.`);
             }
           }}
         />
@@ -113,9 +119,10 @@ export const getColumns = (openModal: (args: any) => void) => [
   },
 ];
 
-export interface ServiceType {
+export interface Price {
   active: string;
   name: string;
+  pricePerHour: number;
   status: any;
   image: string;
   created_at: string;

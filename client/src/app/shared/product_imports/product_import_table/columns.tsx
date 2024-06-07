@@ -8,10 +8,34 @@ import AvatarCard from '@/components/ui/avatar-card';
 import DateCell from '@/components/ui/date-cell';
 import DeletePopover from '@/app/shared/delete-popover';
 import { dispatch } from '@/store';
-import { deleteProduct,getProducts } from '@/store/slices/productSlices';
+import { deleteProduct,getProductImports } from '@/store/slices/product_importSlice';
 import toast from 'react-hot-toast';
 import EditProduct from '../edit-product_import';
-
+export function getStatusBadge(status: Product_Import['status']) {
+  switch (status) {
+    case STATUSES.Canceled:
+      return (
+        <div className="flex items-center">
+          <Badge color="danger" renderAsDot />
+          <Text className="ms-2 font-medium text-red-dark">Canceled</Text>
+        </div>
+      );
+    case STATUSES.Completed:
+      return (
+        <div className="flex items-center">
+          <Badge color="success" renderAsDot />
+          <Text className="ms-2 font-medium text-green-dark">Completed</Text>
+        </div>
+      );
+    default:
+      return (
+        <div className="flex items-center">
+          <Badge renderAsDot className="bg-gray-400" />
+          <Text className="ms-2 font-medium text-gray-600">{status}</Text>
+        </div>
+      );
+  }
+}
 export const getColumns = (openModal: (args: any) => void) => [
   {
     title: <HeaderCell title="Id" />,
@@ -46,7 +70,7 @@ export const getColumns = (openModal: (args: any) => void) => [
     dataIndex: 'status',
     key: 'status',
     width: 50,
-    render: (_: string,  product_import: Product_Import) => product_import.status,
+    render: (status: Product_Import['status']) => getStatusBadge(status),
   },
   {
     title: <></>,
@@ -65,7 +89,7 @@ export const getColumns = (openModal: (args: any) => void) => [
                 status: product_import.status,
               };
               openModal({
-                // view: <EditProduct product_import={data} active={product_import.active} />,
+                view: <EditProduct product_import={data} active={product_import.active} />,
               });
             }}
             as="span"
@@ -76,19 +100,19 @@ export const getColumns = (openModal: (args: any) => void) => [
             <PencilIcon className="h-4 w-4" />
           </ActionIcon>
         </Tooltip>
-        {/* <DeletePopover
+        <DeletePopover
           title={`Delete this user`}
-          description={`Are you sure you want to delete this #${product.name} staff?`}
+          description={`Are you sure you want to delete this import `}
           onDelete={async () => {
-            const result = await dispatch(deleteProduct(product.active)); // Remove the .then() block
+            const result = await dispatch(deleteProduct(product_import.active)); // Remove the .then() block
             if (deleteProduct.fulfilled.match(result)) {
-              await dispatch(getProducts({ page: 1, pageSize: 5, query: ''}));
-              toast.success(`Staff #${product.name} has been deleted successfully.`);
+              await dispatch(getProductImports({ page: 1, pageSize: 5, query: ''}));
+              toast.success(`Import  has been deleted successfully.`);
             } else {
-              toast.error(`Failed to delete staff #${product.active}.`);
+              toast.error(`Failed to delete import #${product_import.active}.`);
             }
           }}
-        /> */}
+        />
       </div>
     ),
   },
@@ -109,3 +133,7 @@ export const getColumns = (openModal: (args: any) => void) => [
     total_cost: string;
     status: string;
   }
+  export const STATUSES = {
+    Completed: 'A',
+    Canceled: 'D',
+  } as const; 
