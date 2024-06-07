@@ -96,7 +96,7 @@ export default function EditServiceType({
                 Cancel
               </Button>
               <Button type="submit" isLoading={isUpdateLoading} className="w-full @xl:w-auto">
-                Update User
+                Update service type
               </Button>
             </div>
           </>

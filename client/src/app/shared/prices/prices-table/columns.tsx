@@ -9,7 +9,7 @@ import DeletePopover from '@/app/shared/delete-popover';
 import { dispatch } from '@/store';
 import { getPrices, deletePrice } from '@/store/slices/priceSlice';
 import toast from 'react-hot-toast';
-// import EditPrice from '../edit-price';
+import EditPrice from '../edit-price';
 
 export function getStatusBadge(status: Price['status']) {
   switch (status) {
@@ -81,17 +81,17 @@ export const getColumns = (openModal: (args: any) => void) => [
     width: 10,
     render: (_: string, price: Price) => (
       <div className="flex items-center justify-end gap-3 pe-3">
-        <Tooltip size="sm" content={'Edit Customer'} placement="top" color="invert">
+        <Tooltip size="sm" content={'Edit price'} placement="top" color="invert">
           <ActionIcon
             onClick={() => {
               const data = {
                 name: price.name,
-                price: price.pricePerHour,
+                pricePerHour: price.pricePerHour,
                 status: price.status,
               };
-              // openModal({
-              //   view: <EditPrice price={data} active={price.active} />,
-              // });
+              openModal({
+                view: <EditPrice price={data} active={price.active} />,
+              });
             }}
             as="span"
             size="sm"
@@ -122,7 +122,7 @@ export const getColumns = (openModal: (args: any) => void) => [
 export interface Price {
   active: string;
   name: string;
-  pricePerHour: string;
+  pricePerHour: number;
   status: any;
   image: string;
   created_at: string;
