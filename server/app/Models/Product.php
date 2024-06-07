@@ -34,8 +34,8 @@ class Product extends Model
             }
         });
     }
-    public function productimport()
+    public function product()
     {
-        return $this->hasMany(ProductImpDetail::class);
+        return $this->hasMany(ProductImportDetail::class);
     }
 }

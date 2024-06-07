@@ -16,7 +16,7 @@ import { number } from 'zod';
 import  {getStatusBadge}  from './product_import_table/columns';
 import { statusOptions } from './type';
 
-export default function EditProduct({ product_import, active }: { product_import: EditProduc_ImporttInput; active: string }) {
+export default function EditProduct_Detail({ product_import, active }: { product_import: EditProduc_ImporttInput; active: string }) {
   const { closeModal } = useModal();
   const [reset, setReset] = useState<any>(product_import);
   const [errors, setErrors] = useState<any>({});
@@ -54,21 +54,21 @@ export default function EditProduct({ product_import, active }: { product_import
           <>
             <div className="col-span-full flex items-center justify-between">
               <Title as="h4" className="font-semibold">
-                Edit a Product
+                Product 
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
             <Input
-              label="Create time"
+              label="Product name"
               type="date"
               className="col-span-full"
               {...register('create_time')}
               error={errors.create_time?.message}
             />
             <Input
-              label="Receive Time"
+              label="Quantity"
               type="date"
               placeholder="Enter cost price"
               {...register('receive_time')}
@@ -93,7 +93,7 @@ export default function EditProduct({ product_import, active }: { product_import
                   value={value}
                   onChange={onChange}
                   name={name}
-                  label="Status"
+                  label="Supplier"
                   placeholder="Select a status"
                   className="col-span-[1/2]"
                   error={errors?.status?.message}

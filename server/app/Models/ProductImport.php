@@ -36,6 +36,6 @@ class ProductImport extends Model
     }
     public function productimport()
     {
-        return $this->hasMany(ProductImpDetail::class);
+        return $this->hasMany(ProductImportDetail::class);
     }
 }

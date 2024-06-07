@@ -6,6 +6,7 @@ export interface RootState {
   service_type: service_typeType;
   product: productType;
   product_import: product_ImportType;
+  product_import_detail: product_Import_DetailType;
   customer: customerType;
   area: areaType;
   device: deviceType;
@@ -116,6 +117,18 @@ export interface productType {
   isUpdateLoading: boolean;
 }
 export interface product_ImportType {
+  data: [];
+  isLoading: boolean;
+  isFiltered: boolean;
+  page: number;
+  pageSize: number;
+  totalRow: number;
+  query: string;
+  errors: any;
+  isCreateLoading: boolean;
+  isUpdateLoading: boolean;
+}
+export interface product_Import_DetailType {
   data: [];
   isLoading: boolean;
   isFiltered: boolean;

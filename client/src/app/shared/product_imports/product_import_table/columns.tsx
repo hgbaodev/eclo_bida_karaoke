@@ -4,6 +4,8 @@
 import { Text, Badge, Tooltip, ActionIcon } from 'rizzui';
 import { HeaderCell } from '@/components/ui/table';
 import PencilIcon from '@/components/icons/pencil';
+import EyeIcon from '@/components/icons/eye';
+import ShoppingBagSolidIcon from '@/components/icons/shopping-bag-solid';
 import AvatarCard from '@/components/ui/avatar-card';
 import DateCell from '@/components/ui/date-cell';
 import DeletePopover from '@/app/shared/delete-popover';
@@ -11,7 +13,11 @@ import { dispatch } from '@/store';
 import { deleteProduct,getProductImports } from '@/store/slices/product_importSlice';
 import toast from 'react-hot-toast';
 import EditProduct from '../edit-product_import';
-export function getStatusBadge(status: Product_Import['status']) {
+import EditProduct_Detail from '../create-product_import_detail';
+import Link from 'next/link';
+import { act } from 'react';
+
+export  function getStatusBadge(status: Product_Import['status']) {
   switch (status) {
     case STATUSES.Canceled:
       return (
@@ -73,13 +79,45 @@ export const getColumns = (openModal: (args: any) => void) => [
     render: (status: Product_Import['status']) => getStatusBadge(status),
   },
   {
+    title: <HeaderCell title="Product" />,
+    // dataIndex: 'status',
+    // key: 'status',
+    // width: 50,
+    // render: (status: Product_Import['status']) => getStatusBadge(status),
+    dataIndex: 'action',
+    key: 'action',
+    width: 50,
+    render: (_: string, product_import: Product_Import) => (
+      <div className="flex">
+        <Tooltip size="sm" content={'Edit Import'} placement="top" color="invert">
+        <Link href={{
+            pathname: '/admin/product_import_details',
+            query: { active: product_import.active }
+          }}>
+          
+            <ActionIcon
+              size="sm"
+              variant="outline"
+              className="inline-flex items-center"
+              
+            >
+              <EyeIcon className="h-4 w-4" />
+            </ActionIcon>
+         
+        </Link>
+      </Tooltip>
+        </div>
+    )
+  },
+
+  {
     title: <></>,
     dataIndex: 'action',
     key: 'action',
     width: 10,
     render: (_: string, product_import: Product_Import) => (
       <div className="flex items-center justify-end gap-3 pe-3">
-        <Tooltip size="sm" content={'Edit Staff'} placement="top" color="invert">
+        <Tooltip size="sm" content={'Edit Import'} placement="top" color="invert">
           <ActionIcon
             onClick={() => {
               const data = {
@@ -98,6 +136,27 @@ export const getColumns = (openModal: (args: any) => void) => [
             className="hover:!border-gray-900 hover:text-gray-700 cursor-pointer"
           >
             <PencilIcon className="h-4 w-4" />
+          </ActionIcon>
+        </Tooltip>
+        <Tooltip size="sm" content={'Import product'} placement="top" color="invert">
+          <ActionIcon
+            onClick={() => {
+              const data = {
+                create_time: product_import.create_time,
+                receive_time: product_import.receive_time,
+                total_cost: product_import.total_cost,
+                status: product_import.status,
+              };
+              openModal({
+                view: <EditProduct_Detail product_import={data} active={product_import.active} />,
+              });
+            }}
+            as="span"
+            size="sm"
+            variant="outline"
+            className="hover:!border-gray-900 hover:text-gray-700 cursor-pointer"
+          >
+            <ShoppingBagSolidIcon className="h-4 w-4" />
           </ActionIcon>
         </Tooltip>
         <DeletePopover
@@ -126,7 +185,7 @@ export const getColumns = (openModal: (args: any) => void) => [
 //     quantity: string;
    
 //   }
-  export interface Product_Import {
+export interface Product_Import {
     active: string;
     receive_time: string;
     create_time: string;
@@ -137,3 +196,10 @@ export const getColumns = (openModal: (args: any) => void) => [
     Completed: 'A',
     Canceled: 'D',
   } as const; 
+  export interface Product {
+    active: string;
+    receive_time: string;
+    create_time: string;
+    total_cost: string;
+    status: string;
+  }

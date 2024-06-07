@@ -16,32 +16,12 @@ class ProductImpDetailController extends Controller
     {
         $this->product_import_Repository = $product_import_Repository;
     }
-    public function index()
+    public function index(Request $request)
     {
-        return $this->sentSuccessResponse($this->product_import_Repository->getAllProductImppDetail());
+        return $this->sentSuccessResponse($this->product_import_Repository->getProductImports($request));
     }
-    public function store(ProductImpDetailRequest $request)
-    {
-        $validated_data = $request->validated();
-        return $this->sentSuccessResponse($this->product_import_Repository->create($validated_data));
-    }
-    public function show($active)
-    {
-        return $this->sentSuccessResponse($this->product_import_Repository->getProductImppDetailByActive($active));
-    }
-    public function update(ProductImpDetailRequest $request, $active)
-    {
-        $validated_data = $request->validated();
-        if (!$this->product_import_Repository->getProductImppDetailByActive($active)) {
-            return $this->sentErrorResponse($active . 'is not found', "error", 404);
-        }
-        return $this->sentSuccessResponse($this->product_import_Repository->updateProductImppDetailByActive($active, $validated_data), " Updated successfully", 200);
-    }
-    public function destroy($active)
-    {
-        if (!$this->product_import_Repository->getProductImppDetailByActive($active)) {
-            return $this->sentErrorResponse($active . 'is not found', 'error', 404);
-        }
-        return $this->sentSuccessResponse($this->product_import_Repository->deleteByActive($active), $active . 'is deleted successfully', 200);
-    }
+    // public function show($active)
+    // {
+    //     return $this->sentSuccessResponse($this->product_import_Repository->getProductImpDetailtByActive($active));
+    // }
 }
