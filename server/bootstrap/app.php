@@ -20,7 +20,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->append(LogRequest::class);
         // tôi muốn thêm 1 middleware khác ở đây
         $middleware->alias([
-            'logger' => LogUserActivity::class
+            'logger' => LogUserActivity::class,
+            'markOrderRequestAsRead'=>\App\Http\Middleware\MarkOrderRequestAsRead::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

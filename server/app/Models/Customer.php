@@ -6,10 +6,11 @@ use App\Traits\GeneratesUniqueActive;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 
 class Customer extends Model
 {
-    use HasFactory, SoftDeletes, GeneratesUniqueActive;
+    use HasFactory, SoftDeletes, Notifiable, GeneratesUniqueActive;
 
     public $timestamps = true;
 

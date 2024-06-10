@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Customer;
 
 use App\Http\Helpers\HelperRequest;
-use Illuminate\Validation\Rule;
 
 class StoreCustomerRequest extends HelperRequest
 

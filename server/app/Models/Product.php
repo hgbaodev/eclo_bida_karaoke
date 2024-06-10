@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\GeneratesUniqueActive;
+use Illuminate\Notifications\Notifiable;
 
-class Product extends Model
+class   Product extends Model
 {
     public $timestamps = false;
-    use HasFactory, GeneratesUniqueActive;
+    use HasFactory, GeneratesUniqueActive, Notifiable;
     use SoftDeletes;
     protected $fillable = [
         'name',
