@@ -16,6 +16,7 @@ const initialState: shiftType = {
   status: '',
   query: '',
   errors: '',
+  listShifts: [],
 };
 export const getAllShifts = createAsyncThunk(
   'shifts',
@@ -120,6 +121,7 @@ const shiftSlice = createSlice({
         const result = action.payload.data;
         state.data = result.result;
         state.totalRow = result.meta.total;
+        state.listShifts = result.result;
       })
       .addCase(getShifts.rejected, (state) => {
         state.isLoading = false;
@@ -147,6 +149,7 @@ const shiftSlice = createSlice({
         const result = action.payload.data;
         state.data = result.result;
         state.totalRow = result.meta.total;
+        state.listShifts = result.result;
       })
       .addCase(getAllShifts.pending, (state) => {
         state.isLoading = true;
