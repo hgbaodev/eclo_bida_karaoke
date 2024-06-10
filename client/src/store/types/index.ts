@@ -157,6 +157,7 @@ export interface staffType {
   errors: any;
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
+  listStaffs: any[];
 }
 
 export interface positionType {

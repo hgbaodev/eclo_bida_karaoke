@@ -10,39 +10,27 @@ import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
 import { getAllStaffs, setPage, setPageSize } from '@/store/slices/staffSlice';
 import { useModal } from '../modal-views/use-modal';
-const FilterElement = dynamic(() => import('@/app/shared/staffs/staffs-table/filter-element'), {
-  ssr: false,
-});
+import { getShifts } from '@/store/slices/shiftSlice';
 
 export default function ShiftDetailStaffTable() {
   const { openModal } = useModal();
-  const { data, isLoading, pageSize, page, totalRow, query, position, status } = useSelector(
-    (state: RootState) => state.staff,
-  );
+  const { data, isLoading } = useSelector((state: RootState) => state.shift);
   useEffect(() => {
-    const fetch = async () => {
-      await dispatch(getAllStaffs());
-    };
-    fetch();
-  }, [page, pageSize, query, position, status]);
+    dispatch(getShifts());
+  }, []);
+  useEffect(() => {
+    dispatch(getAllStaffs(''));
+  }, []);
 
   const columns = useMemo(
     () => getColumns(openModal),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
-  const handleChangePageSize = (size: any) => {
-    dispatch(setPageSize(size));
-  };
-
-  const handlePaginate = (page: number) => {
-    dispatch(setPage(page));
-  };
 
   const { visibleColumns } = useColumn(columns);
   return (
     <div className="mt-0">
-      <FilterElement />
       <ControlledTable
         variant="modern"
         data={data}
@@ -50,13 +38,6 @@ export default function ShiftDetailStaffTable() {
         showLoadingText={false}
         // @ts-ignore
         columns={visibleColumns}
-        // paginatorOptions={{
-        //   pageSize,
-        //   setPageSize: handleChangePageSize,
-        //   total: totalRow,
-        //   current: page,
-        //   onChange: (page: number) => handlePaginate(page),
-        // }}
         className="rounded-md border border-muted text-sm shadow-sm [&_.rc-table-placeholder_.rc-table-expanded-row-fixed>div]:h-60 [&_.rc-table-placeholder_.rc-table-expanded-row-fixed>div]:justify-center [&_.rc-table-row:last-child_td.rc-table-cell]:border-b-0 [&_thead.rc-table-thead]:border-t-0"
       />
     </div>
