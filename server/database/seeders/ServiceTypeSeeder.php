@@ -13,6 +13,7 @@ class ServiceTypeSeeder extends Seeder
      */
     public function run(): void
     {
-        ServiceType::factory()->count(3)->create();
+        ServiceType::create(['name' => 'Table Bida', 'status' => 'A']);
+        ServiceType::create(['name' => 'Room Karaoke', 'status' => 'A']);
     }
 }

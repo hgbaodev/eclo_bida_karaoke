@@ -21,6 +21,7 @@ import price from './priceSlice';
 
 import device from './deviceSlice';
 import supplier from './supplierSlice';
+import service from './serviceSlice';
 
 // ==============================|| COMBINE REDUCERS ||============================== //
 
@@ -40,6 +41,7 @@ const reducers = combineReducers({
   price,
   device,
   shift,
+  service,
 });
 
 export default reducers;

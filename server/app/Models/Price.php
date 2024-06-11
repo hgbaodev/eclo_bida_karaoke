@@ -20,6 +20,14 @@ class Price extends Model
         'active',
     ];
 
+    protected $hidden = [
+        'id',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+        'service_type_id'
+    ];
+
     protected static function boot()
     {
         parent::boot();
@@ -29,5 +37,10 @@ class Price extends Model
                 $model->active = self::generateUniqueActive();
             }
         });
+    }
+
+    public function services()
+    {
+        return $this->hasMany(Service::class);
     }
 }
