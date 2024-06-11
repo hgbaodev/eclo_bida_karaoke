@@ -18,17 +18,17 @@ class ShiftUserDetailSeeder extends Seeder
             "day_of_week" => "Monday"
         ]);
         ShiftUserDetail::create([
-            "staff_id" => "1",
+            "staff_id" => "3",
             "shift_id" => "3",
             "day_of_week" => "Monday"
         ]);
         ShiftUserDetail::create([
-            "staff_id" => "1",
+            "staff_id" => "2",
             "shift_id" => "3",
             "day_of_week" => "Tuesday"
         ]);
         ShiftUserDetail::create([
-            "staff_id" => "1",
+            "staff_id" => "4",
             "shift_id" => "2",
             "day_of_week" => "Monday"
         ]);

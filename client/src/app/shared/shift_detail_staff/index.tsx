@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
 import { getAllStaffs, setPage, setPageSize } from '@/store/slices/staffSlice';
+import { getAllShiftUserDetails } from '@/store/slices/shift_user_detail';
 import { useModal } from '../modal-views/use-modal';
 import { getShifts } from '@/store/slices/shiftSlice';
 
@@ -16,14 +17,17 @@ export default function ShiftDetailStaffTable() {
   const { openModal } = useModal();
   const { data, isLoading } = useSelector((state: RootState) => state.shift);
   useEffect(() => {
+    dispatch(getAllShiftUserDetails());
+  }, []);
+  useEffect(() => {
     dispatch(getShifts());
   }, []);
   useEffect(() => {
     dispatch(getAllStaffs(''));
   }, []);
-
+  const { listShiftUserDetail } = useSelector((state: RootState) => state.shift_user_detail);
   const columns = useMemo(
-    () => getColumns(openModal),
+    () => getColumns(openModal, listShiftUserDetail),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );

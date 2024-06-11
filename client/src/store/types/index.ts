@@ -15,6 +15,7 @@ export interface RootState {
   staff: staffType;
   shift: shiftType;
   shift_detail: shift_detailType;
+  shift_user_detail: shift_user_detailType;
 }
 export interface authType {
   isAuthenticated: boolean;
@@ -217,4 +218,19 @@ export interface shift_detailType {
   errors: any;
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
+}
+export interface shift_user_detailType {
+  data: [];
+  isLoading: boolean;
+  isFiltered: boolean;
+  page: number;
+  pageSize: number;
+  totalRow: number;
+  query: string;
+  day_of_week: string;
+  shift: any;
+  errors: any;
+  isCreateLoading: boolean;
+  isUpdateLoading: boolean;
+  listShiftUserDetail: any[];
 }
