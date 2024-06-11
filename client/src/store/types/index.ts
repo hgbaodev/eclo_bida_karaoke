@@ -14,6 +14,7 @@ export interface RootState {
   supplier: supplierType;
   staff: staffType;
   shift: shiftType;
+  service: serviceType;
   shift_detail: shift_detailType;
 }
 export interface authType {
@@ -217,4 +218,35 @@ export interface shift_detailType {
   errors: any;
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
+}
+export interface serviceType {
+  data: [];
+  isLoading: boolean;
+  isFiltered: boolean;
+  totalRow: number;
+  page: number;
+  pageSize: number;
+  query: string;
+  prices: {
+    active: string;
+    name: string;
+    pricePerHour: number;
+    status: string;
+  }[];
+  areas: {
+    name: string;
+    description: string;
+    active: string;
+  }[];
+  serviceTypes: {
+    name: string;
+    status: string;
+    active: string;
+  }[];
+  devices: [];
+  listDevices: {
+    device: string;
+    number: number;
+  }[];
+  isCreateLoading: boolean;
 }

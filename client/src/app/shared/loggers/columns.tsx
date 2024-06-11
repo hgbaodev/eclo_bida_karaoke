@@ -1,9 +1,6 @@
 'use client';
 
-// import { STATUSES, type User } from '@/data/users-data';
-import { Tooltip, ActionIcon } from 'rizzui';
 import { HeaderCell } from '@/components/ui/table';
-import PencilIcon from '@/components/icons/pencil';
 import AvatarCard from '@/components/ui/avatar-card';
 import DateCell from '@/components/ui/date-cell';
 

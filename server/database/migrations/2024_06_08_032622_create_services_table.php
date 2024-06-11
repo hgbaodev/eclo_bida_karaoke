@@ -11,15 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('prices', function (Blueprint $table) {
+        Schema::create('services', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
-            $table->string('active')->unique();
             $table->string('name');
-            $table->float('pricePerHour');
+            $table->string('description')->nullable();
             $table->string('status')->default('A');
+            $table->string('active')->unique();
             $table->foreignId('service_type_id')->constrained('service_types');
+            $table->foreignId('area_id')->constrained('areas');
+            $table->foreignId('price_id')->constrained('prices');
             $table->softDeletes();
+            $table->timestamps();
         });
     }
 
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('prices');
+        Schema::dropIfExists('services');
     }
 };
