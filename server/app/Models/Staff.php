@@ -26,7 +26,8 @@ class Staff extends Model
     ];
     protected $hidden = [
         "id",
-        "position_id"
+        "position_id",
+        "idcard"
     ];
     protected static function boot()
     {

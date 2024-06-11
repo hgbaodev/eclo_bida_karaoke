@@ -12,8 +12,12 @@ class ShiftUserDetail extends Model
     use HasFactory, SoftDeletes, GeneratesUniqueActive;
     protected $fillable = [
         "staff_id",
-        "shift_detail_id",
+        "shift_id",
+        "day_of_week",
         "active"
+    ];
+    protected $hidden = [
+        "id",
     ];
     protected static function boot()
     {
@@ -26,10 +30,10 @@ class ShiftUserDetail extends Model
     }
     public function staff()
     {
-        return $this->belongsTo(Staff::class);
+        return $this->belongsTo(Staff::class, "staff_id");
     }
-    public function shiftDetail()
+    public function shift()
     {
-        return $this->belongsTo(ShiftDetail::class);
+        return $this->belongsTo(Shift::class, "shift_id");
     }
 }

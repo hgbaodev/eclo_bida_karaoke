@@ -17,6 +17,7 @@ use App\Interface\ShiftRepositoryInterface;
 use App\Interface\StaffRepositoryInterface;
 use App\Interface\ProductRepositoryInterface;
 use App\Interface\ShiftDetailRepositoryInterface;
+use App\Interface\ShiftUserDetailRepositoryInterface;
 use App\Interface\SupplierRepositoryInterface;
 use App\Interface\UserRepositoryInterface;
 use App\Models\Price;
@@ -38,6 +39,7 @@ use App\Repositories\StaffRepository;
 use App\Repositories\ProductImpDetailRepository;
 use App\Repositories\ProductRepository;
 use App\Repositories\ShiftDetailRepository;
+use App\Repositories\ShiftUserDetailRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -63,6 +65,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class);
         $this->app->bind(PriceRepositoryInterface::class, PriceRepository::class);
         $this->app->bind(ShiftDetailRepositoryInterface::class, ShiftDetailRepository::class);
+        $this->app->bind(ShiftUserDetailRepositoryInterface::class, ShiftUserDetailRepository::class);
     }
 
     /**

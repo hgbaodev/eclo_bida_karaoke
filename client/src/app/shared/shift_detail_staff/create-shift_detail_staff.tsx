@@ -59,9 +59,8 @@ export default function CreateShiftDetailStaff({ day_of_week, shift }: { day_of_
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
-            <label>Day of week : {day_of_week}</label>
-            <br />
-            <label>Shift : {shift}</label>
+            <Input label="Day of week" className="col-span-full" value={day_of_week} readOnly />
+            <Input label="Shift" className="col-span-full" value={shift} readOnly />
             <Controller
               name="name"
               control={control}
