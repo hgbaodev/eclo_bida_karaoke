@@ -10,14 +10,21 @@ import { useModal } from '../modal-views/use-modal';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
-import { createService, getAllAreas, getAllPrices, getAllServiceTypes, getServices } from '@/store/slices/serviceSlice';
+import {
+  createService,
+  editService,
+  getAllAreas,
+  getAllPrices,
+  getAllServiceTypes,
+  getServices,
+} from '@/store/slices/serviceSlice';
 import toast from 'react-hot-toast';
 
-export default function CreateTableAndRoom() {
+export default function EditTableAndRoom({ service, active }: { service: any; active: string }) {
   const { closeModal } = useModal();
-  const [reset, setReset] = useState({});
+  const [reset, setReset] = useState(service);
   const [errors, setErrors] = useState<any>({});
-  const { prices, areas, serviceTypes, isCreateLoading, selectedArea, page, pageSize, query } = useSelector(
+  const { prices, areas, serviceTypes, isEditLoading, selectedArea, page, pageSize, query } = useSelector(
     (state: RootState) => state.service,
   );
 
@@ -28,8 +35,8 @@ export default function CreateTableAndRoom() {
   }, []);
 
   const onSubmit: SubmitHandler<CreateServiceInput> = async (data) => {
-    const result: any = await dispatch(createService(data));
-    if (createService.fulfilled.match(result)) {
+    const result: any = await dispatch(editService({ ...data, active }));
+    if (editService.fulfilled.match(result)) {
       setReset({
         name: '',
         description: '',
@@ -40,9 +47,9 @@ export default function CreateTableAndRoom() {
       });
       closeModal();
       dispatch(getServices({ page, pageSize, query, area: selectedArea }));
-      toast.success('Create service successfully');
-    } else if (createService.rejected.match(result)) {
-      toast.error('Create service errors');
+      toast.success('Update service successfully');
+    } else if (editService.rejected.match(result)) {
+      toast.error('Update service errors');
     }
   };
 
@@ -60,7 +67,7 @@ export default function CreateTableAndRoom() {
           <>
             <div className="col-span-full flex items-center justify-between">
               <Title as="h4" className="font-semibold">
-                Add a new Service
+                Edit Service
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
@@ -194,8 +201,8 @@ export default function CreateTableAndRoom() {
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
                 Cancel
               </Button>
-              <Button type="submit" isLoading={isCreateLoading} className="w-full @xl:w-auto">
-                Create Service
+              <Button type="submit" isLoading={isEditLoading} className="w-full @xl:w-auto">
+                Update Service
               </Button>
             </div>
           </>

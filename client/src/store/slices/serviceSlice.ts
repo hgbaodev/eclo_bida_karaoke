@@ -18,15 +18,18 @@ const initialState: serviceType = {
   devices: [],
   listDevices: [],
   isCreateLoading: false,
+  isEditLoading: false,
+  selectedArea: '',
 };
 
 export const getServices = createAsyncThunk(
   'services/index',
-  async ({ page, pageSize, query }: { page: number; pageSize: number; query: string }) => {
+  async ({ page, pageSize, query, area }: { page: number; pageSize: number; query: string; area: string }) => {
     const url = new URL('/api/v1/services', env.NEXT_API_URL);
     url.searchParams.set('page', `${page}`);
     url.searchParams.set('perPage', `${pageSize}`);
     url.searchParams.set('query', query);
+    url.searchParams.set('area', area);
     try {
       const response = await axiosInstance.get(url.href);
       return response.data;
@@ -83,6 +86,50 @@ export const createService = createAsyncThunk(
   },
 );
 
+export const editService = createAsyncThunk(
+  'services/editService',
+  async (data: {
+    active: string;
+    name: string;
+    description: string;
+    status: string;
+    area_active: string;
+    price_active: string;
+    service_type_active: string;
+  }) => {
+    try {
+      const reponse = await axiosInstance.put(`services/${data.active}`, data);
+      return reponse.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
+);
+
+export const changeStatusService = createAsyncThunk(
+  'services/changeStatusService',
+  async (data: { status: string; active: string }) => {
+    try {
+      const reponse = await axiosInstance.put(`services/${data.active}/change_status`, { status: data.status });
+      return reponse.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
+);
+
+export const deleteService = createAsyncThunk('services/deleteService', async (active: string) => {
+  try {
+    const reponse = await axiosInstance.delete(`services/${active}`);
+    return reponse.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+});
+
 const serviceSlice: any = createSlice({
   name: 'service',
   initialState,
@@ -92,9 +139,15 @@ const serviceSlice: any = createSlice({
     },
     setPageSize: (state, action) => {
       state.pageSize = action.payload;
+      state.page = 1;
     },
     setQuery: (state, action) => {
       state.query = action.payload;
+      state.page = 1;
+    },
+    setSelectedArea: (state, action) => {
+      state.selectedArea = action.payload;
+      state.page = 1;
     },
   },
   extraReducers: (builder) => {
@@ -128,10 +181,19 @@ const serviceSlice: any = createSlice({
       })
       .addCase(createService.rejected, (state) => {
         state.isCreateLoading = false;
+      })
+      .addCase(editService.pending, (state, action) => {
+        state.isEditLoading = true;
+      })
+      .addCase(editService.fulfilled, (state, action) => {
+        state.isEditLoading = false;
+      })
+      .addCase(editService.rejected, (state) => {
+        state.isEditLoading = false;
       });
   },
 });
 
-export const { setPage, setPageSize, setQuery } = serviceSlice.actions;
+export const { setPage, setPageSize, setQuery, setSelectedArea } = serviceSlice.actions;
 
 export default serviceSlice.reducer;

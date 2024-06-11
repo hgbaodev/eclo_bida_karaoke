@@ -3,37 +3,21 @@
 import { HeaderCell } from '@/components/ui/table';
 import { Text, ActionIcon, Tooltip, Select, Switch } from 'rizzui';
 import PencilIcon from '@/components/icons/pencil';
-import EyeIcon from '@/components/icons/eye';
 import DeletePopover from '@/app/shared/delete-popover';
 import DateCell from '@/components/ui/date-cell';
 import { useState } from 'react';
 import { PiCheckCircleBold, PiPlusCircle } from 'react-icons/pi';
-import { title } from 'process';
+import { dispatch } from '@/store';
+import { changeStatusService, deleteService, getServices } from '@/store/slices/serviceSlice';
+import EditTableAndRoom from '../edit-tableandroom';
+import toast from 'react-hot-toast';
 
 const statusOptions = [
   { label: 'Live', value: 'Live' },
   { label: 'Closed', value: 'Closed' },
 ];
 
-type Columns = {
-  data: any[];
-  sortConfig?: any;
-  handleSelectAll: any;
-  checkedItems: string[];
-  onDeleteItem: (id: string) => void;
-  onHeaderCellClick: (value: string) => void;
-  onChecked?: (id: string) => void;
-};
-
-export const getColumns = ({
-  data,
-  onChecked,
-  sortConfig,
-  checkedItems,
-  onDeleteItem,
-  handleSelectAll,
-  onHeaderCellClick,
-}: Columns) => [
+export const getColumns = (openModal: any) => [
   {
     title: <HeaderCell title="Id" />,
     dataIndex: 'id',
@@ -68,7 +52,11 @@ export const getColumns = ({
       <Switch
         defaultChecked={service?.status == 'A'}
         onChange={(event) => {
-          console.log(event?.target?.checked);
+          const data = {
+            status: event?.target?.checked ? 'A' : 'D',
+            active: service.active,
+          };
+          dispatch(changeStatusService(data));
         }}
       />
     ),
@@ -139,7 +127,7 @@ export const getColumns = ({
     dataIndex: 'action',
     key: 'action',
     width: 180,
-    render: (_: string, row: any) => (
+    render: (_: string, service: Service) => (
       <div className="flex items-center justify-end gap-3 pe-3">
         <Tooltip size="sm" content={'Edit'} placement="top" color="invert">
           <ActionIcon
@@ -147,26 +135,36 @@ export const getColumns = ({
             size="sm"
             variant="outline"
             aria-label={'Edit Appointment'}
-            className="hover:!border-gray-900 hover:text-gray-700"
+            className="hover:!border-gray-900 hover:text-gray-700 cursor-pointer"
+            onClick={() => {
+              const data = {
+                name: service.name,
+                description: service.description,
+                status: service.status,
+                area_active: service.area.active,
+                price_active: service.price.active,
+                service_type_active: service.service_type.active,
+              };
+              openModal({
+                view: <EditTableAndRoom service={data} active={service.active} />,
+              });
+            }}
           >
             <PencilIcon className="h-4 w-4" />
-          </ActionIcon>
-        </Tooltip>
-        <Tooltip size="sm" content={'View'} placement="top" color="invert">
-          <ActionIcon
-            as="span"
-            size="sm"
-            variant="outline"
-            aria-label={'View Appointment'}
-            className="hover:!border-gray-900 hover:text-gray-700"
-          >
-            <EyeIcon className="h-4 w-4" />
           </ActionIcon>
         </Tooltip>
         <DeletePopover
           title={`Delete the job post`}
           description={`Are you sure you want to delete this job post?`}
-          onDelete={() => onDeleteItem('1')}
+          onDelete={async () => {
+            const result = await dispatch(deleteService(service.active));
+            if (deleteService.fulfilled.match(result)) {
+              await dispatch(getServices({ page: 1, pageSize: 5, query: '', area: '' }));
+              toast.success(`Service deleted successfully.`);
+            } else {
+              toast.error(`Failed to delete service`);
+            }
+          }}
         />
       </div>
     ),
@@ -226,5 +224,10 @@ interface Service {
     name: string;
     pricePerHour: number;
     status: string;
+  };
+  service_type: {
+    name: string;
+    active: string;
+    description: string;
   };
 }

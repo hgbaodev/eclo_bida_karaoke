@@ -249,4 +249,6 @@ export interface serviceType {
     number: number;
   }[];
   isCreateLoading: boolean;
+  isEditLoading: boolean;
+  selectedArea: any;
 }

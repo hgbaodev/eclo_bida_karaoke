@@ -1,27 +1,32 @@
 'use client';
 
-import { useCallback, useMemo, useEffect } from 'react';
+import { useMemo, useEffect } from 'react';
 import { useColumn } from '@/hooks/use-column';
-import { useTable } from '@/hooks/use-table';
 import ControlledTable from '@/components/controlled-table';
-import { jobData } from '@/data/job-data';
 import { getColumns } from './columns';
 import FilterElement from './filter-element';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { getServices, setPage, setPageSize } from '@/store/slices/serviceSlice';
 import { dispatch } from '@/store';
+import { useModal } from '../../modal-views/use-modal';
 
 const filterState = {
   date: [null, null],
   status: '',
 };
 export default function RoomAndTablesTable({ className }: { className?: string }) {
-  const { data, pageSize, isLoading, page, totalRow, query } = useSelector((state: RootState) => state.service);
+  const { data, pageSize, isLoading, page, totalRow, query, selectedArea } = useSelector(
+    (state: RootState) => state.service,
+  );
+
+  const { openModal } = useModal();
+
+  console.log({ selectedArea });
 
   useEffect(() => {
-    dispatch(getServices({ page, pageSize, query }));
-  }, [page, pageSize, query]);
+    dispatch(getServices({ page, pageSize, query, area: selectedArea }));
+  }, [page, pageSize, query, selectedArea]);
 
   const handlePaginate = (page: number) => {
     dispatch(setPage(page));
@@ -31,44 +36,10 @@ export default function RoomAndTablesTable({ className }: { className?: string }
     dispatch(setPageSize(size));
   };
 
-  const onHeaderCellClick = (value: string) => ({
-    onClick: () => {
-      handleSort(value);
-    },
-  });
-
-  const onDeleteItem = useCallback((id: string) => {
-    handleDelete(id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const { sortConfig, handleSort, selectedRowKeys, handleRowSelect, handleSelectAll, handleDelete } = useTable(
-    jobData,
-    pageSize,
-    filterState,
-  );
-
   const columns = useMemo(
-    () =>
-      getColumns({
-        data: jobData,
-        sortConfig,
-        checkedItems: selectedRowKeys,
-        onHeaderCellClick,
-        onDeleteItem,
-        onChecked: handleRowSelect,
-        handleSelectAll,
-      }),
+    () => getColumns(openModal),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [
-      selectedRowKeys,
-      onHeaderCellClick,
-      sortConfig.key,
-      sortConfig.direction,
-      onDeleteItem,
-      handleRowSelect,
-      handleSelectAll,
-    ],
+    [openModal],
   );
 
   const { visibleColumns } = useColumn(columns);
@@ -80,7 +51,7 @@ export default function RoomAndTablesTable({ className }: { className?: string }
         variant="modern"
         data={data}
         isLoading={isLoading}
-        showLoadingText={true}
+        showLoadingText={false}
         // @ts-ignore
         columns={visibleColumns}
         paginatorOptions={{

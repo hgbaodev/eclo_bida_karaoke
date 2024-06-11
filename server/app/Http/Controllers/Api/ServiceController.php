@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Service\ChangeStatusServiceRequest;
 use App\Http\Requests\Service\StoreServiceRequest;
+use App\Http\Requests\Service\UpdateServiceRequest;
 use App\Interface\AreaRepositoryInterface;
 use App\Interface\PriceRepositoryInterface;
 use App\Interface\ServiceRepositoryInterface;
 use App\Interface\ServiceTypeRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class ServiceController extends Controller
 {
@@ -45,9 +47,32 @@ class ServiceController extends Controller
     {
         $service = $this->serviceRepository->getServiceByActive($actvies);
         if (!$service) {
-            return $this->sentFailedResponse('Service not found', 404);
+            return $this->sentErrorResponse('Service not found', 'erros', 404);
         }
         $validatedData = $request->validated();
         return $this->sentSuccessResponse($this->serviceRepository->changeStatus($validatedData, $service->id));
+    }
+
+    public function update(UpdateServiceRequest $request, $active)
+    {
+        $validatedData = $request->validated();
+        $service = $this->serviceRepository->getServiceByActive($active);
+        if (!$service) {
+            return $this->sentErrorResponse('Service not found', 'erros', 404);
+        }
+        $validatedData['area_id'] = $this->areaRepository->getAreaByActive($validatedData['area_active'])->id;
+        $validatedData['price_id'] = $this->priceRepository->getPriceByActive($validatedData['price_active'])->id;
+        $validatedData['service_type_id'] = $this->serviceTypeRepository->getServiceTypeByActive($validatedData['service_type_active'])->id;
+        return $this->sentSuccessResponse($this->serviceRepository->updateServiceById($validatedData, $service->id));
+    }
+
+    public function destroy($active)
+    {
+        $service = $this->serviceRepository->getServiceByActive($active);
+        if (!$service) {
+            return $this->sentErrorResponse('Service not found', 'erros', 404);
+        }
+        $deleteService = $this->serviceRepository->deleteServiceById($service->id);
+        return $this->sentSuccessResponse($deleteService, 'Service deleted successfully', 201);
     }
 }
