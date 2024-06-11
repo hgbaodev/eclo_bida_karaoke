@@ -11,5 +11,8 @@ Route::group(
   function () {
     Route::get('/', [ServiceController::class, 'index']);
     Route::post('/', [ServiceController::class, 'store']);
+    Route::put('/{active}/change_status', [ServiceController::class, 'changeStatus']);
+    Route::put('/{active}', [ServiceController::class, 'update']);
+    Route::delete('/{active}', [ServiceController::class, 'destroy']);
   }
 );

@@ -14,7 +14,7 @@ class ServiceReposirory implements ServiceRepositoryInterface
     $perPage = $request->input('perPage');
     $query = $request->input('query');
     $area = $request->input('area');
-    $services = Service::query()->with(['area', 'price']);
+    $services = Service::query()->with(['area', 'price', 'serviceType']);
     if ($query) {
       $services->whereRaw("name LIKE ?", ["%$query%"]);
     }
@@ -38,15 +38,28 @@ class ServiceReposirory implements ServiceRepositoryInterface
   {
     return Service::create($data);
   }
-  public function updateServiceById($id, array $data)
+  public function updateServiceById(array $data, $id)
   {
+    $service = Service::find($id);
+    $service->update($data);
+    return $service;
   }
-  public function deleteServiceById($active)
+  public function deleteServiceById($id)
   {
+    $service = Service::find($id);
+    $service->delete();
+    return $service;
   }
   public function getServiceByActive($active)
   {
     $service = Service::where('active', $active)->first();
+    return $service;
+  }
+
+  public function changeStatus(array $data, $id)
+  {
+    $service = Service::find($id);
+    $service->update($data);
     return $service;
   }
 }
