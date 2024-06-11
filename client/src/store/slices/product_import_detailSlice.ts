@@ -16,17 +16,31 @@ const initialState: product_ImportType = {
   isCreateLoading: false,
   isUpdateLoading: false,
 };
+const initialState1: product_Import_DetailType = {
+  data: [],
+  isLoading: false,
+  isFiltered: false,
+  totalRow: 0,
+  page: 1,
+  pageSize: 5,
+  query: '',
+  errors: null,
+  isCreateLoading: false,
+  isUpdateLoading: false,
+};
 
 export const getProductImportDetails= createAsyncThunk(
   'product_import_details',
-  async ({ page, pageSize, query }: { page: number; pageSize: number; query: string }) => {
+  async ({ page, pageSize, query,active }: { page: number; pageSize: number; query: string ;active:string}) => {
     const url = new URL('/api/v1/product_import_details', env.NEXT_API_URL);
     url.searchParams.set('page', `${page}`);
     url.searchParams.set('perPage', `${pageSize}`);
     url.searchParams.set('query', query);
+    url.searchParams.set('active', active);
  
     try {
       const response = await axiosInstance.get(url.href);
+      console.log(response.data);
       return response.data;
     } catch (error: any) {
       throw error;
@@ -70,7 +84,20 @@ export const getProductImportDetails= createAsyncThunk(
 //     }
 //   },
 // );
+export const getProductImportsByActive= createAsyncThunk(
+  'product_import_details/getByActive',
+  async (active: string) => {    
+    const url = new URL(`/api/v1/product_imports/${active}`, env.NEXT_API_URL);
 
+   try {
+      const response = await axiosInstance.get(url.href);
+      console.log(response.data);
+      return response.data;
+    } catch (error: any) {
+      throw error;
+    }
+  },
+);
 const product_import_detailSlices = createSlice({
   name: 'product_import_detail',
   initialState,
@@ -102,11 +129,35 @@ const product_import_detailSlices = createSlice({
         state.isLoading = false;
         state.data = result.result;
         state.totalRow = result.meta.total;
-        console.log(state.data)
+        // console.log(state.data)
       })
       .addCase(getProductImportDetails.rejected, (state) => {
         state.isLoading = false;
       })
+      .addCase(getProductImportsByActive.pending, (state: product_ImportType) => {
+        state.isLoading = true;
+      })
+      .addCase(getProductImportsByActive.fulfilled, (state, action) => {
+        const result = action.payload.data;
+        state.isLoading = false;
+        state.data = result.result;
+        console.log(result)
+      })
+      .addCase(getProductImportsByActive.rejected, (state) => {
+        state.isLoading = false;
+      })
+         // .addCase(getProductImportsByActive.pending, (state: product_ImportType) => {
+      //   state.isLoading = true;
+      // })
+      // .addCase(getProductImportsByActive.fulfilled, (state, action) => {
+      //   const result = action.payload.data;
+      //   state.isLoading = false;
+      //   state.data = result;
+      //   console.log(state.data)
+      // })
+      // .addCase(getProductImportsByActive.rejected, (state) => {
+      //   state.isLoading = false;
+      // })
       // .addCase(createProduct.pending, (state: product_Import_DetailType) => {
       //   state.isCreateLoading = true;
       // })

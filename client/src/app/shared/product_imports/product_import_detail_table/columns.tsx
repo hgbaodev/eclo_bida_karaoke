@@ -18,6 +18,8 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
+import { Table } from 'antd'; // Sử dụng Ant Design cho bảng
+import type { ColumnsType } from 'antd/es/table';
 
 // export  function getStatusBadge(status: Product_Import['status']) {
 //   switch (status) {
@@ -44,22 +46,45 @@ import { RootState } from '@/store/types';
 //       );
 //   }
 // }
-const ProductImportDetails = () => {
+export const ProductImportDetails: React.FC = () => {
   const router = useRouter();
   const { active } = router.query;
 
   // Dữ liệu product_import_detail từ Redux
   const productImportDetails = useSelector((state: RootState) => state.product_import_detail.data);
 
-  const [filteredDetails, setFilteredDetails] = useState([]);
+  const [filteredDetails, setFilteredDetails] = useState<Product_Detail[]>([]);
 
   useEffect(() => {
     if (active) {
       // Lọc dữ liệu dựa trên `active`
-      const details = productImportDetails.filter((detail: Product_Detail) => detail.active === active);
+      const details = productImportDetails.filter((detail: Product_Detail) => detail.active.toString() === active);
       setFilteredDetails(details);
+      console.log(details)
+    } else {
+      setFilteredDetails(productImportDetails); // Hiển thị tất cả nếu `active` không có giá trị
     }
   }, [active, productImportDetails]);
+
+  // Hàm để mở modal (ví dụ, có thể thay đổi tùy thuộc vào chức năng modal của bạn)
+  const openModal = (record: Product_Detail) => {
+    console.log("Mở modal với chi tiết sản phẩm:", record);
+    // Gọi modal để hiển thị chi tiết hoặc thực hiện hành động khác
+  };
+
+  return (
+    <div>
+      <Table
+        columns={getColumns(openModal)} // Lấy các cột từ hàm getColumns
+        dataSource={filteredDetails} // Cung cấp dữ liệu đã lọc cho bảng
+        rowKey="id" // Định danh duy nhất cho mỗi hàng
+        onRow={(record) => ({
+          onClick: () => openModal(record), // Gọi openModal khi nhấn vào hàng
+        })}
+        pagination={false} // Vô hiệu hóa phân trang nếu không cần
+      />
+    </div>
+  );
 }
 export const getColumns = (openModal: (args: any) => void) => [
   {
@@ -97,121 +122,8 @@ export const getColumns = (openModal: (args: any) => void) => [
     width: 50,
     render: (_: string, product_detail: Product_Detail) => product_detail.supplier_detail.name,
   },
-  // {
-  //   title: <HeaderCell title="Product" />,
-  //   // dataIndex: 'status',
-  //   // key: 'status',
-  //   // width: 50,
-  //   // render: (status: Product_Import['status']) => getStatusBadge(status),
-  //   dataIndex: 'action',
-  //   key: 'action',
-  //   width: 50,
-  //   render: (_: string, product_import: Product_Import) => (
-  //     <div className="flex">
-  //       <Tooltip size="sm" content={'Edit Import'} placement="top" color="invert">
-  //       <Link href="/admin/products" passHref>
-          
-  //           <ActionIcon
-  //             size="sm"
-  //             variant="outline"
-  //             className="inline-flex items-center"
-  //           >
-  //             <PencilIcon className="h-4 w-4" />
-  //           </ActionIcon>
-         
-  //       </Link>
-  //     </Tooltip>
-  //       </div>
-  //   )
-  // },
-
-  // {
-  //   title: <></>,
-  //   dataIndex: 'action',
-  //   key: 'action',
-  //   width: 10,
-  //   render: (_: string, product_import: Product_Import) => (
-  //     <div className="flex items-center justify-end gap-3 pe-3">
-  //       <Tooltip size="sm" content={'Edit Import'} placement="top" color="invert">
-  //         <ActionIcon
-  //           onClick={() => {
-  //             const data = {
-  //               create_time: product_import.create_time,
-  //               receive_time: product_import.receive_time,
-  //               total_cost: product_import.total_cost,
-  //               status: product_import.status,
-  //             };
-  //             openModal({
-  //               view: <EditProduct product_import={data} active={product_import.active} />,
-  //             });
-  //           }}
-  //           as="span"
-  //           size="sm"
-  //           variant="outline"
-  //           className="hover:!border-gray-900 hover:text-gray-700 cursor-pointer"
-  //         >
-  //           <PencilIcon className="h-4 w-4" />
-  //         </ActionIcon>
-  //       </Tooltip>
-        {/* <Tooltip size="sm" content={'Import product'} placement="top" color="invert">
-          <ActionIcon
-            onClick={() => {
-              const data = {
-                create_time: product_import.create_time,
-                receive_time: product_import.receive_time,
-                total_cost: product_import.total_cost,
-                status: product_import.status,
-              };
-              openModal({
-                view: <EditProduct_Detail product_import={data} active={product_import.active} />,
-              });
-            }}
-            as="span"
-            size="sm"
-            variant="outline"
-            className="hover:!border-gray-900 hover:text-gray-700 cursor-pointer"
-          >
-            <ShoppingBagSolidIcon className="h-4 w-4" />
-          </ActionIcon>
-        </Tooltip> */}
-        /* <DeletePopover
-          title={`Delete this user`}
-          description={`Are you sure you want to delete this import `}
-          onDelete={async () => {
-            const result = await dispatch(deleteProduct(product_import.active)); // Remove the .then() block
-            if (deleteProduct.fulfilled.match(result)) {
-              await dispatch(getProductImports({ page: 1, pageSize: 5, query: ''}));
-              toast.success(`Import  has been deleted successfully.`);
-            } else {
-              toast.error(`Failed to delete import #${product_import.active}.`);
-            }
-          }}
-        /> */
-  //     </div>
-  //   ),
-  // },
 ];
-
-// export interface Product {
-//     active: string;
-//     name: string;
-//     cost_price: string;
-//     selling_price: string;
-//     quantity: string;
-   
-//   }
-// export interface Product_Import {
-//     active: string;
-//     receive_time: string;
-//     create_time: string;
-//     total_cost: string;
-//     status: string;
-//   }
-//   export const STATUSES = {
-//     Completed: 'A',
-//     Canceled: 'D',
-//   } as const; 
-  export interface Product_Detail {
+export interface Product_Detail {
     active: string;
     product:{
       name:string
@@ -226,4 +138,4 @@ export const getColumns = (openModal: (args: any) => void) => [
     };
   }
   
- 
+  export default ProductImportDetails;

@@ -21,7 +21,7 @@ export default function BlankPage() {
   return (
     <>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb}>
-        {/* <ModalButton label="Add New Import" view={<CreateProduct />} customSize="600px" className="mt-0" /> */}
+        <ModalButton label="Add New Import" view={<CreateProduct />} customSize="600px" className="mt-0" />
       </PageHeader>
       <ProductsTable />
     </>

@@ -92,6 +92,7 @@ export interface supplierType {
   errors: any;
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
+  listSupplier:any[];
 }
 
 export interface loggerType {
@@ -115,6 +116,7 @@ export interface productType {
   errors: any;
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
+  listProduct:any[];
 }
 export interface product_ImportType {
   data: [];
@@ -127,6 +129,8 @@ export interface product_ImportType {
   errors: any;
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
+  product:any;
+  supplier:any;
 }
 export interface product_Import_DetailType {
   data: [];

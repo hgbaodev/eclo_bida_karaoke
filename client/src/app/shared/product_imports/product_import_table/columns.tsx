@@ -5,7 +5,7 @@ import { Text, Badge, Tooltip, ActionIcon } from 'rizzui';
 import { HeaderCell } from '@/components/ui/table';
 import PencilIcon from '@/components/icons/pencil';
 import EyeIcon from '@/components/icons/eye';
-import ShoppingBagSolidIcon from '@/components/icons/shopping-bag-solid';
+import { PiPlusBold } from 'react-icons/pi';
 import AvatarCard from '@/components/ui/avatar-card';
 import DateCell from '@/components/ui/date-cell';
 import DeletePopover from '@/app/shared/delete-popover';
@@ -89,7 +89,7 @@ export const getColumns = (openModal: (args: any) => void) => [
     width: 50,
     render: (_: string, product_import: Product_Import) => (
       <div className="flex">
-        <Tooltip size="sm" content={'Edit Import'} placement="top" color="invert">
+        <Tooltip size="sm" content={'See product'} placement="top" color="invert">
         <Link href={{
             pathname: '/admin/product_import_details',
             query: { active: product_import.active }
@@ -105,6 +105,30 @@ export const getColumns = (openModal: (args: any) => void) => [
             </ActionIcon>
          
         </Link>
+        {/* <Link href={{
+            pathname: '/admin/product_import_details',
+            query: { active: product_import.active }
+          }}>
+        <ActionIcon
+            onClick={() => {
+              const data = {
+                create_time: product_import.create_time,
+                receive_time: product_import.receive_time,
+                total_cost: product_import.total_cost,
+                status: product_import.status,
+              };
+              openModal({
+                view: <EditProduct product_import={data} active={product_import.active} />,
+              });
+            }}
+            as="span"
+            size="sm"
+            variant="outline"
+            className="hover:!border-gray-900 hover:text-gray-700 cursor-pointer"
+          >
+            <EyeIcon className="h-4 w-4" />
+          </ActionIcon>
+          </Link> */}
       </Tooltip>
         </div>
     )
@@ -156,7 +180,7 @@ export const getColumns = (openModal: (args: any) => void) => [
             variant="outline"
             className="hover:!border-gray-900 hover:text-gray-700 cursor-pointer"
           >
-            <ShoppingBagSolidIcon className="h-4 w-4" />
+            <PiPlusBold className="h-4 w-4" />
           </ActionIcon>
         </Tooltip>
         <DeletePopover

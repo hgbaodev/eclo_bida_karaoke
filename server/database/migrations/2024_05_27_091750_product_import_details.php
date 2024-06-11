@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('product_import_details', function (Blueprint $table) {
-            $table->unsignedBigInteger('id');
+            $table->id();
+            $table->unsignedBigInteger('id_product');
             $table->double('cost_price');
             $table->bigInteger('quantity');
             $table->unsignedBigInteger('supplier_id')->nullable();
@@ -20,8 +21,8 @@ return new class extends Migration
             $table->string('active')->unique();
             $table->softDeletes();
             $table->timestamps();
-            $table->primary('id');
-            $table->foreign('id')->references('id')->on('products');
+            $table->unique(['id_product', 'import_id']);
+            $table->foreign('id_product')->references('id')->on('products');
             $table->foreign('supplier_id')->references('id')->on('suppliers');
             $table->foreign('import_id')->references('id')->on('product_imports');
         });

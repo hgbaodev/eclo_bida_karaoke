@@ -15,12 +15,14 @@ class ProductImportDetail extends Model
         'cost_price',
         'supplier_id',
         'import_id',
+        'id_product',
         'active',
     ];
     protected $hidden = [
-        'id',
+        'id_product',
         'supplier_id',
         'import_id',
+        'id'
     ];
     public function product_imp_detail()
     {
@@ -32,7 +34,7 @@ class ProductImportDetail extends Model
     }
     public function product()
     {
-        return $this->belongsTo(Product::class, 'id');
+        return $this->belongsTo(Product::class, 'id_product');
     }
     protected static function boot()
     {

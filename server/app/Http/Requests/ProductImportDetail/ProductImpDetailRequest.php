@@ -24,6 +24,9 @@ class ProductImpDetailRequest extends FormRequest
         return [
             'quantity' => 'required',
             'cost_price' => 'required',
+            'product' => 'required',
+            'supplier' => 'required',
+            'import' => 'required',
         ];
     }
 }

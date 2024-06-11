@@ -24,7 +24,7 @@ export default function StaffsTable() {
     };
     fetch();
   }, [page, pageSize, query]);
-
+  
   const columns = useMemo(
     () => getColumns(openModal),
     // eslint-disable-next-line react-hooks/exhaustive-deps

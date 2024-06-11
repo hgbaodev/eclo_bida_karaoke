@@ -102,11 +102,11 @@ const product_importSlices = createSlice({
         state.isLoading = false;
         state.data = result.result;
         state.totalRow = result.meta.total;
-        console.log(state.data)
       })
       .addCase(getProductImports.rejected, (state) => {
         state.isLoading = false;
       })
+   
       .addCase(createProduct.pending, (state: product_ImportType) => {
         state.isCreateLoading = true;
       })

@@ -16,12 +16,18 @@ class ProductImpDetailRepository implements ProductImpDetailInterface
         $perPage = $request->input('perPage');
         $query = $request->input('query');
         $id = $request->input('id');
+        $active = $request->input('active');
         $product_import_detail_query = ProductImportDetail::query()->with(['product_imp_detail', 'product', 'supplier_detail']);
         if ($query) {
             $product_import_detail_query->whereRaw("quantity LIKE '%$query%'");
         }
         if ($id) {
             $product_import_detail_query->where('id', $id);
+        }
+        if ($active) {
+            $product_import_detail_query->whereHas('product_imp_detail', function ($query) use ($active) {
+                $query->where("active", $active);
+            });
         }
         if ($all && $all == true) {
             $product_import_detail_query = $product_import_detail_query->get();
@@ -38,6 +44,12 @@ class ProductImpDetailRepository implements ProductImpDetailInterface
 
     function create(array $data)
     {
+
+
+        // if ($active) {
+        //     $product_import_detail_query->whereHas('product_imp_detail', function ($query) use ($active) {
+        //         $query->where("active", $active);
+        //     });
         return ProductImportDetail::create($data);
     }
     function getProductImpDetailtByActive($active)

@@ -16,8 +16,9 @@ import { number } from 'zod';
 import  {getStatusBadge}  from './product_import_table/columns';
 import { statusOptions } from './type';
 
-export default function EditProduct_Detail({ product_import, active }: { product_import: EditProduc_ImporttInput; active: string }) {
+export default function EditProduct({ product_import, active }: { product_import: EditProduc_ImporttInput; active: string }) {
   const { closeModal } = useModal();
+  const { listPositions } = useSelector((state: RootState) => state.position);
   const [reset, setReset] = useState<any>(product_import);
   const [errors, setErrors] = useState<any>({});
   const { pageSize, page, query, isUpdateLoading } = useSelector((state: RootState) => state.product_import);
@@ -54,23 +55,45 @@ export default function EditProduct_Detail({ product_import, active }: { product
           <>
             <div className="col-span-full flex items-center justify-between">
               <Title as="h4" className="font-semibold">
-                Product 
+                Add a Product
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
-            <Input
+            {/* <Input
               label="Product name"
-              type="date"
+              placeholder="Enter product name"
               className="col-span-full"
               {...register('create_time')}
               error={errors.create_time?.message}
+            /> */}
+                <Controller
+              name="product"
+              control={control}
+              render={({ field: { name, onChange, value } }) => (
+                <Select
+                  options={listPositions}
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                  label="Product"
+                  className="col-span-[1/2]"
+                  placeholder="Select a product"
+                  getOptionValue={(option) => option.active}
+                  getOptionDisplayValue={(option) => option.name}
+                  displayValue={(selected: string) =>
+                  listPositions.find((position) => position.active === selected)?.name ?? selected
+                  }
+                  dropdownClassName="!z-[1]"
+                  inPortal={false}
+                />
+              )}
             />
             <Input
               label="Quantity"
-              type="date"
-              placeholder="Enter cost price"
+              type="number"
+              placeholder="Enter quantity"
               {...register('receive_time')}
               className="col-span-full"
               error={errors.receive_time?.message}
@@ -93,7 +116,7 @@ export default function EditProduct_Detail({ product_import, active }: { product
                   value={value}
                   onChange={onChange}
                   name={name}
-                  label="Supplier"
+                  label="Status"
                   placeholder="Select a status"
                   className="col-span-[1/2]"
                   error={errors?.status?.message}
@@ -105,12 +128,19 @@ export default function EditProduct_Detail({ product_import, active }: { product
                 />
               )}
             />
+             <Input
+              label="Supplier"
+              placeholder="Enter supplier"
+              {...register('total_cost')}
+              className="col-span-full"
+              error={errors.total_cost?.message}
+            />
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
                 Cancel
               </Button>
               <Button type="submit" isLoading={isUpdateLoading} className="w-full @xl:w-auto">
-                Edit Product
+                Add Product
               </Button>
             </div>
           </>
