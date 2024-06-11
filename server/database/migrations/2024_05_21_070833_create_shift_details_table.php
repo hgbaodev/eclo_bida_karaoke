@@ -16,6 +16,10 @@ return new class extends Migration
             $table->foreignId('shift_id')->constrained('shifts');
             $table->string('day_of_week');
             $table->integer("quantity_of_staff");
+            $table->softDeletes();
+            $table->string('active')->unique();
+            $table->unique(['shift_id', 'day_of_week']);
+            $table->timestamps(true);
         });
     }
 

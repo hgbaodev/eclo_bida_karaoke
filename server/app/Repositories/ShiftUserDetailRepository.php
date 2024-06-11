@@ -24,13 +24,13 @@ class ShiftUserDetailRepository implements ShiftUserDetailRepositoryInterface
     }
     public function updateShiftUserDetailByActive($active, array $data)
     {
-        $shiftUserDetail = ShiftUserDetail::where("active", $active);
+        $shiftUserDetail = ShiftUserDetail::where("active", $active)->first();
         $shiftUserDetail->update($data);
         return $shiftUserDetail;
     }
     public function deleteShiftUserDetailByActive($active)
     {
-        $shiftUserDetail = ShiftUserDetail::where("active", $active);
+        $shiftUserDetail = ShiftUserDetail::where("active", $active)->first();
         $shiftUserDetail->delete();
         return $shiftUserDetail;
     }

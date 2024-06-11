@@ -78,6 +78,16 @@ export const menuItems = [
     href: routes.admin.shifts,
     icon: <MdOutlineBadge />,
   },
+  // {
+  //   name: 'Shift Details',
+  //   href: routes.admin.shift_detail,
+  //   icon: <MdOutlineBadge />,
+  // },
+  {
+    name: 'Shift Details Of Staff',
+    href: routes.admin.shift_detail_staff,
+    icon: <MdOutlineBadge />,
+  },
   {
     name: 'Customers',
     href: routes.admin.customers,

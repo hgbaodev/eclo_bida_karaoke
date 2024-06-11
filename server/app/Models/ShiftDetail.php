@@ -11,7 +11,6 @@ class ShiftDetail extends Model
 {
     use HasFactory, SoftDeletes, GeneratesUniqueActive;
     protected $fillable = [
-        "id",
         "shift_id",
         "day_of_week",
         "quantity_of_staff",
