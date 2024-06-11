@@ -47,7 +47,7 @@ export const deleteShiftUserDetail = createAsyncThunk(
   'shiftuserdetails/deleteShiftUserDetail',
   async (active: string, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.delete(`shiftuserdetailss/${active}`);
+      const response = await axiosInstance.delete(`shiftuserdetails/${active}`);
       return response.data;
     } catch (error: any) {
       if (!error.response) {
@@ -106,8 +106,8 @@ const shiftUserDetailSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(getAllShiftUserDetails.fulfilled, (state, action) => {
-        state.isLoading = false;
         const result = action.payload.data;
+        state.isLoading = false;
         state.data = result;
         state.listShiftUserDetail = result;
       })

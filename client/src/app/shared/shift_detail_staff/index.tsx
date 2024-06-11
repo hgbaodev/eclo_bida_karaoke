@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
 import { getAllStaffs, setPage, setPageSize } from '@/store/slices/staffSlice';
-import { getAllShiftUserDetails } from '@/store/slices/shift_user_detail';
+import { getAllShiftUserDetails } from '@/store/slices/shift_user_detailSlice';
 import { useModal } from '../modal-views/use-modal';
 import { getShifts } from '@/store/slices/shiftSlice';
 

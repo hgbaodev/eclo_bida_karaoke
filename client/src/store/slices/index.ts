@@ -9,7 +9,7 @@ import staff from './staffSlice';
 import position from './positionSlice';
 import shift from './shiftSlice';
 import shift_detail from './shift_detailSlice';
-import shift_user_detail from './shift_user_detail';
+import shift_user_detail from './shift_user_detailSlice';
 
 import logger from './loggerSlice';
 
