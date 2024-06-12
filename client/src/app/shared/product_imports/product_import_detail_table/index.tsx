@@ -10,6 +10,8 @@ import { RootState } from '@/store/types';
 import { dispatch, useDispatch } from '@/store';
 import { useSearchParams } from 'next/navigation';
 import { getProductImportDetails,getProductImportsByActive, setPage, setPageSize } from '@/store/slices/product_import_detailSlice';
+import { getSinghle_Product } from '@/store/slices/productSlices';
+import { getSinghle_Supplier } from '@/store/slices/supplierSlice';
 import { useModal } from '../../modal-views/use-modal';
 import { useRouter } from 'next/router';
 const FilterElement = dynamic(() => import('@/app/shared/products/product_table/filter-elements'), {
@@ -17,6 +19,8 @@ const FilterElement = dynamic(() => import('@/app/shared/products/product_table/
 });
 
 export default function StaffsTable() {
+  const { listProduct } = useSelector((state: RootState) => state.product);
+  const { listSupplier } = useSelector((state: RootState) => state.supplier);
   const searchParams = useSearchParams(); 
   const active = searchParams.get('active');
   const { openModal } = useModal();
@@ -39,6 +43,12 @@ export default function StaffsTable() {
     };
     fetch();
   }, [page, pageSize, query,active]);
+  useEffect(() => {
+    dispatch(getSinghle_Product());
+  }, []);
+  useEffect(() => {
+    dispatch(getSinghle_Supplier());
+  }, []);
   const columns = useMemo(
     () => getColumns(openModal),
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -1,51 +1,57 @@
+
 'use client';
 import { useState } from 'react';
 import { PiXBold } from 'react-icons/pi';
 import { Controller, SubmitHandler } from 'react-hook-form';
 import { Form } from '@/components/ui/form';
-import { Input, Button, ActionIcon, Title, Select, Password, Textarea } from 'rizzui';
+import { Input, Button, ActionIcon, Title, Select, Textarea } from 'rizzui';
 import { useModal } from '@/app/shared/modal-views/use-modal';
-import { updateProduct, getProductImports } from '@/store/slices/product_importSlice';
-import { CreateProduc_ImporttInput, createProduct_ImportSchema } from '@/utils/validators/create-product_import.schema';
+// import { createProduct, getProductImports } from '@/store/slices/product_importSlice';
+import { createProductImportDetail, getProductImportDetails } from '@/store/slices/product_import_detailSlice';
+
+import { CreateProduct_Import_DetailtInput, createProduct_Import_DetailSchema } from '@/utils/validators/create-product_import_detail.schema';
 import { dispatch } from '@/store';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
-import { EditProduc_ImporttInput, editProduct_ImportSchema } from '@/utils/validators/edit-product_import.schema';
-import { number } from 'zod';
-import  {getStatusBadge}  from './product_import_table/columns';
 import { statusOptions } from './type';
+import { useSearchParams } from 'next/navigation';
 
-export default function EditProduct({ product_import, active }: { product_import: EditProduc_ImporttInput; active: string }) {
+export default function CreateProductImportDetail() {
   const { closeModal } = useModal();
-  const { listPositions } = useSelector((state: RootState) => state.position);
-  const [reset, setReset] = useState<any>(product_import);
+  const searchParams = useSearchParams(); 
+  const active = searchParams.get('active');
+  const [reset, setReset] = useState({});
   const [errors, setErrors] = useState<any>({});
-  const { pageSize, page, query, isUpdateLoading } = useSelector((state: RootState) => state.product_import);
-//   const { listPositions } = useSelector((state: RootState) => state.position);
-  const onSubmit: SubmitHandler<CreateProduc_ImporttInput> = async (data) => {
-    const result: any = await dispatch(updateProduct({product_import: data, active }));
+  const { pageSize, page, query, isCreateLoading} = useSelector((state: RootState) => state.product_import_detail);
+  const { listProduct } = useSelector((state: RootState) => state.product);
+  const { listSupplier} = useSelector((state: RootState) => state.supplier);
+  const onSubmit: SubmitHandler<CreateProduct_Import_DetailtInput> = async (data) => {
+    const result: any = await dispatch(createProductImportDetail(data));
 
-    if (updateProduct.fulfilled.match(result)) {
+    if (createProductImportDetail.fulfilled.match(result)) {
       setReset({
-        create_time: '',
-        receive_time: '',
-        status: '',
-        total_cost: '',
+        product: '',
+        quantity: '',
+        supplier : '',
+        cost_price: '',
+      
       });
       setErrors({});
       closeModal();
-      await dispatch(getProductImports({ page, pageSize, query }));
-      toast.success('User created successfully');
+      //@ts-expect-errorts-inogre
+      await dispatch(getProductImportDetails ({ page, pageSize, query, active }));
+      toast.success('Import created successfully');
     } else {
       setErrors(result?.payload?.errors);
     }
+    console.log(data);
   };
   return (
-    <Form<EditProduc_ImporttInput>
+    <Form<CreateProduct_Import_DetailtInput>
       resetValues={reset}
       onSubmit={onSubmit}
-      validationSchema={editProduct_ImportSchema}
+      validationSchema={createProduct_Import_DetailSchema}
       serverError={errors}
       className="grid grid-cols-1 gap-6 p-6 @container md:grid-cols-2 [&_.rizzui-input-label]:font-medium [&_.rizzui-input-label]:text-gray-900"
     >
@@ -55,97 +61,90 @@ export default function EditProduct({ product_import, active }: { product_import
           <>
             <div className="col-span-full flex items-center justify-between">
               <Title as="h4" className="font-semibold">
-                Add a Product
+                Import Product
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
-            {/* <Input
-              label="Product name"
-              placeholder="Enter product name"
-              className="col-span-full"
-              {...register('create_time')}
-              error={errors.create_time?.message}
-            /> */}
-                <Controller
+            <Controller
               name="product"
               control={control}
               render={({ field: { name, onChange, value } }) => (
                 <Select
-                  options={listPositions}
+                  options={listProduct}
                   value={value}
                   onChange={onChange}
                   name={name}
                   label="Product"
-                  className="col-span-[1/2]"
+                  className="col-span-full"
                   placeholder="Select a product"
+                  error={errors?.product?.message}
                   getOptionValue={(option) => option.active}
                   getOptionDisplayValue={(option) => option.name}
                   displayValue={(selected: string) =>
-                  listPositions.find((position) => position.active === selected)?.name ?? selected
+                    listProduct.find((option) => option.active === selected)?.name ?? selected
                   }
                   dropdownClassName="!z-[1]"
                   inPortal={false}
                 />
               )}
             />
-            <Input
-              label="Quantity"
-              type="number"
-              placeholder="Enter quantity"
-              {...register('receive_time')}
-              className="col-span-full"
-              error={errors.receive_time?.message}
-            />
-
-            <Input
-              label="Total cost"
-              type='number'
-              placeholder="Enter total cost"
-              {...register('total_cost')}
-              className="col-span-full"
-              error={errors.total_cost?.message}
-            />
             <Controller
-              name="status"
+              name="supplier"
               control={control}
               render={({ field: { name, onChange, value } }) => (
                 <Select
-                  options={statusOptions}
+                  options={listSupplier}
                   value={value}
                   onChange={onChange}
                   name={name}
-                  label="Status"
-                  placeholder="Select a status"
-                  className="col-span-[1/2]"
-                  error={errors?.status?.message}
-                  getOptionValue={(option: { value: any }) => option.value}
-                  getOptionDisplayValue={(option: { value: any }) => getStatusBadge(option.value as any)}
-                  displayValue={(selected: any) => getStatusBadge(selected)}
+                  label="Supplier"
+                  className="col-span-full"
+                  placeholder="Select a supplier"
+                  error={errors?.supplier?.message}
+                  getOptionValue={(option) => option.active}
+                  getOptionDisplayValue={(option) => option.name}
+                  displayValue={(selected: string) =>
+                    listSupplier.find((option) => option.active === selected)?.name ?? selected
+                  }
                   dropdownClassName="!z-[1]"
                   inPortal={false}
                 />
               )}
             />
-             <Input
-              label="Supplier"
-              placeholder="Enter supplier"
-              {...register('total_cost')}
+
+            <Input
+             type="number"
+              label="Cost price"
+              placeholder="Enter cost price of product "
+              {...register('cost_price')}
               className="col-span-full"
-              error={errors.total_cost?.message}
+              error={errors.cost_price?.message}
             />
+             <Input
+             type="number"
+              label="Quantity"
+              placeholder="Enter quantity of producrt"
+              {...register('quantity')}
+              className="col-span-full"
+              error={errors.quantity?.message}
+            />
+            
+          
+
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
                 Cancel
               </Button>
-              <Button type="submit" isLoading={isUpdateLoading} className="w-full @xl:w-auto">
-                Add Product
-              </Button>
-            </div>
-          </>
+              <Button type="submit" isLoading={isCreateLoading} className="w-full @xl:w-auto">
+                Add product 
+             </Button>
+             </div>
+             </>
         );
       }}
+      
     </Form>
   );
 }

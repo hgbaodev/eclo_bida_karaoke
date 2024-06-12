@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ProductImport\ProductImpDetailRequest;
+use App\Http\Requests\ProductImportDetail\ProductImpDetailRequest;
 use Illuminate\Http\Request;
 use App\Interface\ProductImpDetailInterface;
 use App\Interface\ProductImportInterface;
@@ -35,10 +35,12 @@ class ProductImpDetailController extends Controller
     public function store(ProductImpDetailRequest $request)
     {
         $validated_data = $request->validated();
-
-        $product_import = $this->product_import_Repository->getProductImportByActive($validated_data['product_imp_detail']);
+        // dd($validated_data);
+        $product_import = $this->product_import_Repository->getProductImportByActive($validated_data['import']);
+        // dd($product_import);
         $product = $this->product_Repository->getProductByActive($validated_data['product']);
-        $supplier = $this->supplier_Repository->getSupplierByActive($validated_data['supplier_detail']);
+        // dd($product->id);
+        $supplier = $this->supplier_Repository->getSupplierByActive($validated_data['supplier']);
         if (!$product_import) {
             return $this->sentErrorResponse("Product import is not found", "error", 404);
         }
@@ -49,11 +51,11 @@ class ProductImpDetailController extends Controller
             return $this->sentErrorResponse("Supplier is not found", "error", 404);
         }
         $validated_data["import_id"] = $product_import->id;
-        $validated_data["supplier_id"] = $product_import->id;
-        $validated_data["id_product"] = $product_import->id;
-        unset($validatedData['product_imp_detail']);
-        unset($validatedData['product']);
-        unset($validatedData['supplier_detail']);
-        return $this->sentSuccessResponse($this->product_import_Repository->create($validated_data));
+        $validated_data["supplier_id"] = $supplier->id;
+        $validated_data["id_product"] = $product->id;
+        unset($validated_data['import']);
+        unset($validated_data['product']);
+        unset($validated_data['supplier']);
+        return $this->sentSuccessResponse($this->product_import_detail_Repository->create($validated_data));
     }
 }

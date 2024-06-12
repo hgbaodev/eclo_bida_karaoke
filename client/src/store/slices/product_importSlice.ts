@@ -15,6 +15,8 @@ const initialState: product_ImportType = {
   errors: null,
   isCreateLoading: false,
   isUpdateLoading: false,
+  product:'',
+  supplier:'',
 };
 
 export const getProductImports= createAsyncThunk(

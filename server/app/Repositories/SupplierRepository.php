@@ -6,9 +6,11 @@ use App\Http\Collections\CollectionCustom;
 use App\Interface\SupplierRepositoryInterface;
 use App\Models\Supplier;
 
-class SupplierRepository implements SupplierRepositoryInterface {
+class SupplierRepository implements SupplierRepositoryInterface
+{
 
-    function getAllSuppliers($request) {
+    function getAllSuppliers($request)
+    {
 
         $all = $request->input('all');
         $perPage = $request->input('perPage');
@@ -26,7 +28,7 @@ class SupplierRepository implements SupplierRepositoryInterface {
         if ($status) {
             $suppliers->where('status', $status);
         }
-        if($all){
+        if ($all) {
             $suppliers = $suppliers->get();
         } else {
             $suppliers = $suppliers->paginate($perPage);
@@ -40,7 +42,7 @@ class SupplierRepository implements SupplierRepositoryInterface {
     }
     function getSupplierByActive($active)
     {
-        return Supplier::where('active', $active)->firstOrFail();
+        return Supplier::where('active', $active)->first();
     }
     function createSupplier(array $data)
     {
@@ -49,7 +51,7 @@ class SupplierRepository implements SupplierRepositoryInterface {
 
     function updateSupplierByActive($active, array $data)
     {
-        $supplier = Supplier::where('active', $active)->firstOrFail();
+        $supplier = Supplier::where('active', $active)->first();
         $supplier->update($data);
         return $supplier;
     }
@@ -74,5 +76,4 @@ class SupplierRepository implements SupplierRepositoryInterface {
         $supplier->delete();
         return $supplier;
     }
-
 }

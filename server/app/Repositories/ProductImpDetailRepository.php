@@ -44,12 +44,6 @@ class ProductImpDetailRepository implements ProductImpDetailInterface
 
     function create(array $data)
     {
-
-
-        // if ($active) {
-        //     $product_import_detail_query->whereHas('product_imp_detail', function ($query) use ($active) {
-        //         $query->where("active", $active);
-        //     });
         return ProductImportDetail::create($data);
     }
     function getProductImpDetailtByActive($active)

@@ -4,19 +4,19 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { product_ImportType, product_Import_DetailType } from '../types';
 import env from '@/env';
 import { EditProduc_ImporttInput } from '@/utils/validators/edit-product_import.schema';
-const initialState: product_ImportType = {
-  data: [],
-  isLoading: false,
-  isFiltered: false,
-  totalRow: 0,
-  page: 1,
-  pageSize: 5,
-  query: '',
-  errors: null,
-  isCreateLoading: false,
-  isUpdateLoading: false,
-};
-const initialState1: product_Import_DetailType = {
+// const initialState1: product_ImportType = {
+//   data: [],
+//   isLoading: false,
+//   isFiltered: false,
+//   totalRow: 0,
+//   page: 1,
+//   pageSize: 5,
+//   query: '',
+//   errors: null,
+//   isCreateLoading: false,
+//   isUpdateLoading: false,
+// };
+const initialState: product_Import_DetailType = {
   data: [],
   isLoading: false,
   isFiltered: false,
@@ -48,17 +48,17 @@ export const getProductImportDetails= createAsyncThunk(
   },
 );
 
-// export const createProduct = createAsyncThunk('product_imports/createProductImport', async (data: any, { rejectWithValue }) => {
-//   try {
-//     const response = await axiosInstance.post(`product_imports`, data);
-//     return response.data;
-//   } catch (error: any) {
-//     if (!error.response) {
-//       throw error;
-//     }
-//     return rejectWithValue(error.response.data);
-//   }
-// });
+export const createProductImportDetail = createAsyncThunk('product_imports/createProductImport', async (data: any, { rejectWithValue }) => {
+  try {
+    const response = await axiosInstance.post(`product_import_details`, data);
+    return response.data;
+  } catch (error: any) {
+    if (!error.response) {
+      throw error;
+    }
+    return rejectWithValue(error.response.data);
+  }
+});
 
 // export const deleteProduct = createAsyncThunk('product_imports/deleteProductImport', async (active: string, { rejectWithValue }) => {
 //   try {
@@ -134,18 +134,18 @@ const product_import_detailSlices = createSlice({
       .addCase(getProductImportDetails.rejected, (state) => {
         state.isLoading = false;
       })
-      .addCase(getProductImportsByActive.pending, (state: product_ImportType) => {
-        state.isLoading = true;
-      })
-      .addCase(getProductImportsByActive.fulfilled, (state, action) => {
-        const result = action.payload.data;
-        state.isLoading = false;
-        state.data = result.result;
-        console.log(result)
-      })
-      .addCase(getProductImportsByActive.rejected, (state) => {
-        state.isLoading = false;
-      })
+      // .addCase(getProductImportsByActive.pending, (state: product_ImportType) => {
+      //   state.isLoading = true;
+      // })
+      // .addCase(getProductImportsByActive.fulfilled, (state, action) => {
+      //   const result = action.payload.data;
+      //   state.isLoading = false;
+      //   state.data = result.result;
+      //   console.log(result)
+      // })
+      // .addCase(getProductImportsByActive.rejected, (state) => {
+      //   state.isLoading = false;
+      // })
          // .addCase(getProductImportsByActive.pending, (state: product_ImportType) => {
       //   state.isLoading = true;
       // })

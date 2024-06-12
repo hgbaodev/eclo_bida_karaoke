@@ -46,46 +46,7 @@ import type { ColumnsType } from 'antd/es/table';
 //       );
 //   }
 // }
-export const ProductImportDetails: React.FC = () => {
-  const router = useRouter();
-  const { active } = router.query;
 
-  // Dữ liệu product_import_detail từ Redux
-  const productImportDetails = useSelector((state: RootState) => state.product_import_detail.data);
-
-  const [filteredDetails, setFilteredDetails] = useState<Product_Detail[]>([]);
-
-  useEffect(() => {
-    if (active) {
-      // Lọc dữ liệu dựa trên `active`
-      const details = productImportDetails.filter((detail: Product_Detail) => detail.active.toString() === active);
-      setFilteredDetails(details);
-      console.log(details)
-    } else {
-      setFilteredDetails(productImportDetails); // Hiển thị tất cả nếu `active` không có giá trị
-    }
-  }, [active, productImportDetails]);
-
-  // Hàm để mở modal (ví dụ, có thể thay đổi tùy thuộc vào chức năng modal của bạn)
-  const openModal = (record: Product_Detail) => {
-    console.log("Mở modal với chi tiết sản phẩm:", record);
-    // Gọi modal để hiển thị chi tiết hoặc thực hiện hành động khác
-  };
-
-  return (
-    <div>
-      <Table
-        columns={getColumns(openModal)} // Lấy các cột từ hàm getColumns
-        dataSource={filteredDetails} // Cung cấp dữ liệu đã lọc cho bảng
-        rowKey="id" // Định danh duy nhất cho mỗi hàng
-        onRow={(record) => ({
-          onClick: () => openModal(record), // Gọi openModal khi nhấn vào hàng
-        })}
-        pagination={false} // Vô hiệu hóa phân trang nếu không cần
-      />
-    </div>
-  );
-}
 export const getColumns = (openModal: (args: any) => void) => [
   {
     title: <HeaderCell title="Id" />,
@@ -96,8 +57,8 @@ export const getColumns = (openModal: (args: any) => void) => [
   },
   {
     title: <HeaderCell title="Product name" />,
-    dataIndex: 'name',
-    key: 'name',
+    dataIndex: 'product',
+    key: 'product',
     width: 50,
     render: (_: string,  product_detail: Product_Detail) => product_detail.product.name,
   },
@@ -117,8 +78,8 @@ export const getColumns = (openModal: (args: any) => void) => [
   },
   {
     title: <HeaderCell title="Supplier" />,
-    dataIndex: 'supplier_id',
-    key: 'supplier_id',
+    dataIndex: 'supplier',
+    key: 'supplier',
     width: 50,
     render: (_: string, product_detail: Product_Detail) => product_detail.supplier_detail.name,
   },
@@ -138,4 +99,3 @@ export interface Product_Detail {
     };
   }
   
-  export default ProductImportDetails;
