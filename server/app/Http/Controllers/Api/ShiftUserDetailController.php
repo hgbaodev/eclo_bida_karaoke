@@ -7,7 +7,6 @@ use App\Http\Requests\ShiftUserDetail\ShiftUserDetailRequest;
 use App\Interface\ShiftRepositoryInterface;
 use App\Interface\ShiftUserDetailRepositoryInterface;
 use App\Interface\StaffRepositoryInterface;
-use Illuminate\Http\Request;
 
 class ShiftUserDetailController extends Controller
 {
@@ -95,6 +94,6 @@ class ShiftUserDetailController extends Controller
         if (!$shiftUserDetail) {
             return $this->sentErrorResponse("Shift User Detail is not found", "error", 404);
         }
-        return $this->sentSuccessResponse($shiftUserDetail, "Deleted successfully!", 200);
+        return $this->sentSuccessResponse($this->shiftUserDetailRes->deleteShiftUserDetailByActive($active), "Deleted successfully!", 200);
     }
 }

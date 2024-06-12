@@ -5,24 +5,26 @@ import { Controller, SubmitHandler } from 'react-hook-form';
 import { Form } from '@/components/ui/form';
 import { Input, Button, ActionIcon, Title, Select, Textarea } from 'rizzui';
 import { useModal } from '@/app/shared/modal-views/use-modal';
-import { createStaff, getStaffs } from '@/store/slices/staffSlice';
-import { CreateStaffInput, createStaffSchema } from '@/utils/validators/create-staff.schema';
 import { dispatch } from '@/store';
-import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
-import { createShiftDetail } from '@/store/slices/shift_detailSlice';
-import { CreateShiftUserDetailInput } from '@/utils/validators/shift-user-detail/create-shift-user-detail';
 
-export default function CreateShiftDetailStaff({ day_of_week, shift }: { day_of_week: string; shift: string }) {
+import {
+  CreateShiftUserDetailInput,
+  createShiftUserDetailSchema,
+} from '@/utils/validators/shift-user-detail/create-shift-user-detail';
+import { createShiftUserDetail, getAllShiftUserDetails } from '@/store/slices/shift_user_detailSlice';
+import toast from 'react-hot-toast';
+
+export default function CreateShiftDetailStaff({ day_of_week, shift }: { day_of_week: string; shift: any }) {
   const { closeModal } = useModal();
   const [reset, setReset] = useState({});
   const [errors, setErrors] = useState<any>({});
-  const { listStaffs, query, isCreateLoading } = useSelector((state: RootState) => state.staff);
+  const { listStaffs, isCreateLoading } = useSelector((state: RootState) => state.staff);
   const onSubmit: SubmitHandler<CreateShiftUserDetailInput> = async (data) => {
-    const result: any = await dispatch(createShiftDetail(data));
+    const result: any = await dispatch(createShiftUserDetail(data));
 
-    if (createStaff.fulfilled.match(result)) {
+    if (createShiftUserDetail.fulfilled.match(result)) {
       setReset({
         // name: '',
         // birthday: '',
@@ -33,17 +35,17 @@ export default function CreateShiftDetailStaff({ day_of_week, shift }: { day_of_
       });
       setErrors({});
       closeModal();
-      //   await dispatch(getStaffs({ page, pageSize, query, position, status }));
-      //   toast.success('Staff created successfully');
+      await dispatch(getAllShiftUserDetails());
+      toast.success('Created successfully');
     } else {
       setErrors(result?.payload?.errors);
     }
   };
   return (
-    <Form<CreateStaffInput>
-      resetValues={reset}
+    <Form<CreateShiftUserDetailInput>
+      resetValues={{ shift: shift.active, ...reset }}
       onSubmit={onSubmit}
-      validationSchema={createStaffSchema}
+      validationSchema={createShiftUserDetailSchema}
       serverError={errors}
       className="grid grid-cols-1 gap-6 p-6 @container md:grid-cols-2 [&_.rizzui-input-label]:font-medium [&_.rizzui-input-label]:text-gray-900"
     >
@@ -59,10 +61,16 @@ export default function CreateShiftDetailStaff({ day_of_week, shift }: { day_of_
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
-            <Input label="Day of week" className="col-span-full" value={day_of_week} readOnly />
-            <Input label="Shift" className="col-span-full" value={shift} readOnly />
+            <Input
+              label="Day of week"
+              {...register('day_of_week')}
+              className="col-span-full"
+              value={day_of_week}
+              readOnly
+            />
+            <Input label="Shift" className="col-span-full" value={shift.time_in + '-' + shift.time_out} readOnly />
             <Controller
-              name="name"
+              name="staff"
               control={control}
               render={({ field: { name, onChange, value } }) => (
                 <Select
@@ -73,7 +81,7 @@ export default function CreateShiftDetailStaff({ day_of_week, shift }: { day_of_
                   label="Staff"
                   className="col-span-full custom-dropdown"
                   placeholder="Select a staff"
-                  error={errors?.position?.message}
+                  error={errors?.staff?.message}
                   getOptionValue={(option) => option.active}
                   getOptionDisplayValue={(option) => option.name}
                   displayValue={(selected: string) =>

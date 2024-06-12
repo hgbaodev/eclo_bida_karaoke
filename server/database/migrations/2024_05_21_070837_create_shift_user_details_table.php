@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('staff_id')->constrained('staff');
             $table->foreignId('shift_id')->constrained('shifts');
             $table->string("day_of_week");
-            $table->string("active");
+            $table->string("active")->unique();
             $table->unique(["shift_id", "day_of_week", "staff_id"]);
             $table->softDeletes();
             $table->timestamps();

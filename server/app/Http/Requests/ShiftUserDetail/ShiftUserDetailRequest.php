@@ -2,10 +2,11 @@
 
 namespace App\Http\Requests\ShiftUserDetail;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Helpers\HelperRequest;
+
 use Illuminate\Validation\Rule;
 
-class ShiftUserDetailRequest extends FormRequest
+class ShiftUserDetailRequest extends HelperRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,15 +25,14 @@ class ShiftUserDetailRequest extends FormRequest
     {
         $data = $this->all();
         return [
-            "staff_id" => "required|exists:staff,id",
-            "shift_id" => "required|exists:shifts,id",
+            "staff" => "required",
+            "shift" => "required",
             "day_of_week" => "required|in:Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday",
-            "active" => "required",
             "unique_combination" => Rule::unique('shift_user_details')
                 ->where(function ($query) use ($data) {
-                    return $query->where('shift_id', $data['shift_id'])
+                    return $query->where('shift', $data['shift'])
                         ->where('day_of_week', $data['day_of_week'])
-                        ->where('staff_id', $data['staff_id']);
+                        ->where('staff', $data['staff']);
                 })
         ];
     }

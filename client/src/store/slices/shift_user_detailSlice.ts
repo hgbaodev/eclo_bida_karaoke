@@ -28,7 +28,7 @@ export const getAllShiftUserDetails = createAsyncThunk('shiftuserdetails/getAllS
   }
 });
 
-export const createShiftDetail = createAsyncThunk(
+export const createShiftUserDetail = createAsyncThunk(
   'shiftuserdetails/createShiftDetail',
   async (data: any, { rejectWithValue }) => {
     try {
@@ -93,13 +93,13 @@ const shiftUserDetailSlice = createSlice({
 
   extraReducers: (builder) => {
     builder
-      .addCase(createShiftDetail.pending, (state: shift_user_detailType) => {
+      .addCase(createShiftUserDetail.pending, (state: shift_user_detailType) => {
         state.isCreateLoading = true;
       })
-      .addCase(createShiftDetail.fulfilled, (state, action) => {
+      .addCase(createShiftUserDetail.fulfilled, (state, action) => {
         state.isCreateLoading = false;
       })
-      .addCase(createShiftDetail.rejected, (state) => {
+      .addCase(createShiftUserDetail.rejected, (state) => {
         state.isCreateLoading = false;
       })
       .addCase(getAllShiftUserDetails.pending, (state: shift_user_detailType) => {

@@ -3,6 +3,11 @@ import { Shift, ShiftUserDetail } from '@/app/shared/shift_detail_staff/colunm';
 import CreateShiftDetailStaff from '@/app/shared/shift_detail_staff/create-shift_detail_staff';
 import React from 'react';
 import Create from './Create';
+import toast from 'react-hot-toast';
+import { TiDeleteOutline } from 'react-icons/ti';
+import { deleteShiftUserDetail, getAllShiftUserDetails } from '@/store/slices/shift_user_detailSlice';
+import { dispatch } from '@/store';
+import { ActionIcon, Tooltip } from 'rizzui';
 interface DayColumnProps {
   data: ShiftUserDetail[];
   dayOfWeek: string;
@@ -20,19 +25,38 @@ const DayColumn: React.FC<DayColumnProps> = ({ data, dayOfWeek, shift }) => {
     return (
       <div>
         {dayDataList.map((dayData, index) => (
-          <div key={index}>{dayData.staff.name}</div>
+          <div key={index} className="flex items-center border border-gray-300 rounded-md mr-2">
+            <Tooltip size="sm" content={'Delete'} placement="top" color="invert">
+              <ActionIcon
+                as="span"
+                size="sm"
+                variant="outline"
+                className="hover:!border-gray-900  hover:text-gray-700 cursor-pointer rounded-full w-6 h-6 flex items-center justify-center"
+              >
+                <TiDeleteOutline
+                  className="w-6 h-6"
+                  onClick={async () => {
+                    const result = await dispatch(deleteShiftUserDetail(dayData.active)); // Remove the .then() block
+                    if (deleteShiftUserDetail.fulfilled.match(result)) {
+                      await dispatch(getAllShiftUserDetails());
+                      toast.success(`Staff #${dayData.staff.name} has been deleted successfully.`);
+                    } else {
+                      toast.error(`Failed to delete staff #${dayData.staff.name}.`);
+                    }
+                  }}
+                />
+              </ActionIcon>
+            </Tooltip>
+            {dayData.staff.name} <br />
+          </div>
         ))}
-        <Create
-          onClick={<CreateShiftDetailStaff day_of_week={dayOfWeek} shift={shift.time_in + '-' + shift.time_out} />}
-        />
+        <Create onClick={<CreateShiftDetailStaff day_of_week={dayOfWeek} shift={shift} />} />
       </div>
     );
   } else {
     return (
       <div>
-        <Create
-          onClick={<CreateShiftDetailStaff day_of_week={dayOfWeek} shift={shift.time_in + '-' + shift.time_out} />}
-        />
+        <Create onClick={<CreateShiftDetailStaff day_of_week={dayOfWeek} shift={shift} />} />
       </div>
     );
   }

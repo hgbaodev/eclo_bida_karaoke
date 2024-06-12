@@ -15,23 +15,14 @@ import { getShifts } from '@/store/slices/shiftSlice';
 
 export default function ShiftDetailStaffTable() {
   const { openModal } = useModal();
-  const { data, isLoading } = useSelector((state: RootState) => state.shift);
+  const { data } = useSelector((state: RootState) => state.shift);
   useEffect(() => {
     dispatch(getAllShiftUserDetails());
-  }, []);
-  useEffect(() => {
     dispatch(getShifts());
-  }, []);
-  useEffect(() => {
     dispatch(getAllStaffs(''));
   }, []);
-  const { listShiftUserDetail } = useSelector((state: RootState) => state.shift_user_detail);
-  const columns = useMemo(
-    () => getColumns(openModal, listShiftUserDetail),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
-
+  const { listShiftUserDetail, isLoading } = useSelector((state: RootState) => state.shift_user_detail);
+  const columns = useMemo(() => getColumns(openModal, listShiftUserDetail), [openModal, listShiftUserDetail]);
   const { visibleColumns } = useColumn(columns);
   return (
     <div className="mt-0">

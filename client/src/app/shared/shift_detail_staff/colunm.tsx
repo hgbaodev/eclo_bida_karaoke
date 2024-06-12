@@ -1,19 +1,14 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { HeaderCell } from '@/components/ui/table';
-import CreateShiftDetailStaff from './create-shift_detail_staff';
-import Create from '@/components/select/Create';
 import DayColumn from '@/components/select/ShiftUser';
-import { deleteShiftUserDetail, getAllShiftUserDetails } from '@/store/slices/shift_user_detail';
-import { dispatch } from '@/store';
-import DeletePopover from '../delete-popover';
-import toast from 'react-hot-toast';
+
 export const getColumns = (openModal: (args: any) => void, Data: ShiftUserDetail[]) => [
   {
     title: <HeaderCell title="Shift/Day" />,
     dataIndex: 'shift',
     key: 'shift',
-    width: 50,
+    width: 30,
     render: (_: string, shift: Shift) => shift.time_in + '-' + shift.time_out,
   },
   {
@@ -21,53 +16,7 @@ export const getColumns = (openModal: (args: any) => void, Data: ShiftUserDetail
     dataIndex: 'mon',
     key: 'mon',
     width: 200,
-    render: (_: string, shift: Shift) => {
-      // Lọc ra tất cả các dữ liệu có day_of_week là "Monday"
-      const mondayDataList = Data.filter((item) => {
-        return item.day_of_week === 'Monday' && item.shift.active === shift.active;
-      });
-
-      // Kiểm tra xem có dữ liệu cho "Monday" không
-      if (mondayDataList.length > 0) {
-        // Trả về thông tin mong muốn từ mondayDataList
-        return (
-          <div>
-            {/* Hiển thị thông tin từ mondayDataList */}
-            {mondayDataList.map((mondayData, index) => (
-              <div key={index}>
-                {mondayData.staff.name}
-                <DeletePopover
-                  title={`Delete this staff`}
-                  description={`Are you sure you want to delete this #${mondayData.staff.name} staff?`}
-                  onDelete={async () => {
-                    const result = await dispatch(deleteShiftUserDetail(mondayData.active)); // Remove the .then() block
-                    if (deleteShiftUserDetail.fulfilled.match(result)) {
-                      await dispatch(getAllShiftUserDetails());
-                      toast.success(`Staff #${mondayData.staff.name} has been deleted successfully.`);
-                    } else {
-                      toast.error(`Failed to delete staff #${mondayData.staff.name}.`);
-                    }
-                  }}
-                />
-                <br />
-              </div>
-            ))}
-            <Create
-              onClick={<CreateShiftDetailStaff day_of_week="Monday" shift={shift.time_in + '-' + shift.time_out} />}
-            />
-          </div>
-        );
-      } else {
-        // Nếu không có dữ liệu, trả về một giá trị mặc định hoặc null
-        return (
-          <div>
-            <Create
-              onClick={<CreateShiftDetailStaff day_of_week="Monday" shift={shift.time_in + '-' + shift.time_out} />}
-            />
-          </div>
-        );
-      }
-    },
+    render: (_: string, shift: Shift) => <DayColumn data={Data} dayOfWeek="Monday" shift={shift} />,
   },
   {
     title: <HeaderCell title="Tue" />,
@@ -81,65 +30,35 @@ export const getColumns = (openModal: (args: any) => void, Data: ShiftUserDetail
     dataIndex: 'wed',
     key: 'wed',
     width: 200,
-    render: (_: string, shift: Shift) => (
-      <div>
-        <Create
-          onClick={<CreateShiftDetailStaff day_of_week="Wednesday" shift={shift.time_in + '-' + shift.time_out} />}
-        />
-      </div>
-    ),
+    render: (_: string, shift: Shift) => <DayColumn data={Data} dayOfWeek="Wednesday" shift={shift} />,
   },
   {
     title: <HeaderCell title="Thu" />,
     dataIndex: 'thu',
     key: 'thu',
     width: 200,
-    render: (_: string, shift: Shift) => (
-      <div>
-        <Create
-          onClick={<CreateShiftDetailStaff day_of_week="Thursday" shift={shift.time_in + '-' + shift.time_out} />}
-        />
-      </div>
-    ),
+    render: (_: string, shift: Shift) => <DayColumn data={Data} dayOfWeek="Thursday" shift={shift} />,
   },
   {
     title: <HeaderCell title="Fri" />,
     dataIndex: 'fri',
     key: 'fri',
     width: 200,
-    render: (_: string, shift: Shift) => (
-      <div>
-        <Create
-          onClick={<CreateShiftDetailStaff day_of_week="Friday" shift={shift.time_in + '-' + shift.time_out} />}
-        />
-      </div>
-    ),
+    render: (_: string, shift: Shift) => <DayColumn data={Data} dayOfWeek="Friday" shift={shift} />,
   },
   {
     title: <HeaderCell title="Sat" />,
     dataIndex: 'sat',
     key: 'sat',
     width: 200,
-    render: (_: string, shift: Shift) => (
-      <div>
-        <Create
-          onClick={<CreateShiftDetailStaff day_of_week="Saturday" shift={shift.time_in + '-' + shift.time_out} />}
-        />
-      </div>
-    ),
+    render: (_: string, shift: Shift) => <DayColumn data={Data} dayOfWeek="Saturday" shift={shift} />,
   },
   {
     title: <HeaderCell title="Sun" />,
     dataIndex: 'sun',
     key: 'sun',
     width: 200,
-    render: (_: string, shift: Shift) => (
-      <div>
-        <Create
-          onClick={<CreateShiftDetailStaff day_of_week="Sunday" shift={shift.time_in + '-' + shift.time_out} />}
-        />
-      </div>
-    ),
+    render: (_: string, shift: Shift) => <DayColumn data={Data} dayOfWeek="Sunday" shift={shift} />,
   },
 ];
 
