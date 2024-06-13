@@ -23,6 +23,11 @@ class Customer extends Model
         'active',
     ];
 
+    protected $hidden = [
+        'id',
+        'deleted_at'
+    ];
+
     protected static function boot()
     {
         parent::boot();
@@ -32,5 +37,10 @@ class Customer extends Model
                 $model->active = self::generateUniqueActive();
             }
         });
+    }
+
+    public function orders()
+    {
+        $this->hasMany(Order::class);
     }
 }

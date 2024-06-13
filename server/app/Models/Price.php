@@ -20,6 +20,10 @@ class Price extends Model
         'active',
     ];
 
+    protected $hidden = [
+        'id',
+        'deleted_at'
+    ];
     protected static function boot()
     {
         parent::boot();

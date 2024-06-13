@@ -23,7 +23,6 @@ class OrderController extends Controller
     public function addProductsToOrder(Request $request, $active)
     {
         $this->orderRepository->addProductsToOrder($request, $active);
-//        return $this->sentSuccessResponse($request->requestedProducts);
     }
 
     public function fiveLatestUnreadRequests()
@@ -51,5 +50,17 @@ class OrderController extends Controller
         }
 
         return response()->json(['message' => 'Notification ID is required.'], 400);
+    }
+
+    public function index(Request $request)
+    {
+        $data = $this->orderRepository->getOders($request);
+        return $this->sentSuccessResponse($data);
+    }
+
+    public function show($active)
+    {
+        $returnedData = $this->orderRepository->getOrderByActive($active);
+        return $this->sentSuccessResponse($returnedData);
     }
 }
