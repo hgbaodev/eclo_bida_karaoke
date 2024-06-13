@@ -12,6 +12,8 @@ import { getAllStaffs, setPage, setPageSize } from '@/store/slices/staffSlice';
 import { getAllShiftUserDetails } from '@/store/slices/shift_user_detailSlice';
 import { useModal } from '../modal-views/use-modal';
 import { getShifts } from '@/store/slices/shiftSlice';
+import ModalButton from '../modal-button';
+import CreateWorkShift from './work_shift/create-work_shift';
 
 export default function ShiftDetailStaffTable() {
   const { openModal } = useModal();
@@ -26,6 +28,7 @@ export default function ShiftDetailStaffTable() {
   const { visibleColumns } = useColumn(columns);
   return (
     <div className="mt-0">
+      <ModalButton label="Copy" view={<CreateWorkShift />} customSize="600px" className="mt-10 w-30 h-15" />
       <ControlledTable
         variant="modern"
         data={data}

@@ -16,26 +16,25 @@ export default function CreateWorkShift() {
   const { closeModal } = useModal();
   const [reset, setReset] = useState({});
   const [errors, setErrors] = useState<any>({});
-  const { pageSize, page, query, isCreateLoading, position, status } = useSelector((state: RootState) => state.staff);
-  const { listPositions } = useSelector((state: RootState) => state.position);
+  const { listStaffs, isCreateLoading } = useSelector((state: RootState) => state.staff);
   const onSubmit: SubmitHandler<CreateStaffInput> = async (data) => {
     const result: any = await dispatch(createStaff(data));
 
     if (createStaff.fulfilled.match(result)) {
-      setReset({
-        name: '',
-        birthday: '',
-        phone: '',
-        idcard: '',
-        address: '',
-        position: '',
-      });
-      setErrors({});
-      closeModal();
-      await dispatch(getStaffs({ page, pageSize, query, position, status }));
-      toast.success('Staff created successfully');
-    } else {
-      setErrors(result?.payload?.errors);
+      //   setReset({
+      //     name: '',
+      //     birthday: '',
+      //     phone: '',
+      //     idcard: '',
+      //     address: '',
+      //     position: '',
+      //   });
+      //   setErrors({});
+      //   closeModal();
+      //   await dispatch(getStaffs({ page, pageSize, query, position, status }));
+      //   toast.success('Staff created successfully');
+      // } else {
+      //   setErrors(result?.payload?.errors);
     }
   };
   return (
@@ -52,82 +51,32 @@ export default function CreateWorkShift() {
           <>
             <div className="col-span-full flex items-center justify-between">
               <Title as="h4" className="font-semibold">
-                Add a new Staff
+                Copy Work Shift
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
-            <Input
-              label="IDCard"
-              placeholder="Enter staff idcard"
-              className="col-span-[1/2]"
-              {...register('idcard')}
-              error={errors.idcard?.message}
-            />
-            <Input
-              label="Name"
-              placeholder="Enter staff name"
-              {...register('name')}
-              className="col-span-[1/2]"
-              error={errors.name?.message}
-            />
-
+            <Input label="Work Shift" className="col-span-full" />
             <Input
               type="date"
-              label="Birthday"
-              placeholder="Enter staff birthday"
-              {...register('birthday')}
+              label="Date Start"
               className="col-span-full"
-              error={errors.birthday?.message}
+              // {...register('idcard')}
             />
-
             <Input
-              label="Phone"
-              placeholder="Enter staff phone number"
+              type="date"
+              label="Date End"
               className="col-span-full"
-              {...register('phone')}
-              error={errors.phone?.message}
+              // {...register('idcard')}
             />
 
-            <Textarea
-              rows={2}
-              label="Address"
-              placeholder="Enter staff address"
-              className="col-span-full"
-              {...register('address')}
-              error={errors.address?.message}
-            />
-
-            <Controller
-              name="position"
-              control={control}
-              render={({ field: { name, onChange, value } }) => (
-                <Select
-                  options={listPositions}
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  label="Position"
-                  className="col-span-[1/2]"
-                  placeholder="Select a position"
-                  error={errors?.position?.message}
-                  getOptionValue={(option) => option.active}
-                  getOptionDisplayValue={(option) => option.name}
-                  displayValue={(selected: string) =>
-                    listPositions.find((option) => option.active === selected)?.name ?? selected
-                  }
-                  dropdownClassName="!z-[1]"
-                  inPortal={false}
-                />
-              )}
-            />
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
                 Cancel
               </Button>
               <Button type="submit" isLoading={isCreateLoading} className="w-full @xl:w-auto">
-                Create Staff
+                Copy Work Shift
               </Button>
             </div>
           </>
