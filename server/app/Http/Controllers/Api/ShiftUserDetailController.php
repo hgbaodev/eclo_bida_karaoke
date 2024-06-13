@@ -49,6 +49,10 @@ class ShiftUserDetailController extends Controller
         if (!$shift) {
             return $this->sentErrorResponse("Shift is not found", "error", 404);
         }
+        $shiftuserdetail = $this->shiftUserDetailRes->checkUniqueByStaffDay($staff->id, $validateData["day_of_week"]);
+        if ($shiftuserdetail->isNotEmpty()) {
+            return $this->sentErrorResponse("Shift User Detail is available", "error", 404);
+        }
         $validateData["staff_id"] = $staff->id;
         $validateData["shift_id"] = $shift->id;
         unset($validateData['shift']);

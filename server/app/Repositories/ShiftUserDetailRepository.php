@@ -37,4 +37,11 @@ class ShiftUserDetailRepository implements ShiftUserDetailRepositoryInterface
         $shiftUserDetail->delete();
         return $shiftUserDetail;
     }
+    public function checkUniqueByStaffDay($staff, $day_of_week)
+    {
+        $shiftUserDetail = ShiftUserDetail::query();
+        $shiftUserDetail->where("staff_id", $staff);
+        $shiftUserDetail->where("day_of_week", $day_of_week);
+        return $shiftUserDetail->get();
+    }
 }

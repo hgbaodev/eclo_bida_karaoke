@@ -18,6 +18,8 @@ class ShiftUserDetail extends Model
     ];
     protected $hidden = [
         "id",
+        "staff_id",
+        "shift_id"
     ];
     protected static function boot()
     {

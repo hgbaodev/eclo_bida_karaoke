@@ -23,22 +23,17 @@ export default function CreateShiftDetailStaff({ day_of_week, shift }: { day_of_
   const { listStaffs, isCreateLoading } = useSelector((state: RootState) => state.staff);
   const onSubmit: SubmitHandler<CreateShiftUserDetailInput> = async (data) => {
     const result: any = await dispatch(createShiftUserDetail(data));
-
+    console.log(result);
     if (createShiftUserDetail.fulfilled.match(result)) {
-      setReset({
-        // name: '',
-        // birthday: '',
-        // phone: '',
-        // idcard: '',
-        // address: '',
-        // position: '',
-      });
+      setReset({});
       setErrors({});
       closeModal();
       await dispatch(getAllShiftUserDetails());
       toast.success('Created successfully');
     } else {
       setErrors(result?.payload?.errors);
+      toast.error(result.payload.errors);
+      closeModal();
     }
   };
   return (
@@ -50,7 +45,6 @@ export default function CreateShiftDetailStaff({ day_of_week, shift }: { day_of_
       className="grid grid-cols-1 gap-6 p-6 @container md:grid-cols-2 [&_.rizzui-input-label]:font-medium [&_.rizzui-input-label]:text-gray-900"
     >
       {({ setError, register, control, watch, formState: { errors } }) => {
-        console.log('errors', errors);
         return (
           <>
             <div className="col-span-full flex items-center justify-between">
@@ -83,7 +77,7 @@ export default function CreateShiftDetailStaff({ day_of_week, shift }: { day_of_
                   placeholder="Select a staff"
                   error={errors?.staff?.message}
                   getOptionValue={(option) => option.active}
-                  getOptionDisplayValue={(option) => option.name}
+                  getOptionDisplayValue={(option) => option.name + '-' + option.idcard}
                   displayValue={(selected: string) =>
                     listStaffs.find((option) => option.active === selected)?.name ?? selected
                   }
