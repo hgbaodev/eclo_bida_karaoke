@@ -84,20 +84,14 @@ export const createProductImportDetail = createAsyncThunk('product_imports/creat
 //     }
 //   },
 // );
-export const getProductImportsByActive= createAsyncThunk(
-  'product_import_details/getByActive',
-  async (active: string) => {    
-    const url = new URL(`/api/v1/product_imports/${active}`, env.NEXT_API_URL);
-
-   try {
-      const response = await axiosInstance.get(url.href);
-      console.log(response.data);
-      return response.data;
-    } catch (error: any) {
-      throw error;
-    }
-  },
-);
+export const getSinghle_ProductImport = createAsyncThunk('product_import/getProductImport',async (active: string,) => {
+  try {
+    const response = await axiosInstance.get(`product_imports/${active}`);
+    return response.data;
+  } catch (error: any) {
+    throw error;
+  }
+});
 const product_import_detailSlices = createSlice({
   name: 'product_import_detail',
   initialState,
@@ -134,18 +128,18 @@ const product_import_detailSlices = createSlice({
       .addCase(getProductImportDetails.rejected, (state) => {
         state.isLoading = false;
       })
-      // .addCase(getProductImportsByActive.pending, (state: product_ImportType) => {
-      //   state.isLoading = true;
-      // })
-      // .addCase(getProductImportsByActive.fulfilled, (state, action) => {
-      //   const result = action.payload.data;
-      //   state.isLoading = false;
-      //   state.data = result.result;
-      //   console.log(result)
-      // })
-      // .addCase(getProductImportsByActive.rejected, (state) => {
-      //   state.isLoading = false;
-      // })
+      .addCase(getSinghle_ProductImport.pending, (state: product_Import_DetailType) => {
+        state.isLoading = true;
+      })
+      .addCase(getSinghle_ProductImport.fulfilled, (state, action) => {
+        const result = action.payload.data;
+        state.isLoading = false;
+        state.data = result.result;
+        console.log(state.data)
+      })
+      .addCase(getSinghle_ProductImport.rejected, (state) => {
+        state.isLoading = false;
+      })
          // .addCase(getProductImportsByActive.pending, (state: product_ImportType) => {
       //   state.isLoading = true;
       // })

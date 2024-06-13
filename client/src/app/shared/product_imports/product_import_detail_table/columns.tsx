@@ -84,6 +84,7 @@ export const getColumns = (openModal: (args: any) => void) => [
     render: (_: string, product_detail: Product_Detail) => product_detail.supplier_detail.name,
   },
 ];
+
 export interface Product_Detail {
     active: string;
     product:{
@@ -95,7 +96,7 @@ export interface Product_Detail {
       name:string;
     } 
     import_detail:{
-      name:string;
+      create_time:Date;
     };
   }
   

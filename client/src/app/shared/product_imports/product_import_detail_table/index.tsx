@@ -9,7 +9,9 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { dispatch, useDispatch } from '@/store';
 import { useSearchParams } from 'next/navigation';
-import { getProductImportDetails,getProductImportsByActive, setPage, setPageSize } from '@/store/slices/product_import_detailSlice';
+import { getProductImportDetails, setPage, setPageSize } from '@/store/slices/product_import_detailSlice';
+import { getSinghle_ProductImport } from '@/store/slices/product_importSlice';
+
 import { getSinghle_Product } from '@/store/slices/productSlices';
 import { getSinghle_Supplier } from '@/store/slices/supplierSlice';
 import { useModal } from '../../modal-views/use-modal';
@@ -30,7 +32,7 @@ export default function StaffsTable() {
       const fetch = async () => {
         // @ts-ignore
        
-          dispatch(getProductImportsByActive(active)); 
+          dispatch(getSinghle_ProductImport(active)); 
         
       };
       fetch();
@@ -45,6 +47,9 @@ export default function StaffsTable() {
   }, [page, pageSize, query,active]);
   useEffect(() => {
     dispatch(getSinghle_Product());
+  }, []);
+  useEffect(() => {
+    dispatch(getSinghle_Supplier());
   }, []);
   useEffect(() => {
     dispatch(getSinghle_Supplier());

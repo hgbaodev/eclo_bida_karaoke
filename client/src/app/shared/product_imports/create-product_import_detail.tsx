@@ -16,6 +16,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { statusOptions } from './type';
 import { useSearchParams } from 'next/navigation';
+import { values } from 'lodash';
 
 export default function CreateProductImportDetail() {
   const { closeModal } = useModal();
@@ -26,6 +27,7 @@ export default function CreateProductImportDetail() {
   const { pageSize, page, query, isCreateLoading} = useSelector((state: RootState) => state.product_import_detail);
   const { listProduct } = useSelector((state: RootState) => state.product);
   const { listSupplier} = useSelector((state: RootState) => state.supplier);
+  const {data1 } = useSelector((state: RootState) => state.product_import);
   const onSubmit: SubmitHandler<CreateProduct_Import_DetailtInput> = async (data) => {
     const result: any = await dispatch(createProductImportDetail(data));
 
@@ -35,6 +37,7 @@ export default function CreateProductImportDetail() {
         quantity: '',
         supplier : '',
         cost_price: '',
+        import:'',
       
       });
       setErrors({});
@@ -45,11 +48,11 @@ export default function CreateProductImportDetail() {
     } else {
       setErrors(result?.payload?.errors);
     }
-    console.log(data);
+    console.log(data)
   };
   return (
     <Form<CreateProduct_Import_DetailtInput>
-      resetValues={reset}
+      resetValues={{import:data1.active , ...reset }}
       onSubmit={onSubmit}
       validationSchema={createProduct_Import_DetailSchema}
       serverError={errors}
@@ -67,6 +70,13 @@ export default function CreateProductImportDetail() {
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
+            <Input
+              label="Import day"
+              className="col-span-full"
+              error={errors.import?.message}
+              value={data1.create_time}
+              readOnly
+            />
             <Controller
               name="product"
               control={control}

@@ -162,7 +162,7 @@ export const getColumns = (openModal: (args: any) => void) => [
             <PencilIcon className="h-4 w-4" />
           </ActionIcon>
         </Tooltip>
-        <Tooltip size="sm" content={'Import product'} placement="top" color="invert">
+        {/* <Tooltip size="sm" content={'Import product'} placement="top" color="invert">
           <ActionIcon
             onClick={() => {
               const data = {
@@ -182,7 +182,7 @@ export const getColumns = (openModal: (args: any) => void) => [
           >
             <PiPlusBold className="h-4 w-4" />
           </ActionIcon>
-        </Tooltip>
+        </Tooltip> */}
         <DeletePopover
           title={`Delete this user`}
           description={`Are you sure you want to delete this import `}
@@ -220,10 +220,3 @@ export interface Product_Import {
     Completed: 'A',
     Canceled: 'D',
   } as const; 
-  export interface Product {
-    active: string;
-    receive_time: string;
-    create_time: string;
-    total_cost: string;
-    status: string;
-  }
