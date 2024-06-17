@@ -8,6 +8,7 @@ import user from './userSlice';
 import staff from './staffSlice';
 import position from './positionSlice';
 import shift from './shiftSlice';
+import shift_detail from './shift_detailSlice';
 
 import logger from './loggerSlice';
 
@@ -21,6 +22,7 @@ import price from './priceSlice';
 
 import device from './deviceSlice';
 import supplier from './supplierSlice';
+import service from './serviceSlice';
 
 // ==============================|| COMBINE REDUCERS ||============================== //
 
@@ -40,6 +42,8 @@ const reducers = combineReducers({
   price,
   device,
   shift,
+  service,
+  shift_detail,
 });
 
 export default reducers;

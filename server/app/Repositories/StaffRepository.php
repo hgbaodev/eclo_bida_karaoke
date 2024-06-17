@@ -11,6 +11,7 @@ class StaffRepository implements StaffRepositoryInterface
     public function getStaffs($request)
     {
         $all = $request->input('all');
+        // dd($request);
         $perPage = $request->input('perPage');
         $query = $request->input('query');
         $idcard = $request->input('idcard');

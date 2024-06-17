@@ -14,33 +14,28 @@ class ShiftSeeder extends Seeder
     public function run(): void
     {
         Shift::create([
-            "time_in" => "8:00",
-            "time_out" => "15:00",
+            "time_in" => "9:00",
+            "time_out" => "13:00",
             "status" => "A"
         ]);
         Shift::create([
-            "time_in" => "15:00",
-            "time_out" => "22:00",
-            "status" => "A"
-        ]);
-        Shift::create([
-            "time_in" => "12:00",
-            "time_out" => "19:00",
-            "status" => "A"
-        ]);
-        Shift::create([
-            "time_in" => "10:00",
+            "time_in" => "13:00",
             "time_out" => "17:00",
             "status" => "A"
         ]);
         Shift::create([
-            "time_in" => "14:00",
+            "time_in" => "17:00",
             "time_out" => "21:00",
             "status" => "A"
         ]);
         Shift::create([
-            "time_in" => "8:00",
-            "time_out" => "14:00",
+            "time_in" => "9:00",
+            "time_out" => "18:00",
+            "status" => "A"
+        ]);
+        Shift::create([
+            "time_in" => "18:00",
+            "time_out" => "3:00",
             "status" => "A"
         ]);
     }

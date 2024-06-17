@@ -32,6 +32,9 @@ class DatabaseSeeder extends Seeder
             ProductImportSeeder::class,
             PriceSeeder::class,
             OrderSeeder::class,
+            ServiceSeeder::class,
+            ShiftDetailSeeder::class,
+
         ]);
     }
 }

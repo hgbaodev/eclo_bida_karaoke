@@ -28,6 +28,8 @@ export const routes = {
     staffs: '/admin/staffs',
     positions: '/admin/positions',
     shifts: '/admin/shifts',
+    shift_detail: '/admin/shiftdetails',
+    shift_detail_staff: '/admin/shift_detail_staff',
   },
   auth: {
     signIn: '/auth/signin',

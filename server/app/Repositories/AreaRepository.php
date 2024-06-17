@@ -2,16 +2,24 @@
 
 namespace App\Repositories;
 
-
+use App\Http\Collections\CollectionCustom;
 use App\Interface\AreaRepositoryInterface;
 use App\Models\Area;
 
 class AreaRepository implements AreaRepositoryInterface
 {
 
-    function getAllAreas()
+    function getAreas($request)
     {
-        return Area::all();
+        $all = $request->input('all');
+        $perPage = $request->input('perPage');
+        $areas = Area::query();
+        if ($all) {
+            $areas = $areas->get();
+        } else {
+            $areas = $areas->paginate($perPage);
+        }
+        return new CollectionCustom($areas);
     }
 
     function getAreaById($id)

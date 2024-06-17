@@ -61,7 +61,7 @@ export default function CreateSupplier() {
               label="Name"
               placeholder="Enter service type name"
               {...register('name')}
-              className="col-span-[1/2]"
+              className="col-span-full"
               error={errors.name?.message}
             />
 

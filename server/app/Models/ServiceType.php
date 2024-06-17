@@ -21,7 +21,9 @@ class ServiceType extends Model
 
     protected $hidden = [
         'id',
-        'deleted_at'
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     protected static function boot()
@@ -33,5 +35,10 @@ class ServiceType extends Model
                 $model->active = self::generateUniqueActive();
             }
         });
+    }
+
+    public function services()
+    {
+        return $this->hasMany(Service::class);
     }
 }

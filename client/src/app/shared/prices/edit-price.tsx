@@ -62,7 +62,7 @@ export default function EditPrice({ price, active }: { price: EditPriceInput; ac
               label="Name"
               placeholder="Enter price name"
               {...register('name')}
-              className="col-span-[1/2]"
+              className="col-span-full"
               error={errors.name?.message}
             />
             <Input

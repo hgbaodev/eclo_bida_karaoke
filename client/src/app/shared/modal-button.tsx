@@ -24,10 +24,7 @@ export default function ModalButton({
   const { openModal } = useModal();
   return (
     <Button
-      className={cn(
-        'mt-5 w-full text-xs capitalize @lg:w-auto sm:text-sm lg:mt-0',
-        className
-      )}
+      className={cn('mt-5 w-full text-xs capitalize @lg:w-auto sm:text-sm lg:mt-0', className)}
       onClick={() =>
         openModal({
           view,

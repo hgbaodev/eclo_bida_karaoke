@@ -19,9 +19,9 @@ class AreaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->sentSuccessResponse($this->areaRepository->getAllAreas());
+        return $this->sentSuccessResponse($this->areaRepository->getAreas($request));
     }
 
     /**
