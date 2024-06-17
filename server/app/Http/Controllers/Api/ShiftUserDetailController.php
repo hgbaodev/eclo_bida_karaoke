@@ -7,24 +7,28 @@ use App\Http\Requests\ShiftUserDetail\ShiftUserDetailRequest;
 use App\Interface\ShiftRepositoryInterface;
 use App\Interface\ShiftUserDetailRepositoryInterface;
 use App\Interface\StaffRepositoryInterface;
+use App\Interface\WorkShiftRepositoryInterface;
+use Illuminate\Http\Request;
 
 class ShiftUserDetailController extends Controller
 {
     protected $shiftUserDetailRes;
     protected $staffRes;
     protected $shiftRes;
-    public function __construct(ShiftUserDetailRepositoryInterface $shiftUserDetailRepositoryInterface, StaffRepositoryInterface $staffRepositoryInterface, ShiftRepositoryInterface $shiftRepositoryInterface)
+    protected $workshiftRes;
+    public function __construct(ShiftUserDetailRepositoryInterface $shiftUserDetailRepositoryInterface, StaffRepositoryInterface $staffRepositoryInterface, ShiftRepositoryInterface $shiftRepositoryInterface, WorkShiftRepositoryInterface $workShiftRepositoryInterface)
     {
         $this->staffRes = $staffRepositoryInterface;
         $this->shiftUserDetailRes = $shiftUserDetailRepositoryInterface;
         $this->shiftRes = $shiftRepositoryInterface;
+        $this->workshiftRes = $workShiftRepositoryInterface;
     }
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->sentSuccessResponse($this->shiftUserDetailRes->getAllShiftUserDetail());
+        return $this->sentSuccessResponse($this->shiftUserDetailRes->getShiftUserDetail($request));
     }
 
     /**
@@ -49,12 +53,18 @@ class ShiftUserDetailController extends Controller
         if (!$shift) {
             return $this->sentErrorResponse("Shift is not found", "error", 404);
         }
-        $shiftuserdetail = $this->shiftUserDetailRes->checkUniqueByStaffDay($staff->id, $validateData["day_of_week"]);
+        $workshift = $this->workshiftRes->getWorkShiftByActive($validateData["workshift"]);
+        if (!$workshift) {
+            return $this->sentErrorResponse("Work Shift is not found", "error", 404);
+        }
+        $shiftuserdetail = $this->shiftUserDetailRes->checkUniqueByStaffDay($staff->id, $validateData["day_of_week"], $workshift->id);
         if ($shiftuserdetail->isNotEmpty()) {
             return $this->sentErrorResponse("Shift User Detail is available", "error", 404);
         }
+        $validateData["workshift_id"] = $workshift->id;
         $validateData["staff_id"] = $staff->id;
         $validateData["shift_id"] = $shift->id;
+        unset($validateData['workshift']);
         unset($validateData['shift']);
         unset($validateData['staff']);
         return $this->sentSuccessResponse($this->shiftUserDetailRes->createShiftUserDetail($validateData), "Created successfully", 200);

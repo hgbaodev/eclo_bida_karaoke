@@ -1,20 +1,31 @@
 // Tạo một component riêng để xử lý hiển thị dữ liệu của một ngày cụ thể
-import { Shift, ShiftUserDetail } from '@/app/shared/shift_detail_staff/colunm';
+import { Shift, ShiftUserDetail, WorkShift } from '@/app/shared/shift_detail_staff/colunm';
 import CreateShiftDetailStaff from '@/app/shared/shift_detail_staff/create-shift_detail_staff';
 import React from 'react';
 import Create from './Create';
 import toast from 'react-hot-toast';
 import { TiDeleteOutline } from 'react-icons/ti';
-import { deleteShiftUserDetail, getAllShiftUserDetails } from '@/store/slices/shift_user_detailSlice';
+import {
+  deleteShiftUserDetail,
+  getAllShiftUserDetails,
+  getShiftUserDetails,
+} from '@/store/slices/shift_user_detailSlice';
 import { dispatch } from '@/store';
 import { ActionIcon, Tooltip } from 'rizzui';
 interface DayColumnProps {
   data: ShiftUserDetail[];
   dayOfWeek: string;
   shift: Shift;
+  workshift: string;
 }
 
-const DayColumn: React.FC<DayColumnProps> = ({ data, dayOfWeek, shift }) => {
+const DayColumn: React.FC<DayColumnProps> = ({ data, dayOfWeek, shift, workshift }) => {
+  if (!data) {
+    return null; // hoặc return hoặc hiển thị một thông báo lỗi
+  }
+  if (!workshift) {
+    return null;
+  }
   const dayDataList = data.filter((item) => {
     return item.day_of_week === dayOfWeek && item.shift.active === shift.active;
   });
@@ -38,7 +49,7 @@ const DayColumn: React.FC<DayColumnProps> = ({ data, dayOfWeek, shift }) => {
                   onClick={async () => {
                     const result = await dispatch(deleteShiftUserDetail(dayData.active)); // Remove the .then() block
                     if (deleteShiftUserDetail.fulfilled.match(result)) {
-                      await dispatch(getAllShiftUserDetails());
+                      await dispatch(getShiftUserDetails(workshift));
                       toast.success(`Staff #${dayData.staff.name} has been deleted successfully.`);
                     } else {
                       toast.error(`Failed to delete staff #${dayData.staff.name}.`);
@@ -50,13 +61,13 @@ const DayColumn: React.FC<DayColumnProps> = ({ data, dayOfWeek, shift }) => {
             {dayData.staff.name} <br />
           </div>
         ))}
-        <Create onClick={<CreateShiftDetailStaff day_of_week={dayOfWeek} shift={shift} />} />
+        <Create onClick={<CreateShiftDetailStaff day_of_week={dayOfWeek} shift={shift} workshift={workshift} />} />
       </div>
     );
   } else {
     return (
       <div>
-        <Create onClick={<CreateShiftDetailStaff day_of_week={dayOfWeek} shift={shift} />} />
+        <Create onClick={<CreateShiftDetailStaff day_of_week={dayOfWeek} shift={shift} workshift={workshift} />} />
       </div>
     );
   }

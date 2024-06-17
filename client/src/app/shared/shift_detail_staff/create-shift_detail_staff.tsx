@@ -13,10 +13,22 @@ import {
   CreateShiftUserDetailInput,
   createShiftUserDetailSchema,
 } from '@/utils/validators/shift-user-detail/create-shift-user-detail';
-import { createShiftUserDetail, getAllShiftUserDetails } from '@/store/slices/shift_user_detailSlice';
+import {
+  createShiftUserDetail,
+  getAllShiftUserDetails,
+  getShiftUserDetails,
+} from '@/store/slices/shift_user_detailSlice';
 import toast from 'react-hot-toast';
 
-export default function CreateShiftDetailStaff({ day_of_week, shift }: { day_of_week: string; shift: any }) {
+export default function CreateShiftDetailStaff({
+  day_of_week,
+  shift,
+  workshift,
+}: {
+  day_of_week: string;
+  shift: any;
+  workshift: string;
+}) {
   const { closeModal } = useModal();
   const [reset, setReset] = useState({});
   const [errors, setErrors] = useState<any>({});
@@ -28,7 +40,7 @@ export default function CreateShiftDetailStaff({ day_of_week, shift }: { day_of_
       setReset({});
       setErrors({});
       closeModal();
-      await dispatch(getAllShiftUserDetails());
+      await dispatch(getShiftUserDetails(workshift));
       toast.success('Created successfully');
     } else {
       setErrors(result?.payload?.errors);
@@ -38,7 +50,7 @@ export default function CreateShiftDetailStaff({ day_of_week, shift }: { day_of_
   };
   return (
     <Form<CreateShiftUserDetailInput>
-      resetValues={{ shift: shift.active, ...reset }}
+      resetValues={{ shift: shift.active, ...reset, workshift: workshift }}
       onSubmit={onSubmit}
       validationSchema={createShiftUserDetailSchema}
       serverError={errors}

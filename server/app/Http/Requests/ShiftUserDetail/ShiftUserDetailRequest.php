@@ -49,6 +49,7 @@ class ShiftUserDetailRequest extends HelperRequest
             ],
             "shift" => "required",
             "day_of_week" => "required|in:Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday",
+            "workshift" => "required",
         ];
     }
 }

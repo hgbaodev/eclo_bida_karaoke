@@ -3,50 +3,42 @@ import { useState } from 'react';
 import { PiXBold } from 'react-icons/pi';
 import { Controller, SubmitHandler } from 'react-hook-form';
 import { Form } from '@/components/ui/form';
-import { Input, Button, ActionIcon, Title, Select, Textarea } from 'rizzui';
+import { Input, Button, ActionIcon, Title } from 'rizzui';
 import { useModal } from '@/app/shared/modal-views/use-modal';
-import { createStaff, getStaffs } from '@/store/slices/staffSlice';
-import { CreateStaffInput, createStaffSchema } from '@/utils/validators/create-staff.schema';
 import { dispatch } from '@/store';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
+import { CreateWorkShiftInput, createWorkShiftSchema } from '@/utils/validators/work-shift/create-work-shift';
+import { getAllShiftUserDetails, getShiftUserDetails } from '@/store/slices/shift_user_detailSlice';
+import { createWorkShift, getAllWorkShifts } from '@/store/slices/workshiftSlice';
 
 export default function CreateWorkShift() {
   const { closeModal } = useModal();
   const [reset, setReset] = useState({});
   const [errors, setErrors] = useState<any>({});
-  const { listStaffs, isCreateLoading } = useSelector((state: RootState) => state.staff);
-  const onSubmit: SubmitHandler<CreateStaffInput> = async (data) => {
-    const result: any = await dispatch(createStaff(data));
-
-    if (createStaff.fulfilled.match(result)) {
-      //   setReset({
-      //     name: '',
-      //     birthday: '',
-      //     phone: '',
-      //     idcard: '',
-      //     address: '',
-      //     position: '',
-      //   });
-      //   setErrors({});
-      //   closeModal();
-      //   await dispatch(getStaffs({ page, pageSize, query, position, status }));
-      //   toast.success('Staff created successfully');
-      // } else {
-      //   setErrors(result?.payload?.errors);
+  const { isCreateLoading, oneWorkShift } = useSelector((state: RootState) => state.work_shift);
+  const onSubmit: SubmitHandler<CreateWorkShiftInput> = async (data) => {
+    const result: any = await dispatch(createWorkShift(data));
+    if (createWorkShift.fulfilled.match(result)) {
+      setReset({});
+      setErrors({});
+      closeModal();
+      await dispatch(getAllWorkShifts());
+      toast.success('Work Shift created successfully');
+    } else {
+      setErrors(result?.payload?.errors);
     }
   };
   return (
-    <Form<CreateStaffInput>
+    <Form<CreateWorkShiftInput>
       resetValues={reset}
       onSubmit={onSubmit}
-      validationSchema={createStaffSchema}
+      validationSchema={createWorkShiftSchema}
       serverError={errors}
       className="grid grid-cols-1 gap-6 p-6 @container md:grid-cols-2 [&_.rizzui-input-label]:font-medium [&_.rizzui-input-label]:text-gray-900"
     >
       {({ setError, register, control, watch, formState: { errors } }) => {
-        console.log('errors', errors);
         return (
           <>
             <div className="col-span-full flex items-center justify-between">
@@ -57,18 +49,25 @@ export default function CreateWorkShift() {
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
-            <Input label="Work Shift" className="col-span-full" />
+            <Input
+              label="Work Shift"
+              className="col-span-full"
+              readOnly
+              value={oneWorkShift.date_start + '->' + oneWorkShift.date_end}
+            />
             <Input
               type="date"
               label="Date Start"
               className="col-span-full"
-              // {...register('idcard')}
+              {...register('date_start')}
+              error={errors.date_start?.message}
             />
             <Input
               type="date"
               label="Date End"
               className="col-span-full"
-              // {...register('idcard')}
+              {...register('date_end')}
+              error={errors.date_end?.message}
             />
 
             <div className="col-span-full flex items-center justify-end gap-4">

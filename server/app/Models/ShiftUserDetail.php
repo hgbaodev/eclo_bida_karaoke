@@ -14,12 +14,14 @@ class ShiftUserDetail extends Model
         "staff_id",
         "shift_id",
         "day_of_week",
+        "workshift_id",
         "active"
     ];
     protected $hidden = [
         "id",
         "staff_id",
-        "shift_id"
+        "shift_id",
+        "workshift_id",
     ];
     protected static function boot()
     {
@@ -37,5 +39,9 @@ class ShiftUserDetail extends Model
     public function shift()
     {
         return $this->belongsTo(Shift::class, "shift_id");
+    }
+    public function workshift()
+    {
+        return $this->belongsTo(WorkShift::class, "workshift_id");
     }
 }

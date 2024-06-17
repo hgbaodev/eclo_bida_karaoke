@@ -15,6 +15,7 @@ const initialState: shift_user_detailType = {
   query: '',
   day_of_week: '',
   shift: '',
+  workshift: '',
   errors: '',
   listShiftUserDetail: [],
 };
@@ -22,6 +23,17 @@ const initialState: shift_user_detailType = {
 export const getAllShiftUserDetails = createAsyncThunk('shiftuserdetails/getAllShiftUserDetail', async () => {
   try {
     const response = await axiosInstance.get('shiftuserdetails');
+    return response.data;
+  } catch (error: any) {
+    throw error;
+  }
+});
+
+export const getShiftUserDetails = createAsyncThunk('shiftuserdetail', async (workshift: string) => {
+  const url = new URL('/api/v1/shiftuserdetails', env.NEXT_API_URL);
+  url.searchParams.set('workshift', `${workshift}`);
+  try {
+    const response = await axiosInstance.get(url.href);
     return response.data;
   } catch (error: any) {
     throw error;
@@ -76,6 +88,10 @@ const shiftUserDetailSlice = createSlice({
       state.shift = action.payload;
       state.isFiltered = true;
     },
+    setWorkShift: (state, action) => {
+      state.workshift = action.payload;
+      state.isFiltered = true;
+    },
     setDayOfWeek: (state, action) => {
       state.page = 1;
       state.isFiltered = true;
@@ -84,6 +100,7 @@ const shiftUserDetailSlice = createSlice({
       state.page = 1;
       state.day_of_week = '';
       state.shift = '';
+      state.workshift = '';
       state.isFiltered = false;
     },
     setErrors: (state, action) => {
@@ -113,10 +130,21 @@ const shiftUserDetailSlice = createSlice({
       })
       .addCase(getAllShiftUserDetails.rejected, (state) => {
         state.isLoading = false;
+      })
+      .addCase(getShiftUserDetails.pending, (state: shift_user_detailType) => {
+        state.isLoading = true;
+      })
+      .addCase(getShiftUserDetails.fulfilled, (state, action) => {
+        const result = action.payload.data;
+        state.isLoading = false;
+        state.listShiftUserDetail = result;
+      })
+      .addCase(getShiftUserDetails.rejected, (state) => {
+        state.isLoading = false;
       });
   },
 });
-export const { setShift, setPage, setPageSize, setReset, setDayOfWeek, setQuery, setErrors } =
+export const { setShift, setPage, setPageSize, setReset, setDayOfWeek, setQuery, setErrors, setWorkShift } =
   shiftUserDetailSlice.actions;
 
 export default shiftUserDetailSlice.reducer;
