@@ -9,8 +9,6 @@ interface OrderRepositoryInterface{
      * @param $active currentOrder
      * @return mixed
      */
-    public function addProductsToOrder($request, $active);
-
     public function getOders($request);
     public function createOrder(array $data);
     public function getOrderByActive(string $active);

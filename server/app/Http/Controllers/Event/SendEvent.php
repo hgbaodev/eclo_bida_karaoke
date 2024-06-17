@@ -2,10 +2,18 @@
 
 namespace App\Http\Controllers\Event;
 
+use GuzzleHttp\Exception\GuzzleException;
+use Pusher\ApiErrorException;
 use Pusher\Pusher;
+use Pusher\PusherException;
 
 class SendEvent
 {
+    /**
+     * @throws PusherException
+     * @throws GuzzleException
+     * @throws ApiErrorException
+     */
     public static function send($event, $data)
     {
         $options = array(

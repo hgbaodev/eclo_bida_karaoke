@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\GeneratesUniqueActive;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class Order extends Model
 {
-    use HasFactory, SoftDeletes, GeneratesUniqueActive;
+    use HasFactory, SoftDeletes, GeneratesUniqueActive, Notifiable;
 
     public $timestamps = true;
 

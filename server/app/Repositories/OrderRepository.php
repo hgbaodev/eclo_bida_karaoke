@@ -18,11 +18,6 @@ class OrderRepository implements OrderRepositoryInterface
      * @param $active
      * @return mixed
      */
-    public function addProductsToOrder($request, $active)
-    {
-        $product = Product::where('active', $active)->firstOrFail();
-        return $product->notify(new OrderNotification($request->requestedProducts, $active));
-    }
 
     public function getOders($request)
     {

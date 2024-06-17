@@ -89,6 +89,11 @@ export const menuItems = [
     icon: <TbPackages />,
   },
   {
+    name: 'Kitchen orders',
+    href: routes.admin.kitchen_orders,
+    icon: <PiFolderLockDuotone />,
+  },
+  {
     name: 'Products',
     href: routes.admin.products,
     icon: <FaProductHunt />,

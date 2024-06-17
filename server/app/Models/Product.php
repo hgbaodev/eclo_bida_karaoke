@@ -11,7 +11,7 @@ use Illuminate\Notifications\Notifiable;
 class   Product extends Model
 {
     public $timestamps = false;
-    use HasFactory, GeneratesUniqueActive, Notifiable;
+    use HasFactory, GeneratesUniqueActive;
     use SoftDeletes;
     protected $fillable = [
         'name',

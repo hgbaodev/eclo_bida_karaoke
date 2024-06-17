@@ -4,25 +4,29 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Interface\OrderRepositoryInterface;
-use App\Models\Product;
 use App\Notifications\OrderNotification;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\Notification;
+use App\Events\OrderProductRequestEvent;
 
 class OrderController extends Controller
 {
     protected $orderRepository;
+    protected $orderProductRequestEvent;
 
     public function __construct(OrderRepositoryInterface $orderRepository)
     {
         $this->orderRepository = $orderRepository;
     }
 
-
-    public function addProductsToOrder(Request $request, $active)
+    public function addProductsToOrder(Request $request, string $active)
     {
-        $this->orderRepository->addProductsToOrder($request, $active);
+        $order = $this->orderRepository->getOrderByActive($active);
+        $order->notify(new OrderNotification($request->requestedProducts, $active));
+        $orderProductRequestEvent = new OrderProductRequestEvent($order, $request->requestedProducts);
+        event($orderProductRequestEvent);
+        return $this->sentSuccessResponse();
     }
 
     public function fiveLatestUnreadRequests()
