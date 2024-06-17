@@ -20,7 +20,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->append(LogRequest::class);
         $middleware->alias([
             'logger' => LogUserActivity::class,
-            'markOrderRequestAsRead'=>\App\Http\Middleware\MarkOrderRequestAsRead::class,
+            'mark.orderRequestAsRead.event'=>\App\Http\Middleware\MarkOrderRequestAsReadEvent::class,
+            'dispatch.order.event' => \App\Http\Middleware\DispatchOrderProductRequestEvent::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

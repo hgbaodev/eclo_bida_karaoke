@@ -9,8 +9,8 @@ Route::group(
     ], function(){
     Route::get('/', [OrderController::class, 'index']);
     Route::get('/{active}', [OrderController::class, 'show']);
-    Route::post('/{active}/products', [OrderController::class, 'addProductsToOrder']);
-    Route::post('/mark-notification-as-read', [OrderController::class, 'markOrderRequestAsRead'])->middleware('markOrderRequestAsRead');
+    Route::post('/{active}/products', [OrderController::class, 'addProductsToOrder'])->middleware('dispatch.order.event');
+    Route::post('/mark-notification-as-read', [OrderController::class, 'markOrderRequestAsRead'])->middleware('mark.orderRequestAsRead.event');
     Route::get('/fiveLatestUnreadRequests', [OrderController::class, 'fiveLatestUnreadRequests']);
 }
 );

@@ -20,18 +20,18 @@ export default function Orders() {
           console.log('Successfully subscribed to the channel.');
         });
 
-        channel.bind('productOrder.requested', (data) => {
+        channel.bind('productOrder.requested', (data: any) => {
           console.log('Raw event data:', data); // Log the raw event data
 
           // Use the data directly without parsing
           setOrderData(data);
         });
 
-        channel.bind('pusher:subscription_error', (status) => {
+        channel.bind('pusher:subscription_error', (status: any) => {
           console.error('Subscription error:', status);
         });
 
-        channel.bind('pusher:error', (err) => {
+        channel.bind('pusher:error', (err: any) => {
           console.error('Pusher error:', err);
         });
 
@@ -54,14 +54,23 @@ export default function Orders() {
       {orderData ? (
         <div>
           <h2>Order Product Request Event Data</h2>
-          <p>Order: {orderData.order_active}</p>
+          <p>
+            Order:{' '}
+            {
+              // @ts-ignore
+              orderData.order_active
+            }
+          </p>
           <p>Products:</p>
           <ul>
-            {orderData.products.map((product, index) => (
-              <li key={index}>
-                Active: {product.active}, Quantity: {product.quantity}
-              </li>
-            ))}
+            {
+              // @ts-ignore
+              orderData.products.map((product, index) => (
+                <li key={index}>
+                  Active: {product.active}, Quantity: {product.quantity}
+                </li>
+              ))
+            }
           </ul>
         </div>
       ) : (

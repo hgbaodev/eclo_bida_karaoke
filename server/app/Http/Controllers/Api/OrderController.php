@@ -23,9 +23,10 @@ class OrderController extends Controller
     public function addProductsToOrder(Request $request, string $active)
     {
         $order = $this->orderRepository->getOrderByActive($active);
+        // Thêm order vào request để middleware có thể truy cập
+        $request->merge(['order' => $order]);
+        // Thông báo cho order
         $order->notify(new OrderNotification($request->requestedProducts, $active));
-        $orderProductRequestEvent = new OrderProductRequestEvent($order, $request->requestedProducts);
-        event($orderProductRequestEvent);
         return $this->sentSuccessResponse();
     }
 

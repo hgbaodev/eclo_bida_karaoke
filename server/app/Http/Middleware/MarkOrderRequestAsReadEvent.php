@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\DatabaseNotification;
 
-class MarkOrderRequestAsRead
+class MarkOrderRequestAsReadEvent
 {
     /**
      * Handle an incoming request.
