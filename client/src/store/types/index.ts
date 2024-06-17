@@ -121,6 +121,7 @@ export interface productType {
 export interface product_ImportType {
   data: [];
   data1: any;
+  data2:any;
   isLoading: boolean;
   isFiltered: boolean;
   page: number;

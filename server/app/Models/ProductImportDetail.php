@@ -24,7 +24,7 @@ class ProductImportDetail extends Model
         'import_id',
         'id'
     ];
-    public function product_imp_detail()
+    public function product_import()
     {
         return $this->belongsTo(ProductImport::class, 'import_id');
     }

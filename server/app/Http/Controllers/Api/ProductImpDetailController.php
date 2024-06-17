@@ -58,4 +58,12 @@ class ProductImpDetailController extends Controller
         unset($validated_data['supplier']);
         return $this->sentSuccessResponse($this->product_import_detail_Repository->create($validated_data));
     }
+    // public function sum(string $active)
+    // {
+
+    //     $product_import = $this->product_import_Repository->getProductImportByActive($active);
+    //     $sum = $this->product_import_detail_Repository->sumCost($product_import->id);
+    //     // return $this->sentSuccessResponse($this->product_import_detail_Repository->sumCost($product_import));
+    //     return response()->json(['sum' => $sum]);
+    // }
 }
