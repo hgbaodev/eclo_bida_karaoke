@@ -24,6 +24,7 @@ export const routes = {
     loggers: '/admin/loggers',
     products: '/admin/products',
     product_import: '/admin/product_imports',
+    kitchen_orders: '/admin/kitchen_orders',
     staffs: '/admin/staffs',
     positions: '/admin/positions',
     shifts: '/admin/shifts',

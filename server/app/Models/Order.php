@@ -3,28 +3,32 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\GeneratesUniqueActive;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
-class   Product extends Model
+class Order extends Model
 {
-    public $timestamps = false;
-    use HasFactory, GeneratesUniqueActive;
-    use SoftDeletes;
+    use HasFactory, SoftDeletes, GeneratesUniqueActive, Notifiable;
+
+    public $timestamps = true;
+
     protected $fillable = [
-        'name',
-        'description',
-        'cost_price',
-        'selling_price',
         'active',
-        'unit',
-        'quantity',
+        'status',
+        'checkout_time',
+        'total_price',
+        'customer_id',
+        'staff_id',
+        'service_id',
     ];
+
     protected $hidden = [
-        'id',
+      'id',
+      'deleted_at',
     ];
+
     protected static function boot()
     {
         parent::boot();
@@ -35,8 +39,14 @@ class   Product extends Model
             }
         });
     }
-    public function productimport()
+
+    public function customer()
     {
-        return $this->hasMany(ProductImpDetail::class);
+        return $this->belongsTo(Customer::class);
+    }
+
+    public function staff()
+    {
+        return $this->belongsTo(Staff::class);
     }
 }

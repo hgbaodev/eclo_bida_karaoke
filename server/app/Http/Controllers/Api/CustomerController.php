@@ -23,7 +23,6 @@ class CustomerController extends Controller
      */
     public function index(Request $request)
     {
-//        return $this->sentSuccessResponse($this->customerRepository->getAllCustomers());
         $data = $this->customerRepository->getCustomers($request);
         return $this->sentSuccessResponse($data);
     }

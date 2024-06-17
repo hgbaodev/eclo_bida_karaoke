@@ -27,7 +27,6 @@ class Price extends Model
         'deleted_at',
         'service_type_id'
     ];
-
     protected static function boot()
     {
         parent::boot();
