@@ -51,6 +51,10 @@ export const menuItems = [
         name: 'Prices setting',
         href: routes.admin.services.prices,
       },
+      {
+        name: 'Books',
+        href: routes.admin.services.books,
+      },
     ],
   },
   {

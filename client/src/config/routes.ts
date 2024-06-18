@@ -17,6 +17,7 @@ export const routes = {
       devices: '/admin/services/devices',
       service_types: '/admin/services/service_types',
       prices: '/admin/services/prices',
+      books: '/admin/services/books',
     },
     customers: '/admin/customers',
     jobBoard: '/admin/job-board',

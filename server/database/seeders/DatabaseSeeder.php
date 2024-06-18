@@ -35,6 +35,8 @@ class DatabaseSeeder extends Seeder
             ServiceSeeder::class,
             ShiftDetailSeeder::class,
 
+            ShiftDetailSeeder::class,
+            ServiceSeeder::class,
         ]);
     }
 }
