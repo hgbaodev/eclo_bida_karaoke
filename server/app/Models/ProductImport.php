@@ -24,6 +24,12 @@ class ProductImport extends Model
     protected $hidden = [
         'id',
     ];
+    public function updateTotalCost()
+    {
+        // Tính tổng `cost_price` từ `import_detail` và cập nhật `total_cost` trong `import`
+        $this->total_cost = $this->productimport()->sum('cost_price');
+        $this->save();
+    }
     protected static function boot()
     {
         parent::boot();
@@ -36,6 +42,6 @@ class ProductImport extends Model
     }
     public function productimport()
     {
-        return $this->hasMany(ProductImportDetail::class);
+        return $this->hasMany(ProductImportDetail::class, 'import_id');
     }
 }

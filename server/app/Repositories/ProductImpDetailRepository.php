@@ -41,11 +41,11 @@ class ProductImpDetailRepository implements ProductImpDetailInterface
     {
         return ProductImportDetail::all();
     }
-    // function sumCost($active)
-    // {
-    //     $totalQuantity = ProductImportDetail::where('import_id', $active)->sum('cost_price');
-    //     return $totalQuantity;
-    // }
+    function sumCost($active)
+    {
+        $totalQuantity = ProductImportDetail::where('import_id', $active)->sum('cost_price');
+        return $totalQuantity;
+    }
 
     function create(array $data)
     {

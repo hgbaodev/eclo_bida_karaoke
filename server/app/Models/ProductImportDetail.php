@@ -36,6 +36,7 @@ class ProductImportDetail extends Model
     {
         return $this->belongsTo(Product::class, 'id_product');
     }
+
     protected static function boot()
     {
         parent::boot();
@@ -44,6 +45,10 @@ class ProductImportDetail extends Model
             if (empty($model->active)) {
                 $model->active = self::generateUniqueActive();
             }
+        });
+
+        static::saved(function ($productimport) {
+            $productimport->product_import->updateTotalCost();
         });
     }
 }

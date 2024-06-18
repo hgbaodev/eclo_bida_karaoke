@@ -9,6 +9,7 @@ use App\Interface\ProductImpDetailInterface;
 use App\Interface\ProductImportInterface;
 use App\Interface\ProductRepositoryInterface;
 use App\Interface\SupplierRepositoryInterface;
+use App\Models\ProductImport;
 
 class ProductImpDetailController extends Controller
 {
@@ -66,4 +67,18 @@ class ProductImpDetailController extends Controller
     //     // return $this->sentSuccessResponse($this->product_import_detail_Repository->sumCost($product_import));
     //     return response()->json(['sum' => $sum]);
     // }
+    public function updateTotalCost($active)
+    {
+        // Lấy đối tượng Import theo ID
+        $import = ProductImport::find($active);
+
+        if (!$import) {
+            return response()->json(['error' => 'Import not found.'], 404);
+        }
+
+        // Gọi phương thức updateTotalCost() để cập nhật total_cost
+        $import->updateTotalCost();
+
+        return response()->json(['success' => 'Total cost updated successfully.', 'total_cost' => $import->total_cost]);
+    }
 }

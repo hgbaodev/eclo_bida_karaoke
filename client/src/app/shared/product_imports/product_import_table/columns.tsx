@@ -213,7 +213,7 @@ export interface Product_Import {
     active: string;
     receive_time: string;
     create_time: string;
-    total_cost: string;
+    total_cost: any;
     status: string;
   }
   export const STATUSES = {

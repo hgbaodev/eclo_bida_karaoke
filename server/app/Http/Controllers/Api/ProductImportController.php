@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductImport\ProductImportRequest;
 use App\Interface\ProductImportInterface;
 use Illuminate\Http\Request;
+use App\Models\ProductImport;
 
 class ProductImportController extends Controller
 {
@@ -43,5 +44,19 @@ class ProductImportController extends Controller
             return $this->sentErrorResponse($active . 'is not found', 'error', 404);
         }
         return $this->sentSuccessResponse($this->product_import_Repository->deleteByActive($active), $active . 'is deleted successfully', 200);
+    }
+    public function updateTotalCost($active)
+    {
+        // Lấy đối tượng Import theo ID
+        $import1 = $this->product_import_Repository->getProductImportByActive($active);
+        $import = ProductImport::find($import1->id);
+        if (!$import) {
+            return response()->json(['error' => 'Import not found.'], 404);
+        }
+
+        // Gọi phương thức updateTotalCost() để cập nhật total_cost
+        $import->updateTotalCost();
+
+        return response()->json(['success' => 'Total cost updated successfully.', 'total_cost' => $import->total_cost]);
     }
 }
