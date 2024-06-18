@@ -9,7 +9,7 @@ class WorkShiftRepository implements WorkShiftRepositoryInterface
 {
     public function getAllWorkShift()
     {
-        return WorkShift::all();
+        return WorkShift::latest()->get();
     }
 
     public function getWorkShiftByActive($active)

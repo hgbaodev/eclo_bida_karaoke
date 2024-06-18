@@ -1428,3 +1428,8 @@ div[style='z-index: 1000001;'],
   max-height: 50px; /* Đặt chiều cao tối đa cho dropdown */
   overflow-y: auto; /* Cho phép cuộn nếu nội dung vượt quá kích thước */
 }
+
+.error-message {
+  color: red;
+  font-size: 0.875rem; /* Kích thước chữ nhỏ */
+}

@@ -1,9 +1,10 @@
 'use client';
 import { useState } from 'react';
+import Select, { StylesConfig } from 'react-select';
 import { PiXBold } from 'react-icons/pi';
 import { Controller, SubmitHandler } from 'react-hook-form';
 import { Form } from '@/components/ui/form';
-import { Input, Button, ActionIcon, Title, Select, Textarea } from 'rizzui';
+import { Input, Button, ActionIcon, Title } from 'rizzui';
 import { useModal } from '@/app/shared/modal-views/use-modal';
 import { dispatch } from '@/store';
 import { useSelector } from 'react-redux';
@@ -19,6 +20,8 @@ import {
   getShiftUserDetails,
 } from '@/store/slices/shift_user_detailSlice';
 import toast from 'react-hot-toast';
+import { MenuList } from 'node_modules/react-select/dist/declarations/src/components/Menu';
+import { OptionType } from 'dayjs';
 
 export default function CreateShiftDetailStaff({
   day_of_week,
@@ -75,34 +78,34 @@ export default function CreateShiftDetailStaff({
               readOnly
             />
             <Input label="Shift" className="col-span-full" value={shift.time_in + '-' + shift.time_out} readOnly />
+            <label style={{ fontWeight: 'bold' }}>Staff:</label>
             <Controller
               name="staff"
               control={control}
-              render={({ field: { name, onChange, value } }) => (
-                <Select
-                  options={listStaffs}
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  label="Staff"
-                  className="col-span-full custom-dropdown"
-                  placeholder="Select a staff"
-                  error={errors?.staff?.message}
-                  getOptionValue={(option) => option.active}
-                  getOptionDisplayValue={(option) => option.name + '-' + option.idcard}
-                  displayValue={(selected: string) =>
-                    listStaffs.find((option) => option.active === selected)?.name ?? selected
-                  }
-                  dropdownClassName="!z-[1]"
-                  inPortal={false}
-                />
+              render={({ field }) => (
+                <>
+                  <Select
+                    options={listStaffs}
+                    value={listStaffs.find((option) => option.active === field.value)}
+                    onChange={(option) => field.onChange(option.active)}
+                    name={field.name}
+                    className="col-span-full"
+                    placeholder="Select a staff"
+                    isSearchable
+                    styles={customStyles}
+                    getOptionValue={(option) => option.active}
+                    getOptionLabel={(option) => `${option.name} - ${option.idcard}`}
+                    aria-invalid={errors.staff ? 'true' : 'false'}
+                  />
+                  {errors.staff && <span className="error-message">{errors.staff.message}</span>}
+                </>
               )}
             />
             <div className="col-span-full flex items-center justify-end gap-4">
-              <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
+              <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto" style={{ zIndex: 10 }}>
                 Cancel
               </Button>
-              <Button type="submit" isLoading={isCreateLoading} className="w-full @xl:w-auto">
+              <Button type="submit" isLoading={isCreateLoading} className="w-full @xl:w-auto" style={{ zIndex: 10 }}>
                 Create
               </Button>
             </div>
@@ -112,3 +115,15 @@ export default function CreateShiftDetailStaff({
     </Form>
   );
 }
+
+const customStyles: StylesConfig<OptionType, boolean> = {
+  menu: (provided, state) => ({
+    ...provided,
+    zIndex: 9999,
+    position: 'absolute',
+    top: state.selectProps.menuPlacement === 'top' ? 'auto' : '100%',
+    maxHeight: '200px',
+    marginTop: '-1px',
+    background: 'white',
+  }),
+};

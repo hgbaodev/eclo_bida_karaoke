@@ -22,7 +22,6 @@ export default function ShiftDetailStaffTable() {
   const { openModal } = useModal();
   const { data } = useSelector((state: RootState) => state.shift);
   const { listShiftUserDetail, isLoading, workshift } = useSelector((state: RootState) => state.shift_user_detail);
-  const { oneWorkShift } = useSelector((state: RootState) => state.work_shift);
   useEffect(() => {
     dispatch(getShifts());
     dispatch(getAllStaffs(''));

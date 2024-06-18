@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { PiXBold } from 'react-icons/pi';
-import { Controller, SubmitHandler } from 'react-hook-form';
+import { SubmitHandler } from 'react-hook-form';
 import { Form } from '@/components/ui/form';
 import { Input, Button, ActionIcon, Title } from 'rizzui';
 import { useModal } from '@/app/shared/modal-views/use-modal';
@@ -10,21 +10,38 @@ import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { CreateWorkShiftInput, createWorkShiftSchema } from '@/utils/validators/work-shift/create-work-shift';
-import { getAllShiftUserDetails, getShiftUserDetails } from '@/store/slices/shift_user_detailSlice';
+import { createShiftUserDetail, setWorkShift } from '@/store/slices/shift_user_detailSlice';
 import { createWorkShift, getAllWorkShifts } from '@/store/slices/workshiftSlice';
 
 export default function CreateWorkShift() {
   const { closeModal } = useModal();
   const [reset, setReset] = useState({});
   const [errors, setErrors] = useState<any>({});
+  const { listShiftUserDetail } = useSelector((state: RootState) => state.shift_user_detail);
   const { isCreateLoading, oneWorkShift } = useSelector((state: RootState) => state.work_shift);
+
   const onSubmit: SubmitHandler<CreateWorkShiftInput> = async (data) => {
     const result: any = await dispatch(createWorkShift(data));
     if (createWorkShift.fulfilled.match(result)) {
+      const workshift = result.payload.data;
+      const updatedList = listShiftUserDetail.map((item) => {
+        const shiftUserDetail: ShiftUserDetail = {
+          day_of_week: item.day_of_week,
+          shift: item.shift.active,
+          staff: item.staff.active,
+          workshift: workshift.active,
+        };
+        return shiftUserDetail;
+      });
+      console.log(updatedList);
+      for (const item of updatedList) {
+        await dispatch(createShiftUserDetail(item));
+      }
       setReset({});
       setErrors({});
       closeModal();
       await dispatch(getAllWorkShifts());
+      dispatch(setWorkShift(workshift.active));
       toast.success('Work Shift created successfully');
     } else {
       setErrors(result?.payload?.errors);
@@ -83,4 +100,10 @@ export default function CreateWorkShift() {
       }}
     </Form>
   );
+}
+export interface ShiftUserDetail {
+  day_of_week: string;
+  shift: string;
+  staff: string;
+  workshift: string;
 }

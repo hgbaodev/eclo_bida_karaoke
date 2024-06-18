@@ -33,24 +33,6 @@ export default function FilterElement() {
               data.find((workshift) => workshift.active === selected)?.date_end || selected
           }
         />
-
-        {isFiltered && (
-          <Button
-            size="sm"
-            onClick={() => dispatch(setReset())}
-            className="-order-1 h-8 w-full bg-gray-200/70 @4xl:-order-4 @4xl:w-auto"
-            variant="flat"
-          >
-            <PiTrashDuotone className="me-1.5 h-[17px] w-[17px]" /> Clear
-          </Button>
-        )}
-        <Input
-          type="search"
-          placeholder="Search for staffs..."
-          rounded="lg"
-          clearable
-          className="-order-2 w-full @xl:-order-5 @xl:ms-auto @xl:w-auto @4xl:-order-2 @4xl:w-[230px] @5xl:w-auto"
-        />
       </div>
     </>
   );
