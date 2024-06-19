@@ -41,8 +41,8 @@ class OrderProductRequestEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        Log::info('OrderProductRequestEvent broadcast on', ['channel' => 'eclo']);
-        return ['eclo']; // Tên của channel mà đầu bếp sẽ nghe
+        Log::info('OrderProductRequestEvent broadcast on', ['channel' => 'eclo-channel']);
+        return ['eclo-channel']; // Tên của channel mà đầu bếp sẽ nghe
     }
 
     /**

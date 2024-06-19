@@ -16,7 +16,23 @@ export interface RootState {
   shift: shiftType;
   service: serviceType;
   shift_detail: shift_detailType;
+  requested_products: requested_productsType;
 }
+
+export interface requested_productsType {
+  data: [];
+  isLoading: boolean;
+  isFiltered: boolean;
+  page: number;
+  pageSize: number;
+  totalRow: number;
+  query: string;
+  status: any;
+  errors: string | null;
+  isCreateLoading: boolean;
+  isUpdateLoading: boolean;
+}
+
 export interface authType {
   isAuthenticated: boolean;
   isLoaded: boolean;

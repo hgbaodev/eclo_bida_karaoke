@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
@@ -13,7 +12,6 @@ use App\Events\OrderProductRequestEvent;
 class OrderController extends Controller
 {
     protected $orderRepository;
-    protected $orderProductRequestEvent;
 
     public function __construct(OrderRepositoryInterface $orderRepository)
     {
@@ -30,17 +28,17 @@ class OrderController extends Controller
         return $this->sentSuccessResponse();
     }
 
-    public function fiveLatestUnreadRequests()
+    //TODO: tao repo
+    public function requestedProducts()
     {
         $unreadNotifications = DatabaseNotification::whereNull('read_at')
             ->orderBy('created_at', 'desc')
-            ->limit(5)
             ->get()
             ->toArray();
-
-        return response()->json($unreadNotifications);
+        return $this->sentSuccessResponse($unreadNotifications);
     }
 
+    //TODO: tao repo
     public function markOrderRequestAsRead(Request $request)
     {
         if ($request->has('id')) {
