@@ -6,6 +6,7 @@ use App\Interface\AreaRepositoryInterface;
 use App\Interface\CustomerRepositoryInterface;
 use App\Interface\DeviceRepositoryInterface;
 use App\Interface\LoggerRepositoryInterface;
+use App\Interface\NotificationRepositoryInterface;
 use App\Interface\OrderRepositoryInterface;
 use App\Interface\PositionRepositoryInterface;
 use App\Interface\PriceRepositoryInterface;
@@ -25,6 +26,7 @@ use App\Repositories\AreaRepository;
 use App\Repositories\CustomerRepository;
 use App\Repositories\DeviceRepository;
 use App\Repositories\LoggerRepository;
+use App\Repositories\NotificationRepository;
 use App\Repositories\OrderRepository;
 use App\Repositories\PositionRepository;
 use App\Repositories\PriceRepository;
@@ -68,6 +70,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(OrderRepositoryInterface::class, OrderRepository::class);
         $this->app->bind(ServiceRepositoryInterface::class, ServiceReposirory::class);
         $this->app->bind(ShiftDetailRepositoryInterface::class, ShiftDetailRepository::class);
+        $this->app->bind(NotificationRepositoryInterface::class, NotificationRepository::class);
 
     }
 
