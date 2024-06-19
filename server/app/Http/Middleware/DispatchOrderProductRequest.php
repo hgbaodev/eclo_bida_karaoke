@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Events\OrderProductRequestEvent;
 
-class DispatchOrderProductRequestEvent
+class DispatchOrderProductRequest
 {
     /**
      * Handle an incoming request.

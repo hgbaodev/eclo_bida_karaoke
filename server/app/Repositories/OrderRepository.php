@@ -9,6 +9,8 @@ use App\Interface\requestedProduct;
 use App\Models\Order;
 use App\Models\Product;
 use App\Notifications\OrderNotification;
+use Illuminate\Http\Request;
+use Illuminate\Notifications\DatabaseNotification;
 
 class OrderRepository implements OrderRepositoryInterface
 {
@@ -57,5 +59,16 @@ class OrderRepository implements OrderRepositoryInterface
         $order = Order::where('active', $active)->firstOrFail();
         $order->delete();
         return $order;
+    }
+
+
+    public function markOrderRequestAsRead(Request $request)
+    {
+        $id = $request->id;
+            $notification = DatabaseNotification::where('id', $id)->firstOrFail();
+            if ($notification) {
+                $notification->markAsRead();
+                return $notification;
+            }
     }
 }

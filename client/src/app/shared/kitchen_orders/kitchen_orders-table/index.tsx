@@ -26,8 +26,11 @@ export default function KitchenOrdersTable() {
   }, []);
 
   usePusher('productOrder.requested', (data: any) => {
-    console.log('usePusher', data);
     fetchData(); // Fetch the data when receiving new Pusher data
+  });
+
+  usePusher('productOrder.read', (data: any) => {
+    console.log('usePusher', data);
   });
 
   useEffect(() => {

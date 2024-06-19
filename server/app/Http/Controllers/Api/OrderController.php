@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Interface\NotificationRepositoryInterface;
 use App\Interface\OrderRepositoryInterface;
 use App\Notifications\OrderNotification;
 use Illuminate\Http\Request;
@@ -12,47 +13,41 @@ use App\Events\OrderProductRequestEvent;
 class OrderController extends Controller
 {
     protected $orderRepository;
+    protected $notifcationRepository;
 
-    public function __construct(OrderRepositoryInterface $orderRepository)
+    public function __construct(OrderRepositoryInterface $orderRepository,NotificationRepositoryInterface $notifcationRepository)
     {
         $this->orderRepository = $orderRepository;
+        $this->notifcationRepository = $notifcationRepository;
     }
 
     public function addProductsToOrder(Request $request, string $active)
     {
         $order = $this->orderRepository->getOrderByActive($active);
-        // Thêm order vào request để middleware có thể truy cập
         $request->merge(['order' => $order]);
-        // Thông báo cho order
         $order->notify(new OrderNotification($request->requestedProducts, $active));
         return $this->sentSuccessResponse();
     }
 
-    //TODO: tao repo
     public function requestedProducts()
+
     {
-        $unreadNotifications = DatabaseNotification::whereNull('read_at')
-            ->orderBy('created_at', 'desc')
-            ->get()
-            ->toArray();
-        return $this->sentSuccessResponse($unreadNotifications);
+        return $this->sentSuccessResponse($this->notifcationRepository->getUnreadNotifications());
     }
 
-    //TODO: tao repo
     public function markOrderRequestAsRead(Request $request)
     {
-        if ($request->has('id')) {
-            $notification = DatabaseNotification::find($request->id);
-
-            if ($notification) {
-                $notification->markAsRead();
-                return response()->json(['message' => 'Notification marked as read.'], 200);
-            }
-
-            return response()->json(['message' => 'Notification not found.'], 404);
+        if (!$request->has('id')){
+            return $this->sentErrorResponse('order id not found');
         }
+        $notification = $this->orderRepository->markOrderRequestAsRead($request);
 
-        return response()->json(['message' => 'Notification ID is required.'], 400);
+        if(!$notification){
+            return  $this->sentErrorResponse('order not found');
+        }
+        $request->merge(['orderNotification' => $notification]);
+
+        return $this->sentSuccessResponse($notification);
     }
 
     public function index(Request $request)
