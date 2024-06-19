@@ -76,14 +76,15 @@ export default function CreateStaff() {
               error={errors.receive_time?.message}
             />
 
-            <Input
+            {/* <Input
              type="number"
               label="Total cost"
               placeholder="Enter total cost"
               {...register('total_cost')}
               className="col-span-full"
+          
               error={errors.total_cost?.message}
-            />
+            /> */}
             
             
             <Controller

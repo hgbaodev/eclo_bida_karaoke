@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\GeneratesUniqueActive;
+use Illuminate\Support\Facades\DB;
 
 class ProductImport extends Model
 {
@@ -27,7 +28,7 @@ class ProductImport extends Model
     public function updateTotalCost()
     {
         // Tính tổng `cost_price` từ `import_detail` và cập nhật `total_cost` trong `import`
-        $this->total_cost = $this->productimport()->sum('cost_price');
+        $this->total_cost = $this->productimport()->sum(DB::raw('cost_price * quantity'));
         $this->save();
     }
     protected static function boot()

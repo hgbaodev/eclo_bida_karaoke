@@ -69,6 +69,7 @@ export const getColumns = (openModal: (args: any) => void) => [
     dataIndex: 'total_cost',
     key: 'total_cost',
     width: 50,
+    
     render: (_: number, product_import: Product_Import) => product_import.total_cost,
   },
   {
