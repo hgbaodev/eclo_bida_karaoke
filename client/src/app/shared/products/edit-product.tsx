@@ -27,7 +27,6 @@ export default function EditProduct({ product, active }: { product: EditProductI
     if (updateProduct.fulfilled.match(result)) {
       setReset({
         product_name: '',
-        cost_price: '',
         selling_price: '',
         quantity: '',
         description:'',
@@ -68,14 +67,14 @@ export default function EditProduct({ product, active }: { product: EditProductI
               {...register('name')}
               error={errors.name?.message}
             />
-            <Input
+            {/* <Input
               label="Cost Price"
               type='number'
               placeholder="Enter cost price"
               {...register('cost_price')}
               className="col-span-full"
               error={errors.cost_price?.message}
-            />
+            /> */}
 
             <Input
               label="Selling Price"

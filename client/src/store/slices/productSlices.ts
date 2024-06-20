@@ -42,6 +42,14 @@ export const getSinghle_Product = createAsyncThunk('product/getAllProduct', asyn
     throw error;
   }
 });
+export const getProductType = createAsyncThunk('product_type/getProductType',async (active: string,) => {
+  try {
+    const response = await axiosInstance.get(`product_types`);
+    return response.data;
+  } catch (error: any) {
+    throw error;
+  }
+});
 export const createProduct = createAsyncThunk('products/createProduct', async (data: any, { rejectWithValue }) => {
   try {
     const response = await axiosInstance.post(`products`, data);

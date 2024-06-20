@@ -68,14 +68,7 @@ export default function CreateStaff() {
               {...register('name')}
               error={errors.name?.message}
             />
-            <Input
-              label="Cost Price"
-              placeholder="Enter cost price"
-              {...register('cost_price')}
-              className="col-span-full"
-              error={errors.cost_price?.message}
-            />
-
+            
             <Input
               label="Selling Price"
               placeholder="Enter selling price"

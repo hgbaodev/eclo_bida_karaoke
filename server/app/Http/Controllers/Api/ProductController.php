@@ -5,17 +5,20 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\ProductRequest;
 use App\Interface\ProductRepositoryInterface;
+use App\Interface\ProductTypeRepositoryInterface;
+use App\Repositories\ProductTypeRepository;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
 
     protected $productRepository;
+    protected $product_typeRepository;
 
-
-    public function __construct(ProductRepositoryInterface $productRepository)
+    public function __construct(ProductRepositoryInterface $productRepository, ProductTypeRepositoryInterface $product_typeRepository)
     {
         $this->productRepository = $productRepository;
+        $this->product_typeRepository = $product_typeRepository;
     }
 
     public function index(Request $request)
@@ -35,8 +38,21 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        $validated = $request->validated();
-        return $this->sentSuccessResponse($this->productRepository->create($validated), "product is created successfully", 200);
+        // $validated = $request->validated();
+        // return $this->sentSuccessResponse($this->productRepository->create($validated), "product is created successfully", 200);
+        $validated_data = $request->validated();
+        // dd($validated_data);
+        // dd($product->id);
+        $product_type = $this->product_typeRepository->getProductTypeByActive($validated_data['product_type']);
+        if (!$product_type) {
+            return $this->sentErrorResponse("Type is not found", "error", 404);
+        }
+
+        $validated_data["id_type"] = $product_type->id;
+
+        unset($validated_data['product_type']);
+
+        return $this->sentSuccessResponse($this->productRepository->create($validated_data));
     }
 
     /**

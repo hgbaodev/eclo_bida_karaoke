@@ -282,7 +282,7 @@ export interface work_shiftType {
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
   oneWorkShift: any;
-
+}
 export interface serviceType {
   data: [];
   isLoading: boolean;

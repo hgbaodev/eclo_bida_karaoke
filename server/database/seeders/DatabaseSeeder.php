@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             DeviceSeeder::class,
             SupplierSeeder::class,
             ServiceTypeSeeder::class,
+            ProductTypeSeeder::class,
             ProductSeeder::class,
             ProductImportSeeder::class,
             PriceSeeder::class,
