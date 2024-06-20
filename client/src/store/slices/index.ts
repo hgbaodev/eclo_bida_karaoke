@@ -24,6 +24,8 @@ import device from './deviceSlice';
 import supplier from './supplierSlice';
 import service from './serviceSlice';
 
+import order from './orderSlice';
+
 // ==============================|| COMBINE REDUCERS ||============================== //
 
 const reducers = combineReducers({
@@ -44,6 +46,7 @@ const reducers = combineReducers({
   shift,
   service,
   shift_detail,
+  order,
 });
 
 export default reducers;

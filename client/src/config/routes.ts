@@ -8,10 +8,15 @@ export const routes = {
     shipmentDetails: (id: string) => `/logistics/shipments/${id}`,
     tracking: (id: string) => `/logistics/tracking/${id}`,
   },
+
   admin: {
     analytics: '/admin',
     users: '/admin/users',
     rolesPermissions: '/admin/roles-permissions',
+    order: {
+      tableandrooms: '/admin/orders/tableandrooms',
+      invoice: '/admin/orders/invoices',
+    },
     services: {
       tableandrooms: '/admin/services/tableandrooms',
       devices: '/admin/services/devices',

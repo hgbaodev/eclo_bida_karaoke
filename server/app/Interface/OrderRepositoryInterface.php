@@ -2,7 +2,8 @@
 
 namespace App\Interface;
 
-interface OrderRepositoryInterface{
+interface OrderRepositoryInterface
+{
 
     /**
      * @param $request requestedProducts
@@ -14,4 +15,5 @@ interface OrderRepositoryInterface{
     public function getOrderByActive(string $active);
     public function updateOrderByActive(string $active, array $data);
     public function deleteOrderByActive(string $active);
+    public function checkOrderServiceById(int $service_id);
 }

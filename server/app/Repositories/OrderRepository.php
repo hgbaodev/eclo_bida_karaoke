@@ -27,7 +27,7 @@ class OrderRepository implements OrderRepositoryInterface
 
         $orders = Order::query();
         $orders->latest();
-        if($all){
+        if ($all) {
             $orders = $orders->get();
         } else {
             $orders = $orders->paginate($perPage);
@@ -56,6 +56,12 @@ class OrderRepository implements OrderRepositoryInterface
     {
         $order = Order::where('active', $active)->firstOrFail();
         $order->delete();
+        return $order;
+    }
+
+    public function checkOrderServiceById(int $service_id)
+    {
+        $order = Order::where('service_id', $service_id)->where('checkout_time', null)->first();
         return $order;
     }
 }

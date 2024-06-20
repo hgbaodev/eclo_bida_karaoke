@@ -64,4 +64,10 @@ class AreaController extends Controller
         }
         return $this->sentSuccessResponse($this->areaRepository->deleteAreaById($id), 'The area ' . $id . ' has been deleted!!!', 200);
     }
+
+    public function getAllAreaWithServices()
+    {
+        $areas = $this->areaRepository->getAllAreaWithServices();
+        return $this->sentSuccessResponse($areas);
+    }
 }

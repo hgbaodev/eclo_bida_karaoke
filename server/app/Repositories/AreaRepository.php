@@ -5,6 +5,8 @@ namespace App\Repositories;
 use App\Http\Collections\CollectionCustom;
 use App\Interface\AreaRepositoryInterface;
 use App\Models\Area;
+use App\Models\Order;
+use App\Models\Service;
 
 class AreaRepository implements AreaRepositoryInterface
 {
@@ -13,7 +15,7 @@ class AreaRepository implements AreaRepositoryInterface
     {
         $all = $request->input('all');
         $perPage = $request->input('perPage');
-        $areas = Area::query();
+        $areas = Area::with(['services']);
         if ($all) {
             $areas = $areas->get();
         } else {
@@ -50,5 +52,27 @@ class AreaRepository implements AreaRepositoryInterface
     {
         $area = Area::where('active', $active)->first();
         return $area;
+    }
+
+    public function getAllAreaWithServices()
+    {
+        $areas = Area::all();
+        $areas = $areas->map(function ($area) {
+            $area->services = Service::where('area_id', $area->id)
+                ->where('status', 'A')
+                ->get();
+            $area->services = $area->services->map(function ($service) {
+                $foundServiceOrder = Order::where('service_id', $service->id)
+                    ->where('checkout_time', null)
+                    ->first();
+                if ($foundServiceOrder)
+                    $service->is_booked = true;
+                else
+                    $service->is_booked = false;
+                return $service;
+            });
+            return $area;
+        });
+        return $areas;
     }
 }

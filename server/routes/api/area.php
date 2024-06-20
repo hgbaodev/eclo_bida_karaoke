@@ -15,5 +15,6 @@ Route::group(
         Route::post('/', [AreaController::class, 'store']);
         Route::put('/{active}', [AreaController::class, 'update']);
         Route::delete('/{id}', [AreaController::class, 'destroy']);
+        Route::get('/services/all', [AreaController::class, 'getAllAreaWithServices']);
     }
 );

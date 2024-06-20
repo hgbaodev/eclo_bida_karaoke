@@ -19,11 +19,12 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
-            'total_price' => $this->faker->randomFloat(5,1),
+            'total_price' => $this->faker->randomFloat(5, 1),
             'status' => $this->faker->randomElement(['A', 'D']),
-            'staff_id' => $this->faker->numberBetween(1,10),
+            'user_id' => $this->faker->numberBetween(1, 10),
+            'service_id' => $this->faker->numberBetween(1, 10),
             'checkout_time' => $this->faker->dateTimeBetween('now', '+1 year'),
-            'customer_id' => $this->faker->numberBetween(1,15),
+            'customer_id' => $this->faker->numberBetween(1, 15),
         ];
     }
 }

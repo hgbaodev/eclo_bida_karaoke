@@ -16,6 +16,7 @@ export interface RootState {
   shift: shiftType;
   service: serviceType;
   shift_detail: shift_detailType;
+  order: orderType;
 }
 export interface authType {
   isAuthenticated: boolean;
@@ -251,4 +252,9 @@ export interface serviceType {
   isCreateLoading: boolean;
   isEditLoading: boolean;
   selectedArea: any;
+}
+
+export interface orderType {
+  areas: any[];
+  isLoading: boolean;
 }
