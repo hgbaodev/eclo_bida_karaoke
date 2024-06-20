@@ -7,7 +7,6 @@ use App\Interface\NotificationRepositoryInterface;
 use App\Interface\OrderRepositoryInterface;
 use App\Notifications\OrderNotification;
 use Illuminate\Http\Request;
-use Illuminate\Notifications\DatabaseNotification;
 use App\Http\Requests\Order\StoreOrderRequest;
 use App\Interface\ServiceRepositoryInterface;
 
@@ -17,7 +16,7 @@ class OrderController extends Controller
     protected $serviceRepository;
     protected $notifcationRepository;
 
-    public function __construct(OrderRepositoryInterface $orderRepository, ServiceRepositoryInterface $serviceRepositoryInterface)
+    public function __construct(OrderRepositoryInterface $orderRepository, ServiceRepositoryInterface $serviceRepositoryInterface, NotificationRepositoryInterface $notifcationRepository)
     {
         $this->orderRepository = $orderRepository;
         $this->serviceRepository =  $serviceRepositoryInterface;
