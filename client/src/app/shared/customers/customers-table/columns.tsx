@@ -7,7 +7,6 @@ import PencilIcon from '@/components/icons/pencil';
 import AvatarCard from '@/components/ui/avatar-card';
 import DateCell from '@/components/ui/date-cell';
 import EditCustomer from '../edit-customer';
-
 import DeletePopover from '@/app/shared/delete-popover';
 import { dispatch } from '@/store';
 import { getCustomers, deleteCustomer } from '@/store/slices/customerSlice';

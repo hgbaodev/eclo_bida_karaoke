@@ -51,7 +51,7 @@ export default function ControlledTable({
       {!isEmpty(filterOptions) && <TableFilter {...filterOptions}>{filterElement}</TableFilter>}
 
       <div className="relative">
-        <Table scroll={{ x: 1000 }} rowKey={(record) => record.id} className={cn(className)} {...tableProps} />
+        <Table scroll={{ x: 100 }} rowKey={(record) => record.id} className={cn(className)} {...tableProps} />
 
         {tableFooter ? tableFooter : null}
       </div>
