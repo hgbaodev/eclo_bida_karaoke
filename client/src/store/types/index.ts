@@ -128,7 +128,7 @@ export interface supplierType {
   errors: any;
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
-  listSupplier:any[];
+  listSupplier: any[];
 }
 
 export interface loggerType {
@@ -152,12 +152,12 @@ export interface productType {
   errors: any;
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
-  listProduct:any[];
+  listProduct: any[];
 }
 export interface product_ImportType {
   data: [];
   data1: any;
-  data2:any;
+  data2: any;
   isLoading: boolean;
   isFiltered: boolean;
   page: number;
@@ -167,8 +167,8 @@ export interface product_ImportType {
   errors: any;
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
-  product:any;
-  supplier:any;
+  product: any;
+  supplier: any;
 }
 export interface product_Import_DetailType {
   data: [];
@@ -282,6 +282,7 @@ export interface work_shiftType {
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
   oneWorkShift: any;
+}
 
 export interface serviceType {
   data: [];
@@ -320,5 +321,4 @@ export interface serviceType {
 export interface orderType {
   areas: any[];
   isLoading: boolean;
-
 }
