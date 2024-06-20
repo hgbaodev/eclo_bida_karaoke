@@ -1,7 +1,7 @@
 import { useModal } from '@/app/shared/modal-views/use-modal';
 import React from 'react';
 import { ActionIcon, Tooltip } from 'rizzui';
-import PencilIcon from '../icons/pencil';
+import { PiPlusBold } from 'react-icons/pi';
 
 const Create = ({ onClick }) => {
   const { openModal } = useModal();
@@ -22,7 +22,7 @@ const Create = ({ onClick }) => {
           variant="outline"
           className="hover:!border-gray-900 hover:text-gray-700 cursor-pointer"
         >
-          <PencilIcon className="h-4 w-4" />
+          <PiPlusBold className="h-4 w-4" />
         </ActionIcon>
       </Tooltip>
     </div>

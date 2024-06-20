@@ -71,7 +71,7 @@ export const messages = {
   roleNameLengthMin: 'Role name must be at least 3 letters',
   errorSendingEmail: 'Error sending email',
   emailSentSuccessfully: 'Your email has been sent successfully.',
-  ProductNameIsRequired:'Product Name is required',
+  ProductNameIsRequired: 'Product Name is required',
   CostPriceIsRequired: 'Must have cost price',
   SellingPriceIsRequired: 'Must have selling price',
   maxlenghtAddress: "Your length's address is 50 characters",
@@ -86,5 +86,7 @@ export const messages = {
   salaryIsRequired: 'Salary position is required',
   timeinIsRequired: 'Time in is required',
   timeoutIsRequired: 'Time out is required',
+  dateStartIsRequired: 'Date start is required',
+  dateEndIsRequired: 'Date end is required',
   supplierisRequired: 'Suppliers is required',
 };

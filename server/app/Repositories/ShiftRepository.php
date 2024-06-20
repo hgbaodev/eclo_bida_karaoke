@@ -33,7 +33,6 @@ class ShiftRepository implements ShiftRepositoryInterface
         if ($status) {
             $shift->where("status", $status);
         }
-        $shift->latest();
         if ($all && $all == true) {
             $shift = $shift->get();
         } else {
@@ -47,7 +46,7 @@ class ShiftRepository implements ShiftRepositoryInterface
     }
     public function getShiftByActive($active)
     {
-        return Shift::where("active", $active)->get();
+        return Shift::where("active", $active)->first();
     }
     public function createShift(array $data)
     {

@@ -17,6 +17,8 @@ export interface RootState {
   shift: shiftType;
   service: serviceType;
   shift_detail: shift_detailType;
+  shift_user_detail: shift_user_detailType;
+  work_shift: work_shiftType;
   order: orderType;
   requested_products: requested_productsType;
 }
@@ -255,6 +257,32 @@ export interface shift_detailType {
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
 }
+
+export interface shift_user_detailType {
+  data: [];
+  isLoading: boolean;
+  isFiltered: boolean;
+  page: number;
+  pageSize: number;
+  totalRow: number;
+  query: string;
+  day_of_week: string;
+  shift: any;
+  workshift: any;
+  errors: any;
+  isCreateLoading: boolean;
+  isUpdateLoading: boolean;
+  listShiftUserDetail: any[];
+}
+
+export interface work_shiftType {
+  data: any[];
+  isLoading: boolean;
+  isFiltered: boolean;
+  isCreateLoading: boolean;
+  isUpdateLoading: boolean;
+  oneWorkShift: any;
+
 export interface serviceType {
   data: [];
   isLoading: boolean;
@@ -292,4 +320,5 @@ export interface serviceType {
 export interface orderType {
   areas: any[];
   isLoading: boolean;
+
 }

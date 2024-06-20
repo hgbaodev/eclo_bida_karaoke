@@ -4,13 +4,7 @@
 
 @import 'react-big-calendar/lib/css/react-big-calendar.css';
 @import 'react-calendar/dist/Calendar.css';
-.custom-dropdown {
-  height: 100px; /* Định kích thước tối đa cho dropdown */
-}
-.custom-dropdown .react-select__menu {
-  max-height: 50px; /* Đặt chiều cao tối đa cho dropdown */
-  overflow-y: auto; /* Cho phép cuộn nếu nội dung vượt quá kích thước */
-}
+
 @layer base {
   /* default theme */
   :root {
@@ -1425,4 +1419,17 @@ div[style='z-index: 1000001;'],
 }
 .job-schedule-calendar .react-calendar__century-view__decades > button {
   @apply border border-s-0 border-t-0 border-solid border-gray-200 dark:hover:bg-gray-100 dark:focus:bg-gray-100 dark:disabled:bg-gray-100 [&:nth-child(4n)]:border-r-0;
+}
+
+.custom-dropdown {
+  height: 100px; /* Định kích thước tối đa cho dropdown */
+}
+.custom-dropdown .react-select__menu {
+  max-height: 50px; /* Đặt chiều cao tối đa cho dropdown */
+  overflow-y: auto; /* Cho phép cuộn nếu nội dung vượt quá kích thước */
+}
+
+.error-message {
+  color: red;
+  font-size: 0.875rem; /* Kích thước chữ nhỏ */
 }

@@ -1,15 +1,15 @@
 'use client';
 import PageHeader from '@/app/shared/page-header';
-import ShiftDetailStaffTable from '@/app/shared/shift_detail_staff/index';
+import ShiftDetailStaffTable from '@/app/shared/shift_detail_staff/schedule/index';
 const pageHeader = {
-  title: 'Shift Details Of Staff',
+  title: 'Schedule',
   breadcrumb: [
     {
       href: '/admin',
       name: 'Analytics',
     },
     {
-      name: 'Shift Details Of Staff',
+      name: 'Schedule',
     },
   ],
 };

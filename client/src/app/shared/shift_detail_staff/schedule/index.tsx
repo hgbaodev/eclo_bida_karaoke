@@ -3,16 +3,16 @@
 import { useEffect, useMemo } from 'react';
 import { useColumn } from '@/hooks/use-column';
 import ControlledTable from '@/components/controlled-table';
-import { getColumns } from '@/app/shared/shift_detail_staff/colunm';
+import { getColumns } from '@/app/shared/shift_detail_staff/schedule/colunm';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
 import { getAllStaffs, setPage, setPageSize } from '@/store/slices/staffSlice';
 import { getAllShiftUserDetails, getShiftUserDetails } from '@/store/slices/shift_user_detailSlice';
-import { useModal } from '../modal-views/use-modal';
+import { useModal } from '../../modal-views/use-modal';
 import { getShifts } from '@/store/slices/shiftSlice';
-import ModalButton from '../modal-button';
-import CreateWorkShift from './work_shift/create-work_shift';
+import ModalButton from '../../modal-button';
+import CreateWorkShift from '../work_shift/create-work_shift';
 import dynamic from 'next/dynamic';
 import { getAllWorkShifts, getWorkShift } from '@/store/slices/workshiftSlice';
 const FilterElement = dynamic(() => import('@/app/shared/shift_detail_staff/work_shift/filter-element'), {
@@ -22,7 +22,6 @@ export default function ShiftDetailStaffTable() {
   const { openModal } = useModal();
   const { data } = useSelector((state: RootState) => state.shift);
   const { listShiftUserDetail, isLoading, workshift } = useSelector((state: RootState) => state.shift_user_detail);
-  const { oneWorkShift } = useSelector((state: RootState) => state.work_shift);
   useEffect(() => {
     dispatch(getShifts());
     dispatch(getAllStaffs(''));
@@ -38,8 +37,8 @@ export default function ShiftDetailStaffTable() {
     dispatch(getAllWorkShifts());
   }, []);
   const columns = useMemo(
-    () => getColumns(openModal, listShiftUserDetail, oneWorkShift),
-    [openModal, listShiftUserDetail, oneWorkShift],
+    () => getColumns(openModal, listShiftUserDetail, workshift),
+    [openModal, listShiftUserDetail, workshift],
   );
   const { visibleColumns } = useColumn(columns);
   if (!workshift) {

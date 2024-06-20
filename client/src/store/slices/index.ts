@@ -9,6 +9,8 @@ import staff from './staffSlice';
 import position from './positionSlice';
 import shift from './shiftSlice';
 import shift_detail from './shift_detailSlice';
+import shift_user_detail from './shift_user_detailSlice';
+import work_shift from './workshiftSlice';
 
 import logger from './loggerSlice';
 
@@ -49,8 +51,11 @@ const reducers = combineReducers({
   product_import_detail,
   service,
   shift_detail,
+  shift_user_detail,
+  work_shift,
   order,
   requested_products,
+
 });
 
 export default reducers;
