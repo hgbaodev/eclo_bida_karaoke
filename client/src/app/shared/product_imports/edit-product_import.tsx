@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { EditProduc_ImporttInput, editProduct_ImportSchema } from '@/utils/validators/edit-product_import.schema';
 import { number } from 'zod';
-import { getStatusBadge } from './product_import_table/columns';
+import  {getStatusBadge}  from './product_import_table/columns';
 import { statusOptions } from './type';
 
 export default function EditProduct({ product_import, active }: { product_import: EditProduc_ImporttInput; active: string }) {
@@ -44,6 +44,7 @@ export default function EditProduct({ product_import, active }: { product_import
     <Form<EditProduc_ImporttInput>
       resetValues={reset}
       onSubmit={onSubmit}
+      resetValues={{total_cost:data.active , ...reset }}
       validationSchema={editProduct_ImportSchema}
       serverError={errors}
       className="grid grid-cols-1 gap-6 p-6 @container md:grid-cols-2 [&_.rizzui-input-label]:font-medium [&_.rizzui-input-label]:text-gray-900"
@@ -83,6 +84,7 @@ export default function EditProduct({ product_import, active }: { product_import
               {...register('total_cost')}
               className="col-span-full"
               error={errors.total_cost?.message}
+              readOnly
             />
             <Controller
               name="status"

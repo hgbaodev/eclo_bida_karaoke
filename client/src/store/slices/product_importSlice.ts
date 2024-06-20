@@ -15,6 +15,10 @@ const initialState: product_ImportType = {
   errors: null,
   isCreateLoading: false,
   isUpdateLoading: false,
+  product:'',
+  supplier:'',
+  data1:{},
+  data2:{},
 };
 
 export const getProductImports= createAsyncThunk(
@@ -33,7 +37,14 @@ export const getProductImports= createAsyncThunk(
     }
   },
 );
-
+export const getSinghle_ProductImport = createAsyncThunk('product_import/getProductImport',async (active: string,) => {
+  try {
+    const response = await axiosInstance.get(`product_imports/${active}`);
+    return response.data;
+  } catch (error: any) {
+    throw error;
+  }
+});
 export const createProduct = createAsyncThunk('product_imports/createProductImport', async (data: any, { rejectWithValue }) => {
   try {
     const response = await axiosInstance.post(`product_imports`, data);
@@ -102,9 +113,20 @@ const product_importSlices = createSlice({
         state.isLoading = false;
         state.data = result.result;
         state.totalRow = result.meta.total;
-        console.log(state.data)
       })
       .addCase(getProductImports.rejected, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(getSinghle_ProductImport.pending, (state: product_ImportType) => {
+        state.isLoading = true;
+      })
+      .addCase(getSinghle_ProductImport.fulfilled, (state, action) => {
+        const result = action.payload.data;
+        state.isLoading = false;
+        state.data1 = result;
+        console.log(state.data1)
+      })
+      .addCase(getSinghle_ProductImport.rejected, (state) => {
         state.isLoading = false;
       })
       .addCase(createProduct.pending, (state: product_ImportType) => {

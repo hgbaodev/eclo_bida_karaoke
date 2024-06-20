@@ -20,7 +20,13 @@ class Supplier extends Model
         'active',
         'status',
     ];
-
+    protected $hidden = [
+        "id",
+    ];
+    public function supplier()
+    {
+        return $this->hasMany(ProductImportDetail::class);
+    }
     protected static function boot()
     {
         parent::boot();
