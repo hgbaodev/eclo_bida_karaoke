@@ -13,19 +13,16 @@ use App\Events\OrderProductRequestEvent;
 class OrderController extends Controller
 {
     protected $orderRepository;
-    protected $notifcationRepository;
 
-    public function __construct(OrderRepositoryInterface $orderRepository,NotificationRepositoryInterface $notifcationRepository)
+    public function __construct(OrderRepositoryInterface $orderRepository)
     {
         $this->orderRepository = $orderRepository;
-        $this->notifcationRepository = $notifcationRepository;
     }
 
     public function addProductsToOrder(Request $request, string $active)
     {
         $order = $this->orderRepository->getOrderByActive($active);
         $request->merge(['order' => $order]);
-        $order->notify(new OrderNotification($request->requestedProducts, $active));
         return $this->sentSuccessResponse();
     }
 
@@ -35,19 +32,14 @@ class OrderController extends Controller
         return $this->sentSuccessResponse($this->notifcationRepository->getUnreadNotifications());
     }
 
-    public function markOrderRequestAsRead(Request $request)
+    public function markOrderRequestAsProccessing(Request $request)
     {
-        if (!$request->has('id')){
-            return $this->sentErrorResponse('order id not found');
-        }
-        $notification = $this->orderRepository->markOrderRequestAsRead($request);
+       // TODO: danh dau la dang che bien
+    }
 
-        if(!$notification){
-            return  $this->sentErrorResponse('order not found');
-        }
-        $request->merge(['orderNotification' => $notification]);
-
-        return $this->sentSuccessResponse($notification);
+    public function markOrderRequestAsDone(Request $request)
+    {
+        // TODO: danh dau la dang che bien
     }
 
     public function index(Request $request)

@@ -70,7 +70,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(OrderRepositoryInterface::class, OrderRepository::class);
         $this->app->bind(ServiceRepositoryInterface::class, ServiceReposirory::class);
         $this->app->bind(ShiftDetailRepositoryInterface::class, ShiftDetailRepository::class);
-        $this->app->bind(NotificationRepositoryInterface::class, NotificationRepository::class);
 
     }
 
