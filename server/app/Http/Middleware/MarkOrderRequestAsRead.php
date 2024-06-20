@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Events\MarkOrderRequestAsReadEvent;
+use App\Http\Controllers\Event\SendEvent;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -20,7 +21,7 @@ class MarkOrderRequestAsRead
         $response = $next($request);
         //TODO: Validating the request.
         $orderNotification = $request->orderNotification;
-        event(new MarkOrderRequestAsReadEvent($orderNotification));
+        SendEvent::send('productOrder.requested', $orderNotification);
         return $response;
     }
 }

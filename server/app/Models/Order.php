@@ -50,4 +50,9 @@ class Order extends Model
     {
         return $this->belongsTo(Staff::class);
     }
+
+    public function kitchenOrders()
+    {
+        return $this->hasMany(KitchenOrders::class);
+    }
 }

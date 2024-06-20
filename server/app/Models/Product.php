@@ -39,4 +39,9 @@ class   Product extends Model
     {
         return $this->hasMany(ProductImportDetail::class);
     }
+
+    public function kitchenOrders()
+    {
+        return $this->hasMany(KitchenOrders::class);
+    }
 }
