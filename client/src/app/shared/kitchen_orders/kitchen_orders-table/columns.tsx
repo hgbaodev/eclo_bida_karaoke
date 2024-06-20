@@ -36,5 +36,47 @@ export const getColumns = (openModal: (args: any) => void) => {
       width: 50,
       render: (_: string, kitchenOrder: kitchenOrder) => kitchenOrder.quantity,
     },
+    {
+      title: <></>,
+      dataIndex: 'action',
+      key: 'action',
+      width: 10,
+      render: (_: string, kitchenOrder: kitchenOrder) => (
+        <div className="flex items-center justify-end gap-3 pe-3">
+          <Tooltip size="sm" content={'Edit Customer'} placement="top" color="invert">
+            <ActionIcon
+              onClick={() => {
+                const data = {
+                  name: kitchenOrder.product_name,
+                  status: kitchenOrder.status,
+                };
+                // openModal({
+                //   view: <EditServiceType service_type={data} active={serviceType.active} />,
+                // });
+              }}
+              as="span"
+              size="sm"
+              variant="outline"
+              className="hover:!border-gray-900 hover:text-gray-700 cursor-pointer"
+            >
+              <PencilIcon className="h-4 w-4" />
+            </ActionIcon>
+          </Tooltip>
+          {/* <DeletePopover
+            title={`Delete this service type`}
+            description={`Are you sure you want to delete this #${kitchenOrder.product_name} product?`}
+            onDelete={async () => {
+              const result = await dispatch(deleteServiceType(serviceType.active)); // Remove the .then() block
+              if (deleteServiceType.fulfilled.match(result)) {
+                await dispatch(getServiceTypes({ page: 1, pageSize: 5, query: '', status: '' }));
+                toast.success(`Service type #${serviceType.name} has been deleted successfully.`);
+              } else {
+                toast.error(`Failed to delete service type #${serviceType.active}.`);
+              }
+            }}
+          /> */}
+        </div>
+      ),
+    },
   ];
 };
