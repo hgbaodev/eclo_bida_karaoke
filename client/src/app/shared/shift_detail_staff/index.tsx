@@ -22,6 +22,7 @@ export default function ShiftDetailStaffTable() {
   const { openModal } = useModal();
   const { data } = useSelector((state: RootState) => state.shift);
   const { listShiftUserDetail, isLoading, workshift } = useSelector((state: RootState) => state.shift_user_detail);
+  const { oneWorkShift } = useSelector((state: RootState) => state.work_shift);
   useEffect(() => {
     dispatch(getShifts());
     dispatch(getAllStaffs(''));
@@ -37,8 +38,8 @@ export default function ShiftDetailStaffTable() {
     dispatch(getAllWorkShifts());
   }, []);
   const columns = useMemo(
-    () => getColumns(openModal, listShiftUserDetail, workshift),
-    [openModal, listShiftUserDetail, workshift],
+    () => getColumns(openModal, listShiftUserDetail, oneWorkShift),
+    [openModal, listShiftUserDetail, oneWorkShift],
   );
   const { visibleColumns } = useColumn(columns);
   if (!workshift) {

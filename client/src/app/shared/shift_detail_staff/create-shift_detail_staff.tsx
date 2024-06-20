@@ -20,22 +20,14 @@ import {
   getShiftUserDetails,
 } from '@/store/slices/shift_user_detailSlice';
 import toast from 'react-hot-toast';
-import { MenuList } from 'node_modules/react-select/dist/declarations/src/components/Menu';
 import { OptionType } from 'dayjs';
 
-export default function CreateShiftDetailStaff({
-  day_of_week,
-  shift,
-  workshift,
-}: {
-  day_of_week: string;
-  shift: any;
-  workshift: string;
-}) {
+export default function CreateShiftDetailStaff({ day_of_week, shift }: { day_of_week: string; shift: any }) {
   const { closeModal } = useModal();
   const [reset, setReset] = useState({});
   const [errors, setErrors] = useState<any>({});
   const { listStaffs, isCreateLoading } = useSelector((state: RootState) => state.staff);
+  const { oneWorkShift } = useSelector((state: RootState) => state.work_shift);
   const onSubmit: SubmitHandler<CreateShiftUserDetailInput> = async (data) => {
     const result: any = await dispatch(createShiftUserDetail(data));
     console.log(result);
@@ -43,7 +35,7 @@ export default function CreateShiftDetailStaff({
       setReset({});
       setErrors({});
       closeModal();
-      await dispatch(getShiftUserDetails(workshift));
+      await dispatch(getShiftUserDetails(oneWorkShift.active));
       toast.success('Created successfully');
     } else {
       setErrors(result?.payload?.errors);
@@ -53,7 +45,7 @@ export default function CreateShiftDetailStaff({
   };
   return (
     <Form<CreateShiftUserDetailInput>
-      resetValues={{ shift: shift.active, ...reset, workshift: workshift }}
+      resetValues={{ shift: shift.active, ...reset, workshift: oneWorkShift.active }}
       onSubmit={onSubmit}
       validationSchema={createShiftUserDetailSchema}
       serverError={errors}
@@ -70,14 +62,6 @@ export default function CreateShiftDetailStaff({
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
-            <Input
-              label="Day of week"
-              {...register('day_of_week')}
-              className="col-span-full"
-              value={day_of_week}
-              readOnly
-            />
-            <Input label="Shift" className="col-span-full" value={shift.time_in + '-' + shift.time_out} readOnly />
             <label style={{ fontWeight: 'bold' }}>Staff:</label>
             <Controller
               name="staff"
@@ -101,6 +85,20 @@ export default function CreateShiftDetailStaff({
                 </>
               )}
             />
+            <Input
+              label="Day of week"
+              {...register('day_of_week')}
+              className="col-span-full"
+              value={day_of_week}
+              readOnly
+            />
+            <Input label="Shift" className="col-span-full" value={shift.time_in + '-' + shift.time_out} readOnly />
+            <Input
+              label="Work Shift"
+              className="col-span-full"
+              value={oneWorkShift.date_start + '->' + oneWorkShift.date_end}
+              readOnly
+            />
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto" style={{ zIndex: 10 }}>
                 Cancel
@@ -121,8 +119,7 @@ const customStyles: StylesConfig<OptionType, boolean> = {
     ...provided,
     zIndex: 9999,
     position: 'absolute',
-    top: state.selectProps.menuPlacement === 'top' ? 'auto' : '100%',
-    maxHeight: '200px',
+    maxHeight: '300px',
     marginTop: '-1px',
     background: 'white',
   }),

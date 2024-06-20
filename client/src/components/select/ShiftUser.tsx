@@ -5,18 +5,14 @@ import React from 'react';
 import Create from './Create';
 import toast from 'react-hot-toast';
 import { TiDeleteOutline } from 'react-icons/ti';
-import {
-  deleteShiftUserDetail,
-  getAllShiftUserDetails,
-  getShiftUserDetails,
-} from '@/store/slices/shift_user_detailSlice';
+import { deleteShiftUserDetail, getShiftUserDetails } from '@/store/slices/shift_user_detailSlice';
 import { dispatch } from '@/store';
 import { ActionIcon, Tooltip } from 'rizzui';
 interface DayColumnProps {
   data: ShiftUserDetail[];
   dayOfWeek: string;
   shift: Shift;
-  workshift: string;
+  workshift: any;
 }
 
 const DayColumn: React.FC<DayColumnProps> = ({ data, dayOfWeek, shift, workshift }) => {
@@ -36,7 +32,11 @@ const DayColumn: React.FC<DayColumnProps> = ({ data, dayOfWeek, shift, workshift
     return (
       <div>
         {dayDataList.map((dayData, index) => (
-          <div key={index} className="flex items-center border border-gray-300 rounded-md mr-2">
+          <div
+            key={index}
+            className="flex items-center border border-gray-300 rounded-md mr-2"
+            style={{ width: '150px' }}
+          >
             <Tooltip size="sm" content={'Delete'} placement="top" color="invert">
               <ActionIcon
                 as="span"
@@ -49,7 +49,7 @@ const DayColumn: React.FC<DayColumnProps> = ({ data, dayOfWeek, shift, workshift
                   onClick={async () => {
                     const result = await dispatch(deleteShiftUserDetail(dayData.active)); // Remove the .then() block
                     if (deleteShiftUserDetail.fulfilled.match(result)) {
-                      await dispatch(getShiftUserDetails(workshift));
+                      await dispatch(getShiftUserDetails(workshift.active));
                       toast.success(`Staff #${dayData.staff.name} has been deleted successfully.`);
                     } else {
                       toast.error(`Failed to delete staff #${dayData.staff.name}.`);
@@ -61,13 +61,13 @@ const DayColumn: React.FC<DayColumnProps> = ({ data, dayOfWeek, shift, workshift
             {dayData.staff.name} <br />
           </div>
         ))}
-        <Create onClick={<CreateShiftDetailStaff day_of_week={dayOfWeek} shift={shift} workshift={workshift} />} />
+        <Create onClick={<CreateShiftDetailStaff day_of_week={dayOfWeek} shift={shift} />} />
       </div>
     );
   } else {
     return (
       <div>
-        <Create onClick={<CreateShiftDetailStaff day_of_week={dayOfWeek} shift={shift} workshift={workshift} />} />
+        <Create onClick={<CreateShiftDetailStaff day_of_week={dayOfWeek} shift={shift} />} />
       </div>
     );
   }
