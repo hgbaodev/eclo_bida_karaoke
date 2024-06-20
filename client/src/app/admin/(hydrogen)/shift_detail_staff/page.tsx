@@ -1,6 +1,5 @@
 'use client';
 import PageHeader from '@/app/shared/page-header';
-import ModalButton from '@/app/shared/modal-button';
 import ShiftDetailStaffTable from '@/app/shared/shift_detail_staff/index';
 const pageHeader = {
   title: 'Shift Details Of Staff',

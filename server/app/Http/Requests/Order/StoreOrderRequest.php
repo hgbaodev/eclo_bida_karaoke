@@ -22,7 +22,7 @@ class StoreOrderRequest extends HelperRequest
     public function rules(): array
     {
         return [
-            //
+            'service_active' => 'required|exists:services,active',
         ];
     }
 }

@@ -12,9 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('shift_user_details', function (Blueprint $table) {
-            $table->primary(['staff_id', 'shift_detail_id']);
+            $table->id();
             $table->foreignId('staff_id')->constrained('staff');
-            $table->foreignId('shift_detail_id')->constrained('shift_details');
+            $table->foreignId('shift_id')->constrained('shifts');
+            $table->string("day_of_week");
+            $table->string("active")->unique();
+            $table->foreignId('workshift_id')->constrained('work_shifts');
+            $table->softDeletes();
+            $table->timestamps();
         });
     }
 

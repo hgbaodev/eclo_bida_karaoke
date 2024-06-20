@@ -15,18 +15,19 @@ class Order extends Model
     public $timestamps = true;
 
     protected $fillable = [
+        'id',
         'active',
         'status',
+        'checkin_time',
         'checkout_time',
         'total_price',
         'customer_id',
-        'staff_id',
+        'user_id',
         'service_id',
     ];
 
     protected $hidden = [
-      'id',
-      'deleted_at',
+        'deleted_at',
     ];
 
     protected static function boot()

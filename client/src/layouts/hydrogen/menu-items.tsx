@@ -25,6 +25,24 @@ export const menuItems = [
     icon: <PiShapesDuotone />,
     badge: 'NEW',
   },
+  {
+    name: 'Sell',
+  },
+  {
+    name: 'Order',
+    href: '#',
+    icon: <PiPackageDuotone />,
+    dropdownItems: [
+      {
+        name: 'Table & Rooms',
+        href: routes.admin.order.tableandrooms,
+      },
+      {
+        name: 'Invoices',
+        href: routes.admin.order.invoice,
+      },
+    ],
+  },
   // label start
   {
     name: 'Apps Kit',
@@ -50,10 +68,6 @@ export const menuItems = [
       {
         name: 'Prices setting',
         href: routes.admin.services.prices,
-      },
-      {
-        name: 'Books',
-        href: routes.admin.services.books,
       },
     ],
   },
@@ -87,6 +101,11 @@ export const menuItems = [
   //   href: routes.admin.shift_detail,
   //   icon: <MdOutlineBadge />,
   // },
+  {
+    name: 'Schedule',
+    href: routes.admin.schedule,
+    icon: <MdOutlineBadge />,
+  },
   {
     name: 'Shift Details Of Staff',
     href: routes.admin.shift_detail_staff,

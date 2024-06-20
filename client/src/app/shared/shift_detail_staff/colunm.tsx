@@ -1,106 +1,77 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { HeaderCell } from '@/components/ui/table';
-import CreateShiftDetailStaff from './create-shift_detail_staff';
-import Create from '@/components/select/Create';
-export const getColumns = (openModal: (args: any) => void) => [
+import DayColumn from '@/components/select/ShiftUser';
+
+export const getColumns = (openModal: (args: any) => void, Data: ShiftUserDetail[], workshift: string) => [
   {
     title: <HeaderCell title="Shift/Day" />,
     dataIndex: 'shift',
     key: 'shift',
-    width: 50,
+    width: 30,
     render: (_: string, shift: Shift) => shift.time_in + '-' + shift.time_out,
   },
-
   {
     title: <HeaderCell title="Mon" />,
     dataIndex: 'mon',
     key: 'mon',
-    width: 100,
+    width: 200,
     render: (_: string, shift: Shift) => (
-      <div>
-        <Create
-          onClick={<CreateShiftDetailStaff day_of_week="Monday" shift={shift.time_in + '-' + shift.time_out} />}
-        />
-      </div>
+      <DayColumn data={Data} dayOfWeek="Monday" shift={shift} workshift={workshift} />
     ),
   },
   {
     title: <HeaderCell title="Tue" />,
     dataIndex: 'tue',
     key: 'tue',
-    width: 100,
+    width: 200,
     render: (_: string, shift: Shift) => (
-      <div>
-        <Create
-          onClick={<CreateShiftDetailStaff day_of_week="Tuesday" shift={shift.time_in + '-' + shift.time_out} />}
-        />
-      </div>
+      <DayColumn data={Data} dayOfWeek="Tuesday" shift={shift} workshift={workshift} />
     ),
   },
   {
     title: <HeaderCell title="Wed" />,
     dataIndex: 'wed',
     key: 'wed',
-    width: 100,
+    width: 200,
     render: (_: string, shift: Shift) => (
-      <div>
-        <Create
-          onClick={<CreateShiftDetailStaff day_of_week="Wednesday" shift={shift.time_in + '-' + shift.time_out} />}
-        />
-      </div>
+      <DayColumn data={Data} dayOfWeek="Wednesday" shift={shift} workshift={workshift} />
     ),
   },
   {
     title: <HeaderCell title="Thu" />,
     dataIndex: 'thu',
     key: 'thu',
-    width: 100,
+    width: 200,
     render: (_: string, shift: Shift) => (
-      <div>
-        <Create
-          onClick={<CreateShiftDetailStaff day_of_week="Thursday" shift={shift.time_in + '-' + shift.time_out} />}
-        />
-      </div>
+      <DayColumn data={Data} dayOfWeek="Thursday" shift={shift} workshift={workshift} />
     ),
   },
   {
     title: <HeaderCell title="Fri" />,
     dataIndex: 'fri',
     key: 'fri',
-    width: 100,
+    width: 200,
     render: (_: string, shift: Shift) => (
-      <div>
-        <Create
-          onClick={<CreateShiftDetailStaff day_of_week="Friday" shift={shift.time_in + '-' + shift.time_out} />}
-        />
-      </div>
+      <DayColumn data={Data} dayOfWeek="Friday" shift={shift} workshift={workshift} />
     ),
   },
   {
     title: <HeaderCell title="Sat" />,
     dataIndex: 'sat',
     key: 'sat',
-    width: 100,
+    width: 200,
     render: (_: string, shift: Shift) => (
-      <div>
-        <Create
-          onClick={<CreateShiftDetailStaff day_of_week="Saturday" shift={shift.time_in + '-' + shift.time_out} />}
-        />
-      </div>
+      <DayColumn data={Data} dayOfWeek="Saturday" shift={shift} workshift={workshift} />
     ),
   },
   {
     title: <HeaderCell title="Sun" />,
     dataIndex: 'sun',
     key: 'sun',
-    width: 100,
+    width: 200,
     render: (_: string, shift: Shift) => (
-      <div>
-        <Create
-          onClick={<CreateShiftDetailStaff day_of_week="Sunday" shift={shift.time_in + '-' + shift.time_out} />}
-        />
-      </div>
+      <DayColumn data={Data} dayOfWeek="Sunday" shift={shift} workshift={workshift} />
     ),
   },
 ];
@@ -110,10 +81,21 @@ export interface Shift {
   time_out: string;
   active: string;
 }
-export interface ShiftDetail {
-  shift_id: string;
+export interface WorkShift {
+  date_start: string;
+  date_end: string;
+  active: string;
 }
-export const STATUSES = {
-  Active: 'A',
-  InActive: 'D',
-} as const;
+export interface ShiftUserDetail {
+  day_of_week: string;
+  shift: {
+    active: string;
+    time_in: string;
+    time_out: string;
+  };
+  staff: {
+    name: string;
+    active: string;
+  };
+  active: string;
+}

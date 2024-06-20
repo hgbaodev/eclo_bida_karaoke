@@ -29,7 +29,7 @@ class OrderRepository implements OrderRepositoryInterface
 
         $orders = Order::query();
         $orders->latest();
-        if($all){
+        if ($all) {
             $orders = $orders->get();
         } else {
             $orders = $orders->paginate($perPage);
@@ -61,14 +61,19 @@ class OrderRepository implements OrderRepositoryInterface
         return $order;
     }
 
+    public function checkOrderServiceById(int $service_id)
+    {
+        $order = Order::where('service_id', $service_id)->where('checkout_time', null)->first();
+        return $order;
+    }
 
     public function markOrderRequestAsRead(Request $request)
     {
         $id = $request->id;
-            $notification = DatabaseNotification::where('id', $id)->firstOrFail();
-            if ($notification) {
-                $notification->markAsRead();
-                return $notification;
-            }
+        $notification = DatabaseNotification::where('id', $id)->firstOrFail();
+        if ($notification) {
+            $notification->markAsRead();
+            return $notification;
+        }
     }
 }
