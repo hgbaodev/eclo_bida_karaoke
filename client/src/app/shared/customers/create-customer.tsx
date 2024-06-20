@@ -117,7 +117,7 @@ export default function CreateCustomer() {
                 Cancel
               </Button>
               <Button type="submit" isLoading={isCreateLoading} className="w-full @xl:w-auto">
-                Create User
+                Create price
               </Button>
             </div>
           </>

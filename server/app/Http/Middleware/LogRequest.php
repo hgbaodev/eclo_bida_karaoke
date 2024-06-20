@@ -36,7 +36,7 @@ class LogRequest
                     'ip_address' => $request->ip(),
                 ]);
                 $log = Logger::with(['user.role'])->find($loginToken->id);
-                SendEvent::send('loggerEnvent', $log);
+                SendEvent::send('loggerEvent', $log);
             }
         }
         Log::info('Request Logged:', [

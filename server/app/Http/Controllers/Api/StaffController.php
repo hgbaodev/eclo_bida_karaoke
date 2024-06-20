@@ -8,10 +8,9 @@ use App\Http\Requests\Staff\UpdateStaffRequest;
 use App\Interface\PositionRepositoryInterface;
 use App\Models\Staff;
 use App\Interface\StaffRepositoryInterface;
-use App\Models\Logger;
+
 use Illuminate\Http\Request;
-use Laravel\Reverb\Loggers\Log;
-use Psy\Readline\Hoa\Console;
+
 
 class StaffController extends Controller
 {
@@ -30,6 +29,10 @@ class StaffController extends Controller
         return $this->sentSuccessResponse($this->staffRepository->getStaffs($request));
     }
 
+    public function list()
+    {
+        return $this->sentSuccessResponse($this->staffRepository->getAllStaffs());
+    }
     /**
      * Show the form for creating a new resource.
      */

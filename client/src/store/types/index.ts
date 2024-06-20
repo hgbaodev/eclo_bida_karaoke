@@ -11,10 +11,29 @@ export interface RootState {
   area: areaType;
   device: deviceType;
   position: positionType;
+  price: priceType;
   supplier: supplierType;
   staff: staffType;
   shift: shiftType;
+  service: serviceType;
+  shift_detail: shift_detailType;
+  requested_products: requested_productsType;
 }
+
+export interface requested_productsType {
+  data: [];
+  isLoading: boolean;
+  isFiltered: boolean;
+  page: number;
+  pageSize: number;
+  totalRow: number;
+  query: string;
+  status: any;
+  errors: string | null;
+  isCreateLoading: boolean;
+  isUpdateLoading: boolean;
+}
+
 export interface authType {
   isAuthenticated: boolean;
   isLoaded: boolean;
@@ -47,6 +66,20 @@ export interface userType {
   query: string;
   role: any;
   status: any;
+  errors: any;
+  isCreateLoading: boolean;
+  isUpdateLoading: boolean;
+}
+
+export interface priceType {
+  data: [];
+  isLoading: boolean;
+  isFiltered: boolean;
+  page: number;
+  pageSize: number;
+  totalRow: number;
+  status: any;
+  query: string;
   errors: any;
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
@@ -175,6 +208,7 @@ export interface staffType {
   errors: any;
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
+  listStaffs: any[];
 }
 
 export interface positionType {
@@ -204,4 +238,52 @@ export interface shiftType {
   errors: any;
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
+  listShifts: any[];
+}
+export interface shift_detailType {
+  data: [];
+  isLoading: boolean;
+  isFiltered: boolean;
+  page: number;
+  pageSize: number;
+  totalRow: number;
+  query: string;
+  day_of_week: string;
+  shift: any;
+  errors: any;
+  isCreateLoading: boolean;
+  isUpdateLoading: boolean;
+}
+export interface serviceType {
+  data: [];
+  isLoading: boolean;
+  isFiltered: boolean;
+  totalRow: number;
+  page: number;
+  pageSize: number;
+  query: string;
+  prices: {
+    active: string;
+    name: string;
+    pricePerHour: number;
+    status: string;
+  }[];
+  areas: {
+    name: string;
+    description: string;
+    active: string;
+  }[];
+  serviceTypes: {
+    name: string;
+    status: string;
+    active: string;
+  }[];
+  devices: [];
+  listDevices: {
+    device: string;
+    number: number;
+  }[];
+  isCreateLoading: boolean;
+  isEditLoading: boolean;
+  selectedArea: any;
 }

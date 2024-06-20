@@ -35,15 +35,6 @@ class CustomerRepository implements CustomerRepositoryInterface {
       return new CollectionCustom($customers);
   }
 
-  function getAllCustomers()
-  {
-    return Customer::all();
-  }
-
-  function getCustomerById($id)
-  {
-    return Customer::find($id);
-  }
 
     function getCustomerByActive($active)
     {
@@ -55,26 +46,12 @@ class CustomerRepository implements CustomerRepositoryInterface {
     return Customer::create($data);
   }
 
-  function updateCustomerById($id, array $data)
-  {
-    $customer = Customer::find($id);
-    $customer->update($data);
-    return $customer;
-  }
-
     function updateCustomerByActive($active, array $data)
     {
         $customer = Customer::where('active', $active)->firstOrFail();
         $customer->update($data);
         return $customer;
     }
-
-  function deleteCustomerById($id)
-  {
-    $customer = Customer::find($id);
-    $customer->delete();
-    return $customer;
-  }
 
 
   public function deleteCustomerByActive($active)

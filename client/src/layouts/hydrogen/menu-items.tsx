@@ -47,6 +47,14 @@ export const menuItems = [
         name: 'Service types',
         href: routes.admin.services.service_types,
       },
+      {
+        name: 'Prices setting',
+        href: routes.admin.services.prices,
+      },
+      {
+        name: 'Books',
+        href: routes.admin.services.books,
+      },
     ],
   },
   {
@@ -74,6 +82,16 @@ export const menuItems = [
     href: routes.admin.shifts,
     icon: <MdOutlineBadge />,
   },
+  // {
+  //   name: 'Shift Details',
+  //   href: routes.admin.shift_detail,
+  //   icon: <MdOutlineBadge />,
+  // },
+  {
+    name: 'Shift Details Of Staff',
+    href: routes.admin.shift_detail_staff,
+    icon: <MdOutlineBadge />,
+  },
   {
     name: 'Customers',
     href: routes.admin.customers,
@@ -85,7 +103,11 @@ export const menuItems = [
     icon: <TbPackages />,
   },
   {
-
+    name: 'Kitchen orders',
+    href: routes.admin.kitchen_orders,
+    icon: <PiFolderLockDuotone />,
+  },
+  {
     name: 'Products',
     href: routes.admin.products,
     icon: <FaProductHunt />,
@@ -100,5 +122,4 @@ export const menuItems = [
     href: routes.admin.loggers,
     icon: <FaUniversalAccess />,
   },
- 
 ];

@@ -1,4 +1,3 @@
-// userSlice.js
 import axiosInstance from '@/api/axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { customerType } from '../types';

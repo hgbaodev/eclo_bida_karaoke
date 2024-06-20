@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helpers\FileHandler;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Device\StoreDeviceRequest;
 use App\Http\Requests\Device\UpdateDeviceRequest;
@@ -31,9 +32,7 @@ class DeviceController extends Controller
     {
         $validated_data = $request->validated();
         if ($request->hasFile('image')) {
-            $filePath = $request->file('image')->store('public/uploads');
-            $fileName = basename($filePath);
-            $validated_data['image'] = $fileName;
+            $validated_data['image'] = FileHandler::storeFile($request->file('image'));
         }
         $device = $this->deviceRepository->createDevice($validated_data);
         return $this->sentSuccessResponse($device, 'The device has been created!!!', 200);

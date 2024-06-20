@@ -6,10 +6,11 @@ use App\Traits\GeneratesUniqueActive;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 
 class Customer extends Model
 {
-    use HasFactory, SoftDeletes, GeneratesUniqueActive;
+    use HasFactory, SoftDeletes, Notifiable, GeneratesUniqueActive;
 
     public $timestamps = true;
 
@@ -22,6 +23,11 @@ class Customer extends Model
         'active',
     ];
 
+    protected $hidden = [
+        'id',
+        'deleted_at'
+    ];
+
     protected static function boot()
     {
         parent::boot();
@@ -31,5 +37,10 @@ class Customer extends Model
                 $model->active = self::generateUniqueActive();
             }
         });
+    }
+
+    public function orders()
+    {
+        $this->hasMany(Order::class);
     }
 }

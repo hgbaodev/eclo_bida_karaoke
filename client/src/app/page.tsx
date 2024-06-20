@@ -1,9 +1,14 @@
+'use client';
+
 import Image from 'next/image';
 import { Button, Title, Text } from 'rizzui';
 import LaptopImg from '@public/welcome-laptop.png';
 import MobileImg from '@public/welcome-mobile.png';
+import { useRouter } from 'next/navigation';
 
 export default function WelcomePage() {
+  const router = useRouter();
+
   return (
     <div className="flex grow items-center px-6 xl:px-10">
       <div className="mx-auto flex w-full max-w-[1180px] flex-col-reverse items-center justify-between text-center lg:flex-row lg:gap-5 lg:text-start 3xl:max-w-[1520px]">
@@ -21,7 +26,12 @@ export default function WelcomePage() {
             update.
           </Text>
           <div className="mt-8 flex flex-col justify-center gap-4 lg:flex-row lg:justify-start xl:gap-6">
-            <Button color="primary" size="lg" className="h-12 px-4 xl:h-14 xl:px-6">
+            <Button
+              color="primary"
+              size="lg"
+              className="h-12 px-4 xl:h-14 xl:px-6"
+              onClick={() => router.push('/admin')}
+            >
               Start Installation
             </Button>
             <Button size="lg" variant="outline" className="h-12 px-4 xl:h-14 xl:px-6">

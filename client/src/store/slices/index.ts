@@ -8,6 +8,7 @@ import user from './userSlice';
 import staff from './staffSlice';
 import position from './positionSlice';
 import shift from './shiftSlice';
+import shift_detail from './shift_detailSlice';
 
 import logger from './loggerSlice';
 
@@ -18,9 +19,12 @@ import area from './areaSlice';
 import service_type from './serviceTypeSlice';
 
 import customer from './customerSlice';
+import price from './priceSlice';
+import requested_products from './requested_productsSlice';
 
 import device from './deviceSlice';
 import supplier from './supplierSlice';
+import service from './serviceSlice';
 
 // ==============================|| COMBINE REDUCERS ||============================== //
 
@@ -37,9 +41,13 @@ const reducers = combineReducers({
   customer,
   area,
   supplier,
+  price,
   device,
   shift,
   product_import_detail,
+  service,
+  shift_detail,
+  requested_products,
 });
 
 export default reducers;

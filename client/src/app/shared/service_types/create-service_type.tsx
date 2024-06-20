@@ -61,7 +61,7 @@ export default function CreateSupplier() {
               label="Name"
               placeholder="Enter service type name"
               {...register('name')}
-              className="col-span-[1/2]"
+              className="col-span-full"
               error={errors.name?.message}
             />
 
@@ -91,7 +91,7 @@ export default function CreateSupplier() {
                 Cancel
               </Button>
               <Button type="submit" isLoading={isCreateLoading} className="w-full @xl:w-auto">
-                Create User
+                Create service type
               </Button>
             </div>
           </>

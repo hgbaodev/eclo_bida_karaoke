@@ -14,10 +14,19 @@ class PriceRepository implements PriceRepositoryInterface
     {
         $all = $request->input('all');
         $perPage = $request->input('perPage');
+        $status = $request->input('status');
+        $query = $request->input('query');
 
         $prices = Price::query();
         $prices->latest();
 
+        if($query){
+            $prices->whereRaw("CONCAT(name, ' ', pricePerHour) LIKE ?", ["%$query%"]);
+        }
+
+        if($status){
+            $prices->where('status', $status);
+        }
         if($all){
             $prices = $prices->get();
         } else {

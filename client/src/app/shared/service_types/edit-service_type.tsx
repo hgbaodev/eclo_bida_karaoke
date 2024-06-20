@@ -66,7 +66,7 @@ export default function EditServiceType({
               label="Name"
               placeholder="Enter service type name"
               {...register('name')}
-              className="col-span-[1/2]"
+              className="col-span-full"
               error={errors.name?.message}
             />
             <Controller
@@ -96,7 +96,7 @@ export default function EditServiceType({
                 Cancel
               </Button>
               <Button type="submit" isLoading={isUpdateLoading} className="w-full @xl:w-auto">
-                Update User
+                Update service type
               </Button>
             </div>
           </>

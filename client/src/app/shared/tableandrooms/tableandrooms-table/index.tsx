@@ -1,72 +1,45 @@
 'use client';
 
-import { useCallback, useState, useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 import { useColumn } from '@/hooks/use-column';
-import { useTable } from '@/hooks/use-table';
 import ControlledTable from '@/components/controlled-table';
-import { jobData } from '@/data/job-data';
 import { getColumns } from './columns';
 import FilterElement from './filter-element';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store/types';
+import { getServices, setPage, setPageSize } from '@/store/slices/serviceSlice';
+import { dispatch } from '@/store';
+import { useModal } from '../../modal-views/use-modal';
 
 const filterState = {
   date: [null, null],
   status: '',
 };
 export default function RoomAndTablesTable({ className }: { className?: string }) {
-  const [pageSize, setPageSize] = useState(7);
+  const { data, pageSize, isLoading, page, totalRow, query, selectedArea } = useSelector(
+    (state: RootState) => state.service,
+  );
 
-  const onHeaderCellClick = (value: string) => ({
-    onClick: () => {
-      handleSort(value);
-    },
-  });
+  const { openModal } = useModal();
 
-  const onDeleteItem = useCallback((id: string) => {
-    handleDelete(id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  console.log({ selectedArea });
 
-  const {
-    isLoading,
-    isFiltered,
-    tableData,
-    currentPage,
-    totalItems,
-    handlePaginate,
-    filters,
-    updateFilter,
-    searchTerm,
-    handleSearch,
-    sortConfig,
-    handleSort,
-    selectedRowKeys,
-    handleRowSelect,
-    handleSelectAll,
-    handleDelete,
-    handleReset,
-  } = useTable(jobData, pageSize, filterState);
+  useEffect(() => {
+    dispatch(getServices({ page, pageSize, query, area: selectedArea }));
+  }, [page, pageSize, query, selectedArea]);
+
+  const handlePaginate = (page: number) => {
+    dispatch(setPage(page));
+  };
+
+  const handleChangePageSize = (size: any) => {
+    dispatch(setPageSize(size));
+  };
 
   const columns = useMemo(
-    () =>
-      getColumns({
-        data: jobData,
-        sortConfig,
-        checkedItems: selectedRowKeys,
-        onHeaderCellClick,
-        onDeleteItem,
-        onChecked: handleRowSelect,
-        handleSelectAll,
-      }),
+    () => getColumns(openModal),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [
-      selectedRowKeys,
-      onHeaderCellClick,
-      sortConfig.key,
-      sortConfig.direction,
-      onDeleteItem,
-      handleRowSelect,
-      handleSelectAll,
-    ],
+    [openModal],
   );
 
   const { visibleColumns } = useColumn(columns);
@@ -76,16 +49,16 @@ export default function RoomAndTablesTable({ className }: { className?: string }
       <FilterElement />
       <ControlledTable
         variant="modern"
-        data={tableData}
+        data={data}
         isLoading={isLoading}
-        showLoadingText={true}
+        showLoadingText={false}
         // @ts-ignore
         columns={visibleColumns}
         paginatorOptions={{
           pageSize,
-          setPageSize,
-          total: totalItems,
-          current: currentPage,
+          setPageSize: handleChangePageSize,
+          total: totalRow,
+          current: page,
           onChange: (page: number) => handlePaginate(page),
         }}
         className="rounded-md border border-muted text-sm shadow-sm [&_.rc-table-placeholder_.rc-table-expanded-row-fixed>div]:h-60 [&_.rc-table-placeholder_.rc-table-expanded-row-fixed>div]:justify-center [&_.rc-table-row:last-child_td.rc-table-cell]:border-b-0 [&_thead.rc-table-thead]:border-t-0"

@@ -11,7 +11,7 @@ const initialState: areaType = {
 
 export const getAreas = createAsyncThunk('areas', async () => {
   try {
-    const response = await axiosInstance.get('/areas');
+    const response = await axiosInstance.get(`/areas?all=true`);
     return response.data;
   } catch (error: any) {
     throw error;
@@ -55,7 +55,7 @@ const areaSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getAreas.fulfilled, (state, action) => {
-        state.data = action.payload.data;
+        state.data = action.payload.data.result;
       })
       .addCase(createArea.pending, (state) => {
         state.isCreateLoading = true;
