@@ -88,4 +88,5 @@ export const messages = {
   timeoutIsRequired: 'Time out is required',
   dateStartIsRequired: 'Date start is required',
   dateEndIsRequired: 'Date end is required',
+  supplierisRequired: 'Suppliers is required',
 };

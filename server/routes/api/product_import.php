@@ -13,6 +13,7 @@ Route::group(
         Route::get('/', [ProductImportController::class, 'index']);
         Route::get('/{active}', [ProductImportController::class, 'show']);
         Route::post('/', [ProductImportController::class, 'store']);
+        Route::get('/update-total-cost/{active}', [ProductImportController::class, 'updateTotalCost']);
         Route::put('/{active}', [ProductImportController::class, 'update']);
         Route::delete('/{active}', [ProductImportController::class, 'destroy']);
     }

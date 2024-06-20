@@ -25,6 +25,24 @@ export const menuItems = [
     icon: <PiShapesDuotone />,
     badge: 'NEW',
   },
+  {
+    name: 'Sell',
+  },
+  {
+    name: 'Order',
+    href: '#',
+    icon: <PiPackageDuotone />,
+    dropdownItems: [
+      {
+        name: 'Table & Rooms',
+        href: routes.admin.order.tableandrooms,
+      },
+      {
+        name: 'Invoices',
+        href: routes.admin.order.invoice,
+      },
+    ],
+  },
   // label start
   {
     name: 'Apps Kit',
@@ -102,6 +120,11 @@ export const menuItems = [
     name: 'Suppliers',
     href: routes.admin.suppliers,
     icon: <TbPackages />,
+  },
+  {
+    name: 'Kitchen orders',
+    href: routes.admin.kitchen_orders,
+    icon: <PiFolderLockDuotone />,
   },
   {
     name: 'Products',

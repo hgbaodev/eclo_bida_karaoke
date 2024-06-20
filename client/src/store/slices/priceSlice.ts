@@ -83,7 +83,6 @@ const priceSlice = createSlice({
       state.page = action.payload;
     },
     setPageSize: (state, action) => {
-      state.page = 1;
       state.pageSize = action.payload;
     },
     setQuery: (state, action) => {

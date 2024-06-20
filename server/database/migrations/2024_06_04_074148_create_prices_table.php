@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->float('pricePerHour');
             $table->string('status')->default('A');
+            $table->foreignId('service_type_id')->constrained('service_types');
             $table->softDeletes();
         });
     }

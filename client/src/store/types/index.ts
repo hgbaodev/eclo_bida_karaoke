@@ -6,6 +6,7 @@ export interface RootState {
   service_type: service_typeType;
   product: productType;
   product_import: product_ImportType;
+  product_import_detail: product_Import_DetailType;
   customer: customerType;
   area: areaType;
   device: deviceType;
@@ -14,10 +15,28 @@ export interface RootState {
   supplier: supplierType;
   staff: staffType;
   shift: shiftType;
+  service: serviceType;
   shift_detail: shift_detailType;
   shift_user_detail: shift_user_detailType;
   work_shift: work_shiftType;
+  order: orderType;
+  requested_products: requested_productsType;
 }
+
+export interface requested_productsType {
+  data: [];
+  isLoading: boolean;
+  isFiltered: boolean;
+  page: number;
+  pageSize: number;
+  totalRow: number;
+  query: string;
+  status: any;
+  errors: string | null;
+  isCreateLoading: boolean;
+  isUpdateLoading: boolean;
+}
+
 export interface authType {
   isAuthenticated: boolean;
   isLoaded: boolean;
@@ -109,6 +128,7 @@ export interface supplierType {
   errors: any;
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
+  listSupplier:any[];
 }
 
 export interface loggerType {
@@ -132,8 +152,25 @@ export interface productType {
   errors: any;
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
+  listProduct:any[];
 }
 export interface product_ImportType {
+  data: [];
+  data1: any;
+  data2:any;
+  isLoading: boolean;
+  isFiltered: boolean;
+  page: number;
+  pageSize: number;
+  totalRow: number;
+  query: string;
+  errors: any;
+  isCreateLoading: boolean;
+  isUpdateLoading: boolean;
+  product:any;
+  supplier:any;
+}
+export interface product_Import_DetailType {
   data: [];
   isLoading: boolean;
   isFiltered: boolean;
@@ -220,6 +257,7 @@ export interface shift_detailType {
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
 }
+
 export interface shift_user_detailType {
   data: [];
   isLoading: boolean;
@@ -244,4 +282,43 @@ export interface work_shiftType {
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
   oneWorkShift: any;
+
+export interface serviceType {
+  data: [];
+  isLoading: boolean;
+  isFiltered: boolean;
+  totalRow: number;
+  page: number;
+  pageSize: number;
+  query: string;
+  prices: {
+    active: string;
+    name: string;
+    pricePerHour: number;
+    status: string;
+  }[];
+  areas: {
+    name: string;
+    description: string;
+    active: string;
+  }[];
+  serviceTypes: {
+    name: string;
+    status: string;
+    active: string;
+  }[];
+  devices: [];
+  listDevices: {
+    device: string;
+    number: number;
+  }[];
+  isCreateLoading: boolean;
+  isEditLoading: boolean;
+  selectedArea: any;
+}
+
+export interface orderType {
+  areas: any[];
+  isLoading: boolean;
+
 }

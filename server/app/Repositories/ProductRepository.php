@@ -39,7 +39,7 @@ class ProductRepository implements ProductRepositoryInterface
     }
     public function getProductByActive($active)
     {
-        return Product::where("active", $active)->get();
+        return Product::where("active", $active)->first();
     }
     public function updateProductByActive($active, array $data)
     {

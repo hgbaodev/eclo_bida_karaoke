@@ -41,4 +41,9 @@ class Staff extends Model
     {
         return $this->belongsTo(Position::class);
     }
+
+    public function orders()
+    {
+        $this->hasMany(Order::class);
+    }
 }

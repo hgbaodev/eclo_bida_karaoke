@@ -3,7 +3,7 @@
 import { CiEdit } from 'react-icons/ci';
 import { IoAddCircleOutline } from 'react-icons/io5';
 import StatusField from '@/components/controlled-table/status-field';
-import { Button } from 'rizzui';
+import { Button, Input } from 'rizzui';
 import { dispatch } from '@/store';
 import { RootState } from '@/store/types';
 import { useSelector } from 'react-redux';
@@ -12,15 +12,24 @@ import { useModal } from '../../modal-views/use-modal';
 import CreateArea from '../create-area';
 import { getAreas } from '@/store/slices/areaSlice';
 import EditArea from '../edit-area';
+import { setQuery, setSelectedArea } from '@/store/slices/serviceSlice';
+import { PiMagnifyingGlassBold } from 'react-icons/pi';
+import useDebounce from '@/hooks/use-debounce';
 
 export default function FilterElement() {
   const { openModal } = useModal();
   const { data } = useSelector((state: RootState) => state.area);
-  const [selectedArea, setSelectedArea] = useState('' as string);
+  const { selectedArea, query } = useSelector((state: RootState) => state.service);
+  const [searchTerm, setSearchTerm] = useState(query);
+  const debounceSearchTerm = useDebounce(searchTerm, 1000);
 
   useEffect(() => {
     dispatch(getAreas());
   }, []);
+
+  useEffect(() => {
+    dispatch(setQuery(debounceSearchTerm));
+  }, [debounceSearchTerm]);
 
   return (
     <>
@@ -37,7 +46,7 @@ export default function FilterElement() {
           dropdownClassName="!z-10"
           value={selectedArea}
           onChange={(active: any) => {
-            setSelectedArea(active);
+            dispatch(setSelectedArea(active));
           }}
           placeholder="All areas"
           getOptionValue={(option) => option.active}
@@ -80,6 +89,17 @@ export default function FilterElement() {
             <IoAddCircleOutline className="me-1.5 h-[17px] w-[17px]" /> Add
           </Button>
         )}
+        <Input
+          type="search"
+          placeholder="Search for table/rooms..."
+          value={searchTerm}
+          onClear={() => setSearchTerm('')}
+          onChange={(event) => setSearchTerm(event.target.value)}
+          prefix={<PiMagnifyingGlassBold className="h-4 w-4" />}
+          rounded="lg"
+          clearable
+          className="-order-2 w-full @xl:-order-5 @xl:ms-auto @xl:w-full @4xl:-order-2 @4xl:w-[230px] @5xl:w-auto"
+        />
       </div>
     </>
   );

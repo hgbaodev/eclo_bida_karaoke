@@ -19,6 +19,13 @@ class ServiceType extends Model
         'active',
     ];
 
+    protected $hidden = [
+        'id',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
+
     protected static function boot()
     {
         parent::boot();
@@ -28,5 +35,10 @@ class ServiceType extends Model
                 $model->active = self::generateUniqueActive();
             }
         });
+    }
+
+    public function services()
+    {
+        return $this->hasMany(Service::class);
     }
 }

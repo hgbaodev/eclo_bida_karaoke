@@ -53,7 +53,7 @@ export const getColumns = (openModal: (args: any) => void) => [
     dataIndex: 'fullName',
     key: 'fullName',
     width: 50,
-    render: (_: string, serviceType: ServiceType) => <AvatarCard src={serviceType.image} name={serviceType.name} />,
+    render: (_: string, serviceType: ServiceType) => serviceType.name,
   },
   {
     title: <HeaderCell title="Created" />,

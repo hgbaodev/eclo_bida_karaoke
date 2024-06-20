@@ -19,9 +19,9 @@ class AreaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->sentSuccessResponse($this->areaRepository->getAllAreas());
+        return $this->sentSuccessResponse($this->areaRepository->getAreas($request));
     }
 
     /**
@@ -63,5 +63,11 @@ class AreaController extends Controller
             return $this->sentErrorResponse('Area ' . $id . ' is not found');
         }
         return $this->sentSuccessResponse($this->areaRepository->deleteAreaById($id), 'The area ' . $id . ' has been deleted!!!', 200);
+    }
+
+    public function getAllAreaWithServices()
+    {
+        $areas = $this->areaRepository->getAllAreaWithServices();
+        return $this->sentSuccessResponse($areas);
     }
 }

@@ -26,4 +26,6 @@ class LoggerRepository implements LoggerRepositoryInterface
     }
     return new CollectionCustom($loggers);
   }
+
+  
 }

@@ -22,7 +22,9 @@ Route::group([
     require __DIR__ . '/api/product.php';
     require __DIR__ . '/api/product_import_details.php';
     require __DIR__ . '/api/price.php';
+    require __DIR__ . '/api/order.php';
     require __DIR__ . '/api/shiftdetail.php';
     require __DIR__ . '/api/shiftuserdetail.php';
     require __DIR__ . '/api/workshift.php';
+    require __DIR__ . '/api/service.php';
 });

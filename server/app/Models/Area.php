@@ -34,4 +34,9 @@ class Area extends Model
             }
         });
     }
+
+    public function services()
+    {
+        return $this->hasMany(Service::class, 'area_id', 'id');
+    }
 }
