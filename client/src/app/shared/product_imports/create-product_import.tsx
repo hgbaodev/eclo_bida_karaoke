@@ -10,7 +10,7 @@ import { createProduct, getProductImports } from '@/store/slices/product_importS
 import { CreateProduc_ImporttInput, createProduct_ImportSchema } from '@/utils/validators/create-product_import.schema';
 import { dispatch } from '@/store';
 import toast from 'react-hot-toast';
-import { getStatusBadge } from './product_import_table/columns';
+import  {getStatusBadge}  from './product_import_table/columns';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { statusOptions } from './type';
@@ -76,15 +76,15 @@ export default function CreateStaff() {
               error={errors.receive_time?.message}
             />
 
-            <Input
+            {/* <Input
              type="number"
               label="Total cost"
               placeholder="Enter total cost"
-             
               {...register('total_cost')}
               className="col-span-full"
+          
               error={errors.total_cost?.message}
-            />
+            /> */}
             
             
             <Controller

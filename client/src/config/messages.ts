@@ -86,4 +86,5 @@ export const messages = {
   salaryIsRequired: 'Salary position is required',
   timeinIsRequired: 'Time in is required',
   timeoutIsRequired: 'Time out is required',
+  supplierisRequired: 'Suppliers is required',
 };

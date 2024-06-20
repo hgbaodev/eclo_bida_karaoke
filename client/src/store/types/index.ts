@@ -6,6 +6,7 @@ export interface RootState {
   service_type: service_typeType;
   product: productType;
   product_import: product_ImportType;
+  product_import_detail: product_Import_DetailType;
   customer: customerType;
   area: areaType;
   device: deviceType;
@@ -125,6 +126,7 @@ export interface supplierType {
   errors: any;
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
+  listSupplier:any[];
 }
 
 export interface loggerType {
@@ -148,8 +150,25 @@ export interface productType {
   errors: any;
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
+  listProduct:any[];
 }
 export interface product_ImportType {
+  data: [];
+  data1: any;
+  data2:any;
+  isLoading: boolean;
+  isFiltered: boolean;
+  page: number;
+  pageSize: number;
+  totalRow: number;
+  query: string;
+  errors: any;
+  isCreateLoading: boolean;
+  isUpdateLoading: boolean;
+  product:any;
+  supplier:any;
+}
+export interface product_Import_DetailType {
   data: [];
   isLoading: boolean;
   isFiltered: boolean;

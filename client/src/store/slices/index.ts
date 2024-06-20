@@ -14,6 +14,7 @@ import logger from './loggerSlice';
 
 import product from './productSlices';
 import product_import from './product_importSlice';
+import product_import_detail from './product_import_detailSlice';
 import area from './areaSlice';
 import service_type from './serviceTypeSlice';
 
@@ -45,6 +46,7 @@ const reducers = combineReducers({
   price,
   device,
   shift,
+  product_import_detail,
   service,
   shift_detail,
   order,

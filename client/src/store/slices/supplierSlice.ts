@@ -17,6 +17,7 @@ const initialState: supplierType = {
   errors: null,
   isCreateLoading: false,
   isUpdateLoading: false,
+  listSupplier:[],
 };
 
 export const getSuppliers = createAsyncThunk(
@@ -36,6 +37,14 @@ export const getSuppliers = createAsyncThunk(
   },
 );
 
+export const getSinghle_Supplier = createAsyncThunk('supplier/getAllSupplier', async () => {
+  try {
+    const response = await axiosInstance.get('suppliers');
+    return response.data;
+  } catch (error: any) {
+    throw error;
+  }
+});
 export const createSupplier = createAsyncThunk('suppliers/createSupplier', async (data: any, { rejectWithValue }) => {
   try {
     const response = await axiosInstance.post(`suppliers`, data);
@@ -119,6 +128,19 @@ const supplierSlice = createSlice({
         state.totalRow = result.meta.total;
       })
       .addCase(getSuppliers.rejected, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(getSinghle_Supplier.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getSinghle_Supplier.fulfilled, (state, action) => {
+        state.isLoading = false;
+        const result = action.payload.data;
+        state.listSupplier = result.result;
+        state.data = result.result;
+        state.totalRow = result.meta.total;
+      })
+      .addCase(getSinghle_Supplier.rejected, (state) => {
         state.isLoading = false;
       })
       .addCase(createSupplier.pending, (state: supplierType) => {

@@ -11,16 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_import_detail', function (Blueprint $table) {
-            $table->unsignedBigInteger('id');
+        Schema::create('product_import_details', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('id_product');
             $table->double('cost_price');
             $table->bigInteger('quantity');
-            $table->unsignedBigInteger('supplier_id');
+            $table->unsignedBigInteger('supplier_id')->nullable();
             $table->unsignedBigInteger('import_id');
             $table->string('active')->unique();
             $table->softDeletes();
-            $table->primary('id');
-            $table->foreign('id')->references('id')->on('products');
+            $table->timestamps();
+            $table->unique(['id_product', 'import_id']);
+            $table->foreign('id_product')->references('id')->on('products');
             $table->foreign('supplier_id')->references('id')->on('suppliers');
             $table->foreign('import_id')->references('id')->on('product_imports');
         });
@@ -31,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_import_detail');
+        Schema::dropIfExists('product_import_details');
     }
 };
