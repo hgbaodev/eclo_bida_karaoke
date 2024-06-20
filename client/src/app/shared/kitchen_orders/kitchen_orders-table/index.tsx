@@ -8,18 +8,16 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
 import usePusher from '@/hooks/use-pusher';
-import { getRequestedProducts } from '@/store/slices/requested_productsSlice';
+import { getKitchenOrders } from '@/store/slices/kitchen_orderSlice';
 import { useModal } from '../../modal-views/use-modal';
 
 export default function KitchenOrdersTable() {
   const { openModal } = useModal();
-  const { data, isLoading, pageSize, page, totalRow, status, query } = useSelector(
-    (state: RootState) => state.requested_products,
-  );
+  const { data, isLoading, pageSize, page, status, query } = useSelector((state: RootState) => state.kitchen_order);
 
   const fetchData = useCallback(async () => {
     try {
-      await dispatch(getRequestedProducts());
+      await dispatch(getKitchenOrders());
     } catch (error) {
       console.error('Error:', error);
     }
@@ -44,11 +42,16 @@ export default function KitchenOrdersTable() {
   );
 
   const { visibleColumns } = useColumn(columns);
+
+  // Lọc dữ liệu dựa trên status
+  const dataR = useMemo(() => data.filter((kitchenOrder) => kitchenOrder.status === 'R'), [data]);
+  const dataW = useMemo(() => data.filter((kitchenOrder) => kitchenOrder.status === 'W'), [data]);
+
   return (
     <div className="grid grid-cols-2 gap-4 mt-4">
       <ControlledTable
         variant="modern"
-        data={data}
+        data={dataR}
         isLoading={isLoading}
         showLoadingText={false}
         // @ts-ignore
@@ -57,7 +60,7 @@ export default function KitchenOrdersTable() {
       />
       <ControlledTable
         variant="modern"
-        data={data}
+        data={dataW}
         isLoading={isLoading}
         showLoadingText={false}
         // @ts-ignore

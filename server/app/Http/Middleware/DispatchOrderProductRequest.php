@@ -19,11 +19,8 @@ class DispatchOrderProductRequest
     {
         $response = $next($request);
 
-        //TODO: Validating the request.
-        $data = [
-            'order_active' => $request->order->active,
-            'products' => $request->requestedProducts,
-        ];
+        //TODO: Validating the request.x
+        $data = $request->data;
         SendEvent::send('productOrder.requested', $data);
         return $response;
     }

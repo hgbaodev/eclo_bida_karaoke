@@ -16,12 +16,24 @@ class KitchenOrder extends Model
         'status',
         'order_id',
         'product_id',
+        'quantity',
         ];
 
     protected $hidden = [
         'id',
         'deleted_at',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (empty($model->active)) {
+                $model->active = self::generateUniqueActive();
+            }
+        });
+    }
 
     public function product()
     {
@@ -31,5 +43,10 @@ class KitchenOrder extends Model
     public function order()
     {
         return $this->belongsTo(Order::class);
+    }
+
+    public function getProductNameAttribute()
+    {
+        return $this->product ? $this->product->name : null;
     }
 }

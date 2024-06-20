@@ -1,17 +1,11 @@
 // types.ts
-export interface NotificationData {
-  orderActive: string;
-  requestedProduct: RequestedProduct[];
-}
-
-export interface RequestedProduct {
+export interface kitchenOrder {
   active: string;
+  status: any;
+  product_name: string;
+  order_id: string;
   quantity: string;
-}
-
-export interface ProductOrderNotification {
-  id: string;
-  data: NotificationData;
+  product_id: string;
   created_at: string;
-  status: string;
+  updated_at: string;
 }

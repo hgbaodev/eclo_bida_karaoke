@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Interface\KitchenOrderRepositoryInterface;
 use App\Interface\NotificationRepositoryInterface;
 use App\Interface\OrderRepositoryInterface;
+use App\Interface\ProductRepositoryInterface;
 use App\Notifications\OrderNotification;
 use Illuminate\Http\Request;
 use App\Http\Requests\Order\StoreOrderRequest;
@@ -14,43 +16,65 @@ class OrderController extends Controller
 {
     protected $orderRepository;
     protected $serviceRepository;
-    protected $notifcationRepository;
+    protected $kitchenOrderRepository;
+    protected $productRepository;
 
-    public function __construct(OrderRepositoryInterface $orderRepository, ServiceRepositoryInterface $serviceRepositoryInterface, NotificationRepositoryInterface $notifcationRepository)
+    public function __construct(
+        OrderRepositoryInterface $orderRepository,
+        ServiceRepositoryInterface $serviceRepositoryInterface,
+        KitchenOrderRepositoryInterface $kitchenOrderRepository,
+        ProductRepositoryInterface $productRepository)
     {
         $this->orderRepository = $orderRepository;
         $this->serviceRepository =  $serviceRepositoryInterface;
-        $this->notifcationRepository = $notifcationRepository;
+        $this->kitchenOrderRepository = $kitchenOrderRepository;
+        $this->productRepository = $productRepository;
     }
 
     public function addProductsToOrder(Request $request, string $active)
     {
-        $order = $this->orderRepository->getOrderByActive($active);
-        $request->merge(['order' => $order]);
-        $order->notify(new OrderNotification($request->requestedProducts, $active));
-        return $this->sentSuccessResponse();
+        try {
+            $order = $this->orderRepository->getOrderByActive($active);
+            $orderId = $order->id;
+            $requestedProducts = $request->requestedProducts;
+            $kitchenOrders = [];
+
+            foreach ($requestedProducts as $requestedProduct) {
+                $product = $this->productRepository->getProductByActive($requestedProduct['active']);
+                $data = [
+                    'order_id' => $orderId,
+                    'product_id' => $product->id,
+                    'quantity' => $requestedProduct['quantity'],
+                ];
+                $this->kitchenOrderRepository->createKitchenOrder($data);
+                $kitchenOrders[] = $data;
+            }
+
+            $request->merge(['data'=>$kitchenOrders]);
+            return $this->sentSuccessResponse($order, 'This order has been requested successfully');
+        } catch (\Exception $e){
+            return $this->sentErrorResponse($e->getMessage());
+        }
     }
 
-
-    public function requestedProducts()
-
+    public function getKitchenOrders(Request $request)
     {
-        return $this->sentSuccessResponse($this->notifcationRepository->getUnreadNotifications());
+        return $this->sentSuccessResponse($this->kitchenOrderRepository->getKitchenOrders($request));
     }
 
-    public function markOrderRequestAsRead(Request $request)
+    public function markOrderRequestAsProcessing(Request $request)
     {
-        if (!$request->has('id')) {
-            return $this->sentErrorResponse('order id not found');
-        }
-        $notification = $this->orderRepository->markOrderRequestAsRead($request);
+        // TODO: danh dau la dang xu ly
+    }
 
-        if (!$notification) {
-            return  $this->sentErrorResponse('order not found');
-        }
-        $request->merge(['orderNotification' => $notification]);
+    public function markOrderRequestAsWaiting(Request $request)
+    {
+        // TODO: danh dau la dang cho giao
+    }
 
-        return $this->sentSuccessResponse($notification);
+    public function markOrderRequestAsDone(Request $request)
+    {
+        // TODO: danh dau la da xong
     }
 
     public function index(Request $request)
