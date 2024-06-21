@@ -24,7 +24,7 @@ class ProductRequest extends HelperRequest
     {
         return [
             'name' => 'required',
-            'cost_price' => 'required',
+            'product_type' => 'required',
             'selling_price' => 'required',
         ];
     }

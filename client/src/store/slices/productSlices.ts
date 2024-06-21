@@ -16,6 +16,7 @@ const initialState: productType = {
   isCreateLoading: false,
   isUpdateLoading: false,
   listProduct:[],
+  type:'',
 };
 
 export const getProducts= createAsyncThunk(
@@ -42,14 +43,14 @@ export const getSinghle_Product = createAsyncThunk('product/getAllProduct', asyn
     throw error;
   }
 });
-export const getProductType = createAsyncThunk('product_type/getProductType',async (active: string,) => {
-  try {
-    const response = await axiosInstance.get(`product_types`);
-    return response.data;
-  } catch (error: any) {
-    throw error;
-  }
-});
+// export const getProductType = createAsyncThunk('product_type/getProductType',async () => {
+//   try {
+//     const response = await axiosInstance.get(`product_types`);
+//     return response.data;
+//   } catch (error: any) {
+//     throw error;
+//   }
+// });
 export const createProduct = createAsyncThunk('products/createProduct', async (data: any, { rejectWithValue }) => {
   try {
     const response = await axiosInstance.post(`products`, data);
@@ -135,6 +136,19 @@ const productSlices = createSlice({
       .addCase(getSinghle_Product.rejected, (state) => {
         state.isLoading = false;
       })
+      // .addCase(getProductType.pending, (state) => {
+      //   state.isLoading = true;
+      // })
+      // .addCase(getProductType.fulfilled, (state, action) => {
+      //   state.isLoading = false;
+      //   const result = action.payload.data;
+      //   state.listProduct = result.result;
+      //   state.data = result.result;
+      //   state.totalRow = result.meta.total;
+      // })
+      // .addCase(getProductType.rejected, (state) => {
+      //   state.isLoading = false;
+      // })
       .addCase(createProduct.pending, (state: productType) => {
         state.isCreateLoading = true;
       })

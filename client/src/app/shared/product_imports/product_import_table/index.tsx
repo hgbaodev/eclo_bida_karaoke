@@ -10,6 +10,7 @@ import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
 import { getProductImports, setPage, setPageSize } from '@/store/slices/product_importSlice';
 import { useModal } from '../../modal-views/use-modal';
+import { getProductType } from '@/store/slices/product_typeSlices';
 const FilterElement = dynamic(() => import('@/app/shared/products/product_table/filter-elements'), {
   ssr: false,
 });

@@ -48,9 +48,9 @@ export default function StaffsTable() {
   useEffect(() => {
     dispatch(getSinghle_Product());
   }, []);
-  useEffect(() => {
-    dispatch(getSinghle_Supplier());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getSinghle_Supplier());
+  // }, []);
   useEffect(() => {
     dispatch(getSinghle_Supplier());
   }, []);

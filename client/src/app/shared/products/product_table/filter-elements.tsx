@@ -9,6 +9,7 @@ import { RootState } from '@/store/types';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import useDebounce from '@/hooks/use-debounce';
+
 // import { getPositions } from '@/store/slices/positionSlice';
 
 export default function FilterElement() {
@@ -16,11 +17,11 @@ export default function FilterElement() {
 //   const { listPositions } = useSelector((state: RootState) => state.position);
   const [searchTerm, setSearchTerm] = useState(query);
   const debounceSearchTerm = useDebounce(searchTerm, 1000);
-
+  const { listType } = useSelector((state: RootState) => state.product_type);
   useEffect(() => {
     dispatch(setQuery(debounceSearchTerm));
   }, [debounceSearchTerm]);
-
+ 
   useEffect(() => {
     // dispatch(getPositions());
   }, []);

@@ -6,6 +6,7 @@ export const createProductSchema = z.object({
   name: z.string().min(1, { message: messages.ProductNameIsRequired }),
   // cost_price: z.string().min(1, { message: messages.CostPriceIsRequired }),
   selling_price: z.string().min(1, { message: messages.SellingPriceIsRequired }),
+  product_type: z.string().min(1, { message: messages.placeTypeIsRequired })
 });
 
 // generate form types from zod validation schema

@@ -5,6 +5,7 @@ export interface RootState {
   logger: loggerType;
   service_type: service_typeType;
   product: productType;
+  product_type:product_typeType;
   product_import: product_ImportType;
   product_import_detail: product_Import_DetailType;
   customer: customerType;
@@ -153,6 +154,7 @@ export interface productType {
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
   listProduct:any[];
+  type:any;
 }
 export interface product_ImportType {
   data: [];
@@ -321,4 +323,9 @@ export interface orderType {
   areas: any[];
   isLoading: boolean;
 
+}
+export interface product_typeType {
+  data:[];
+  isLoading: boolean;
+  listType:any[];
 }

@@ -20,6 +20,7 @@ export default function EditProduct({ product, active }: { product: EditProductI
   const [reset, setReset] = useState<any>(product);
   const [errors, setErrors] = useState<any>({});
   const { pageSize, page, query, isUpdateLoading } = useSelector((state: RootState) => state.product);
+  const { listType } = useSelector((state: RootState) => state.product_type);
 //   const { listPositions } = useSelector((state: RootState) => state.position);
   const onSubmit: SubmitHandler<CreateProductInput> = async (data) => {
     const result: any = await dispatch(updateProduct({ product: data, active }));
@@ -29,13 +30,12 @@ export default function EditProduct({ product, active }: { product: EditProductI
         product_name: '',
         selling_price: '',
         quantity: '',
-        description:'',
-        unit:'',
+        product_type:'',
       });
       setErrors({});
       closeModal();
       await dispatch(getProducts({ page, pageSize, query }));
-      toast.success('User created successfully');
+      toast.success('Update successfully');
     } else {
       setErrors(result?.payload?.errors);
     }
@@ -44,6 +44,7 @@ export default function EditProduct({ product, active }: { product: EditProductI
     <Form<EditProductInput>
       resetValues={reset}
       onSubmit={onSubmit}
+
       validationSchema={editProductSchema}
       serverError={errors}
       className="grid grid-cols-1 gap-6 p-6 @container md:grid-cols-2 [&_.rizzui-input-label]:font-medium [&_.rizzui-input-label]:text-gray-900"
@@ -75,7 +76,29 @@ export default function EditProduct({ product, active }: { product: EditProductI
               className="col-span-full"
               error={errors.cost_price?.message}
             /> */}
-
+              <Controller
+              name='product_type'
+              control={control}
+              render={({ field: { name, onChange, value } }) => (
+                <Select
+                  options={listType}
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                  label="Product Type"
+                  className="col-span-full"
+                  placeholder="Select type of product"
+                  error={errors?.product_type?.message}
+                  getOptionValue={(option) => option.active}
+                  getOptionDisplayValue={(option) => option.type_name}
+                  displayValue={(selected: string) =>
+                    listType.find((option) => option.active === selected)?.type_name ?? selected
+                  }
+                  dropdownClassName="!z-[1]"
+                  inPortal={false}
+                />
+              )}
+            />
             <Input
               label="Selling Price"
               type='number'
