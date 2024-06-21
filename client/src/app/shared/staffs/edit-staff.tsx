@@ -19,6 +19,7 @@ export default function EditStaff({ staff, active }: { staff: EditStaffInput; ac
   const { closeModal } = useModal();
   const [reset, setReset] = useState<any>(staff);
   const [errors, setErrors] = useState<any>({});
+  const { listRoles } = useSelector((state: RootState) => state.role);
   const { pageSize, page, query, isUpdateLoading, position, status } = useSelector((state: RootState) => state.staff);
   const { listPositions } = useSelector((state: RootState) => state.position);
   const onSubmit: SubmitHandler<EditStaffInput> = async (data) => {
@@ -142,6 +143,46 @@ export default function EditStaff({ staff, active }: { staff: EditStaffInput; ac
                   getOptionValue={(option: { value: any }) => option.value}
                   getOptionDisplayValue={(option: { value: any }) => getStatusBadge(option.value as any)}
                   displayValue={(selected: any) => getStatusBadge(selected)}
+                  dropdownClassName="!z-[1]"
+                  inPortal={false}
+                />
+              )}
+            />
+            <Title as="h4" className="font-semibold">
+              Edit User
+            </Title>
+            <Input
+              label="Email"
+              placeholder="Enter user's Email Address"
+              className="col-span-full"
+              {...register('email')}
+              error={errors.email?.message}
+            />
+            <Password
+              label="Password"
+              placeholder="Enter your password"
+              className="col-span-[1/2]"
+              {...register('password')}
+              error={errors.password?.message}
+            />
+            <Controller
+              name="role"
+              control={control}
+              render={({ field: { name, onChange, value } }) => (
+                <Select
+                  options={listRoles}
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                  label="Role"
+                  className="col-span-[1/2]"
+                  placeholder="Select a role"
+                  error={errors?.role?.message}
+                  getOptionValue={(option) => option.active}
+                  getOptionDisplayValue={(option) => option.name}
+                  displayValue={(selected: string) =>
+                    listRoles.find((option) => option.active === selected)?.name ?? selected
+                  }
                   dropdownClassName="!z-[1]"
                   inPortal={false}
                 />

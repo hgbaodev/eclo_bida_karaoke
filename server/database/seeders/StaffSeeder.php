@@ -22,6 +22,16 @@ class StaffSeeder extends Seeder
             "status" => "A",
             "position_id" => 3
         ]);
-        Staff::factory()->count(30)->create();
+        Staff::create([
+            "name" => "Nguyen Van A",
+            "birthday" => "2002-01-14",
+            "image" => "",
+            "phone" => "0923465384",
+            "idcard" => "076234567366",
+            "address" => "Q5",
+            "status" => "A",
+            "position_id" => 1
+        ]);
+        // Staff::factory()->count(20)->create();
     }
 }
