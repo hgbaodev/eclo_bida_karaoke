@@ -23,8 +23,8 @@ class OrderController extends Controller
         OrderRepositoryInterface $orderRepository,
         ServiceRepositoryInterface $serviceRepositoryInterface,
         KitchenOrderRepositoryInterface $kitchenOrderRepository,
-        ProductRepositoryInterface $productRepository)
-    {
+        ProductRepositoryInterface $productRepository
+    ) {
         $this->orderRepository = $orderRepository;
         $this->serviceRepository =  $serviceRepositoryInterface;
         $this->kitchenOrderRepository = $kitchenOrderRepository;
@@ -50,9 +50,9 @@ class OrderController extends Controller
                 $this->kitchenOrderRepository->createKitchenOrder($data);
             }
 
-            $request->merge(['data'=>$kitchenOrders]);
+            $request->merge(['data' => $kitchenOrders]);
             return $this->sentSuccessResponse($order, 'This order has been requested successfully');
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             return $this->sentErrorResponse($e->getMessage());
         }
     }

@@ -2,7 +2,7 @@
 
 namespace App\Interface;
 
-use http\Env\Request;
+use Illuminate\Http\Request;
 
 interface KitchenOrderRepositoryInterface
 {
