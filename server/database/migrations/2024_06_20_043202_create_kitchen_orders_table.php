@@ -18,6 +18,7 @@ return new class extends Migration
             $table->softDeletes();
             $table->string('status')->default(KitchenOrderEnum::RECEIVED);
             $table->foreignId('order_id')->constrained('orders');
+            $table->integer('quantity')->default(0);
             $table->foreignId('product_id')->constrained('products');
             $table->timestamps();
         });

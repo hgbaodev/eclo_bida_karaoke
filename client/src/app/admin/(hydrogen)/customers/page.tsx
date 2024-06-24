@@ -1,7 +1,6 @@
 'use client';
 import PageHeader from '@/app/shared/page-header';
 import ModalButton from '@/app/shared/modal-button';
-
 import CreateCustomer from '@/app/shared/customers/create-customer';
 import CustomersTable from '@/app/shared/customers/customers-table';
 

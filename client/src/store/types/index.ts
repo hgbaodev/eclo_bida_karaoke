@@ -20,21 +20,31 @@ export interface RootState {
   shift_user_detail: shift_user_detailType;
   work_shift: work_shiftType;
   order: orderType;
-  requested_products: requested_productsType;
+  kitchen_order: kitchen_orderType;
 }
 
-export interface requested_productsType {
-  data: [];
+export interface kitchen_orderType {
+  data: kitchenOrder[];
   isLoading: boolean;
   isFiltered: boolean;
   page: number;
   pageSize: number;
-  totalRow: number;
   query: string;
   status: any;
   errors: string | null;
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
+}
+
+export interface kitchenOrder {
+  active: string;
+  status: any;
+  product_name: string;
+  order_id: string;
+  quantity: string;
+  product_id: string;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface authType {
