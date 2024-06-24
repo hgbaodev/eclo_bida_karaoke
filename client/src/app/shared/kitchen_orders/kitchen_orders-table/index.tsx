@@ -43,30 +43,63 @@ export default function KitchenOrdersTable() {
 
   const { visibleColumns } = useColumn(columns);
 
-  // Lọc dữ liệu dựa trên status
-  const dataR = useMemo(() => data.filter((kitchenOrder) => kitchenOrder.status === 'R'), [data]);
+  // Lọc dữ liệu dựa trên status là R hoặc P
+  const dataR = useMemo(
+    () => data.filter((kitchenOrder) => kitchenOrder.status === 'R' || kitchenOrder.status === 'P'),
+    [data],
+  );
+
+  // Lọc dữ liệu dựa trên status là W
   const dataW = useMemo(() => data.filter((kitchenOrder) => kitchenOrder.status === 'W'), [data]);
 
   return (
-    <div className="grid grid-cols-2 gap-4 mt-4">
-      <ControlledTable
-        variant="modern"
-        data={dataR}
-        isLoading={isLoading}
-        showLoadingText={false}
-        // @ts-ignore
-        columns={visibleColumns}
-        className="rounded-md border border-muted text-sm shadow-sm [&_.rc-table-placeholder_.rc-table-expanded-row-fixed>div]:h-60 [&_.rc-table-placeholder_.rc-table-expanded-row-fixed>div]:justify-center [&_.rc-table-row:last-child_td.rc-table-cell]:border-b-0 [&_thead.rc-table-thead]:border-t-0"
-      />
-      <ControlledTable
-        variant="modern"
-        data={dataW}
-        isLoading={isLoading}
-        showLoadingText={false}
-        // @ts-ignore
-        columns={visibleColumns}
-        className="rounded-md border border-muted text-sm shadow-sm [&_.rc-table-placeholder_.rc-table-expanded-row-fixed>div]:h-60 [&_.rc-table-placeholder_.rc-table-expanded-row-fixed>div]:justify-center [&_.rc-table-row:last-child_td.rc-table-cell]:border-b-0 [&_thead.rc-table-thead]:border-t-0"
-      />
-    </div>
+    <>
+      <div className="mb-4">
+        <p className="text-sm text-yellow-600">
+          <span className="inline-block w-3 h-3 bg-yellow-600 mr-2"></span>
+          Đã tiếp nhận
+        </p>
+        <p className="text-sm text-blue-600">
+          <span className="inline-block w-3 h-3 bg-blue-600 mr-2"></span>
+          Đang chế biến
+        </p>
+        <p className="text-sm text-green-600">
+          <span className="inline-block w-3 h-3 bg-green-600 mr-2"></span>
+          Đã xong/chờ giao
+        </p>
+      </div>
+      <div className="grid grid-cols-2 gap-4 mt-4">
+        <div>
+          <h2 className="text-lg font-bold mb-2">Đã nhận/Đang chế biến</h2>
+          <ControlledTable
+            variant="modern"
+            data={dataR}
+            isLoading={isLoading}
+            showLoadingText={false}
+            // @ts-ignore
+            columns={visibleColumns}
+            className="rounded-md border border-muted text-sm shadow-sm [&_.rc-table-placeholder_.rc-table-expanded-row-fixed>div]:h-60 [&_.rc-table-placeholder_.rc-table-expanded-row-fixed>div]:justify-center [&_.rc-table-row:last-child_td.rc-table-cell]:border-b-0 [&_thead.rc-table-thead]:border-t-0"
+          />
+        </div>
+        <div>
+          <h2 className="text-lg font-bold mb-2">Chế biến xong/Chờ giao</h2>
+          <ControlledTable
+            variant="modern"
+            data={dataW}
+            isLoading={isLoading}
+            showLoadingText={false}
+            // @ts-ignore
+            columns={visibleColumns}
+            className="rounded-md border border-muted text-sm shadow-sm [&_.rc-table-placeholder_.rc-table-expanded-row-fixed>div]:h-60 [&_.rc-table-placeholder_.rc-table-expanded-row-fixed>div]:justify-center [&_.rc-table-row:last-child_td.rc-table-cell]:border-b-0 [&_thead.rc-table-thead]:border-t-0"
+          />
+        </div>
+      </div>
+    </>
   );
 }
+
+export const STATUSES = {
+  Received: 'R',
+  Waiting: 'W',
+  Processing: 'P',
+} as const;
