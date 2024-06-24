@@ -16,10 +16,35 @@ export const getColumns = (openModal: (args: any) => void, Data: ShiftUserDetail
       width: 30,
     },
     ...dates.map((date) => ({
-      title: <HeaderCell title={date.toLocaleDateString('en-US', { weekday: 'short' })} />,
+      title: (
+        <HeaderCell
+          title={date.toLocaleDateString('en-US', {
+            weekday: 'short',
+            day: 'numeric',
+            month: 'short',
+          })}
+        />
+      ),
       dataIndex: date.toLocaleDateString('en-US', { weekday: 'short' }),
       key: date.toLocaleDateString('en-US', { weekday: 'short' }),
       width: 200,
+      render: (_: any, record: ShiftUserDetail) => {
+        // Find the corresponding data for the current day_of_week
+        const dataForDate = Data.find(
+          (item) => item.day_of_week === date.toLocaleDateString('en-US', { weekday: 'long' }),
+        );
+
+        if (dataForDate) {
+          return (
+            <div className="schedule-time">
+              <div>{dataForDate.shift.time_in}</div>
+              <div>{dataForDate.shift.time_out}</div>
+            </div>
+          );
+        } else {
+          return <div className="schedule-time">OFF</div>;
+        }
+      },
     })),
   ];
 

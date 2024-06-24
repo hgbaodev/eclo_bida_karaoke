@@ -41,7 +41,6 @@ export default function ShiftDetailStaffTable() {
     () => getColumns(openModal, listShiftUserDetail, oneWorkShift),
     [openModal, listShiftUserDetail, oneWorkShift],
   );
-  const { visibleColumns } = useColumn(columns);
   if (!workshift) {
     return (
       <div className="mt-0">
@@ -61,7 +60,7 @@ export default function ShiftDetailStaffTable() {
           isLoading={isLoading}
           showLoadingText={false}
           // @ts-ignore
-          columns={visibleColumns}
+          columns={columns}
           className="rounded-md border border-muted text-sm shadow-sm [&_.rc-table-placeholder_.rc-table-expanded-row-fixed>div]:h-60 [&_.rc-table-placeholder_.rc-table-expanded-row-fixed>div]:justify-center [&_.rc-table-row:last-child_td.rc-table-cell]:border-b-0 [&_thead.rc-table-thead]:border-t-0"
         />
       </div>

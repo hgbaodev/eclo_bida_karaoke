@@ -27,16 +27,16 @@ export default function CreateStaff() {
   const onSubmit: SubmitHandler<CreateStaffInput> = async (data) => {
     try {
       let active = '';
-      const dataUser = {
-        first_name: data.name,
-        last_name: data.name,
-        email: data.email,
-        password: data.password,
-        role: data.role,
-        status: 'A',
-      };
       // Lưu thông tin người dùng nếu có
       if (addUser) {
+        const dataUser = {
+          first_name: data.name,
+          last_name: data.name,
+          email: data.email,
+          password: data.password,
+          role: data.role,
+          status: 'A',
+        };
         const userResult: any = await dispatch(createUser(dataUser));
         if (!createUser.fulfilled.match(userResult)) {
           setErrors(userResult?.payload?.errors);

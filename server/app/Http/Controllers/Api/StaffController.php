@@ -56,7 +56,9 @@ class StaffController extends Controller
             return $this->sentErrorResponse("Position is not found", "error", 404);
         }
         $validatedData["position_id"] = $positon->id;
-        $validatedData["user_id"] = $user->id;
+        if ($user) {
+            $validatedData["user_id"] = $user->id;
+        }
         unset($validatedData['position']);
         unset($validatedData['user']);
         return $this->sentSuccessResponse($this->staffRepository->createStaff($validatedData), "Staff is created successfully", 200);

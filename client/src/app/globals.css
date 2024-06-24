@@ -1433,3 +1433,12 @@ div[style='z-index: 1000001;'],
   color: red;
   font-size: 0.875rem; /* Kích thước chữ nhỏ */
 }
+
+.schedule-time {
+  border-left: 1px solid #000;
+  border-right: 1px solid #000;
+  text-align: center;
+  padding: 4px;
+  margin: -12px;
+  height: 50px;
+}

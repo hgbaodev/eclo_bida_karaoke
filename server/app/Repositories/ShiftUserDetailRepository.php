@@ -10,12 +10,18 @@ class ShiftUserDetailRepository implements ShiftUserDetailRepositoryInterface
     public function getShiftUserDetail($request)
     {
         $workshift = $request->input('workshift');
+        $staff = $request->input('staff');
         $shiftUserDetails = ShiftUserDetail::query()->with(["shift", "staff", "workshift"]);
         $shiftUserDetails->orderByRaw("FIELD(day_of_week, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')")->orderBy('shift_id');
         if ($workshift) {
             $shiftUserDetails->whereHas('workshift', function ($query) use ($workshift) {
                 $query->where("active", $workshift);
             });
+            if ($staff) {
+                $shiftUserDetails->whereHas('staff', function ($query) use ($staff) {
+                    $query->where("active", $staff);
+                });
+            }
             return $shiftUserDetails->get();
         }
         return [];

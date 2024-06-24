@@ -153,7 +153,7 @@ const shiftUserDetailSlice = createSlice({
       .addCase(getShiftUserDetailsByUser.fulfilled, (state, action) => {
         const result = action.payload.data;
         state.isLoading = false;
-        state.listShiftUserDetailByUser = result.result;
+        state.listShiftUserDetailByUser = result;
       })
       .addCase(getShiftUserDetailsByUser.rejected, (state) => {
         state.isLoading = false;
