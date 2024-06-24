@@ -16,6 +16,7 @@ const setAuthCookie = (name: string, token: string) => {
 const initialState: authType = {
   isAuthenticated: false,
   isLoaded: false,
+  active: '',
   first_name: '',
   last_name: '',
   email: '',
@@ -58,6 +59,7 @@ const updateAuthState = (state: any, action: any) => {
   const result = action.payload.data;
   state.isLoaded = false;
   state.isAuthenticated = true;
+  state.active = result.active;
   state.first_name = result.first_name;
   state.last_name = result.last_name;
   state.accessToken = result.accessToken;

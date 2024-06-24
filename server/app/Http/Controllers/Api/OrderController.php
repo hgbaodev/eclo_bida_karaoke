@@ -92,7 +92,11 @@ class OrderController extends Controller
     public function store(StoreOrderRequest $request)
     {
         $validated_data = $request->validated();
-        $service_id = $this->serviceRepository->getServiceByActive($validated_data['service_active'])->id;
+        $service = $this->serviceRepository->getServiceByActive($validated_data['service_active']);
+        if (!$service) {
+            return $this->sentErrorResponse('Service not found', 'errors', 404);
+        }
+        $service_id = $service->id;
         $checkOrder = $this->orderRepository->checkOrderServiceById($service_id);
         if ($checkOrder) {
             return $this->sentErrorResponse('You have an order that is not completed yet');
