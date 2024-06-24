@@ -6,6 +6,7 @@ import { orderType } from '../types';
 const initialState: orderType = {
   areas: [],
   isLoading: false,
+  order: null,
 };
 
 export const getAreas = createAsyncThunk('orders/getAreas', async () => {
@@ -13,6 +14,24 @@ export const getAreas = createAsyncThunk('orders/getAreas', async () => {
     const response = await axiosInstance.get('/areas/services/all');
     return response.data;
   } catch (error: any) {
+    throw error;
+  }
+});
+
+export const getOrder = createAsyncThunk('orders/getOrder', async (id: string) => {
+  try {
+    const response = await axiosInstance.get(`/orders/${id}`);
+    return response.data;
+  } catch (error: any) {
+    throw error;
+  }
+});
+
+export const createOrder = createAsyncThunk('orders/createOrder', async (servive_active: string) => {
+  try {
+    const response = await axiosInstance.post('/orders', { servive_active });
+    return response.data;
+  } catch (error) {
     throw error;
   }
 });
@@ -33,6 +52,9 @@ const orderSlice = createSlice({
       })
       .addCase(getAreas.rejected, (state) => {
         state.isLoading = false;
+      })
+      .addCase(getOrder.fulfilled, (state, action) => {
+        state.order = action.payload.data;
       });
   },
 });

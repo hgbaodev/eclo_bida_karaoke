@@ -41,14 +41,29 @@ class Order extends Model
         });
     }
 
+    public function service()
+    {
+        return $this->belongsTo(Service::class);
+    }
+
     public function customer()
     {
         return $this->belongsTo(Customer::class);
     }
 
-    public function staff()
+    public function user()
     {
-        return $this->belongsTo(Staff::class);
+        return $this->belongsTo(User::class);
+    }
+
+    public function orderdetails()
+    {
+        return $this->hasMany(OrderDetail::class);
+    }
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'order_details')->withPivot('quantity');
     }
 
     public function kitchenOrders()

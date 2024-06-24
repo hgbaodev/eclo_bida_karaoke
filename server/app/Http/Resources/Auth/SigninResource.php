@@ -31,6 +31,7 @@ class SigninResource extends JsonResource
         }
 
         return [
+            'active' => $this->active,
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'email' => $this->email,
