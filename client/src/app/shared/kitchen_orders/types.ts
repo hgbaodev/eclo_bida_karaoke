@@ -1,5 +1,5 @@
 // types.ts
-export interface kitchenOrder {
+export interface KitchenOrder {
   active: string;
   status: any;
   product_name: string;

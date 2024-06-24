@@ -43,11 +43,11 @@ class OrderController extends Controller
                 $product = $this->productRepository->getProductByActive($requestedProduct['active']);
                 $data = [
                     'order_id' => $orderId,
-                    'product_id' => $product->id,
                     'quantity' => $requestedProduct['quantity'],
                 ];
-                $this->kitchenOrderRepository->createKitchenOrder($data);
                 $kitchenOrders[] = $data;
+                $data['product_id'] = $product->id;
+                $this->kitchenOrderRepository->createKitchenOrder($data);
             }
 
             $request->merge(['data'=>$kitchenOrders]);

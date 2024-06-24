@@ -20,7 +20,6 @@ class KitchenOrderRepository implements KitchenOrderRepositoryInterface
         $status = $request->input('status');
 
         $orders = KitchenOrder::with('product');
-        $orders->latest();
         if ($all) {
             $orders = $orders->get();
         } else {
