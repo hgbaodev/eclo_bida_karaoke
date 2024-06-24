@@ -14,8 +14,17 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { EditStaffInput, editStaffSchema } from '@/utils/validators/edit-staff.schema';
 import { getStatusBadge } from '../users/users-table/columns';
+import { updateUser } from '@/store/slices/userSlice';
 
-export default function EditStaff({ staff, active }: { staff: EditStaffInput; active: string }) {
+export default function EditStaff({
+  staff,
+  active,
+  activeUser,
+}: {
+  staff: EditStaffInput;
+  active: string;
+  activeUser: string;
+}) {
   const { closeModal } = useModal();
   const [reset, setReset] = useState<any>(staff);
   const [errors, setErrors] = useState<any>({});
@@ -23,8 +32,32 @@ export default function EditStaff({ staff, active }: { staff: EditStaffInput; ac
   const { pageSize, page, query, isUpdateLoading, position, status } = useSelector((state: RootState) => state.staff);
   const { listPositions } = useSelector((state: RootState) => state.position);
   const onSubmit: SubmitHandler<EditStaffInput> = async (data) => {
+    const dataUser = {
+      first_name: data.name,
+      last_name: data.name,
+      email: data.email,
+      password: data.password,
+      role: data.role,
+      status: 'A',
+    };
+    // Lưu thông tin người dùng nếu có
+    const userResult: any = await dispatch(updateUser({ user: dataUser, active: activeUser }));
+    if (!updateUser.fulfilled.match(userResult)) {
+      setErrors(userResult?.payload?.errors);
+    } else {
+      activeUser = userResult.payload.data.active;
+    }
+    const dataStaff = {
+      name: data.name,
+      birthday: data.birthday,
+      phone: data.phone,
+      idcard: data.idcard,
+      address: data.address,
+      status: data.status,
+      position: data.position,
+      user: activeUser,
+    };
     const result: any = await dispatch(updateStaff({ staff: data, active }));
-
     if (updateStaff.fulfilled.match(result)) {
       setReset({
         name: '',

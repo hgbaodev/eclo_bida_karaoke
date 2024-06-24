@@ -38,7 +38,6 @@ export default function CreateStaff() {
       // Lưu thông tin người dùng nếu có
       if (addUser) {
         const userResult: any = await dispatch(createUser(dataUser));
-        console.log(userResult);
         if (!createUser.fulfilled.match(userResult)) {
           setErrors(userResult?.payload?.errors);
         } else {

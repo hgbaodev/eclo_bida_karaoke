@@ -6,12 +6,10 @@ import { getColumns } from '@/app/shared/shift_detail_staff/schedule/colunm';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
-import { getAllStaffs, setPage, setPageSize } from '@/store/slices/staffSlice';
+import { getAllStaffs, getOneStaff, setPage, setPageSize } from '@/store/slices/staffSlice';
 import { getAllShiftUserDetails, getShiftUserDetails, setWorkShift } from '@/store/slices/shift_user_detailSlice';
 import { useModal } from '../../modal-views/use-modal';
 import { getShifts } from '@/store/slices/shiftSlice';
-import ModalButton from '../../modal-button';
-import CreateWorkShift from '../work_shift/create-work_shift';
 import dynamic from 'next/dynamic';
 import { getAllWorkShifts, getWorkShift } from '@/store/slices/workshiftSlice';
 const FilterElement = dynamic(() => import('@/app/shared/shift_detail_staff/work_shift/filter-element'), {

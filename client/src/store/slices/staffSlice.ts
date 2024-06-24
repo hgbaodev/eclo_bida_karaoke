@@ -18,6 +18,7 @@ const initialState: staffType = {
   isCreateLoading: false,
   isUpdateLoading: false,
   listStaffs: [],
+  oneStaff: '',
 };
 
 export const getStaffs = createAsyncThunk(
@@ -59,7 +60,16 @@ export const getAllStaffs = createAsyncThunk('staffs/getAllStaffs', async (query
     throw error;
   }
 });
-
+export const getOneStaff = createAsyncThunk('staffs/getOneStaff', async (active: string) => {
+  const url = new URL('/api/v1/staffs', env.NEXT_API_URL);
+  url.searchParams.set('user', active);
+  try {
+    const response = await axiosInstance.get(url.href);
+    return response.data;
+  } catch (error: any) {
+    throw error;
+  }
+});
 export const createStaff = createAsyncThunk('staffs/createStaff', async (data: any, { rejectWithValue }) => {
   try {
     const response = await axiosInstance.post(`staffs`, data);
@@ -144,6 +154,17 @@ const staffSlice = createSlice({
         state.totalRow = result.meta.total;
       })
       .addCase(getStaffs.rejected, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(getOneStaff.pending, (state: staffType) => {
+        state.isLoading = true;
+      })
+      .addCase(getOneStaff.fulfilled, (state, action) => {
+        const result = action.payload.data;
+        state.isLoading = false;
+        state.oneStaff = result.result;
+      })
+      .addCase(getOneStaff.rejected, (state) => {
         state.isLoading = false;
       })
       .addCase(getAllStaffs.pending, (state: staffType) => {

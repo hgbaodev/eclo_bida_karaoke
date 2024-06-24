@@ -212,6 +212,7 @@ export interface staffType {
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
   listStaffs: any[];
+  oneStaff: any;
 }
 
 export interface positionType {
@@ -273,6 +274,7 @@ export interface shift_user_detailType {
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
   listShiftUserDetail: any[];
+  listShiftUserDetailByUser: any[];
 }
 
 export interface work_shiftType {

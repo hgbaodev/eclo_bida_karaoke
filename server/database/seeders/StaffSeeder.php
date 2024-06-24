@@ -20,7 +20,8 @@ class StaffSeeder extends Seeder
             "idcard" => "076234567356",
             "address" => "Q5",
             "status" => "A",
-            "position_id" => 3
+            "position_id" => 3,
+            "user_id" => 1
         ]);
         Staff::create([
             "name" => "Nguyen Van A",
@@ -30,7 +31,8 @@ class StaffSeeder extends Seeder
             "idcard" => "076234567366",
             "address" => "Q5",
             "status" => "A",
-            "position_id" => 1
+            "position_id" => 1,
+            "user_id" => 2
         ]);
         // Staff::factory()->count(20)->create();
     }

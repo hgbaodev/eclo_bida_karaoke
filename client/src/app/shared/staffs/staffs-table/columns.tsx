@@ -111,7 +111,7 @@ export const getColumns = (openModal: (args: any) => void) => [
                 password: staff.user ? staff.user.password : '',
               };
               openModal({
-                view: <EditStaff staff={data} active={staff.active} />,
+                view: <EditStaff staff={data} active={staff.active} activeUser={staff.user ? staff.user.active : ''} />,
               });
             }}
             as="span"
