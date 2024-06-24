@@ -24,20 +24,8 @@ export const getKitchenOrders = createAsyncThunk<any, void, {}>('kitchen_orders/
   }
 });
 
-export const createKitchenOrder = createAsyncThunk(
-  'kitchen_orders/createKitchenOrder',
-  async (data: any, { rejectWithValue }) => {
-    try {
-      const response = await axiosInstance.post('/orders/kitchen-orders', data);
-      return response.data;
-    } catch (error: any) {
-      return rejectWithValue(error.response.data);
-    }
-  },
-);
-
 export const updateKitchenOrder = createAsyncThunk(
-  'kitchen_orders/updateKitchenOrder',
+  'orders/updateKitchenOrder',
   async ({ product, active }: { product: any; active: string }, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.put(`/orders/kitchen-orders/${active}`, product);
@@ -48,8 +36,44 @@ export const updateKitchenOrder = createAsyncThunk(
   },
 );
 
+export const markKitchenOrderAsProcessing = createAsyncThunk(
+  'orders/markKitchenOrderAsProcessing',
+  async (active: string, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.put(`/orders/mark-kitchen-order-as-processing/${active}`);
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
+
+export const markKitchenOrderAsWaiting = createAsyncThunk(
+  'orders/markKitchenOrderAsWaiting',
+  async (active: string, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.put(`/orders/mark-kitchen-order-as-waiting/${active}`);
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
+
+export const markKitchenOrderAsDone = createAsyncThunk(
+  'orders/markKitchenOrderAsDone',
+  async (active: string, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.put(`/orders/mark-kitchen-order-as-done/${active}`);
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
+
 export const deleteKitchenOrder = createAsyncThunk(
-  'kitchen_orders/deleteKitchenOrder',
+  'orders/deleteKitchenOrder',
   async (active: string, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.delete(`/orders/kitchen-orders/${active}`);
@@ -92,15 +116,6 @@ const kitchenOrderSlice = createSlice({
       .addCase(getKitchenOrders.rejected, (state) => {
         state.isLoading = false;
       })
-      .addCase(createKitchenOrder.pending, (state: kitchen_orderType) => {
-        state.isCreateLoading = true;
-      })
-      .addCase(createKitchenOrder.fulfilled, (state) => {
-        state.isCreateLoading = false;
-      })
-      .addCase(createKitchenOrder.rejected, (state) => {
-        state.isCreateLoading = false;
-      })
       .addCase(updateKitchenOrder.pending, (state: kitchen_orderType) => {
         state.isUpdateLoading = true;
       })
@@ -109,6 +124,33 @@ const kitchenOrderSlice = createSlice({
       })
       .addCase(updateKitchenOrder.rejected, (state) => {
         state.isUpdateLoading = false;
+      })
+      .addCase(markKitchenOrderAsProcessing.pending, (state: kitchen_orderType) => {
+        state.isLoading = true;
+      })
+      .addCase(markKitchenOrderAsProcessing.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(markKitchenOrderAsProcessing.rejected, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(markKitchenOrderAsWaiting.pending, (state: kitchen_orderType) => {
+        state.isLoading = true;
+      })
+      .addCase(markKitchenOrderAsWaiting.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(markKitchenOrderAsWaiting.rejected, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(markKitchenOrderAsDone.pending, (state: kitchen_orderType) => {
+        state.isLoading = true;
+      })
+      .addCase(markKitchenOrderAsDone.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(markKitchenOrderAsDone.rejected, (state) => {
+        state.isLoading = false;
       });
   },
 });
