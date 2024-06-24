@@ -21,9 +21,9 @@ return new class extends Migration
             $table->string('address');
             $table->string('status');
             $table->foreignId('position_id')->constrained('positions');
+            $table->foreignId('user_id')->nullable()->constrained('users');
             $table->string('active')->unique();
             $table->softDeletes();
-            // $table->string('staff_salary');
             $table->timestamps();
         });
     }

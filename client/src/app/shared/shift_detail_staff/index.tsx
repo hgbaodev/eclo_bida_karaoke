@@ -45,12 +45,14 @@ export default function ShiftDetailStaffTable() {
   if (!workshift) {
     return (
       <div className="mt-0">
+        <label style={{ fontWeight: 'bold', fontSize: '15px' }}>Work Shift:</label>
         <FilterElement />
       </div>
     );
   } else {
     return (
       <div className="mt-0">
+        <label style={{ fontWeight: 'bold', fontSize: '15px' }}>Work Shift:</label>
         <FilterElement />
         <ModalButton label="Copy" view={<CreateWorkShift />} customSize="600px" className="mt-10 w-30 h-15 mb-4" />
         <ControlledTable

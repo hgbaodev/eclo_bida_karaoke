@@ -11,6 +11,7 @@ import { dispatch } from '@/store';
 import { deleteStaff, getStaffs } from '@/store/slices/staffSlice';
 import toast from 'react-hot-toast';
 import EditStaff from '../edit-staff';
+import { deleteUser } from '@/store/slices/userSlice';
 
 export function getStatusBadge(status: Staff['status']) {
   switch (status) {
@@ -105,9 +106,12 @@ export const getColumns = (openModal: (args: any) => void) => [
                 phone: staff.phone,
                 status: staff.status,
                 address: staff.address,
+                email: staff.user ? staff.user.email : '',
+                role: staff.user ? staff.user.role : '',
+                password: staff.user ? staff.user.password : '',
               };
               openModal({
-                view: <EditStaff staff={data} active={staff.active} />,
+                view: <EditStaff staff={data} active={staff.active} activeUser={staff.user ? staff.user.active : ''} />,
               });
             }}
             as="span"
@@ -124,6 +128,7 @@ export const getColumns = (openModal: (args: any) => void) => [
           onDelete={async () => {
             const result = await dispatch(deleteStaff(staff.active)); // Remove the .then() block
             if (deleteStaff.fulfilled.match(result)) {
+              await dispatch(deleteUser(staff.user ? staff.user.active : ''));
               await dispatch(getStaffs({ page: 1, pageSize: 5, query: '', position: '', status: '' }));
               toast.success(`Staff #${staff.name} has been deleted successfully.`);
             } else {
@@ -149,6 +154,12 @@ export interface Staff {
     name: string;
     active: string;
   };
+  user: {
+    active: string;
+    email: string;
+    password: string;
+    role: string;
+  } | null;
   created_at: string;
 }
 export const STATUSES = {
