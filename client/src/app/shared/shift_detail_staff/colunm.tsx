@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { HeaderCell } from '@/components/ui/table';
 import DayColumn from '@/components/select/ShiftUser';
 
-export const getColumns = (openModal: (args: any) => void, Data: ShiftUserDetail[], workshift: string) => [
+export const getColumns = (openModal: (args: any) => void, Data: ShiftUserDetail[], workshift: any) => [
   {
     title: <HeaderCell title="Shift/Day" />,
     dataIndex: 'shift',

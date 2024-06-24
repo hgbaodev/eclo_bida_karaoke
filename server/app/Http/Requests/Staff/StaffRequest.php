@@ -29,6 +29,7 @@ class StaffRequest extends HelperRequest
             'address' => 'required',
             'position' => 'required',
             'status' => 'required',
+            'user' => 'nullable'
         ];
     }
 }

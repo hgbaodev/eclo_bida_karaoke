@@ -18,15 +18,15 @@ class Staff extends Model
         "phone",
         "idcard",
         "address",
-        // "user_id",
         "position_id",
         "status",
-        "active"
-        // "staff_salary",
+        "active",
+        "user_id",
     ];
     protected $hidden = [
         "id",
         "position_id",
+        "user_id",
     ];
     protected static function boot()
     {
@@ -39,7 +39,13 @@ class Staff extends Model
     }
     public function position()
     {
-        return $this->belongsTo(Position::class);
+        return $this->belongsTo(Position::class, 'position_id');
+    }
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function orders()

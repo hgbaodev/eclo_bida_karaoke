@@ -17,7 +17,8 @@ class StaffRepository implements StaffRepositoryInterface
         $idcard = $request->input('idcard');
         $status = $request->input('status');
         $position = $request->input('position');
-        $staffs = Staff::query()->with(['position']);
+        $user = $request->input('user');
+        $staffs = Staff::query()->with(['position', 'user']);
         if ($query) {
             $staffs->whereRaw("CONCAT(name, ' ', phone, ' ', idcard) LIKE '%$query%'");
         }
@@ -27,6 +28,11 @@ class StaffRepository implements StaffRepositoryInterface
         if ($position) {
             $staffs->whereHas('position', function ($query) use ($position) {
                 $query->where("active", $position);
+            });
+        }
+        if ($user) {
+            $staffs->whereHas('user', function ($query) use ($user) {
+                $query->where("active", $user);
             });
         }
         if ($idcard) {

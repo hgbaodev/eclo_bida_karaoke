@@ -12,6 +12,7 @@ import { statusOptions } from '../type';
 import { getStatusBadge } from './columns';
 import { getPositions } from '@/store/slices/positionSlice';
 import { setPosition, setQuery, setReset, setStatus } from '@/store/slices/staffSlice';
+import { getAllRoles } from '@/store/slices/roleSlice';
 
 export default function FilterElement() {
   const { isFiltered, query, position, status } = useSelector((state: RootState) => state.staff);
@@ -25,6 +26,10 @@ export default function FilterElement() {
 
   useEffect(() => {
     dispatch(getPositions());
+  }, []);
+
+  useEffect(() => {
+    dispatch(getAllRoles());
   }, []);
 
   return (

@@ -1,81 +1,41 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { HeaderCell } from '@/components/ui/table';
-import DayColumn from '@/components/select/ShiftUser';
+export const getColumns = (openModal: (args: any) => void, Data: ShiftUserDetail[], work_shift: any) => {
+  if (!work_shift || !work_shift.date_start || !work_shift.date_end) {
+    return [];
+  }
+  const startDate = new Date(work_shift.date_start);
+  const endDate = new Date(work_shift.date_end);
+  const dates = getDatesBetween(startDate, endDate);
+  const columns = [
+    {
+      title: <HeaderCell title="Shift/Day" />,
+      dataIndex: 'shift',
+      key: 'shift',
+      width: 30,
+    },
+    ...dates.map((date) => ({
+      title: <HeaderCell title={date.toLocaleDateString('en-US', { weekday: 'short' })} />,
+      dataIndex: date.toLocaleDateString('en-US', { weekday: 'short' }),
+      key: date.toLocaleDateString('en-US', { weekday: 'short' }),
+      width: 200,
+    })),
+  ];
 
-export const getColumns = (openModal: (args: any) => void, Data: ShiftUserDetail[], workshift: any) => [
-  {
-    title: <HeaderCell title="Shift/Day" />,
-    dataIndex: 'shift',
-    key: 'shift',
-    width: 30,
-    render: (_: string, shift: Shift) => shift.time_in + '-' + shift.time_out,
-  },
-  {
-    title: <HeaderCell title="Mon" />,
-    dataIndex: 'mon',
-    key: 'mon',
-    width: 200,
-    render: (_: string, shift: Shift) => (
-      <DayColumn data={Data} dayOfWeek="Monday" shift={shift} workshift={workshift} />
-    ),
-  },
-  {
-    title: <HeaderCell title="Tue" />,
-    dataIndex: 'tue',
-    key: 'tue',
-    width: 200,
-    render: (_: string, shift: Shift) => (
-      <DayColumn data={Data} dayOfWeek="Tuesday" shift={shift} workshift={workshift} />
-    ),
-  },
-  {
-    title: <HeaderCell title="Wed" />,
-    dataIndex: 'wed',
-    key: 'wed',
-    width: 200,
-    render: (_: string, shift: Shift) => (
-      <DayColumn data={Data} dayOfWeek="Wednesday" shift={shift} workshift={workshift} />
-    ),
-  },
-  {
-    title: <HeaderCell title="Thu" />,
-    dataIndex: 'thu',
-    key: 'thu',
-    width: 200,
-    render: (_: string, shift: Shift) => (
-      <DayColumn data={Data} dayOfWeek="Thursday" shift={shift} workshift={workshift} />
-    ),
-  },
-  {
-    title: <HeaderCell title="Fri" />,
-    dataIndex: 'fri',
-    key: 'fri',
-    width: 200,
-    render: (_: string, shift: Shift) => (
-      <DayColumn data={Data} dayOfWeek="Friday" shift={shift} workshift={workshift} />
-    ),
-  },
-  {
-    title: <HeaderCell title="Sat" />,
-    dataIndex: 'sat',
-    key: 'sat',
-    width: 200,
-    render: (_: string, shift: Shift) => (
-      <DayColumn data={Data} dayOfWeek="Saturday" shift={shift} workshift={workshift} />
-    ),
-  },
-  {
-    title: <HeaderCell title="Sun" />,
-    dataIndex: 'sun',
-    key: 'sun',
-    width: 200,
-    render: (_: string, shift: Shift) => (
-      <DayColumn data={Data} dayOfWeek="Sunday" shift={shift} workshift={workshift} />
-    ),
-  },
-];
+  return columns;
+};
+const getDatesBetween = (startDate: Date, endDate: Date): Date[] => {
+  const dates = [];
+  let currentDate = new Date(startDate);
 
+  while (currentDate <= endDate) {
+    dates.push(new Date(currentDate));
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  return dates;
+};
 export interface Shift {
   time_in: string;
   time_out: string;
@@ -95,6 +55,11 @@ export interface ShiftUserDetail {
   };
   staff: {
     name: string;
+    active: string;
+  };
+  workshift: {
+    date_start: string;
+    date_end: string;
     active: string;
   };
   active: string;
