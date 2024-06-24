@@ -39,7 +39,7 @@ class OrderRepository implements OrderRepositoryInterface
 
     public function getOrderByActive(string $active)
     {
-        return Order::where('active', $active)->firstOrFail();
+        return Order::with(['service.price', 'user', 'customer', 'orderdetails.product'])->where('active', $active)->first();
     }
 
     public function createOrder(array $data)

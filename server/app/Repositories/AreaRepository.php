@@ -65,10 +65,13 @@ class AreaRepository implements AreaRepositoryInterface
                 $foundServiceOrder = Order::where('service_id', $service->id)
                     ->where('checkout_time', null)
                     ->first();
-                if ($foundServiceOrder)
+                if ($foundServiceOrder) {
                     $service->is_booked = true;
-                else
+                    $service->order_active = $foundServiceOrder->active;
+                } else {
                     $service->is_booked = false;
+                }
+
                 return $service;
             });
             return $area;

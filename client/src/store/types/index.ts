@@ -40,6 +40,7 @@ export interface requested_productsType {
 export interface authType {
   isAuthenticated: boolean;
   isLoaded: boolean;
+  active: string;
   first_name: string;
   last_name: string;
   email: string;
@@ -321,4 +322,5 @@ export interface serviceType {
 export interface orderType {
   areas: any[];
   isLoading: boolean;
+  order: any;
 }
