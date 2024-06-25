@@ -27,13 +27,8 @@ export interface kitchen_orderType {
   data: kitchenOrder[];
   isLoading: boolean;
   isFiltered: boolean;
-  page: number;
-  pageSize: number;
-  query: string;
   status: any;
   errors: string | null;
-  isCreateLoading: boolean;
-  isUpdateLoading: boolean;
 }
 
 export interface kitchenOrder {
@@ -42,9 +37,9 @@ export interface kitchenOrder {
   product_name: string;
   order_id: string;
   quantity: string;
-  product_id: string;
   created_at: string;
   updated_at: string;
+  isLoading: boolean;
 }
 
 export interface authType {
