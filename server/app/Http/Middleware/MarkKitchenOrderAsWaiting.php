@@ -19,8 +19,15 @@ class MarkKitchenOrderAsWaiting
     public function handle(Request $request, Closure $next)
     {
         $response = $next($request);
-        //TODO: Validating the request.
-
+        //TODO: Validate the request.
+        /*
+         $data=[
+            Service: Room No.9,
+            Product: Sting,
+            Quantity: 3;
+        ];
+         */
+        SendEvent::send('kitchenOrderWaitingEvent', $request->data);
         return $response;
     }
 }

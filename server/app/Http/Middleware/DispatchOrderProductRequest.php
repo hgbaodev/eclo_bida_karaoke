@@ -19,9 +19,9 @@ class DispatchOrderProductRequest
     {
         $response = $next($request);
 
-        //TODO: Validating the request.x
+        //TODO: Validate the request
         $data = $request->data;
-        SendEvent::send('productOrder.requested', $data);
+        SendEvent::send('kitchenOrderEvent', $data);
         return $response;
     }
 }
