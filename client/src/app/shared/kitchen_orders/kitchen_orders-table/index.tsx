@@ -21,7 +21,8 @@ export default function KitchenOrdersTable() {
     }
   }, []);
 
-  usePusher('productOrder.requested', (data: any) => {
+  // Get notification & refresh after received an order
+  usePusher('kitchenOrderEvent', (data: any) => {
     fetchData(); // Fetch the data when receiving new Pusher data
   });
 
@@ -55,7 +56,7 @@ export default function KitchenOrdersTable() {
       <div className="mb-4">
         <p className="text-sm text-yellow-600">
           <span className="inline-block w-3 h-3 bg-yellow-600 mr-2 rounded-full"></span>
-          Đã tiếp nhận
+          Đã tiếp nhận yêu cầu
         </p>
         <p className="text-sm text-blue-600">
           <span className="inline-block w-3 h-3 bg-blue-600 mr-2 rounded-full"></span>

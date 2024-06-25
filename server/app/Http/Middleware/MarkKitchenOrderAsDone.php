@@ -19,7 +19,7 @@ class MarkKitchenOrderAsDone
     public function handle(Request $request, Closure $next)
     {
         $response = $next($request);
-        //TODO: Validating the request.
+        //TODO: Validate the request
 
         return $response;
     }

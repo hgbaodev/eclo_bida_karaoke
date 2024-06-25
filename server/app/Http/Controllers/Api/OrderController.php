@@ -83,42 +83,64 @@ class OrderController extends Controller
         return $this->sentSuccessResponse($updatedKitchenOrder, 'Marked as processing');
     }
 
-    public function markKitchenOrderAsWaiting(string $active)
+    public function markKitchenOrderAsWaiting(Request $request, string $active)
     {
-        $kitchenOrder = $this->kitchenOrderRepository->getKitchenOrderByActive($active);
+        try {
+            $repo = $this->kitchenOrderRepository;
 
-        // If no order is found, return an error response
-        if (!$kitchenOrder) {
-            return $this->sentErrorResponse('Order not found');
+            $kitchenOrder = $repo->getKitchenOrderByActive($active);
+
+            // If no order is found, return an error response
+            if (!$kitchenOrder) {
+                return $this->sentErrorResponse('Order not found');
+            }
+
+            // Convert the kitchen order to an array and set the status to processing
+            $kitchenOrderData = $kitchenOrder->toArray();
+            $kitchenOrderData['status'] = KitchenOrderEnum::WAITING;
+
+            // Update the kitchen order and return the updated order with a success response
+            $updatedKitchenOrder = $repo->updateKitchenOrderByActive($active, $kitchenOrderData);
+
+            $serviceName = $kitchenOrder->order->service->name;
+            $productName = $kitchenOrder->product->name;
+
+            $eventData = [
+                'serviceName' => $serviceName,
+                'productName' => $productName,
+                'quantity' => $kitchenOrder->quantity,
+            ];
+
+            $request->merge(['data' => $eventData]);
+
+            return $this->sentSuccessResponse($updatedKitchenOrder, 'Marked as waiting');
+        } catch (\Exception $e) {
+            return $this->sentErrorResponse($e->getMessage());
         }
-
-        // Convert the kitchen order to an array and set the status to processing
-        $kitchenOrderData = $kitchenOrder->toArray();
-        $kitchenOrderData['status'] = KitchenOrderEnum::WAITING;
-
-        // Update the kitchen order and return the updated order with a success response
-        $updatedKitchenOrder = $this->kitchenOrderRepository->updateKitchenOrderByActive($active, $kitchenOrderData);
-        return $this->sentSuccessResponse($updatedKitchenOrder, 'Marked as waiting');
     }
 
-    public function markKitchenOrderAsDone(string $active)
+    public function markKitchenOrderAsDone( string $active)
     {
-        $repo = $this->kitchenOrderRepository;
-        $kitchenOrder = $repo->getKitchenOrderByActive($active);
+        try {
+            $repo = $this->kitchenOrderRepository;
+            $kitchenOrder = $repo->getKitchenOrderByActive($active);
 
-        // If no order is found, return an error response
-        if (!$kitchenOrder) {
-            return $this->sentErrorResponse('Order not found');
+            // If no order is found, return an error response
+            if (!$kitchenOrder) {
+                return $this->sentErrorResponse('Order not found');
+            }
+
+            // Convert the kitchen order to an array and set the status to processing
+            $kitchenOrderData = $kitchenOrder->toArray();
+            $kitchenOrderData['status'] = KitchenOrderEnum::DONE;
+
+            // Update the kitchen order and return the updated order with a success response
+            $updatedKitchenOrder = $repo->deleteKitchenOrderByActive($active);
+
+            return $this->sentSuccessResponse($updatedKitchenOrder, 'Marked as done');
+        } catch (\Exception $e) {
+            return $this->sentErrorResponse($e->getMessage());
         }
-
-        // Convert the kitchen order to an array and set the status to processing
-        $kitchenOrderData = $kitchenOrder->toArray();
-        $kitchenOrderData['status'] = KitchenOrderEnum::DONE;
-
-        // Update the kitchen order and return the updated order with a success response
-        $updatedKitchenOrder = $repo->updateKitchenOrderByActive($active, $kitchenOrderData);
-        $updatedKitchenOrder = $repo->deleteKitchenOrderByActive($active);
-        return $this->sentSuccessResponse($updatedKitchenOrder, 'Marked as done');
     }
 
     public function index(Request $request)
