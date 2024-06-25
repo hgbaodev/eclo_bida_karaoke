@@ -9,11 +9,9 @@ import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
 import usePusher from '@/hooks/use-pusher';
 import { getKitchenOrders } from '@/store/slices/kitchen_orderSlice';
-import { useModal } from '../../modal-views/use-modal';
 
 export default function KitchenOrdersTable() {
-  const { openModal } = useModal();
-  const { data, isLoading, pageSize, page, status, query } = useSelector((state: RootState) => state.kitchen_order);
+  const { data, isLoading, status } = useSelector((state: RootState) => state.kitchen_order);
 
   const fetchData = useCallback(async () => {
     try {
@@ -33,12 +31,12 @@ export default function KitchenOrdersTable() {
 
   useEffect(() => {
     fetchData();
-  }, [fetchData, page, pageSize, query, status]);
+  }, [fetchData, status]);
 
   const columns = useMemo(
-    () => getColumns(openModal),
+    () => getColumns(data),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [openModal],
+    [data],
   );
 
   const { visibleColumns } = useColumn(columns);
@@ -56,15 +54,15 @@ export default function KitchenOrdersTable() {
     <>
       <div className="mb-4">
         <p className="text-sm text-yellow-600">
-          <span className="inline-block w-3 h-3 bg-yellow-600 mr-2"></span>
+          <span className="inline-block w-3 h-3 bg-yellow-600 mr-2 rounded-full"></span>
           Đã tiếp nhận
         </p>
         <p className="text-sm text-blue-600">
-          <span className="inline-block w-3 h-3 bg-blue-600 mr-2"></span>
+          <span className="inline-block w-3 h-3 bg-blue-600 mr-2 rounded-full"></span>
           Đang chế biến
         </p>
         <p className="text-sm text-green-600">
-          <span className="inline-block w-3 h-3 bg-green-600 mr-2"></span>
+          <span className="inline-block w-3 h-3 bg-green-600 mr-2 rounded-full"></span>
           Đã xong/chờ giao
         </p>
       </div>
