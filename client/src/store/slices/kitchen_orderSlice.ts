@@ -1,20 +1,16 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axiosInstance from '@/api/axios';
-import { kitchen_orderType } from '../types';
+import { kitchen_orderType, kitchenOrder } from '../types';
 
 const initialState: kitchen_orderType = {
   data: [],
   isLoading: false,
   isFiltered: false,
-  page: 1,
-  pageSize: 5,
   status: '',
-  query: '',
   errors: null,
-  isCreateLoading: false,
-  isUpdateLoading: false,
 };
 
+// Thunk action để lấy danh sách đơn hàng từ API
 export const getKitchenOrders = createAsyncThunk<any, void, {}>('kitchen_orders/getKitchenOrders', async () => {
   try {
     const response = await axiosInstance.get('/orders/kitchen-orders');
@@ -24,36 +20,48 @@ export const getKitchenOrders = createAsyncThunk<any, void, {}>('kitchen_orders/
   }
 });
 
-export const createKitchenOrder = createAsyncThunk(
-  'kitchen_orders/createKitchenOrder',
-  async (data: any, { rejectWithValue }) => {
+// Thunk action để đánh dấu đơn hàng thành "Processing" và cập nhật lại trạng thái
+export const markKitchenOrderAsProcessing = createAsyncThunk(
+  'orders/markKitchenOrderAsProcessing',
+  async (active: string, { dispatch, rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post('/orders/kitchen-orders', data);
-      return response.data;
+      const response = await axiosInstance.put(`/orders/mark-kitchen-order-as-processing/${active}`);
+      const { data } = response;
+      // Cập nhật lại trạng thái đơn hàng sau khi hoàn thành hành động
+      dispatch(markOrderAsProcessed({ active, status: 'P' }));
+      return data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   },
 );
 
-export const updateKitchenOrder = createAsyncThunk(
-  'kitchen_orders/updateKitchenOrder',
-  async ({ product, active }: { product: any; active: string }, { rejectWithValue }) => {
+// Thunk action để đánh dấu đơn hàng thành "Waiting" và cập nhật lại trạng thái
+export const markKitchenOrderAsWaiting = createAsyncThunk(
+  'orders/markKitchenOrderAsWaiting',
+  async (active: string, { dispatch, rejectWithValue }) => {
     try {
-      const response = await axiosInstance.put(`/orders/kitchen-orders/${active}`, product);
-      return response.data;
+      const response = await axiosInstance.put(`/orders/mark-kitchen-order-as-waiting/${active}`);
+      const { data } = response;
+      // Cập nhật lại trạng thái đơn hàng sau khi hoàn thành hành động
+      dispatch(markOrderAsWaited({ active, status: 'W' }));
+      return data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   },
 );
 
-export const deleteKitchenOrder = createAsyncThunk(
-  'kitchen_orders/deleteKitchenOrder',
-  async (active: string, { rejectWithValue }) => {
+// Thunk action để đánh dấu đơn hàng thành "Done" và cập nhật lại trạng thái
+export const markKitchenOrderAsDone = createAsyncThunk(
+  'orders/markKitchenOrderAsDone',
+  async (active: string, { dispatch, rejectWithValue }) => {
     try {
-      const response = await axiosInstance.delete(`/orders/kitchen-orders/${active}`);
-      return response.data;
+      const response = await axiosInstance.put(`/orders/mark-kitchen-order-as-done/${active}`);
+      const { data } = response;
+      // Cập nhật lại trạng thái đơn hàng sau khi hoàn thành hành động
+      dispatch(markOrderAsFinished({ active, status: 'D' }));
+      return data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
@@ -64,54 +72,68 @@ const kitchenOrderSlice = createSlice({
   name: 'kitchen_order',
   initialState,
   reducers: {
-    setErrors: (state, action) => {
+    setErrors: (state, action: PayloadAction<string | null>) => {
       state.errors = action.payload;
     },
     setReset: (state) => {
       state.status = '';
       state.isFiltered = false;
     },
-    setStatus: (state, action) => {
+    setStatus: (state, action: PayloadAction<string>) => {
       state.status = action.payload;
       state.isFiltered = true;
     },
-    updateRequestedProducts: (state, action: PayloadAction<any>) => {
-      const updatedProducts = action.payload.requestedProduct;
+    markOrderAsProcessed: (state, action: PayloadAction<{ active: string; status: string }>) => {
+      const { active, status } = action.payload;
+      const index = state.data.findIndex((order) => order.active === active);
+      if (index !== -1) {
+        state.data[index].status = status;
+        state.data[index].isLoading = false; // Đặt lại isLoading về false
+      }
+    },
+    markOrderAsWaited: (state, action: PayloadAction<{ active: string; status: string }>) => {
+      const { active, status } = action.payload;
+      const index = state.data.findIndex((order) => order.active === active);
+      if (index !== -1) {
+        state.data[index].status = status;
+        state.data[index].isLoading = false; // Đặt lại isLoading về false
+      }
+    },
+    markOrderAsFinished: (state, action: PayloadAction<{ active: string; status: string }>) => {
+      const { active, status } = action.payload;
+      const index = state.data.findIndex((order) => order.active === active);
+      if (index !== -1) {
+        state.data[index].status = status;
+        state.data[index].isLoading = false; // Đặt lại isLoading về false
+      }
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getKitchenOrders.pending, (state: kitchen_orderType) => {
+      .addCase(getKitchenOrders.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getKitchenOrders.fulfilled, (state, action) => {
-        const result = action.payload.data;
+      .addCase(getKitchenOrders.fulfilled, (state, action: PayloadAction<{ data: kitchenOrder[] }>) => {
         state.isLoading = false;
-        state.data = result;
+        state.data = action.payload.data;
       })
       .addCase(getKitchenOrders.rejected, (state) => {
         state.isLoading = false;
-      })
-      .addCase(createKitchenOrder.pending, (state: kitchen_orderType) => {
-        state.isCreateLoading = true;
-      })
-      .addCase(createKitchenOrder.fulfilled, (state) => {
-        state.isCreateLoading = false;
-      })
-      .addCase(createKitchenOrder.rejected, (state) => {
-        state.isCreateLoading = false;
-      })
-      .addCase(updateKitchenOrder.pending, (state: kitchen_orderType) => {
-        state.isUpdateLoading = true;
-      })
-      .addCase(updateKitchenOrder.fulfilled, (state) => {
-        state.isUpdateLoading = false;
-      })
-      .addCase(updateKitchenOrder.rejected, (state) => {
-        state.isUpdateLoading = false;
       });
+    /*
+      .addCase(markKitchenOrderAsProcessing.pending, (state, action) => {})
+      .addCase(markKitchenOrderAsProcessing.fulfilled, (state, action) => {})
+      .addCase(markKitchenOrderAsProcessing.rejected, (state, action) => {})
+      .addCase(markKitchenOrderAsWaiting.pending, (state, action) => {})
+      .addCase(markKitchenOrderAsWaiting.fulfilled, (state, action) => {})
+      .addCase(markKitchenOrderAsWaiting.rejected, (state, action) => {})
+      .addCase(markKitchenOrderAsDone.pending, (state, action) => {})
+      .addCase(markKitchenOrderAsDone.fulfilled, (state, action) => {})
+      .addCase(markKitchenOrderAsDone.rejected, (state, action) => {})*/
   },
 });
-export const { setReset, setStatus, setErrors } = kitchenOrderSlice.actions;
+
+export const { setReset, setStatus, setErrors, markOrderAsProcessed, markOrderAsWaited, markOrderAsFinished } =
+  kitchenOrderSlice.actions;
 
 export default kitchenOrderSlice.reducer;

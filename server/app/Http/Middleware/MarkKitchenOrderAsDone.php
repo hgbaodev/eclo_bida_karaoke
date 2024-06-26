@@ -7,7 +7,7 @@ use App\Http\Controllers\Event\SendEvent;
 use Closure;
 use Illuminate\Http\Request;
 
-class MarkOrderRequestAsRead
+class MarkKitchenOrderAsDone
 {
     /**
      * Handle an incoming request.
@@ -19,9 +19,8 @@ class MarkOrderRequestAsRead
     public function handle(Request $request, Closure $next)
     {
         $response = $next($request);
-        //TODO: Validating the request.
-        $orderNotification = $request->orderNotification;
-        SendEvent::send('productOrder.requested', $orderNotification);
+        //TODO: Validate the request
+
         return $response;
     }
 }
