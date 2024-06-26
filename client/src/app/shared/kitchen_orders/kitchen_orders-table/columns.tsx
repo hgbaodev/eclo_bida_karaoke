@@ -187,7 +187,7 @@ export const DataColumns = (data: kitchenOrder[]) => {
       title: <HeaderCell title="No." key="header-no" />,
       dataIndex: 'no.',
       key: 'no.',
-      width: 12,
+      width: 8,
       render: (_: any, kitchenOrder: KitchenOrder, index: number) => (
         <div className="inline-flex ps-3">{index + 1}</div>
       ),
