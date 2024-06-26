@@ -5,6 +5,7 @@ import { createOrder, getAreas } from '@/store/slices/orderSlice';
 import { RootState } from '@/store/types';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import toast from 'react-hot-toast';
 import { MdMoreHoriz } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 import { Dropdown, Text } from 'rizzui';
@@ -72,9 +73,11 @@ export default function BlankPage() {
                         ) : (
                           <Dropdown.Item
                             onClick={async () => {
-                              const result = dispatch(createOrder(service?.order_active));
+                              const result = await dispatch(createOrder(service?.active));
                               if (createOrder.fulfilled.match(result)) {
                                 navigate.push(`/admin/orders/${result.payload.data.active}`);
+                              } else {
+                                toast.error('Failed to create order');
                               }
                             }}
                             className="gap-2 text-xs sm:text-sm"

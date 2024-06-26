@@ -44,6 +44,6 @@ class Product extends Model
 
     public function kitchenOrders()
     {
-        return $this->hasMany(KitchenOrders::class);
+        return $this->hasMany(KitchenOrder::class);
     }
 }

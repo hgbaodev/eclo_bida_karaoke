@@ -86,6 +86,11 @@ class OrderController extends Controller
     public function show($active)
     {
         $returnedData = $this->orderRepository->getOrderByActive($active);
+        if (!$returnedData) {
+            return $this->sentErrorResponse('Order not found', 'errors', 404);
+        }
+
+        unset($returnedData['orderdetails']);
         return $this->sentSuccessResponse($returnedData);
     }
 

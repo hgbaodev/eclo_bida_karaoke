@@ -334,5 +334,43 @@ export interface serviceType {
 export interface orderType {
   areas: any[];
   isLoading: boolean;
-  order: any;
+  order: null | {
+    active: string;
+    checkin_time: string | number | Date;
+    checkout_time: string;
+    total_price: number;
+    service: {
+      name: string;
+      description: string;
+      price: {
+        pricePerHour: number;
+      };
+    };
+    user: {
+      first_name: string;
+      last_name: string;
+      email: string;
+      image: string;
+    };
+    customer: {
+      first_name: string;
+      last_name: string;
+      status: string;
+      image: string;
+      phone: string;
+      email: string;
+      active: string;
+    };
+    products: {
+      active: string;
+      quantity: number;
+      image: string;
+      name: string;
+      selling_price: number;
+    }[];
+  };
+  isLoadingGetOrder: boolean;
+  queryProduct: string;
+  isLoadingQueryProduct: boolean;
+  products: [];
 }
