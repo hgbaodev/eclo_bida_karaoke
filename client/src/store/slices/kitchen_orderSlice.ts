@@ -100,6 +100,12 @@ const kitchenOrderSlice = createSlice({
         state.data[index].isLoading = false; // Đặt lại isLoading về false
       }
     },
+    appendOrders: (state, action: PayloadAction<{ data: any }>) => {
+      const { data } = action.payload;
+      console.log('Data: ' + data);
+      state.data.push(data);
+    },
+
     removeOrder: (state, action: PayloadAction<string>) => {
       state.data = state.data.filter((order) => order.active !== action.payload);
     },
@@ -119,6 +125,6 @@ const kitchenOrderSlice = createSlice({
   },
 });
 
-export const { setReset, setStatus, setErrors, markOrderStatus, removeOrder } = kitchenOrderSlice.actions;
+export const { setReset, setStatus, setErrors, markOrderStatus, removeOrder, appendOrders } = kitchenOrderSlice.actions;
 
 export default kitchenOrderSlice.reducer;

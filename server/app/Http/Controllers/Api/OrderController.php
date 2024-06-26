@@ -47,13 +47,21 @@ class OrderController extends Controller
                     'order_id' => $orderId,
                     'quantity' => $requestedProduct['quantity'],
                 ];
-                $kitchenOrders[] = $data;
                 $data['product_id'] = $product->id;
-                $this->kitchenOrderRepository->createKitchenOrder($data);
+                $newOrder = $this->kitchenOrderRepository->createKitchenOrder($data);
+
+                //Returned data
+                $eventData['status'] = 'R';
+                $eventData['active'] = $newOrder['active'];
+                $eventData['order_active'] = $active;
+                $eventData['quantity'] = $data['quantity'];
+                $eventData['product_name'] = $product->name;
+
+                $kitchenOrders[] = $eventData;
             }
 
             $request->merge(['data' => $kitchenOrders]);
-            return $this->sentSuccessResponse($order, 'This order has been requested successfully');
+            return $this->sentSuccessResponse($kitchenOrders, 'This order has been requested successfully');
         } catch (\Exception $e) {
             return $this->sentErrorResponse($e->getMessage());
         }
