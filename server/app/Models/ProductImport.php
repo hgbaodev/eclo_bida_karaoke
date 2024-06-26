@@ -20,6 +20,7 @@ class ProductImport extends Model
         'create_time',
         'receive_time',
         'status',
+
         'active',
     ];
     protected $hidden = [

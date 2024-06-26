@@ -19,6 +19,7 @@ return new class extends Migration
             $table->double('selling_price');
             $table->bigInteger('quantity')->nullable();
             $table->string('active')->unique();
+            $table->foreignId('id_type')->constrained('product_types');
             $table->softDeletes();
         });
     }

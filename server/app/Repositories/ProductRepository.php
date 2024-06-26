@@ -15,7 +15,7 @@ class ProductRepository implements ProductRepositoryInterface
         $perPage = $request->input('perPage');
         $query = $request->input('query');
         $id = $request->input('id');
-        $product = Product::query();
+        $product = Product::query()->with(['product_type']);
         if ($query) {
             $product->whereRaw("name LIKE '%$query%'");
         }

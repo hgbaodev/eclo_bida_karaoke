@@ -28,11 +28,11 @@ export const getColumns = (openModal: (args: any) => void) => [
     render: (_: string,  product: Product) => product.name,
   },
   {
-    title: <HeaderCell title="Cost Price" />,
-    dataIndex: 'cost_price',
-    key: 'cost_price',
+    title: <HeaderCell title="Type" />,
+    dataIndex: 'type',
+    key: 'type',
     width: 100,
-    render: (_: number,  product: Product) => product.cost_price,
+    render: (_: string,  product: Product) => product.product_type.type_name,
   },
   {
     title: <HeaderCell title="Selling Price" />,
@@ -55,14 +55,14 @@ export const getColumns = (openModal: (args: any) => void) => [
     width: 10,
     render: (_: string, product: Product) => (
       <div className="flex items-center justify-end gap-3 pe-3">
-        <Tooltip size="sm" content={'Edit Staff'} placement="top" color="invert">
+        <Tooltip size="sm" content={'Edit Product'} placement="top" color="invert">
           <ActionIcon
             onClick={() => {
               const data = {
                 name: product.name,
-                cost_price: product.cost_price,
                 selling_price: product.selling_price,
                 quantity: product.quantity,
+                product_type:product.product_type.active,
               };
               openModal({
                 view: <EditProduct product={data} active={product.active} />,
@@ -78,7 +78,7 @@ export const getColumns = (openModal: (args: any) => void) => [
         </Tooltip>
         <DeletePopover
           title={`Delete this user`}
-          description={`Are you sure you want to delete this #${product.name} staff?`}
+          description={`Are you sure you want to delete this ${product.name} ?`}
           onDelete={async () => {
             const result = await dispatch(deleteProduct(product.active)); // Remove the .then() block
             if (deleteProduct.fulfilled.match(result)) {
@@ -111,8 +111,10 @@ export const getColumns = (openModal: (args: any) => void) => [
 export interface Product {
     active: string;
     name: string;
-    cost_price: string;
     selling_price: string;
     quantity: string;
-   
+   product_type:{
+    active:string
+    type_name:string
+   }
   }

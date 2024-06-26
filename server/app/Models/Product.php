@@ -21,7 +21,7 @@ class Product extends Model
         'cost_price',
         'selling_price',
         'active',
-        'unit',
+        'id_type',
         'quantity',
     ];
     protected $hidden = [
@@ -42,6 +42,10 @@ class Product extends Model
         return $this->hasMany(ProductImportDetail::class);
     }
 
+    public function product_type()
+    {
+        return $this->belongsTo(ProductType::class, 'id_type');
+    }
     public function kitchenOrders()
     {
         return $this->hasMany(KitchenOrder::class);
