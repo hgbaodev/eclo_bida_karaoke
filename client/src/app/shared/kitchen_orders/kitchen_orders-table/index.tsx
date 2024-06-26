@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useCallback } from 'react';
 import { useColumn } from '@/hooks/use-column';
 import ControlledTable from '@/components/controlled-table';
-import { getColumns } from '@/app/shared/kitchen_orders/kitchen_orders-table/columns';
+import { DataColumns } from '@/app/shared/kitchen_orders/kitchen_orders-table/columns';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
@@ -15,7 +15,7 @@ export default function KitchenOrdersTable() {
 
   const fetchData = useCallback(async () => {
     try {
-      await dispatch(getKitchenOrders());
+      await dispatch(getKitchenOrders({ all: true }));
     } catch (error) {
       console.error('Error:', error);
     }
@@ -23,11 +23,8 @@ export default function KitchenOrdersTable() {
 
   // Get notification & refresh after received an order
   usePusher('kitchenOrderEvent', (data: any) => {
-    fetchData(); // Fetch the data when receiving new Pusher data
-  });
-
-  usePusher('productOrder.read', (data: any) => {
-    console.log('usePusher', data);
+    console.log(' // Fetch the data when receiving new Pusher data');
+    fetchData();
   });
 
   useEffect(() => {
@@ -35,7 +32,7 @@ export default function KitchenOrdersTable() {
   }, [fetchData, status]);
 
   const columns = useMemo(
-    () => getColumns(data),
+    () => DataColumns(data),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [data],
   );
@@ -53,20 +50,21 @@ export default function KitchenOrdersTable() {
 
   return (
     <>
-      <div className="mb-4">
-        <p className="text-sm text-yellow-600">
+      <div className="mb-4 flex items-center space-x-4">
+        <p className="text-sm text-yellow-600 flex items-center">
           <span className="inline-block w-3 h-3 bg-yellow-600 mr-2 rounded-full"></span>
           Đã tiếp nhận yêu cầu
         </p>
-        <p className="text-sm text-blue-600">
+        <p className="text-sm text-blue-600 flex items-center">
           <span className="inline-block w-3 h-3 bg-blue-600 mr-2 rounded-full"></span>
           Đang chế biến
         </p>
-        <p className="text-sm text-green-600">
+        <p className="text-sm text-green-600 flex items-center">
           <span className="inline-block w-3 h-3 bg-green-600 mr-2 rounded-full"></span>
           Đã xong/chờ giao
         </p>
       </div>
+
       <div className="grid grid-cols-2 gap-4 mt-4">
         <div>
           <h2 className="text-lg font-bold mb-2">Đã nhận/Đang chế biến</h2>
@@ -77,6 +75,7 @@ export default function KitchenOrdersTable() {
             showLoadingText={false}
             // @ts-ignore
             columns={visibleColumns}
+            scrollY={400}
             className="rounded-md border border-muted text-sm shadow-sm [&_.rc-table-placeholder_.rc-table-expanded-row-fixed>div]:h-60 [&_.rc-table-placeholder_.rc-table-expanded-row-fixed>div]:justify-center [&_.rc-table-row:last-child_td.rc-table-cell]:border-b-0 [&_thead.rc-table-thead]:border-t-0"
           />
         </div>
@@ -89,6 +88,7 @@ export default function KitchenOrdersTable() {
             showLoadingText={false}
             // @ts-ignore
             columns={visibleColumns}
+            scrollY={400}
             className="rounded-md border border-muted text-sm shadow-sm [&_.rc-table-placeholder_.rc-table-expanded-row-fixed>div]:h-60 [&_.rc-table-placeholder_.rc-table-expanded-row-fixed>div]:justify-center [&_.rc-table-row:last-child_td.rc-table-cell]:border-b-0 [&_thead.rc-table-thead]:border-t-0"
           />
         </div>

@@ -6,12 +6,15 @@ import { KitchenOrder } from '../types';
 import { dispatch } from '@/store';
 import { kitchenOrder } from '@/store/types';
 import React from 'react';
+import usePusher from '@/hooks/use-pusher';
 import { useState } from 'react';
 
 import {
   markKitchenOrderAsProcessing,
   markKitchenOrderAsWaiting,
   markKitchenOrderAsDone,
+  markOrderAsWaited,
+  markOrderAsProcessed,
 } from '@/store/slices/kitchen_orderSlice';
 
 export const STATUSES = {
@@ -61,6 +64,32 @@ export function StatusButton({ status, active }: { status: KitchenOrder['status'
       setLoading(false); // Đặt isLoading thành false sau khi xử lý hoàn tất (thành công hoặc thất bại)
     }
   };
+
+  usePusher('kitchenOrderWaitingEvent', (eventData: any) => {
+    if (eventData.active === active) {
+      setLoading(true);
+      try {
+        dispatch(markOrderAsWaited({ active, status: 'W' }));
+      } catch (error) {
+        console.error('Error marking order as waited: ', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+  });
+
+  usePusher('kitchenOrderProcessingEvent', (eventData: any) => {
+    if (eventData.active === active) {
+      setLoading(true);
+      try {
+        dispatch(markOrderAsProcessed({ active, status: 'P' }));
+      } catch (error) {
+        console.error('Error marking order as processed: ', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+  });
 
   // Trả về nút dựa trên trạng thái status
   switch (status) {
@@ -152,13 +181,13 @@ export function getStatusBadge(status: KitchenOrder['status']) {
   }
 }
 
-export const getColumns = (data: kitchenOrder[]) => {
+export const DataColumns = (data: kitchenOrder[]) => {
   return [
     {
       title: <HeaderCell title="No." key="header-no" />,
       dataIndex: 'no.',
       key: 'no.',
-      width: 32,
+      width: 12,
       render: (_: any, kitchenOrder: KitchenOrder, index: number) => (
         <div className="inline-flex ps-3">{index + 1}</div>
       ),
@@ -167,30 +196,30 @@ export const getColumns = (data: kitchenOrder[]) => {
       title: <HeaderCell title="Name" />,
       dataIndex: 'name',
       key: 'name',
-      width: 50,
+      width: 20,
       render: (_: string, kitchenOrder: KitchenOrder) => kitchenOrder.product_name,
     },
     {
       title: <HeaderCell title="Quan" />,
       dataIndex: 'quantity',
       key: 'quantity',
-      width: 32,
+      width: 12,
       render: (_: string, kitchenOrder: KitchenOrder) => kitchenOrder.quantity,
     },
     {
       title: <HeaderCell title="Status" />,
       dataIndex: 'status',
       key: 'status',
-      width: 10,
+      width: 20,
       render: (status: KitchenOrder['status']) => getStatusBadge(status),
     },
     {
-      title: <></>,
+      title: <HeaderCell title="Action" />,
       dataIndex: 'action',
       key: 'action',
-      width: 50,
+      width: 20,
       render: (_: string, kitchenOrder: KitchenOrder) => (
-        <div className="flex items-center justify-end gap-3 pe-3">
+        <div className="flex items-center justify-start gap-3 pe-3">
           <StatusButton status={kitchenOrder.status} active={kitchenOrder.active} />
         </div>
       ),

@@ -64,22 +64,25 @@ class OrderController extends Controller
         return $this->sentSuccessResponse($this->kitchenOrderRepository->getKitchenOrders($request));
     }
 
-    public function markKitchenOrderAsProcessing(string $active)
+    public function markKitchenOrderAsProcessing(Request $request, string $active)
     {
-        // Retrieve the kitchen order by its active status
         $kitchenOrder = $this->kitchenOrderRepository->getKitchenOrderByActive($active);
 
-        // If no order is found, return an error response
         if (!$kitchenOrder) {
             return $this->sentErrorResponse('Order not found');
         }
 
-        // Convert the kitchen order to an array and set the status to processing
         $kitchenOrderData = $kitchenOrder->toArray();
         $kitchenOrderData['status'] = KitchenOrderEnum::PROCESSING;
 
-        // Update the kitchen order and return the updated order with a success response
         $updatedKitchenOrder = $this->kitchenOrderRepository->updateKitchenOrderByActive($active, $kitchenOrderData);
+
+        $eventData = [
+            'active'=> $active,
+        ];
+
+        $request->merge(['data' => $eventData]);
+
         return $this->sentSuccessResponse($updatedKitchenOrder, 'Marked as processing');
     }
 
@@ -106,6 +109,7 @@ class OrderController extends Controller
             $productName = $kitchenOrder->product->name;
 
             $eventData = [
+                'active'=> $active,
                 'serviceName' => $serviceName,
                 'productName' => $productName,
                 'quantity' => $kitchenOrder->quantity,
