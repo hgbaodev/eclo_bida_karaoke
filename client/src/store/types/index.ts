@@ -27,6 +27,9 @@ export interface RootState {
 export interface kitchen_orderType {
   data: kitchenOrder[];
   isLoading: boolean;
+  page: number;
+  pageSize: number;
+  totalRow: number;
   isFiltered: boolean;
   status: any;
   errors: string | null;

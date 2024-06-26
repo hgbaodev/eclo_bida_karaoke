@@ -3,7 +3,6 @@
 namespace App\Http\Middleware;
 
 use App\Events\MarkOrderRequestAsReadEvent;
-use App\Http\Controllers\Event\SendEvent;
 use Closure;
 use Illuminate\Http\Request;
 

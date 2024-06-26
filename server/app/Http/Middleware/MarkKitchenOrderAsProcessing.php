@@ -19,8 +19,7 @@ class MarkKitchenOrderAsProcessing
     public function handle(Request $request, Closure $next)
     {
         $response = $next($request);
-        //TODO: Validate the request.
-
+        SendEvent::send('kitchenOrderProcessingEvent', $request->data);
         return $response;
     }
 }

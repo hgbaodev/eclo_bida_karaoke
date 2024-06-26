@@ -1,24 +1,33 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axiosInstance from '@/api/axios';
 import { kitchen_orderType, kitchenOrder } from '../types';
+import env from '@/env';
 
 const initialState: kitchen_orderType = {
   data: [],
   isLoading: false,
+  totalRow: 0,
+  page: 1,
+  pageSize: 5,
   isFiltered: false,
   status: '',
   errors: null,
 };
 
-// Thunk action để lấy danh sách đơn hàng từ API
-export const getKitchenOrders = createAsyncThunk<any, void, {}>('kitchen_orders/getKitchenOrders', async () => {
-  try {
-    const response = await axiosInstance.get('/orders/kitchen-orders');
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-});
+// Thunk action để lấy danh sách đơn hàng từ API với tham số `all`
+export const getKitchenOrders = createAsyncThunk<any, { all?: boolean }, {}>(
+  'kitchen_orders/getKitchenOrders',
+  async ({ all }) => {
+    const url = new URL('/api/v1/orders/kitchen-orders', env.NEXT_API_URL);
+    url.searchParams.set('all', `${all}`);
+    try {
+      const response = await axiosInstance.get(url.href);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+);
 
 // Thunk action để đánh dấu đơn hàng thành "Processing" và cập nhật lại trạng thái
 export const markKitchenOrderAsProcessing = createAsyncThunk(
