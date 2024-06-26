@@ -7,33 +7,27 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Service extends Model
+class KitchenOrder extends Model
 {
     use HasFactory, SoftDeletes, GeneratesUniqueActive;
 
     protected $fillable = [
-        'id',
-        'name',
-        'description',
-        'status',
         'active',
-        'area_id',
-        'price_id',
-        'service_type_id',
-        'created_at'
-    ];
+        'status',
+        'order_id',
+        'product_id',
+        'quantity',
+        ];
 
     protected $hidden = [
-        'area_id',
-        'price_id',
-        'service_type_id',
-        'updated_at',
-        'deleted_at'
+        'id',
+        'deleted_at',
     ];
 
     protected static function boot()
     {
         parent::boot();
+
         static::creating(function ($model) {
             if (empty($model->active)) {
                 $model->active = self::generateUniqueActive();
@@ -41,18 +35,18 @@ class Service extends Model
         });
     }
 
-    public function area()
+    public function product()
     {
-        return $this->belongsTo(Area::class);
+        return $this->belongsTo(Product::class);
     }
 
-    public function price()
+    public function order()
     {
-        return $this->belongsTo(Price::class);
+        return $this->belongsTo(Order::class);
     }
 
-    public function serviceType()
+    public function getProductNameAttribute()
     {
-        return $this->belongsTo(ServiceType::class);
+        return $this->product ? $this->product->name : null;
     }
 }

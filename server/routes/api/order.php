@@ -10,15 +10,30 @@ Route::group(
     ],
     function () {
         Route::get('/', [OrderController::class, 'index']);
-        Route::get('/requested-products', [OrderController::class, 'requestedProducts']);
-        Route::post(
-            '/mark-notification-as-read',
-            [OrderController::class, 'markOrderRequestAsRead']
+        Route::get('/kitchen-orders', [OrderController::class, 'getKitchenOrders']);
+        Route::post('/', [OrderController::class, 'store']);
+        //mark as processing
+        Route::put(
+            '/mark-kitchen-order-as-processing/{active}',
+            [OrderController::class, 'markKitchenOrderAsProcessing']
         )->middleware(
-            'mark.orderRequestAsRead.event'
+            'markKitchenOrderAsProcessingEvent'
+        );
+        //mark as waiting
+        Route::put(
+            '/mark-kitchen-order-as-waiting/{active}',
+            [OrderController::class, 'markKitchenOrderAsWaiting']
+        )->middleware(
+            'markKitchenOrderAsWaitingEvent'
+        );
+//        mark as done
+        Route::put(
+            '/mark-kitchen-order-as-done/{active}',
+            [OrderController::class, 'markKitchenOrderAsDone']
+        )->middleware(
+            'markKitchenOrderAsDoneEvent'
         );
         Route::get('/{active}', [OrderController::class, 'show']);
         Route::post('/{active}/products', [OrderController::class, 'addProductsToOrder'])->middleware('dispatch.order.event');
-        Route::post('/', [OrderController::class, 'store']);
     }
 );

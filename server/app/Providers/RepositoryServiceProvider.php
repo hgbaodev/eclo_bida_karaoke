@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Interface\AreaRepositoryInterface;
 use App\Interface\CustomerRepositoryInterface;
 use App\Interface\DeviceRepositoryInterface;
+use App\Interface\KitchenOrderRepositoryInterface;
 use App\Interface\LoggerRepositoryInterface;
 use App\Interface\NotificationRepositoryInterface;
 use App\Interface\OrderRepositoryInterface;
@@ -29,6 +30,7 @@ use App\Models\Price;
 use App\Repositories\AreaRepository;
 use App\Repositories\CustomerRepository;
 use App\Repositories\DeviceRepository;
+use App\Repositories\KitchenOrderRepository;
 use App\Repositories\LoggerRepository;
 use App\Repositories\NotificationRepository;
 use App\Repositories\OrderRepository;
@@ -81,6 +83,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(WorkShiftRepositoryInterface::class, WorkShiftRepository::class);
         $this->app->bind(NotificationRepositoryInterface::class, NotificationRepository::class);
         $this->app->bind(ProductTypeRepositoryInterface::class, ProductTypeRepository::class);
+        $this->app->bind(KitchenOrderRepositoryInterface::class, KitchenOrderRepository::class);
     }
 
     /**

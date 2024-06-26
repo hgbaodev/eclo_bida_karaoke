@@ -1,9 +1,11 @@
 'use client';
 import PageHeader from '@/app/shared/page-header';
 import { dispatch } from '@/store';
-import { getAreas } from '@/store/slices/orderSlice';
+import { createOrder, getAreas } from '@/store/slices/orderSlice';
 import { RootState } from '@/store/types';
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import toast from 'react-hot-toast';
 import { MdMoreHoriz } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 import { Dropdown, Text } from 'rizzui';
@@ -24,6 +26,8 @@ const pageHeader = {
 
 export default function BlankPage() {
   const { areas } = useSelector((state: RootState) => state.order);
+
+  const navigate = useRouter();
 
   useEffect(() => {
     dispatch(getAreas());
@@ -59,10 +63,27 @@ export default function BlankPage() {
                       <Dropdown.Menu className="!z-0">
                         {service.is_booked ? (
                           <>
-                            <Dropdown.Item className="gap-2 text-xs sm:text-sm">Pay</Dropdown.Item>
+                            <Dropdown.Item
+                              onClick={() => navigate.push(`/admin/orders/${service?.order_active}`)}
+                              className="gap-2 text-xs sm:text-sm"
+                            >
+                              Pay
+                            </Dropdown.Item>
                           </>
                         ) : (
-                          <Dropdown.Item className="gap-2 text-xs sm:text-sm">Order</Dropdown.Item>
+                          <Dropdown.Item
+                            onClick={async () => {
+                              const result = await dispatch(createOrder(service?.active));
+                              if (createOrder.fulfilled.match(result)) {
+                                navigate.push(`/admin/orders/${result.payload.data.active}`);
+                              } else {
+                                toast.error('Failed to create order');
+                              }
+                            }}
+                            className="gap-2 text-xs sm:text-sm"
+                          >
+                            Order
+                          </Dropdown.Item>
                         )}
                       </Dropdown.Menu>
                     </Dropdown>

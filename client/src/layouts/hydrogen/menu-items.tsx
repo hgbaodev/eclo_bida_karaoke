@@ -5,6 +5,7 @@ import { TbPackages } from 'react-icons/tb';
 import { HiOutlineUsers } from 'react-icons/hi2';
 import { MdOutlineBadge } from 'react-icons/md';
 import { FaProductHunt } from 'react-icons/fa';
+import { TbToolsKitchen3 } from 'react-icons/tb';
 
 // Note: do not add href in the label object, it is rendering as label
 export const menuItems = [
@@ -124,7 +125,7 @@ export const menuItems = [
   {
     name: 'Kitchen orders',
     href: routes.admin.kitchen_orders,
-    icon: <PiFolderLockDuotone />,
+    icon: <TbToolsKitchen3 />,
   },
   {
     name: 'Products',

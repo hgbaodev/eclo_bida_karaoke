@@ -8,7 +8,7 @@ use App\Http\Requests\Staff\UpdateStaffRequest;
 use App\Interface\PositionRepositoryInterface;
 use App\Models\Staff;
 use App\Interface\StaffRepositoryInterface;
-
+use App\Interface\UserRepositoryInterface;
 use Illuminate\Http\Request;
 
 
@@ -16,10 +16,13 @@ class StaffController extends Controller
 {
     protected $staffRepository;
     protected $positionRepository;
-    public function __construct(StaffRepositoryInterface $staffRepositoryInterface, PositionRepositoryInterface $positionRepositoryInterface)
+    protected $userRepository;
+
+    public function __construct(StaffRepositoryInterface $staffRepositoryInterface, PositionRepositoryInterface $positionRepositoryInterface, UserRepositoryInterface $userRepositoryInterface)
     {
         $this->staffRepository = $staffRepositoryInterface;
         $this->positionRepository = $positionRepositoryInterface;
+        $this->userRepository = $userRepositoryInterface;
     }
     /**
      * Display a listing of the resource.
@@ -48,11 +51,14 @@ class StaffController extends Controller
     {
         $validatedData = $request->validated();
         $positon = $this->positionRepository->getPositionByActive($validatedData['position']);
+        $user = $this->userRepository->getUserByActive($validatedData['user']);
         if (!$positon) {
             return $this->sentErrorResponse("Position is not found", "error", 404);
         }
         $validatedData["position_id"] = $positon->id;
+        $validatedData["user_id"] = $user->id;
         unset($validatedData['position']);
+        unset($validatedData['user']);
         return $this->sentSuccessResponse($this->staffRepository->createStaff($validatedData), "Staff is created successfully", 200);
     }
 

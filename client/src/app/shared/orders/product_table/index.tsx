@@ -4,22 +4,14 @@ import { useEffect, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import { useColumn } from '@/hooks/use-column';
 import ControlledTable from '@/components/controlled-table';
-import { getColumns } from '@/app/shared/products/product_table/columns';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
-import {  getProducts, setPage, setPageSize } from '@/store/slices/productSlices';
-import { getProductType } from '@/store/slices/product_typeSlices';
+import { getProducts, setPage, setPageSize } from '@/store/slices/productSlices';
+import { getColumns } from './columns';
+import FilterElement from './filter-elements';
 
-import { useModal } from '../../modal-views/use-modal';
-const FilterElement = dynamic(() => import('@/app/shared/products/product_table/filter-elements'), {
-  ssr: false,
-});
-
-export default function ProductsTable() {
-
-
-  const { openModal } = useModal();
+export default function ProductsOrderTable() {
   const { data, isLoading, pageSize, page, totalRow, query } = useSelector((state: RootState) => state.product);
   useEffect(() => {
     const fetch = async () => {
@@ -27,11 +19,9 @@ export default function ProductsTable() {
     };
     fetch();
   }, [page, pageSize, query]);
-  useEffect(() => {
-    dispatch(getProductType());
-  }, []);
+
   const columns = useMemo(
-    () => getColumns(openModal),
+    () => getColumns(),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
@@ -55,7 +45,6 @@ export default function ProductsTable() {
         showLoadingText={false}
         // @ts-ignore
         columns={visibleColumns}
-      
         paginatorOptions={{
           pageSize,
           setPageSize: handleChangePageSize,

@@ -8,13 +8,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\GeneratesUniqueActive;
 use Illuminate\Notifications\Notifiable;
 
-class   Product extends Model
+class Product extends Model
 {
     public $timestamps = false;
     use HasFactory, GeneratesUniqueActive;
     use SoftDeletes;
     protected $fillable = [
+        'id',
         'name',
+        'image',
         'description',
         'cost_price',
         'selling_price',
@@ -23,7 +25,7 @@ class   Product extends Model
         'quantity',
     ];
     protected $hidden = [
-        'id',
+        'pivot'
     ];
     protected static function boot()
     {
@@ -35,12 +37,17 @@ class   Product extends Model
             }
         });
     }
-    public function product()
+    public function products()
     {
         return $this->hasMany(ProductImportDetail::class);
     }
+
     public function product_type()
     {
         return $this->belongsTo(ProductType::class, 'id_type');
+    }
+    public function kitchenOrders()
+    {
+        return $this->hasMany(KitchenOrder::class);
     }
 }

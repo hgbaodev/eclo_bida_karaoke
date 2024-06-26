@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('status')->default('A');
-            $table->string('image')->nullable();
+            $table->string('image')->default('avatarDefault.jpg');
             $table->string('phone');
             $table->string('email');
             $table->string('active')->unique();

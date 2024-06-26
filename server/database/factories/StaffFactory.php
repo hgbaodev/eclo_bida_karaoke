@@ -24,7 +24,8 @@ class StaffFactory extends Factory
             "idcard" => $this->faker->creditCardNumber(),
             "address" => $this->faker->address,
             "status" => $this->faker->randomElement(['A', 'D']),
-            "position_id" => $this->faker->numberBetween(1, 4)
+            "position_id" => $this->faker->numberBetween(1, 4),
+            "user_id" => $this->faker->unique()->uuid()
         ];
     }
 }

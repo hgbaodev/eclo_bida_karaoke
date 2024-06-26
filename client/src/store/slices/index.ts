@@ -23,7 +23,7 @@ import service_type from './serviceTypeSlice';
 
 import customer from './customerSlice';
 import price from './priceSlice';
-import requested_products from './requested_productsSlice';
+import kitchen_order from './kitchen_orderSlice';
 
 import device from './deviceSlice';
 import supplier from './supplierSlice';
@@ -56,8 +56,7 @@ const reducers = combineReducers({
   shift_user_detail,
   work_shift,
   order,
-  requested_products,
-
+  kitchen_order,
 });
 
 export default reducers;

@@ -20,7 +20,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->append(LogRequest::class);
         $middleware->alias([
             'logger' => LogUserActivity::class,
-            'mark.orderRequestAsRead.event'=>\App\Http\Middleware\MarkOrderRequestAsRead::class,
+            'markKitchenOrderAsDoneEvent'=>\App\Http\Middleware\MarkKitchenOrderAsDone::class,
+            'markKitchenOrderAsWaitingEvent'=>\App\Http\Middleware\MarkKitchenOrderAsWaiting::class,
+            'markKitchenOrderAsProcessingEvent'=>\App\Http\Middleware\MarkKitchenOrderAsProcessing::class,
             'dispatch.order.event' => \App\Http\Middleware\DispatchOrderProductRequest::class,
         ]);
     })

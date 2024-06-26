@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Controllers\Event\SendEvent;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,12 +19,9 @@ class DispatchOrderProductRequest
     {
         $response = $next($request);
 
-        //TODO: Validating the request.
-        $order = $request->order;
-        $products = $request->requestedProducts;
-
-        event(new OrderProductRequestEvent($order, $products));
-
+        //TODO: Validate the request
+        $data = $request->data;
+        SendEvent::send('kitchenOrderEvent', $data);
         return $response;
     }
 }

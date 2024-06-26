@@ -21,26 +21,32 @@ export interface RootState {
   shift_user_detail: shift_user_detailType;
   work_shift: work_shiftType;
   order: orderType;
-  requested_products: requested_productsType;
+  kitchen_order: kitchen_orderType;
 }
 
-export interface requested_productsType {
-  data: [];
+export interface kitchen_orderType {
+  data: kitchenOrder[];
   isLoading: boolean;
   isFiltered: boolean;
-  page: number;
-  pageSize: number;
-  totalRow: number;
-  query: string;
   status: any;
   errors: string | null;
-  isCreateLoading: boolean;
-  isUpdateLoading: boolean;
+}
+
+export interface kitchenOrder {
+  active: string;
+  status: any;
+  product_name: string;
+  order_id: string;
+  quantity: string;
+  created_at: string;
+  updated_at: string;
+  isLoading: boolean;
 }
 
 export interface authType {
   isAuthenticated: boolean;
   isLoaded: boolean;
+  active: string;
   first_name: string;
   last_name: string;
   email: string;
@@ -129,7 +135,7 @@ export interface supplierType {
   errors: any;
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
-  listSupplier:any[];
+  listSupplier: any[];
 }
 
 export interface loggerType {
@@ -159,7 +165,7 @@ export interface productType {
 export interface product_ImportType {
   data: [];
   data1: any;
-  data2:any;
+  data2: any;
   isLoading: boolean;
   isFiltered: boolean;
   page: number;
@@ -169,8 +175,8 @@ export interface product_ImportType {
   errors: any;
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
-  product:any;
-  supplier:any;
+  product: any;
+  supplier: any;
 }
 export interface product_Import_DetailType {
   data: [];
@@ -214,6 +220,7 @@ export interface staffType {
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
   listStaffs: any[];
+  oneStaff: any;
 }
 
 export interface positionType {
@@ -275,6 +282,7 @@ export interface shift_user_detailType {
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
   listShiftUserDetail: any[];
+  listShiftUserDetailByUser: any[];
 }
 
 export interface work_shiftType {
@@ -322,7 +330,45 @@ export interface serviceType {
 export interface orderType {
   areas: any[];
   isLoading: boolean;
-
+  order: null | {
+    active: string;
+    checkin_time: string | number | Date;
+    checkout_time: string;
+    total_price: number;
+    service: {
+      name: string;
+      description: string;
+      price: {
+        pricePerHour: number;
+      };
+    };
+    user: {
+      first_name: string;
+      last_name: string;
+      email: string;
+      image: string;
+    };
+    customer: {
+      first_name: string;
+      last_name: string;
+      status: string;
+      image: string;
+      phone: string;
+      email: string;
+      active: string;
+    };
+    products: {
+      active: string;
+      quantity: number;
+      image: string;
+      name: string;
+      selling_price: number;
+    }[];
+  };
+  isLoadingGetOrder: boolean;
+  queryProduct: string;
+  isLoadingQueryProduct: boolean;
+  products: [];
 }
 export interface product_typeType {
   data:[];

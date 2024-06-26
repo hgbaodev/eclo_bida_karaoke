@@ -18,6 +18,7 @@ const initialState: shift_user_detailType = {
   workshift: '',
   errors: '',
   listShiftUserDetail: [],
+  listShiftUserDetailByUser: [],
 };
 
 export const getAllShiftUserDetails = createAsyncThunk('shiftuserdetails/getAllShiftUserDetail', async () => {
@@ -39,6 +40,21 @@ export const getShiftUserDetails = createAsyncThunk('shiftuserdetail', async (wo
     throw error;
   }
 });
+
+export const getShiftUserDetailsByUser = createAsyncThunk(
+  'shiftuserdetailbyuser',
+  async ({ workshift, staff }: { workshift: string; staff: string }) => {
+    const url = new URL('/api/v1/shiftuserdetails', env.NEXT_API_URL);
+    url.searchParams.set('workshift', `${workshift}`);
+    url.searchParams.set('staff', `${staff}`);
+    try {
+      const response = await axiosInstance.get(url.href);
+      return response.data;
+    } catch (error: any) {
+      throw error;
+    }
+  },
+);
 
 export const createShiftUserDetail = createAsyncThunk(
   'shiftuserdetails/createShiftDetail',
@@ -129,6 +145,17 @@ const shiftUserDetailSlice = createSlice({
         state.listShiftUserDetail = result;
       })
       .addCase(getAllShiftUserDetails.rejected, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(getShiftUserDetailsByUser.pending, (state: shift_user_detailType) => {
+        state.isLoading = true;
+      })
+      .addCase(getShiftUserDetailsByUser.fulfilled, (state, action) => {
+        const result = action.payload.data;
+        state.isLoading = false;
+        state.listShiftUserDetailByUser = result.result;
+      })
+      .addCase(getShiftUserDetailsByUser.rejected, (state) => {
         state.isLoading = false;
       })
       .addCase(getShiftUserDetails.pending, (state: shift_user_detailType) => {

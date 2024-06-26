@@ -39,7 +39,26 @@ class OrderRepository implements OrderRepositoryInterface
 
     public function getOrderByActive(string $active)
     {
-        return Order::where('active', $active)->firstOrFail();
+        $order = Order::with(['service.price', 'user', 'customer', 'orderdetails.product'])->where('active', $active)->first();
+
+        if (!$order) {
+            return null;
+        }
+
+        if ($order['orderdetails']->isEmpty()) {
+            return $order;
+        }
+
+        $order['products'] = $order['orderdetails']->map(function ($orderdetail) {
+            $order_detail['active'] = $orderdetail->product->active;
+            $order_detail['quantity'] = $orderdetail->quantity;
+            $order_detail['image'] = $orderdetail->product->image ?? 'default_image.png'; // Added a fallback for missing images
+            $order_detail['name'] = $orderdetail->product->name;
+            $order_detail['selling_price'] = $orderdetail->product->selling_price;
+            return $order_detail;
+        });
+
+        return $order;
     }
 
     public function createOrder(array $data)
