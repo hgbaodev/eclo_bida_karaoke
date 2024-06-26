@@ -123,7 +123,7 @@ class OrderController extends Controller
         }
     }
 
-    public function markKitchenOrderAsDone( string $active)
+    public function markKitchenOrderAsDone(Request $request, string $active)
     {
         try {
             $repo = $this->kitchenOrderRepository;
@@ -140,7 +140,11 @@ class OrderController extends Controller
 
             // Update the kitchen order and return the updated order with a success response
             $updatedKitchenOrder = $repo->deleteKitchenOrderByActive($active);
+            $eventData = [
+                'active'=> $active,
+            ];
 
+            $request->merge(['data' => $eventData]);
             return $this->sentSuccessResponse($updatedKitchenOrder, 'Marked as done');
         } catch (\Exception $e) {
             return $this->sentErrorResponse($e->getMessage());

@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Events\MarkOrderRequestAsReadEvent;
+use App\Http\Controllers\Event\SendEvent;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -19,7 +20,7 @@ class MarkKitchenOrderAsDone
     {
         $response = $next($request);
         //TODO: Validate the request
-
+        SendEvent::send('kitchenOrderDoneEvent', $request->data);
         return $response;
     }
 }
