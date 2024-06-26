@@ -44,7 +44,6 @@ export default function EditProduct({ product, active }: { product: EditProductI
     <Form<EditProductInput>
       resetValues={reset}
       onSubmit={onSubmit}
-
       validationSchema={editProductSchema}
       serverError={errors}
       className="grid grid-cols-1 gap-6 p-6 @container md:grid-cols-2 [&_.rizzui-input-label]:font-medium [&_.rizzui-input-label]:text-gray-900"
@@ -102,8 +101,11 @@ export default function EditProduct({ product, active }: { product: EditProductI
             <Input
               label="Selling Price"
               type='number'
-              placeholder="Enter staff birthday"
-              {...register('selling_price')}
+             
+              placeholder="Enter selling price"
+              {...register('selling_price',{
+                valueAsNumber: true
+              })}
               className="col-span-full"
               error={errors.selling_price?.message}
             />

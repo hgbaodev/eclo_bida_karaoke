@@ -32,10 +32,7 @@ class ProductFactory extends Factory
             "name" => $name,
             "selling_price" => $this->faker->randomFloat(2, 1, 1000),
             'quantity' => $this->faker->numberBetween(1, 1000),
-
-            'id_type' => $this->faker->randomElements(1, 2),
-
-
+            'id_type' => $this->faker->randomElement([1, 2]),
         ];
     }
     protected function getUniqueName(array $names): string

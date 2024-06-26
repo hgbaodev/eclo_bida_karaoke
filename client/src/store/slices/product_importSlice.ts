@@ -22,7 +22,7 @@ const initialState: product_ImportType = {
 };
 
 export const getProductImports= createAsyncThunk(
-  'products',
+  'product_imports',
   async ({ page, pageSize, query }: { page: number; pageSize: number; query: string }) => {
     const url = new URL('/api/v1/product_imports', env.NEXT_API_URL);
     url.searchParams.set('page', `${page}`);

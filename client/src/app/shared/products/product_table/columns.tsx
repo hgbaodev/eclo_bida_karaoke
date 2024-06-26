@@ -111,7 +111,7 @@ export const getColumns = (openModal: (args: any) => void) => [
 export interface Product {
     active: string;
     name: string;
-    selling_price: string;
+    selling_price: number;
     quantity: string;
    product_type:{
     active:string

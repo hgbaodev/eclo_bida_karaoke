@@ -71,9 +71,13 @@ export default function CreateStaff() {
             />
             
             <Input
+              
               label="Selling Price"
+              type="number"
               placeholder="Enter selling price"
-              {...register('selling_price')}
+              {...register('selling_price',{
+                valueAsNumber: true
+              })}
               className="col-span-full"
               error={errors.selling_price?.message}
             />

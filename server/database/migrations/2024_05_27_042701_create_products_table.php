@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id('id');
             $table->string('name');
             $table->string('image')->default('deviceDefault.png');
-            $table->double('cost_price');
             $table->double('selling_price');
             $table->bigInteger('quantity')->nullable();
             $table->string('active')->unique();
