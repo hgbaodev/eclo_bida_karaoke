@@ -212,7 +212,7 @@ export const DataColumns = (data: kitchenOrder[]) => {
       render: (_: string, kitchenOrder: KitchenOrder) => kitchenOrder.product_name,
     },
     {
-      title: <HeaderCell title="Quan" />,
+      title: <HeaderCell title="Quantity" />,
       dataIndex: 'quantity',
       key: 'quantity',
       width: 12,

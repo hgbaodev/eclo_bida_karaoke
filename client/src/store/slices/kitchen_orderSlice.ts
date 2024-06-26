@@ -69,7 +69,7 @@ export const markKitchenOrderAsDone = createAsyncThunk(
       const response = await axiosInstance.put(`/orders/mark-kitchen-order-as-done/${active}`);
       const { data } = response;
       // Cập nhật lại trạng thái đơn hàng sau khi hoàn thành hành động
-      dispatch(markOrderStatus({ active, status: 'D' }));
+      dispatch(removeOrder(active));
       return data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
@@ -100,6 +100,9 @@ const kitchenOrderSlice = createSlice({
         state.data[index].isLoading = false; // Đặt lại isLoading về false
       }
     },
+    removeOrder: (state, action: PayloadAction<string>) => {
+      state.data = state.data.filter((order) => order.active !== action.payload);
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -116,6 +119,6 @@ const kitchenOrderSlice = createSlice({
   },
 });
 
-export const { setReset, setStatus, setErrors, markOrderStatus } = kitchenOrderSlice.actions;
+export const { setReset, setStatus, setErrors, markOrderStatus, removeOrder } = kitchenOrderSlice.actions;
 
 export default kitchenOrderSlice.reducer;
