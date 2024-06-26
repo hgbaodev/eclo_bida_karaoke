@@ -37,6 +37,7 @@ export const routes = {
     shift_detail: '/admin/shiftdetails',
     shift_detail_staff: '/admin/shift_detail_staff',
     schedule: '/admin/schedule',
+    attendance: '/admin/attendance',
   },
   auth: {
     signIn: '/auth/signin',

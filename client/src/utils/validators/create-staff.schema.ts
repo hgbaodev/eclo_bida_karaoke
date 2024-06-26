@@ -4,10 +4,12 @@ import { validateEmail } from '@/utils/validators/common-rules';
 
 // form zod validation schema
 export const createStaffSchema = z.object({
-  name: z.string().min(1, { message: messages.fullNameIsRequired }),
+  first_name: z.string().min(1, { message: messages.firstNameRequired }),
+  last_name: z.string().min(1, { message: messages.lastNameRequired }),
   birthday: z.string().min(1, { message: messages.birthdayIsRequired }),
   phone: z.string().length(10, { message: messages.phoneIsRequired }),
   email: validateEmail,
+  gender: z.string().min(1, { message: messages.isRequired }),
   idcard: z.string().length(12, { message: messages.idcardIsRequired }),
   address: z.string().min(1, { message: messages.addressIsRequired }).max(50, { message: messages.maxlenghtAddress }),
   position: z.string().min(1, { message: messages.positionIsRequired }),

@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Staff;
 
 use App\Http\Helpers\HelperRequest;
+use Illuminate\Validation\Rule;
 
 class StaffRequest extends HelperRequest
 {
@@ -22,14 +23,17 @@ class StaffRequest extends HelperRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
             'phone' => 'required|unique:staff|regex:/^[0-9]{10}$/',
             'idcard' => 'required|unique:staff|regex:/^[0-9]{12}$/',
             'birthday' => 'required',
+            'gender' => ['required', Rule::in(['F', 'M'])],
             'address' => 'required',
+            "uuid" => 'required',
             'position' => 'required',
             'status' => 'required',
-            'user' => 'nullable'
+            'user' => 'nullable',
         ];
     }
 }

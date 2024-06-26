@@ -108,6 +108,7 @@ export interface ShiftDetail {
     time_in: string;
     time_out: string;
     active: string;
+    shift_type: string;
   };
   created_at: string;
 }

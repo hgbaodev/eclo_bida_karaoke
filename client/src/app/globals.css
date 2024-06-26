@@ -1435,8 +1435,8 @@ div[style='z-index: 1000001;'],
 }
 
 .schedule-time {
-  border-left: 1px solid #000;
-  border-right: 1px solid #000;
+  border-left: 1px solid #a8a8a8;
+  border-right: 1px solid #a8a8a8;
   text-align: center;
   padding: 4px;
   margin: -12px;

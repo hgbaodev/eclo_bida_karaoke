@@ -89,4 +89,6 @@ export const messages = {
   dateStartIsRequired: 'Date start is required',
   dateEndIsRequired: 'Date end is required',
   supplierisRequired: 'Suppliers is required',
+  shiftTypeIsRequired: 'Shift Type is required',
+  isRequired: 'required',
 };

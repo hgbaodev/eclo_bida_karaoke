@@ -24,10 +24,13 @@ class UpdateStaffRequest extends HelperRequest
     {
         $active = $this->route('active');
         return [
-            'name' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
             'phone' => ['required', 'regex:/^[0-9]{10}$/', Rule::unique('staff')->ignore($active, 'active')],
             'idcard' => ['required', 'regex:/^[0-9]{12}$/', Rule::unique('staff')->ignore($active, 'active')],
             'birthday' => 'required',
+            'gender' => ['required', Rule::in(['F', 'M'])],
+            "uuid" => 'required',
             'address' => 'required',
             'position' => 'required',
             'status' => 'required',

@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { HeaderCell } from '@/components/ui/table';
-import { render } from 'node_modules/@headlessui/react/dist/utils/render';
+
 export const getColumns = (openModal: (args: any) => void, Data: ShiftUserDetail[], work_shift: any) => {
   if (!work_shift || !work_shift.date_start || !work_shift.date_end) {
     return [];
@@ -11,13 +11,11 @@ export const getColumns = (openModal: (args: any) => void, Data: ShiftUserDetail
   const dates = getDatesBetween(startDate, endDate);
   const columns = [
     {
-      title: <HeaderCell title="Shift/Day" />,
+      title: <HeaderCell title="Staff/Day" />,
       dataIndex: 'shift',
       key: 'shift',
-      width: 30,
-      render: (_: any) => {
-        return <div className="schedule-time"></div>;
-      },
+      width: 50,
+      render: (_: string, staff: Staff) => staff.name,
     },
     ...dates.map((date) => ({
       title: (
@@ -31,22 +29,18 @@ export const getColumns = (openModal: (args: any) => void, Data: ShiftUserDetail
       ),
       dataIndex: date.toLocaleDateString('en-US', { weekday: 'short' }),
       key: date.toLocaleDateString('en-US', { weekday: 'short' }),
-      width: 200,
-      render: (_: any) => {
-        // Find the corresponding data for the current day_of_week
+      width: 100,
+      render: (_: any, staff: Staff) => {
         const dataForDate = Data.find(
-          (item) => item.day_of_week === date.toLocaleDateString('en-US', { weekday: 'long' }),
+          (item) =>
+            item.day_of_week === date.toLocaleDateString('en-US', { weekday: 'long' }) &&
+            item.staff.active === staff.active,
         );
 
         if (dataForDate) {
-          return (
-            <div className="schedule-time">
-              <div>{dataForDate.shift.time_in}</div>
-              <div>{dataForDate.shift.time_out}</div>
-            </div>
-          );
+          return <div></div>;
         } else {
-          return <div className="schedule-time">OFF</div>;
+          return <div>OFF</div>;
         }
       },
     })),
@@ -54,21 +48,12 @@ export const getColumns = (openModal: (args: any) => void, Data: ShiftUserDetail
 
   return columns;
 };
-const getDatesBetween = (startDate: Date, endDate: Date): Date[] => {
-  const dates = [];
-  let currentDate = new Date(startDate);
 
-  while (currentDate <= endDate) {
-    dates.push(new Date(currentDate));
-    currentDate.setDate(currentDate.getDate() + 1);
-  }
-
-  return dates;
-};
 export interface Shift {
   time_in: string;
   time_out: string;
   active: string;
+  shift_type: string;
 }
 export interface WorkShift {
   date_start: string;
@@ -86,10 +71,37 @@ export interface ShiftUserDetail {
     name: string;
     active: string;
   };
-  workshift: {
-    date_start: string;
-    date_end: string;
+  active: string;
+}
+const getDatesBetween = (startDate: Date, endDate: Date): Date[] => {
+  const dates = [];
+  let currentDate = new Date(startDate);
+
+  while (currentDate <= endDate) {
+    dates.push(new Date(currentDate));
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  return dates;
+};
+export interface Staff {
+  active: string;
+  name: string;
+  phone: string;
+  image: string;
+  idcard: string;
+  birthday: string;
+  status: any;
+  address: string;
+  position: {
+    name: string;
     active: string;
   };
-  active: string;
+  user: {
+    active: string;
+    email: string;
+    password: string;
+    role: string;
+  } | null;
+  created_at: string;
 }

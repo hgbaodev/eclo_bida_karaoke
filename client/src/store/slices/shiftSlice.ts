@@ -14,18 +14,32 @@ const initialState: shiftType = {
   pageSize: 5,
   totalRow: 0,
   status: '',
+  shift_type: '',
   query: '',
   errors: '',
   listShifts: [],
 };
 export const getAllShifts = createAsyncThunk(
   'shifts',
-  async ({ page, pageSize, query, status }: { page: number; pageSize: number; query: string; status: string }) => {
+  async ({
+    page,
+    pageSize,
+    query,
+    status,
+    shift_type,
+  }: {
+    page: number;
+    pageSize: number;
+    query: string;
+    status: string;
+    shift_type: string;
+  }) => {
     const url = new URL('/api/v1/shifts', env.NEXT_API_URL);
     url.searchParams.set('page', `${page}`);
     url.searchParams.set('perPage', `${pageSize}`);
     url.searchParams.set('query', query);
     url.searchParams.set('status', `${status}`);
+    url.searchParams.set('shift_type', `${shift_type}`);
     try {
       const response = await axiosInstance.get(url.href);
       return response.data;
@@ -101,9 +115,15 @@ const shiftSlice = createSlice({
       state.status = action.payload;
       state.isFiltered = true;
     },
+    setShiftType: (state, action) => {
+      state.page = 1;
+      state.shift_type = action.payload;
+      state.isFiltered = true;
+    },
     setReset: (state) => {
       state.page = 1;
       state.status = '';
+      state.shift_type = '';
       state.isFiltered = false;
     },
     setErrors: (state, action) => {
@@ -159,6 +179,6 @@ const shiftSlice = createSlice({
       });
   },
 });
-export const { setPage, setPageSize, setReset, setStatus, setQuery, setErrors } = shiftSlice.actions;
+export const { setPage, setPageSize, setReset, setStatus, setQuery, setErrors, setShiftType } = shiftSlice.actions;
 
 export default shiftSlice.reducer;

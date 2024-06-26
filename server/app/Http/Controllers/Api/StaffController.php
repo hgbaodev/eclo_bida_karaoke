@@ -59,6 +59,19 @@ class StaffController extends Controller
         if ($user) {
             $validatedData["user_id"] = $user->id;
         }
+        $positionName = $positon->name;
+        $UUID = '';
+        $words = explode(' ', $positionName); // Tách chuỗi thành mảng các từ
+
+        foreach ($words as $word) {
+            $UUID .= ucfirst(substr($word, 0, 1)); // Viết hoa chữ cái đầu của từ và ghép vào chuỗi $firstLetters
+        }
+        // $countSimilarPositions = $this->positionRepository->countSimilarPositions($positionName);
+        // $countSuffix = str_pad($countSimilarPositions + 1, 3, '0', STR_PAD_LEFT); // Định dạng số thành dạng chuỗi 3 chữ số với số 0
+
+        // // Tạo UUID theo định dạng yêu cầu
+        // $UUID = $UUID . '-' . $countSuffix;
+        $validatedData['uuid'] = $UUID;
         unset($validatedData['position']);
         unset($validatedData['user']);
         return $this->sentSuccessResponse($this->staffRepository->createStaff($validatedData), "Staff is created successfully", 200);

@@ -12,11 +12,14 @@ class Staff extends Model
     use HasFactory, GeneratesUniqueActive;
     use SoftDeletes;
     protected $fillable = [
-        "name",
+        "first_name",
+        "last_name",
         "birthday",
         "image",
         "phone",
         "idcard",
+        "gender",
+        "uuid",
         "address",
         "position_id",
         "status",

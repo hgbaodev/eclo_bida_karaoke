@@ -16,6 +16,7 @@ return new class extends Migration
             $table->time("time_in");
             $table->time("time_out");
             $table->string("status");
+            $table->string("shift_type");
             $table->string('active')->unique();
             $table->softDeletes();
             $table->timestamps(true);

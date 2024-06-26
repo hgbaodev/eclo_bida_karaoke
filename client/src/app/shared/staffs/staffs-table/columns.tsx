@@ -51,7 +51,9 @@ export const getColumns = (openModal: (args: any) => void) => [
     dataIndex: 'fullName',
     key: 'fullName',
     width: 50,
-    render: (_: string, staff: Staff) => <AvatarCard src={staff.image} name={staff.name} description={staff.idcard} />,
+    render: (_: string, staff: Staff) => (
+      <AvatarCard src={staff.image} name={staff.last_name + ' ' + staff.first_name} description={staff.idcard} />
+    ),
   },
   {
     title: <HeaderCell title="Position" />,
@@ -73,6 +75,13 @@ export const getColumns = (openModal: (args: any) => void) => [
     key: 'phone',
     width: 50,
     render: (_: string, staff: Staff) => staff.phone,
+  },
+  {
+    title: <HeaderCell title="UUID" />,
+    dataIndex: 'uuid',
+    key: 'uuid',
+    width: 50,
+    render: (_: string, staff: Staff) => staff.uuid,
   },
   {
     title: <HeaderCell title="Status" />,
@@ -99,15 +108,17 @@ export const getColumns = (openModal: (args: any) => void) => [
           <ActionIcon
             onClick={() => {
               const data = {
-                name: staff.name,
+                first_name: staff.first_name,
+                last_name: staff.last_name,
                 birthday: staff.birthday,
                 idcard: staff.idcard,
                 position: staff.position.active,
                 phone: staff.phone,
                 status: staff.status,
+                gender: staff.gender,
                 address: staff.address,
                 email: staff.user ? staff.user.email : '',
-                role: staff.user ? staff.user.role : '',
+                role: staff.user ? staff.user.role.active : '',
                 password: staff.user ? staff.user.password : '',
               };
               openModal({
@@ -124,13 +135,13 @@ export const getColumns = (openModal: (args: any) => void) => [
         </Tooltip>
         <DeletePopover
           title={`Delete this staff`}
-          description={`Are you sure you want to delete this #${staff.name} staff?`}
+          description={`Are you sure you want to delete this #${staff.first_name} staff?`}
           onDelete={async () => {
             const result = await dispatch(deleteStaff(staff.active)); // Remove the .then() block
             if (deleteStaff.fulfilled.match(result)) {
               await dispatch(deleteUser(staff.user ? staff.user.active : ''));
               await dispatch(getStaffs({ page: 1, pageSize: 5, query: '', position: '', status: '' }));
-              toast.success(`Staff #${staff.name} has been deleted successfully.`);
+              toast.success(`Staff #${staff.first_name} has been deleted successfully.`);
             } else {
               toast.error(`Failed to delete staff #${staff.active}.`);
             }
@@ -143,10 +154,13 @@ export const getColumns = (openModal: (args: any) => void) => [
 
 export interface Staff {
   active: string;
-  name: string;
+  first_name: string;
+  last_name: string;
   phone: string;
+  gender: string;
   image: string;
   idcard: string;
+  uuid: string;
   birthday: string;
   status: any;
   address: string;
@@ -158,7 +172,9 @@ export interface Staff {
     active: string;
     email: string;
     password: string;
-    role: string;
+    role: {
+      active: string;
+    };
   } | null;
   created_at: string;
 }

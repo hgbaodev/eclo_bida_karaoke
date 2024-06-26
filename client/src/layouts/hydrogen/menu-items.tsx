@@ -1,10 +1,14 @@
 import { routes } from '@/config/routes';
 import { PiPackageDuotone, PiChartBarDuotone, PiFolderLockDuotone, PiShapesDuotone, PiUserList } from 'react-icons/pi';
 import { FaUniversalAccess, FaUserTie } from 'react-icons/fa';
+import { AiOutlineSchedule } from 'react-icons/ai';
 import { TbPackages } from 'react-icons/tb';
 import { HiOutlineUsers } from 'react-icons/hi2';
 import { MdOutlineBadge } from 'react-icons/md';
 import { FaProductHunt } from 'react-icons/fa';
+import { FaUserClock } from 'react-icons/fa6';
+import { LuClock } from 'react-icons/lu';
+import { BsPersonCheckFill } from 'react-icons/bs';
 
 // Note: do not add href in the label object, it is rendering as label
 export const menuItems = [
@@ -94,22 +98,22 @@ export const menuItems = [
   {
     name: 'Shifts',
     href: routes.admin.shifts,
-    icon: <MdOutlineBadge />,
+    icon: <LuClock />,
   },
-  // {
-  //   name: 'Shift Details',
-  //   href: routes.admin.shift_detail,
-  //   icon: <MdOutlineBadge />,
-  // },
+  {
+    name: 'Attendance',
+    href: routes.admin.attendance,
+    icon: <BsPersonCheckFill />,
+  },
   {
     name: 'Schedule',
     href: routes.admin.schedule,
-    icon: <MdOutlineBadge />,
+    icon: <AiOutlineSchedule />,
   },
   {
-    name: 'Shift Details Of Staff',
+    name: 'Shift Details For Staff',
     href: routes.admin.shift_detail_staff,
-    icon: <MdOutlineBadge />,
+    icon: <FaUserClock />,
   },
   {
     name: 'Customers',

@@ -14,6 +14,7 @@ class Shift extends Model
         "time_in",
         "time_out",
         "status",
+        "shift_type",
         "active"
     ];
 
