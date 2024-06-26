@@ -15,7 +15,7 @@ const FilterElement = dynamic(() => import('@/app/shared/products/product_table/
   ssr: false,
 });
 
-export default function StaffsTable() {
+export default function Product_Imports_Table() {
  
   const { openModal } = useModal();
   const { data, isLoading, pageSize, page, totalRow, query } = useSelector((state: RootState) => state.product_import);

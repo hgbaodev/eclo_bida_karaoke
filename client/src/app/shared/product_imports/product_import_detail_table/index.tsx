@@ -11,7 +11,6 @@ import { dispatch, useDispatch } from '@/store';
 import { useSearchParams } from 'next/navigation';
 import { getProductImportDetails, setPage, setPageSize } from '@/store/slices/product_import_detailSlice';
 import { getSinghle_ProductImport } from '@/store/slices/product_importSlice';
-
 import { getSinghle_Product } from '@/store/slices/productSlices';
 import { getSinghle_Supplier } from '@/store/slices/supplierSlice';
 import { useModal } from '../../modal-views/use-modal';
@@ -20,7 +19,7 @@ const FilterElement = dynamic(() => import('@/app/shared/products/product_table/
   ssr: false,
 });
 
-export default function StaffsTable() {
+export default function Product_import_detail_Table() {
   const { listProduct } = useSelector((state: RootState) => state.product);
   const { listSupplier } = useSelector((state: RootState) => state.supplier);
   const searchParams = useSearchParams(); 
