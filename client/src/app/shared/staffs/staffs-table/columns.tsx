@@ -12,7 +12,7 @@ import staffSlice, { deleteStaff, getStaffs } from '@/store/slices/staffSlice';
 import toast from 'react-hot-toast';
 import EditStaff from '../edit-staff';
 import { deleteUser } from '@/store/slices/userSlice';
-import { env } from 'process';
+import env from '@/env';
 
 export function getStatusBadge(status: Staff['status']) {
   switch (status) {
