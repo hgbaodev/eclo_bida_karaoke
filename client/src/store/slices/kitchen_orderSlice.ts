@@ -102,7 +102,6 @@ const kitchenOrderSlice = createSlice({
     },
     appendOrders: (state, action: PayloadAction<{ data: kitchenOrder }>) => {
       const data = action.payload.data;
-      console.log(data);
       state.data.push(data);
     },
     removeOrder: (state, action: PayloadAction<string>) => {
