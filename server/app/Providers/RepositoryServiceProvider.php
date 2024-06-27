@@ -7,7 +7,7 @@ use App\Interface\CustomerRepositoryInterface;
 use App\Interface\DeviceRepositoryInterface;
 use App\Interface\KitchenOrderRepositoryInterface;
 use App\Interface\LoggerRepositoryInterface;
-use App\Interface\NotificationRepositoryInterface;
+use App\Interface\AttendanceRepositoryInterface;
 use App\Interface\OrderRepositoryInterface;
 use App\Interface\PositionRepositoryInterface;
 use App\Interface\PriceRepositoryInterface;
@@ -32,7 +32,7 @@ use App\Repositories\CustomerRepository;
 use App\Repositories\DeviceRepository;
 use App\Repositories\KitchenOrderRepository;
 use App\Repositories\LoggerRepository;
-use App\Repositories\NotificationRepository;
+use App\Repositories\AttendanceRepository;
 use App\Repositories\OrderRepository;
 use App\Repositories\PositionRepository;
 use App\Repositories\PriceRepository;
@@ -81,7 +81,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(ShiftDetailRepositoryInterface::class, ShiftDetailRepository::class);
         $this->app->bind(ShiftUserDetailRepositoryInterface::class, ShiftUserDetailRepository::class);
         $this->app->bind(WorkShiftRepositoryInterface::class, WorkShiftRepository::class);
-        $this->app->bind(NotificationRepositoryInterface::class, NotificationRepository::class);
+        $this->app->bind(AttendanceRepositoryInterface::class, AttendanceRepository::class);
         $this->app->bind(ProductTypeRepositoryInterface::class, ProductTypeRepository::class);
         $this->app->bind(KitchenOrderRepositoryInterface::class, KitchenOrderRepository::class);
     }

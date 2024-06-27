@@ -44,7 +44,7 @@ class DatabaseSeeder extends Seeder
             ShiftDetailSeeder::class,
             ShiftDetailSeeder::class,
             ServiceSeeder::class,
-//            KitchenOrder::class,
+            AttendanceSeeder::class,
         ]);
     }
 }

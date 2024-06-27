@@ -28,4 +28,5 @@ Route::group([
     require __DIR__ . '/api/workshift.php';
     require __DIR__ . '/api/service.php';
     require __DIR__ . '/api/product_type.php';
+    require __DIR__ . '/api/attendance.php';
 });
