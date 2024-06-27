@@ -48,6 +48,7 @@ export default function CreateStaff() {
         first_name: data.first_name,
         last_name: data.last_name,
         birthday: data.birthday,
+        gender: data.gender,
         phone: data.phone,
         idcard: data.idcard,
         address: data.address,

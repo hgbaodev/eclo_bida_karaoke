@@ -30,7 +30,6 @@ class StaffRequest extends HelperRequest
             'birthday' => 'required',
             'gender' => ['required', Rule::in(['F', 'M'])],
             'address' => 'required',
-            "uuid" => 'required',
             'position' => 'required',
             'status' => 'required',
             'user' => 'nullable',

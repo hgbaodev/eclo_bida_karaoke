@@ -70,4 +70,8 @@ class StaffRepository implements StaffRepositoryInterface
         $staff->delete();
         return $staff;
     }
+    public function countSimilarPositions($positionID)
+    {
+        return Staff::where("position_id", $positionID)->count();
+    }
 }

@@ -50,27 +50,26 @@ class StaffController extends Controller
     public function store(StaffRequest $request)
     {
         $validatedData = $request->validated();
-        $positon = $this->positionRepository->getPositionByActive($validatedData['position']);
+        $position = $this->positionRepository->getPositionByActive($validatedData['position']);
         $user = $this->userRepository->getUserByActive($validatedData['user']);
-        if (!$positon) {
+        if (!$position) {
             return $this->sentErrorResponse("Position is not found", "error", 404);
         }
-        $validatedData["position_id"] = $positon->id;
+        $validatedData["position_id"] = $position->id;
         if ($user) {
             $validatedData["user_id"] = $user->id;
         }
-        $positionName = $positon->name;
+        $positionName = $position->name;
         $UUID = '';
-        $words = explode(' ', $positionName); // Tách chuỗi thành mảng các từ
+        $words = explode(' ', $positionName);
 
         foreach ($words as $word) {
-            $UUID .= ucfirst(substr($word, 0, 1)); // Viết hoa chữ cái đầu của từ và ghép vào chuỗi $firstLetters
+            $UUID .= ucfirst(substr($word, 0, 1));
         }
-        // $countSimilarPositions = $this->positionRepository->countSimilarPositions($positionName);
-        // $countSuffix = str_pad($countSimilarPositions + 1, 3, '0', STR_PAD_LEFT); // Định dạng số thành dạng chuỗi 3 chữ số với số 0
+        $countSimilarPositions = $this->staffRepository->countSimilarPositions($position->id);
+        $countSuffix = str_pad($countSimilarPositions + 1, 3, '0', STR_PAD_LEFT);
 
-        // // Tạo UUID theo định dạng yêu cầu
-        // $UUID = $UUID . '-' . $countSuffix;
+        $UUID = $UUID . '-' . $countSuffix;
         $validatedData['uuid'] = $UUID;
         unset($validatedData['position']);
         unset($validatedData['user']);

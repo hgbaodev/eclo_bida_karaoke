@@ -51,6 +51,7 @@ export default function EditStaff({
       last_name: data.last_name,
       birthday: data.birthday,
       phone: data.phone,
+      gender: data.gender,
       idcard: data.idcard,
       address: data.address,
       status: data.status,
