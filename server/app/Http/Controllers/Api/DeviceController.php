@@ -38,13 +38,13 @@ class DeviceController extends Controller
         return $this->sentSuccessResponse($this->deviceRepository->getDeviceById($id));
     }
 
-    public function update(UpdateDeviceRequest $request, $id)
+    public function update(UpdateDeviceRequest $request, string $active)
     {
         $validated_data = $request->validated();
-        if (!$this->deviceRepository->getDeviceById($id)) {
-            return $this->sentErrorResponse('Device ' . $id . ' is not found');
+        if (!$this->deviceRepository->getDeviceByActive($active)) {
+            return $this->sentErrorResponse('Device ' . $active . ' is not found');
         }
-        return $this->sentSuccessResponse($this->deviceRepository->updateDeviceById($id, $validated_data), 'The device ' . $id . ' has been updated!!!', 200);
+        return $this->sentSuccessResponse($this->deviceRepository->updateDeviceByActive($active, $validated_data), 'The device ' . $active . ' has been updated!!!', 200);
     }
 
     public function destroy(string $active)

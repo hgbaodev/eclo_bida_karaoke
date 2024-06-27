@@ -7,6 +7,7 @@ import dynamic from 'next/dynamic';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
+import { useModal } from '../../modal-views/use-modal';
 import { getColumns } from './columns';
 import { getDevices, setPage, setPageSize } from '@/store/slices/deviceSlice';
 const FilterElement = dynamic(() => import('@/app/shared/devices/devices-table/filter-element'), {
@@ -14,6 +15,7 @@ const FilterElement = dynamic(() => import('@/app/shared/devices/devices-table/f
 });
 
 export default function DevicesTable() {
+  const { openModal } = useModal();
   const { data, isLoading, pageSize, page, totalRow, query, status } = useSelector((state: RootState) => state.device);
 
   useEffect(() => {
@@ -28,7 +30,7 @@ export default function DevicesTable() {
   }, [page, pageSize, query, status]);
 
   const columns = useMemo(
-    () => getColumns(),
+    () => getColumns(openModal),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );

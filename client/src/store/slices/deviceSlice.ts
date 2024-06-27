@@ -2,6 +2,7 @@
 import axiosInstance from '@/api/axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import env from '@/env';
+import { EditDeviceInput } from '@/utils/validators/edit-device.schema';
 import { deviceType } from '../types';
 
 const initialState: deviceType = {
@@ -14,6 +15,7 @@ const initialState: deviceType = {
   pageSize: 5,
   errors: '',
   query: '',
+  isUpdateLoading: false,
   isCreateLoading: false,
 };
 
@@ -45,6 +47,21 @@ export const createDevice = createAsyncThunk('areas/createDevice', async (data: 
     return rejectWithValue(error.response.data);
   }
 });
+
+export const updateDevice = createAsyncThunk(
+  'devices/updateDevices',
+  async ({ device, active }: { device: EditDeviceInput; active: string }, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.put(`devices/${active}`, device);
+      return response.data;
+    } catch (error: any) {
+      if (!error.response) {
+        throw error;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
 
 export const deleteDevice = createAsyncThunk('devices/deleteDevice', async (active: string, { rejectWithValue }) => {
   try {
@@ -109,14 +126,23 @@ const deviceSlice = createSlice({
       .addCase(createDevice.rejected, (state) => {
         state.isCreateLoading = false;
       })
+      .addCase(updateDevice.pending, (state) => {
+        state.isUpdateLoading = true;
+      })
+      .addCase(updateDevice.fulfilled, (state) => {
+        state.isUpdateLoading = false;
+      })
+      .addCase(updateDevice.rejected, (state) => {
+        state.isUpdateLoading = false;
+      })
       .addCase(deleteDevice.pending, (state) => {
-        state.isCreateLoading = true;
+        state.isLoading = true;
       })
       .addCase(deleteDevice.fulfilled, (state) => {
-        state.isCreateLoading = false;
+        state.isLoading = false;
       })
       .addCase(deleteDevice.rejected, (state) => {
-        state.isCreateLoading = false;
+        state.isLoading = false;
       });
   },
 });

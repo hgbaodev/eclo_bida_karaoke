@@ -201,7 +201,6 @@ export interface areaType {
 
 export interface deviceType {
   data: any[];
-  isLoading: boolean;
   isFiltered: boolean;
   page: number;
   pageSize: number;
@@ -209,7 +208,9 @@ export interface deviceType {
   totalRow: number;
   errors: string;
   query: string;
+  isLoading: boolean;
   isCreateLoading: boolean;
+  isUpdateLoading: boolean;
 }
 export interface staffType {
   data: [];

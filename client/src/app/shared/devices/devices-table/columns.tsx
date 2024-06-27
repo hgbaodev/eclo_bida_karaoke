@@ -7,10 +7,11 @@ import env from '@/env';
 import { ActionIcon, Badge, Text, Tooltip } from 'rizzui';
 import { dispatch } from '@/store';
 import DeletePopover from '@/app/shared/delete-popover';
+import EditDevice from '../edit-device';
 import { getDevices, deleteDevice } from '@/store/slices/deviceSlice';
 import toast from 'react-hot-toast';
 
-export const getColumns = () => [
+export const getColumns = (openModal: (args: any) => void) => [
   {
     title: <HeaderCell title="Id" />,
     dataIndex: 'id',
@@ -59,16 +60,23 @@ export const getColumns = () => [
     render: (status: Device['status']) => getStatusBadge(status),
   },
   {
-    title: <></>,
+    title: <HeaderCell title="Action" />,
     dataIndex: 'action',
     key: 'action',
     width: 10,
     render: (_: string, device: Device) => (
       <div className="flex items-center justify-end gap-3 pe-3">
-        <Tooltip size="sm" content={'Edit User'} placement="top" color="invert">
+        <Tooltip size="sm" content={'Edit this device'} placement="top" color="invert">
           <ActionIcon
             onClick={() => {
-              console.log(device.active);
+              const data = {
+                name: device.name,
+                description: device.description,
+                status: device.status,
+              };
+              openModal({
+                view: <EditDevice device={data} active={device.active} />,
+              });
             }}
             as="span"
             size="sm"
