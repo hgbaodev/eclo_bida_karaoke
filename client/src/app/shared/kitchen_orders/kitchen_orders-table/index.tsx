@@ -21,10 +21,13 @@ export default function KitchenOrdersTable() {
     }
   }, []);
 
-  // Get notification & refresh after received an order
   usePusher('kitchenOrderEvent', (data: any) => {
-    console.log(data);
-    appendOrders(data);
+    if (Array.isArray(data) && data.length === 1) {
+      const order = data[0]; // Trích xuất đối tượng đầu tiên từ mảng
+      dispatch(appendOrders({ data: order })); // Dispatch đối tượng đã trích xuất
+    } else {
+      console.error('Expected a single-element array.');
+    }
   });
 
   useEffect(() => {

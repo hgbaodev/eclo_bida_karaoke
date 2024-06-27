@@ -68,6 +68,11 @@ class Order extends Model
 
     public function kitchenOrders()
     {
-        return $this->hasMany(KitchenOrders::class);
+        return $this->hasMany(KitchenOrder::class);
+    }
+
+    public function getActiveAttribute()
+    {
+        return $this->attributes['active'];
     }
 }
