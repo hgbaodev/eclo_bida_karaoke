@@ -15,7 +15,6 @@ class Order extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'id',
         'active',
         'status',
         'checkin_time',
@@ -28,6 +27,7 @@ class Order extends Model
 
     protected $hidden = [
         'deleted_at',
+        'id',
     ];
 
     protected static function boot()
@@ -69,10 +69,5 @@ class Order extends Model
     public function kitchenOrders()
     {
         return $this->hasMany(KitchenOrders::class);
-    }
-
-    public function getActiveAttribute()
-    {
-        return $this->attributes['active'];
     }
 }

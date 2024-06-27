@@ -17,7 +17,6 @@ class KitchenOrderResource extends JsonResource
         return [
             'active' => $this->active,
             'status' => $this->status,
-            'order_active' => $this->order->active,
             'quantity' => $this->quantity,
             'product_name' => $this->product->name,
         ];
