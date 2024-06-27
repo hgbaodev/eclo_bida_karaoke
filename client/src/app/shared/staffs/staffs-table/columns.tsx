@@ -8,10 +8,11 @@ import AvatarCard from '@/components/ui/avatar-card';
 import DateCell from '@/components/ui/date-cell';
 import DeletePopover from '@/app/shared/delete-popover';
 import { dispatch } from '@/store';
-import { deleteStaff, getStaffs } from '@/store/slices/staffSlice';
+import staffSlice, { deleteStaff, getStaffs } from '@/store/slices/staffSlice';
 import toast from 'react-hot-toast';
 import EditStaff from '../edit-staff';
 import { deleteUser } from '@/store/slices/userSlice';
+import { env } from 'process';
 
 export function getStatusBadge(status: Staff['status']) {
   switch (status) {
@@ -52,7 +53,16 @@ export const getColumns = (openModal: (args: any) => void) => [
     key: 'fullName',
     width: 50,
     render: (_: string, staff: Staff) => (
-      <AvatarCard src={staff.image} name={staff.last_name + ' ' + staff.first_name} description={staff.idcard} />
+      <AvatarCard
+        src={env.API_STORAGE + staff.image}
+        avatarProps={{
+          name: staff.last_name,
+          size: 'lg',
+          className: 'rounded-lg',
+        }}
+        name={staff.last_name + ' ' + staff.first_name}
+        description={staff.idcard}
+      />
     ),
   },
   {
@@ -116,6 +126,7 @@ export const getColumns = (openModal: (args: any) => void) => [
                 phone: staff.phone,
                 status: staff.status,
                 gender: staff.gender,
+                image: staff.image,
                 address: staff.address,
                 email: staff.user ? staff.user.email : '',
                 role: staff.user ? staff.user.role.active : '',

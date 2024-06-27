@@ -35,7 +35,7 @@ class Attendance extends Model
             }
         });
     }
-    public function product_type()
+    public function staff()
     {
         return $this->belongsTo(Staff::class, 'staff_id');
     }

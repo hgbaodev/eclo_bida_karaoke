@@ -5,7 +5,7 @@ export interface RootState {
   logger: loggerType;
   service_type: service_typeType;
   product: productType;
-  product_type:product_typeType;
+  product_type: product_typeType;
   product_import: product_ImportType;
   product_import_detail: product_Import_DetailType;
   customer: customerType;
@@ -22,6 +22,7 @@ export interface RootState {
   work_shift: work_shiftType;
   order: orderType;
   kitchen_order: kitchen_orderType;
+  attendance: attendance;
 }
 
 export interface kitchen_orderType {
@@ -162,8 +163,8 @@ export interface productType {
   errors: any;
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
-  listProduct:any[];
-  type:any;
+  listProduct: any[];
+  type: any;
 }
 export interface product_ImportType {
   data: [];
@@ -375,7 +376,14 @@ export interface orderType {
   products: [];
 }
 export interface product_typeType {
-  data:[];
+  data: [];
   isLoading: boolean;
-  listType:any[];
+  listType: any[];
+}
+export interface attendance {
+  data: any[];
+  isLoading: boolean;
+  isFiltered: boolean;
+  isCreateLoading: boolean;
+  isUpdateLoading: boolean;
 }

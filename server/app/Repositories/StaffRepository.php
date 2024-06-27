@@ -74,4 +74,9 @@ class StaffRepository implements StaffRepositoryInterface
     {
         return Staff::where("position_id", $positionID)->count();
     }
+
+    public function getStaffByUUID($uuid)
+    {
+        return Staff::where("uuid", $uuid)->first();
+    }
 }

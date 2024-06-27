@@ -15,7 +15,7 @@ export const getColumns = (openModal: (args: any) => void, Data: ShiftUserDetail
       dataIndex: 'shift',
       key: 'shift',
       width: 50,
-      render: (_: string, staff: Staff) => staff.name,
+      render: (_: string, staff: Staff) => staff.last_name + ' ' + staff.first_name,
     },
     ...dates.map((date) => ({
       title: (
@@ -86,7 +86,8 @@ const getDatesBetween = (startDate: Date, endDate: Date): Date[] => {
 };
 export interface Staff {
   active: string;
-  name: string;
+  first_name: string;
+  last_name: string;
   phone: string;
   image: string;
   idcard: string;

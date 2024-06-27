@@ -14,28 +14,29 @@ class AttendanceRepository implements AttendanceRepositoryInterface
         $perPage = $request->input('perPage');
         $query = $request->input('query');
         $id = $request->input('id');
-
+        $staff = $request->input('staff');
+        $day = $request->input('day');
         $timein = $request->input('time_in');
         $timeout = $request->input('time_out');
-        $shift = Attendance::query();
+        $attendance = Attendance::query()->with(["staff"]);
         // if ($query) {
-        //     $shift->whereRaw("CONCAT(time_in, ' ', time_out) LIKE '%$query%'");
+        //     $attendance->whereRaw("CONCAT(time_in, ' ', time_out) LIKE '%$query%'");
         // }
         if ($id) {
-            $shift->where("active", $id);
+            $attendance->where("active", $id);
         }
         if ($timein) {
-            $shift->where("time_in", $timein);
+            $attendance->where("time_in", $timein);
         }
         if ($timeout) {
-            $shift->where("time_out", $timeout);
+            $attendance->where("time_out", $timeout);
         }
         if ($all && $all == true) {
-            $shift = $shift->get();
+            $attendance = $attendance->get();
         } else {
-            $shift = $shift->paginate($perPage);
+            $attendance = $attendance->paginate($perPage);
         }
-        return new CollectionCustom($shift);
+        return new CollectionCustom($attendance);
     }
     public function getAllAttendance()
     {
@@ -51,14 +52,21 @@ class AttendanceRepository implements AttendanceRepositoryInterface
     }
     public function updateAttendanceByActive($active, array $data)
     {
-        $shift = Attendance::where("active", $active)->first();
-        $shift->update($data);
-        return $shift;
+        $attendance = Attendance::where("active", $active)->first();
+        $attendance->update($data);
+        return $attendance;
     }
     public function deleteAttendanceByActive($active)
     {
-        $shift = Attendance::where("active", $active)->first();
-        $shift->delete();
-        return $shift;
+        $attendance = Attendance::where("active", $active)->first();
+        $attendance->delete();
+        return $attendance;
+    }
+    public function getAttendanceByUUIDAndDay($id, $day)
+    {
+        $attendance = Attendance::query();
+        $attendance->where("staff_id", $id);
+        $attendance->where("day", $day);
+        return $attendance->first();
     }
 }

@@ -29,6 +29,12 @@ export default function CreateAttendance() {
   const { isCreateLoading } = useSelector((state: RootState) => state.staff);
   const { oneWorkShift } = useSelector((state: RootState) => state.work_shift);
   const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+
+  const currentDate = `${year}-${month}-${day}`;
+
   const hours = now.getHours().toString().padStart(2, '0');
   const minutes = now.getMinutes().toString().padStart(2, '0');
   const onSubmit: SubmitHandler<CreateShiftUserDetailInput> = async (data) => {
@@ -64,8 +70,9 @@ export default function CreateAttendance() {
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
-            <Input label="Staff ID" placeholder="Enter staff id" className="col-span-[1/2]" />
-            <App />
+            <Input label="Staff UUID" placeholder="Enter staff uuid" className="col-span-full" />
+            <Time />
+            <Input label="Date" className="col-span-[1/2]" value={currentDate} />
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto" style={{ zIndex: 10 }}>
                 Cancel
@@ -92,7 +99,7 @@ const customStyles: StylesConfig<OptionType, boolean> = {
   }),
 };
 
-const App = () => {
+const Time = () => {
   const [currentTime, setCurrentTime] = useState('');
 
   useEffect(() => {

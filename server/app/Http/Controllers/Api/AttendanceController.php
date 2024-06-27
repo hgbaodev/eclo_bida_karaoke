@@ -5,14 +5,17 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Attendance\AttendanceRequest;
 use App\Interface\AttendanceRepositoryInterface;
+use App\Interface\StaffRepositoryInterface;
 use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
 {
     protected $attendanceRepository;
-    public function __construct(AttendanceRepositoryInterface $attendanceRepository)
+    protected $staffRepo;
+    public function __construct(AttendanceRepositoryInterface $attendanceRepository, StaffRepositoryInterface $staffRepositoryInterface)
     {
         $this->attendanceRepository = $attendanceRepository;
+        $this->staffRepo = $staffRepositoryInterface;
     }
     /**
      * Display a listing of the resource.
@@ -36,6 +39,12 @@ class AttendanceController extends Controller
     public function store(AttendanceRequest $request)
     {
         $validatedData = $request->validated();
+        $staff = $this->staffRepo->getStaffByActive($validatedData['staff']);
+        if (!$staff) {
+            return $this->sentErrorResponse("Staff is not found", 'error', 404);
+        }
+        $validatedData['staff_id'] = $staff->id;
+        unset($validatedData['staff']);
         return $this->sentSuccessResponse($this->attendanceRepository->createAttendance($validatedData));
     }
 
@@ -45,7 +54,7 @@ class AttendanceController extends Controller
     public function show(string $active)
     {
         if (!$this->attendanceRepository->getAttendanceByActive($active)) {
-            return $this->sentErrorResponse('Shift is not found', "error", 404);
+            return $this->sentErrorResponse('Attendance is not found', "error", 404);
         }
         return $this->sentSuccessResponse($this->attendanceRepository->getAttendanceByActive($active));
     }
@@ -61,24 +70,23 @@ class AttendanceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(AttendanceRequest $request, string $active)
+    public function update(AttendanceRequest $request)
     {
         $validatedData = $request->validated();
-        $shift = $this->attendanceRepository->getAttendanceByActive($active);
-        if (!$shift) {
-            return $this->sentErrorResponse('Shift is not found', "error", 404);
+        $attendance = $this->attendanceRepository->getAttendanceByUUIDAndDay($validatedData['uuid'], $validatedData['day']);
+        if (!$attendance) {
+            return $this->sentErrorResponse("Attendance is not found", 'error', 404);
         }
-        return $this->sentSuccessResponse($this->attendanceRepository->updateAttendanceByActive($active, $validatedData), "Shift is updated successfully", 200);
+        return $this->sentSuccessResponse($this->attendanceRepository->updateAttendanceByActive($attendance->active, $validatedData), "Attendance is updated successfully", 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $active)
+    public function destroy(string $uuid, string $day)
     {
-        if (!$this->attendanceRepository->getAttendanceByActive($active)) {
-            return $this->sentErrorResponse('Shift is not found', "error", 404);
-        }
-        return $this->sentSuccessResponse($this->attendanceRepository->deleteAttendanceByActive($active), "Shift is deleted successfully", 200);
+        $staff = $this->staffRepo->getStaffByUUID($uuid);
+        $attendance = $this->attendanceRepository->getAttendanceByUUIDAndDay($staff->id, $day);
+        return $this->sentSuccessResponse($this->attendanceRepository->deleteAttendanceByActive($attendance->active), "Shift is deleted successfully", 200);
     }
 }
