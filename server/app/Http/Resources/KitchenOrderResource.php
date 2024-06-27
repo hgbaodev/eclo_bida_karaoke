@@ -17,10 +17,8 @@ class KitchenOrderResource extends JsonResource
         return [
             'active' => $this->active,
             'status' => $this->status,
-            'order_id' => $this->order_id,
+            'order_active' => $this->order->active,
             'quantity' => $this->quantity,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
             'product_name' => $this->product->name,
         ];
     }

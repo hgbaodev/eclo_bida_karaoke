@@ -19,7 +19,7 @@ class KitchenOrderRepository implements KitchenOrderRepositoryInterface
         $perPage = $request->input('perPage');
         $status = $request->input('status');
 
-        $orders = KitchenOrder::with('product');
+        $orders = KitchenOrder::with('product', 'order');
         if ($all) {
             $orders = $orders->get();
         } else {

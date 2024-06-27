@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
 import usePusher from '@/hooks/use-pusher';
-import { getKitchenOrders } from '@/store/slices/kitchen_orderSlice';
+import { getKitchenOrders, appendOrders } from '@/store/slices/kitchen_orderSlice';
 
 export default function KitchenOrdersTable() {
   const { data, isLoading, status } = useSelector((state: RootState) => state.kitchen_order);
@@ -23,8 +23,8 @@ export default function KitchenOrdersTable() {
 
   // Get notification & refresh after received an order
   usePusher('kitchenOrderEvent', (data: any) => {
-    console.log(' // Fetch the data when receiving new Pusher data');
-    fetchData();
+    console.log(data);
+    appendOrders(data);
   });
 
   useEffect(() => {

@@ -13,8 +13,7 @@ import {
   markKitchenOrderAsProcessing,
   markKitchenOrderAsWaiting,
   markKitchenOrderAsDone,
-  markOrderAsWaited,
-  markOrderAsProcessed,
+  markOrderStatus,
 } from '@/store/slices/kitchen_orderSlice';
 
 export const STATUSES = {
@@ -69,7 +68,7 @@ export function StatusButton({ status, active }: { status: KitchenOrder['status'
     if (eventData.active === active) {
       setLoading(true);
       try {
-        dispatch(markOrderAsWaited({ active, status: 'W' }));
+        dispatch(markOrderStatus({ active, status: 'W' }));
       } catch (error) {
         console.error('Error marking order as waited: ', error);
       } finally {
@@ -82,9 +81,22 @@ export function StatusButton({ status, active }: { status: KitchenOrder['status'
     if (eventData.active === active) {
       setLoading(true);
       try {
-        dispatch(markOrderAsProcessed({ active, status: 'P' }));
+        dispatch(markOrderStatus({ active, status: 'P' }));
       } catch (error) {
         console.error('Error marking order as processed: ', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+  });
+
+  usePusher('kitchenOrderDoneEvent', (eventData: any) => {
+    if (eventData.active === active) {
+      setLoading(true);
+      try {
+        dispatch(markOrderStatus({ active, status: 'D' }));
+      } catch (error) {
+        console.error('Error marking order as finished: ', error);
       } finally {
         setLoading(false);
       }
@@ -200,7 +212,7 @@ export const DataColumns = (data: kitchenOrder[]) => {
       render: (_: string, kitchenOrder: KitchenOrder) => kitchenOrder.product_name,
     },
     {
-      title: <HeaderCell title="Quan" />,
+      title: <HeaderCell title="Quantity" />,
       dataIndex: 'quantity',
       key: 'quantity',
       width: 12,

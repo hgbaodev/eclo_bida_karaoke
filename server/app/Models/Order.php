@@ -70,4 +70,9 @@ class Order extends Model
     {
         return $this->hasMany(KitchenOrders::class);
     }
+
+    public function getActiveAttribute()
+    {
+        return $this->attributes['active'];
+    }
 }

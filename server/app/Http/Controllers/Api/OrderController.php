@@ -47,13 +47,21 @@ class OrderController extends Controller
                     'order_id' => $orderId,
                     'quantity' => $requestedProduct['quantity'],
                 ];
-                $kitchenOrders[] = $data;
                 $data['product_id'] = $product->id;
-                $this->kitchenOrderRepository->createKitchenOrder($data);
+                $newOrder = $this->kitchenOrderRepository->createKitchenOrder($data);
+
+                //Returned data
+                $eventData['status'] = 'R';
+                $eventData['active'] = $newOrder['active'];
+                $eventData['order_active'] = $active;
+                $eventData['quantity'] = $data['quantity'];
+                $eventData['product_name'] = $product->name;
+
+                $kitchenOrders[] = $eventData;
             }
 
             $request->merge(['data' => $kitchenOrders]);
-            return $this->sentSuccessResponse($order, 'This order has been requested successfully');
+            return $this->sentSuccessResponse($kitchenOrders, 'This order has been requested successfully');
         } catch (\Exception $e) {
             return $this->sentErrorResponse($e->getMessage());
         }
@@ -123,7 +131,7 @@ class OrderController extends Controller
         }
     }
 
-    public function markKitchenOrderAsDone( string $active)
+    public function markKitchenOrderAsDone(Request $request, string $active)
     {
         try {
             $repo = $this->kitchenOrderRepository;
@@ -140,7 +148,11 @@ class OrderController extends Controller
 
             // Update the kitchen order and return the updated order with a success response
             $updatedKitchenOrder = $repo->deleteKitchenOrderByActive($active);
+            $eventData = [
+                'active'=> $active,
+            ];
 
+            $request->merge(['data' => $eventData]);
             return $this->sentSuccessResponse($updatedKitchenOrder, 'Marked as done');
         } catch (\Exception $e) {
             return $this->sentErrorResponse($e->getMessage());

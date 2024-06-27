@@ -37,7 +37,7 @@ export const markKitchenOrderAsProcessing = createAsyncThunk(
       const response = await axiosInstance.put(`/orders/mark-kitchen-order-as-processing/${active}`);
       const { data } = response;
       // Cập nhật lại trạng thái đơn hàng sau khi hoàn thành hành động
-      dispatch(markOrderAsProcessed({ active, status: 'P' }));
+      dispatch(markOrderStatus({ active, status: 'P' }));
       return data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
@@ -53,7 +53,7 @@ export const markKitchenOrderAsWaiting = createAsyncThunk(
       const response = await axiosInstance.put(`/orders/mark-kitchen-order-as-waiting/${active}`);
       const { data } = response;
       // Cập nhật lại trạng thái đơn hàng sau khi hoàn thành hành động
-      dispatch(markOrderAsWaited({ active, status: 'W' }));
+      dispatch(markOrderStatus({ active, status: 'W' }));
       return data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
@@ -69,7 +69,7 @@ export const markKitchenOrderAsDone = createAsyncThunk(
       const response = await axiosInstance.put(`/orders/mark-kitchen-order-as-done/${active}`);
       const { data } = response;
       // Cập nhật lại trạng thái đơn hàng sau khi hoàn thành hành động
-      dispatch(markOrderAsFinished({ active, status: 'D' }));
+      dispatch(removeOrder(active));
       return data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
@@ -92,7 +92,7 @@ const kitchenOrderSlice = createSlice({
       state.status = action.payload;
       state.isFiltered = true;
     },
-    markOrderAsProcessed: (state, action: PayloadAction<{ active: string; status: string }>) => {
+    markOrderStatus: (state, action: PayloadAction<{ active: string; status: string }>) => {
       const { active, status } = action.payload;
       const index = state.data.findIndex((order) => order.active === active);
       if (index !== -1) {
@@ -100,21 +100,14 @@ const kitchenOrderSlice = createSlice({
         state.data[index].isLoading = false; // Đặt lại isLoading về false
       }
     },
-    markOrderAsWaited: (state, action: PayloadAction<{ active: string; status: string }>) => {
-      const { active, status } = action.payload;
-      const index = state.data.findIndex((order) => order.active === active);
-      if (index !== -1) {
-        state.data[index].status = status;
-        state.data[index].isLoading = false; // Đặt lại isLoading về false
-      }
+    appendOrders: (state, action: PayloadAction<{ data: any }>) => {
+      const { data } = action.payload;
+      console.log('Data: ' + data);
+      state.data.push(data);
     },
-    markOrderAsFinished: (state, action: PayloadAction<{ active: string; status: string }>) => {
-      const { active, status } = action.payload;
-      const index = state.data.findIndex((order) => order.active === active);
-      if (index !== -1) {
-        state.data[index].status = status;
-        state.data[index].isLoading = false; // Đặt lại isLoading về false
-      }
+
+    removeOrder: (state, action: PayloadAction<string>) => {
+      state.data = state.data.filter((order) => order.active !== action.payload);
     },
   },
   extraReducers: (builder) => {
@@ -129,20 +122,9 @@ const kitchenOrderSlice = createSlice({
       .addCase(getKitchenOrders.rejected, (state) => {
         state.isLoading = false;
       });
-    /*
-      .addCase(markKitchenOrderAsProcessing.pending, (state, action) => {})
-      .addCase(markKitchenOrderAsProcessing.fulfilled, (state, action) => {})
-      .addCase(markKitchenOrderAsProcessing.rejected, (state, action) => {})
-      .addCase(markKitchenOrderAsWaiting.pending, (state, action) => {})
-      .addCase(markKitchenOrderAsWaiting.fulfilled, (state, action) => {})
-      .addCase(markKitchenOrderAsWaiting.rejected, (state, action) => {})
-      .addCase(markKitchenOrderAsDone.pending, (state, action) => {})
-      .addCase(markKitchenOrderAsDone.fulfilled, (state, action) => {})
-      .addCase(markKitchenOrderAsDone.rejected, (state, action) => {})*/
   },
 });
 
-export const { setReset, setStatus, setErrors, markOrderAsProcessed, markOrderAsWaited, markOrderAsFinished } =
-  kitchenOrderSlice.actions;
+export const { setReset, setStatus, setErrors, markOrderStatus, removeOrder, appendOrders } = kitchenOrderSlice.actions;
 
 export default kitchenOrderSlice.reducer;
