@@ -5,7 +5,10 @@ import AvatarCard from '@/components/ui/avatar-card';
 import { HeaderCell } from '@/components/ui/table';
 import env from '@/env';
 import { ActionIcon, Badge, Text, Tooltip } from 'rizzui';
+import { dispatch } from '@/store';
 import DeletePopover from '@/app/shared/delete-popover';
+import { getDevices, deleteDevice } from '@/store/slices/deviceSlice';
+import toast from 'react-hot-toast';
 
 export const getColumns = () => [
   {
@@ -79,7 +82,13 @@ export const getColumns = () => [
           title={`Delete this device`}
           description={`Are you sure you want to delete this #${device.name} user?`}
           onDelete={async () => {
-            console.log(device.active);
+            const result = await dispatch(deleteDevice(device.active)); // Remove the .then() block
+            if (deleteDevice.fulfilled.match(result)) {
+              await dispatch(getDevices({ page: 1, pageSize: 5, query: '', status: '' }));
+              toast.success(`Device #${device.name} has been deleted successfully.`);
+            } else {
+              toast.error(`Failed to delete the device #${device.active}.`);
+            }
           }}
         />
       </div>

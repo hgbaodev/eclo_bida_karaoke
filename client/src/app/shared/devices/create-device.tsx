@@ -14,9 +14,10 @@ import { createDevice, getDevices } from '@/store/slices/deviceSlice';
 import toast from 'react-hot-toast';
 
 export default function CreateDevice() {
+  const [reset, setReset] = useState({});
   const { closeModal } = useModal();
   const [errors, setErrors] = useState<any>({});
-  const { page, pageSize, query, isCreateLoading } = useSelector((state: RootState) => state.device);
+  const { page, pageSize, query, isCreateLoading, status } = useSelector((state: RootState) => state.device);
 
   const onSubmit: SubmitHandler<CreateDeviceInput> = async (data: any) => {
     if (data['image'] && data['image'].length > 0) {
@@ -28,9 +29,14 @@ export default function CreateDevice() {
       try {
         const result: any = await dispatch(createDevice(formData));
         if (createDevice.fulfilled.match(result)) {
+          setReset({
+            name: '',
+            description: '',
+            status: '',
+          });
           setErrors({});
           closeModal();
-          await dispatch(getDevices({ page, pageSize, query }));
+          await dispatch(getDevices({ page, pageSize, query, status }));
           toast.success('Device created successfully');
         } else {
           setErrors(result?.payload?.errors);

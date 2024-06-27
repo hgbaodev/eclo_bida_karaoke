@@ -46,6 +46,18 @@ export const createDevice = createAsyncThunk('areas/createDevice', async (data: 
   }
 });
 
+export const deleteDevice = createAsyncThunk('devices/deleteDevice', async (active: string, { rejectWithValue }) => {
+  try {
+    const response = await axiosInstance.delete(`devices/${active}`);
+    return response.data;
+  } catch (error: any) {
+    if (!error.response) {
+      throw error;
+    }
+    return rejectWithValue(error.response.data);
+  }
+});
+
 const deviceSlice = createSlice({
   name: 'device',
   initialState,
@@ -95,6 +107,15 @@ const deviceSlice = createSlice({
         state.isCreateLoading = false;
       })
       .addCase(createDevice.rejected, (state) => {
+        state.isCreateLoading = false;
+      })
+      .addCase(deleteDevice.pending, (state) => {
+        state.isCreateLoading = true;
+      })
+      .addCase(deleteDevice.fulfilled, (state) => {
+        state.isCreateLoading = false;
+      })
+      .addCase(deleteDevice.rejected, (state) => {
         state.isCreateLoading = false;
       });
   },

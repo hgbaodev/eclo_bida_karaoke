@@ -33,26 +33,27 @@ class DeviceRepository implements DeviceRepositoryInterface
         return new CollectionCustom($devices);
     }
 
-    function getDeviceById($id)
-    {
-        return Device::find($id);
-    }
-
     function createDevice(array $data)
     {
         return Device::create($data);
     }
 
-    function updateDeviceById($id, array $data)
+    function getDeviceByActive(string $active)
     {
-        $device = Device::find($id);
+        $device = Device::where('active', $active);
+        return $device;
+    }
+
+    function updateDeviceByActive(string $active, array $data)
+    {
+        $device = Device::where('active', $active);
         $device->update($data);
         return $device;
     }
 
-    function deleteDeviceById($id)
+    function deleteDeviceByActive(string $active)
     {
-        $device = Device::find($id);
+        $device = Device::where('active', $active);
         $device->delete();
         return $device;
     }

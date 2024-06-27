@@ -47,11 +47,11 @@ class DeviceController extends Controller
         return $this->sentSuccessResponse($this->deviceRepository->updateDeviceById($id, $validated_data), 'The device ' . $id . ' has been updated!!!', 200);
     }
 
-    public function destroy($id)
+    public function destroy(string $active)
     {
-        if (!$this->deviceRepository->getDeviceById($id)) {
-            return $this->sentErrorResponse('Device ' . $id . ' is not found');
+        if (!$this->deviceRepository->getDeviceByActive($active)) {
+            return $this->sentErrorResponse('Device ' . $active . ' is not found');
         }
-        return $this->sentSuccessResponse($this->deviceRepository->deleteDeviceById($id), 'The device ' . $id . ' has been deleted!!!', 200);
+        return $this->sentSuccessResponse($this->deviceRepository->deleteDeviceByActive($active), 'The device ' . $active . ' has been deleted!!!', 200);
     }
 }
