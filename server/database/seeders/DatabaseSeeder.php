@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\KitchenOrder;
 use App\Models\Shift;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -39,12 +40,11 @@ class DatabaseSeeder extends Seeder
             ShiftDetailSeeder::class,
             OrderSeeder::class,
             ProductImportDetailSeeder::class,
-            OrderSeeder::class,
             ServiceSeeder::class,
             ShiftDetailSeeder::class,
             ShiftDetailSeeder::class,
             ServiceSeeder::class,
-
+//            KitchenOrder::class,
         ]);
     }
 }
