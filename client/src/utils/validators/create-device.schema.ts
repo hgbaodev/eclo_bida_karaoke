@@ -22,7 +22,6 @@ export const createDeviceSchema = z.object({
       (files) => ACCEPTED_IMAGE_MIME_TYPES.includes(files?.[0]?.type),
       'Only .jpg, .jpeg, .png and .webp formats are supported.',
     ),
-  status: z.string().min(1, { message: messages.statusIsRequired }),
 });
 
 // generate form types from zod validation schema

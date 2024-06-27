@@ -26,6 +26,7 @@ export default function CreateDevice() {
       formData.append('image', imageFile);
       formData.append('name', data.name);
       formData.append('description', data.description);
+      formData.append('status', data.status);
       try {
         const result: any = await dispatch(createDevice(formData));
         if (createDevice.fulfilled.match(result)) {
