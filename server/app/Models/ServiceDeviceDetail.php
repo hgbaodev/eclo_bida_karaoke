@@ -7,23 +7,24 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Device extends Model
+class ServiceDeviceDetail extends Model
 {
     use HasFactory, SoftDeletes, GeneratesUniqueActive;
 
-    public $timestamps = true;
+    protected $table = 'service_device_detail';
 
     protected $fillable = [
         'active',
-        'name',
-        'description',
-        'image',
-        'status'
+        'status',
+        'service_id',
+        'device_id',
+        'quantity',
+        'maintaining_quantity',
     ];
 
     protected $hidden = [
         'id',
-        'deleted_at'
+        'deleted_at',
     ];
 
     protected static function boot()
@@ -37,8 +38,14 @@ class Device extends Model
         });
     }
 
-    public function ServiceDevices()
+    public function device()
     {
-        return $this->hasMany(ServiceDeviceDetail::class);
+        return $this->belongsTo(Device::class);
     }
+
+    public function service()
+    {
+        return $this->belongsTo(Service::class);
+    }
+
 }

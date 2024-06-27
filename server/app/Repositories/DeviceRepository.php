@@ -13,24 +13,24 @@ class DeviceRepository implements DeviceRepositoryInterface
         $all = $request->input('all');
         $perPage = $request->input('perPage');
         $query = $request->input('query');
-        $deivies = Device::query();
-        if ($query) {
-            $deivies->where("id", "LIKE", "%$query%")
-                ->where("name", "LIKE", "%$query%")
-                ->where("description", "LIKE", "%$query%");
-        }
-        $deivies->orderBy('id', 'desc');
-        if ($all && $all == true) {
-            $deivies = $deivies->get();
-        } else {
-            $deivies = $deivies->paginate($perPage ?? 10);
-        }
-        return new CollectionCustom($deivies);
-    }
+        $status = $request->input('status');
 
-    function getDeviceById($id)
-    {
-        return Device::find($id);
+        $devices = Device::query();
+        $devices->latest();
+
+        if ($query) {
+            $devices->whereRaw("CONCAT(name, ' ', description) LIKE '%$query%'");
+        }
+        if ($status) {
+            $devices->where('status', $status);
+        }
+        if ($all) {
+            $devices = $devices->get();
+        }
+        else {
+            $devices = $devices->paginate($perPage);
+        }
+        return new CollectionCustom($devices);
     }
 
     function createDevice(array $data)
@@ -38,16 +38,22 @@ class DeviceRepository implements DeviceRepositoryInterface
         return Device::create($data);
     }
 
-    function updateDeviceById($id, array $data)
+    function getDeviceByActive(string $active)
     {
-        $device = Device::find($id);
+        $device = Device::where('active', $active);
+        return $device;
+    }
+
+    function updateDeviceByActive(string $active, array $data)
+    {
+        $device = Device::where('active', $active);
         $device->update($data);
         return $device;
     }
 
-    function deleteDeviceById($id)
+    function deleteDeviceByActive(string $active)
     {
-        $device = Device::find($id);
+        $device = Device::where('active', $active);
         $device->delete();
         return $device;
     }

@@ -9,9 +9,9 @@ Route::group(
         // 'middleware' => 'auth:api'
     ], function(){
     Route::get('/', [DeviceController::class, 'index']);
-    Route::get('/{id}', [DeviceController::class, 'show']);
+    Route::get('/{active}', [DeviceController::class, 'show']);
     Route::post('/', [DeviceController::class, 'store']);
-    Route::put('/{id}', [DeviceController::class, 'update']);
-    Route::delete('/{id}', [DeviceController::class, 'destroy']);
+    Route::put('/{active}', [DeviceController::class, 'update']);
+    Route::delete('/{active}', [DeviceController::class, 'destroy']);
 }
 );

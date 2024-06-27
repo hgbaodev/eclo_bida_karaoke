@@ -21,6 +21,7 @@ class CustomerRepository implements CustomerRepositoryInterface {
 
       $customers = Customer::query();
       $customers->latest();
+
       if ($query) {
           $customers->whereRaw("CONCAT(first_name, ' ', last_name, ' ', email, ' ', phone) LIKE '%$query%'");
       }

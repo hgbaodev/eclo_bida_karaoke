@@ -55,4 +55,9 @@ class Service extends Model
     {
         return $this->belongsTo(ServiceType::class);
     }
+
+    public function ServiceDevices()
+    {
+        return $this->hasMany(ServiceDeviceDetail::class);
+    }
 }

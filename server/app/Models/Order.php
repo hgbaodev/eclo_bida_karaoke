@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\GeneratesUniqueActive;
@@ -73,6 +73,6 @@ class Order extends Model
 
     public function getActiveAttribute()
     {
-        return $this->attributes['active'];
+        return Arr::get($this->attributes, 'active', null);
     }
 }

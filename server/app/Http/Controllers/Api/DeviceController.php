@@ -17,17 +17,12 @@ class DeviceController extends Controller
     {
         $this->deviceRepository = $deviceRepository;
     }
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index(Request $request)
     {
         return $this->sentSuccessResponse($this->deviceRepository->getDevices($request));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreDeviceRequest $request)
     {
         $validated_data = $request->validated();
@@ -38,34 +33,25 @@ class DeviceController extends Controller
         return $this->sentSuccessResponse($device, 'The device has been created!!!', 200);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show($id)
     {
         return $this->sentSuccessResponse($this->deviceRepository->getDeviceById($id));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateDeviceRequest $request, $id)
+    public function update(UpdateDeviceRequest $request, string $active)
     {
         $validated_data = $request->validated();
-        if (!$this->deviceRepository->getDeviceById($id)) {
-            return $this->sentErrorResponse('Device ' . $id . ' is not found');
+        if (!$this->deviceRepository->getDeviceByActive($active)) {
+            return $this->sentErrorResponse('Device ' . $active . ' is not found');
         }
-        return $this->sentSuccessResponse($this->deviceRepository->updateDeviceById($id, $validated_data), 'The device ' . $id . ' has been updated!!!', 200);
+        return $this->sentSuccessResponse($this->deviceRepository->updateDeviceByActive($active, $validated_data), 'The device ' . $active . ' has been updated!!!', 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id)
+    public function destroy(string $active)
     {
-        if (!$this->deviceRepository->getDeviceById($id)) {
-            return $this->sentErrorResponse('Device ' . $id . ' is not found');
+        if (!$this->deviceRepository->getDeviceByActive($active)) {
+            return $this->sentErrorResponse('Device ' . $active . ' is not found');
         }
-        return $this->sentSuccessResponse($this->deviceRepository->deleteDeviceById($id), 'The device ' . $id . ' has been deleted!!!', 200);
+        return $this->sentSuccessResponse($this->deviceRepository->deleteDeviceByActive($active), 'The device ' . $active . ' has been deleted!!!', 200);
     }
 }

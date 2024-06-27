@@ -1,7 +1,7 @@
 'use client';
 import PageHeader from '@/app/shared/page-header';
 import ModalButton from '@/app/shared/modal-button';
-import DevicesTable from '@/app/shared/devices';
+import DevicesTable from '@/app/shared/devices/devices-table';
 import CreateDevice from '@/app/shared/devices/create-device';
 
 const pageHeader = {

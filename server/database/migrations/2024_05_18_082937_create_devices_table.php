@@ -18,6 +18,7 @@ return new class extends Migration
             $table->longText('description');
             $table->string('image')->default('deviceDefault.png');
             $table->string('status')->default('A');
+            $table->timestamps();
             $table->softDeletes();
         });
     }

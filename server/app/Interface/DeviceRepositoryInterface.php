@@ -5,8 +5,8 @@ namespace App\Interface;
 interface DeviceRepositoryInterface
 {
     public function getDevices($request);
-    public function getDeviceById($id);
+    public function getDeviceByActive(string $active);
     public function createDevice(array $data);
-    public function updateDeviceById($id, array $data);
-    public function deleteDeviceById($id);
+    public function updateDeviceByActive(string $active, array $data);
+    public function deleteDeviceByActive(string $active);
 }
