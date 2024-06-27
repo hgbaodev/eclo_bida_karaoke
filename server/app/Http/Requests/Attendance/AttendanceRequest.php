@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Shift;
+namespace App\Http\Requests\Attendance;
 
 use App\Http\Helpers\HelperRequest;
 
@@ -24,7 +24,8 @@ class AttendanceRequest extends HelperRequest
         return [
             "time_in" => "required",
             "time_out" => "required",
-            "staff_id" => "required"
+            "staff_id" => "required",
+            "day" => "required"
         ];
     }
 }

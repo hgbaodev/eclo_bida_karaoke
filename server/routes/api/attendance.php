@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\ShiftController;
+use App\Http\Controllers\Api\AttendanceController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(
@@ -9,10 +9,10 @@ Route::group(
     // 'middleware' => 'auth:api'
   ],
   function () {
-    Route::get('/', [ShiftController::class, 'index']);
-    Route::get('/{active}', [ShiftController::class, 'show']);
-    Route::post('/', [ShiftController::class, 'store']);
-    Route::put('/{active}', [ShiftController::class, 'update']);
-    Route::delete('/{active}', [ShiftController::class, 'destroy']);
+    Route::get('/', [AttendanceController::class, 'index']);
+    Route::get('/{active}', [AttendanceController::class, 'show']);
+    Route::post('/', [AttendanceController::class, 'store']);
+    Route::put('/{active}', [AttendanceController::class, 'update']);
+    Route::delete('/{active}', [AttendanceController::class, 'destroy']);
   }
 );

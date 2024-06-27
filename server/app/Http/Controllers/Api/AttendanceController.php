@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Shift\AttendanceRequest;
+use App\Http\Requests\Attendance\AttendanceRequest;
 use App\Interface\AttendanceRepositoryInterface;
 use Illuminate\Http\Request;
 
