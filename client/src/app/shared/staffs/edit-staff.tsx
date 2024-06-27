@@ -3,10 +3,9 @@ import { useState } from 'react';
 import { PiXBold } from 'react-icons/pi';
 import { Controller, SubmitHandler } from 'react-hook-form';
 import { Form } from '@/components/ui/form';
-import { Input, Button, ActionIcon, Title, Select, Password, Textarea } from 'rizzui';
+import { Input, Button, ActionIcon, Title, Select, Password, Textarea, RadioGroup, Radio } from 'rizzui';
 import { useModal } from '@/app/shared/modal-views/use-modal';
 import { updateStaff, getStaffs } from '@/store/slices/staffSlice';
-import { CreateStaffInput, createStaffSchema } from '@/utils/validators/create-staff.schema';
 import { dispatch } from '@/store';
 import toast from 'react-hot-toast';
 import { statusOptions } from './type';
@@ -33,8 +32,8 @@ export default function EditStaff({
   const { listPositions } = useSelector((state: RootState) => state.position);
   const onSubmit: SubmitHandler<EditStaffInput> = async (data) => {
     const dataUser = {
-      first_name: data.name,
-      last_name: data.name,
+      first_name: data.first_name,
+      last_name: data.last_name,
       email: data.email,
       password: data.password,
       role: data.role,
@@ -48,9 +47,11 @@ export default function EditStaff({
       activeUser = userResult.payload.data.active;
     }
     const dataStaff = {
-      name: data.name,
+      first_name: data.first_name,
+      last_name: data.last_name,
       birthday: data.birthday,
       phone: data.phone,
+      gender: data.gender,
       idcard: data.idcard,
       address: data.address,
       status: data.status,
@@ -102,30 +103,48 @@ export default function EditStaff({
               {...register('idcard')}
               error={errors.idcard?.message}
             />
-
             <Input
-              label="Name"
-              placeholder="Enter staff name"
-              {...register('name')}
+              label="First Name"
+              placeholder="Enter staff first name"
+              {...register('first_name')}
               className="col-span-[1/2]"
-              error={errors.name?.message}
+              error={errors.first_name?.message}
             />
-
             <Input
-              label="Phone"
-              placeholder="Enter staff phone number"
-              className="col-span-full"
-              {...register('phone')}
-              error={errors.phone?.message}
+              label="Last Name"
+              placeholder="Enter staff last name"
+              {...register('last_name')}
+              className="col-span-[1/2]"
+              error={errors.last_name?.message}
             />
-
+            <div className="col-span-[1/2]">
+              <label className="block mb-3 text-sm font-medium text-gray-700">Gender</label>
+              <Controller
+                name="gender"
+                control={control}
+                defaultValue="M"
+                render={({ field: { name, onChange, value } }) => (
+                  <RadioGroup value={value} setValue={onChange} className="flex gap-4">
+                    <Radio label="Male" value="M" />
+                    <Radio label="Female" value="F" />
+                  </RadioGroup>
+                )}
+              />
+            </div>
             <Input
               type="date"
               label="Birthday"
               placeholder="Enter staff birthday"
               {...register('birthday')}
-              className="col-span-full"
+              className="col-span-[1/2]"
               error={errors.birthday?.message}
+            />
+            <Input
+              label="Phone"
+              placeholder="Enter staff phone number"
+              className="col-span-[1/2]"
+              {...register('phone')}
+              error={errors.phone?.message}
             />
 
             <Textarea

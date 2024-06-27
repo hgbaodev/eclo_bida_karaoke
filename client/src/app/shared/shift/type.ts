@@ -8,3 +8,13 @@ export const statusOptions = [
     label: 'InActive',
   },
 ];
+export const shiftTypeOptions = [
+  {
+    value: 'P',
+    label: 'PartTime',
+  },
+  {
+    value: 'F',
+    label: 'FullTime',
+  },
+];

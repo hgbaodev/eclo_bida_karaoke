@@ -17,6 +17,7 @@ class ShiftRepository implements ShiftRepositoryInterface
         $status = $request->input('status');
         $timein = $request->input('time_in');
         $timeout = $request->input('time_out');
+        $shift_type = $request->input('shift_type');
         $shift = Shift::query();
         if ($query) {
             $shift->whereRaw("CONCAT(time_in, ' ', time_out) LIKE '%$query%'");
@@ -33,6 +34,10 @@ class ShiftRepository implements ShiftRepositoryInterface
         if ($status) {
             $shift->where("status", $status);
         }
+        if ($shift_type) {
+            $shift->where("shift_type", $shift_type);
+        }
+        $shift->orderByRaw("FIELD(shift_type, 'P', 'F')")->orderBy('id');
         if ($all && $all == true) {
             $shift = $shift->get();
         } else {

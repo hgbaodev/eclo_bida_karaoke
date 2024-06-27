@@ -8,12 +8,12 @@ import { RootState } from '@/store/types';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import useDebounce from '@/hooks/use-debounce';
-import { statusOptions } from '../type';
-import { getStatusBadge } from './colunms';
-import { setQuery, setReset, setStatus } from '@/store/slices/shiftSlice';
+import { shiftTypeOptions, statusOptions } from '../type';
+import { getShiftTypeBadge, getStatusBadge } from './colunms';
+import { setQuery, setReset, setShiftType, setStatus } from '@/store/slices/shiftSlice';
 
 export default function FilterElement() {
-  const { isFiltered, query, status } = useSelector((state: RootState) => state.shift);
+  const { isFiltered, query, status, shift_type } = useSelector((state: RootState) => state.shift);
   const [searchTerm, setSearchTerm] = useState(query);
   const debounceSearchTerm = useDebounce(searchTerm, 1000);
 
@@ -36,6 +36,19 @@ export default function FilterElement() {
           getOptionValue={(option: { value: any }) => option.value}
           getOptionDisplayValue={(option: { value: any }) => getStatusBadge(option.value as any)}
           displayValue={(selected: any) => getStatusBadge(selected)}
+        />
+        <StatusField
+          className=" -order-9 w-full @[25rem]:w-[calc(calc(100%_-_10px)_/_2)] @4xl:-order-5 @4xl:w-auto"
+          options={shiftTypeOptions}
+          dropdownClassName="!z-10"
+          value={shift_type}
+          onChange={(value: any) => {
+            dispatch(setShiftType(value));
+          }}
+          placeholder="Filter by Shift Type"
+          getOptionValue={(option: { value: any }) => option.value}
+          getOptionDisplayValue={(option: { value: any }) => getShiftTypeBadge(option.value as any)}
+          displayValue={(selected: any) => getShiftTypeBadge(selected)}
         />
 
         {isFiltered && (

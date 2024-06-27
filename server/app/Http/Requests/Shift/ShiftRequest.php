@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Shift;
 
 use App\Http\Helpers\HelperRequest;
+use Illuminate\Validation\Rule;
 
 class ShiftRequest extends HelperRequest
 {
@@ -25,6 +26,7 @@ class ShiftRequest extends HelperRequest
             "time_in" => "required",
             "time_out" => "required",
             "status" => "required",
+            "shift_type" => ["required", Rule::in(['P', 'F'])]
         ];
     }
 }

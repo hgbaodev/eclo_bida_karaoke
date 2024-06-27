@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { PiXBold } from 'react-icons/pi';
 import { Controller, SubmitHandler } from 'react-hook-form';
 import { Form } from '@/components/ui/form';
-import { Input, Button, ActionIcon, Title, Select, Textarea, Password } from 'rizzui';
+import { Input, Button, ActionIcon, Title, Select, Textarea, Password, RadioGroup, Radio } from 'rizzui';
 import { useModal } from '@/app/shared/modal-views/use-modal';
 import { createStaff, getStaffs } from '@/store/slices/staffSlice';
 import { CreateStaffInput, createStaffSchema } from '@/utils/validators/create-staff.schema';
@@ -14,11 +14,11 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { getStatusBadge } from './staffs-table/columns';
 import { createUser } from '@/store/slices/userSlice';
-import { last } from 'lodash';
 
 export default function CreateStaff() {
   const { closeModal } = useModal();
   const [reset, setReset] = useState({});
+  const [gender, setGender] = useState('M');
   const [errors, setErrors] = useState<any>({});
   const [addUser, setAddUser] = useState(false);
   const { listRoles } = useSelector((state: RootState) => state.role);
@@ -27,16 +27,16 @@ export default function CreateStaff() {
   const onSubmit: SubmitHandler<CreateStaffInput> = async (data) => {
     try {
       let active = '';
-      const dataUser = {
-        first_name: data.name,
-        last_name: data.name,
-        email: data.email,
-        password: data.password,
-        role: data.role,
-        status: 'A',
-      };
       // Lưu thông tin người dùng nếu có
       if (addUser) {
+        const dataUser = {
+          first_name: data.first_name,
+          last_name: data.last_name,
+          email: data.email,
+          password: data.password,
+          role: data.role,
+          status: 'A',
+        };
         const userResult: any = await dispatch(createUser(dataUser));
         if (!createUser.fulfilled.match(userResult)) {
           setErrors(userResult?.payload?.errors);
@@ -45,8 +45,10 @@ export default function CreateStaff() {
         }
       }
       const dataStaff = {
-        name: data.name,
+        first_name: data.first_name,
+        last_name: data.last_name,
         birthday: data.birthday,
+        gender: data.gender,
         phone: data.phone,
         idcard: data.idcard,
         address: data.address,
@@ -104,13 +106,33 @@ export default function CreateStaff() {
               error={errors.idcard?.message}
             />
             <Input
-              label="Name"
-              placeholder="Enter staff name"
-              {...register('name')}
+              label="First Name"
+              placeholder="Enter staff first name"
+              {...register('first_name')}
               className="col-span-[1/2]"
-              error={errors.name?.message}
+              error={errors.first_name?.message}
             />
-
+            <Input
+              label="Last Name"
+              placeholder="Enter staff last name"
+              {...register('last_name')}
+              className="col-span-[1/2]"
+              error={errors.last_name?.message}
+            />
+            <div className="col-span-[1/2]">
+              <label className="block mb-3 text-sm font-medium text-gray-700">Gender</label>
+              <Controller
+                name="gender"
+                control={control}
+                defaultValue="M"
+                render={({ field }) => (
+                  <RadioGroup value={field.value} setValue={field.onChange} className="flex gap-4">
+                    <Radio label="Male" value="M" />
+                    <Radio label="Female" value="F" />
+                  </RadioGroup>
+                )}
+              />
+            </div>
             <Input
               type="date"
               label="Birthday"
@@ -121,6 +143,7 @@ export default function CreateStaff() {
             />
 
             <Input
+              type="number"
               label="Phone"
               placeholder="Enter staff phone number"
               className="col-span-[1/2]"

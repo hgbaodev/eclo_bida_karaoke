@@ -16,14 +16,15 @@ const FilterElement = dynamic(() => import('@/app/shared/shift/shifts-table/filt
 
 export default function ShiftsTable() {
   const { openModal } = useModal();
-  const { data, isLoading, pageSize, page, totalRow, query, status } = useSelector((state: RootState) => state.shift);
+  const { data, isLoading, pageSize, page, totalRow, query, status, shift_type } = useSelector(
+    (state: RootState) => state.shift,
+  );
   useEffect(() => {
     const fetch = async () => {
-      await dispatch(getAllShifts({ page, pageSize, query, status }));
+      await dispatch(getAllShifts({ page, pageSize, query, status, shift_type }));
     };
     fetch();
-  }, [page, pageSize, query, status]);
-
+  }, [page, pageSize, query, status, shift_type]);
   const columns = useMemo(
     () => getColumns(openModal),
     // eslint-disable-next-line react-hooks/exhaustive-deps

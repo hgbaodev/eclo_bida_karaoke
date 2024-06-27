@@ -7,10 +7,10 @@ import { Input, Button, ActionIcon, Title, Select, Textarea } from 'rizzui';
 import { useModal } from '@/app/shared/modal-views/use-modal';
 import { dispatch } from '@/store';
 import toast from 'react-hot-toast';
-import { statusOptions } from './type';
+import { shiftTypeOptions, statusOptions } from './type';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
-import { getStatusBadge } from './shifts-table/colunms';
+import { getShiftTypeBadge, getStatusBadge } from './shifts-table/colunms';
 import { createShift, getAllShifts } from '@/store/slices/shiftSlice';
 import { CreateShiftInput, createShiftSchema } from '@/utils/validators/create-shift.schema';
 
@@ -18,7 +18,7 @@ export default function CreateShift() {
   const { closeModal } = useModal();
   const [reset, setReset] = useState({});
   const [errors, setErrors] = useState<any>({});
-  const { pageSize, page, query, isCreateLoading, status } = useSelector((state: RootState) => state.shift);
+  const { pageSize, page, query, isCreateLoading, status, shift_type } = useSelector((state: RootState) => state.shift);
   const onSubmit: SubmitHandler<CreateShiftInput> = async (data) => {
     const result: any = await dispatch(createShift(data));
 
@@ -29,7 +29,7 @@ export default function CreateShift() {
       });
       setErrors({});
       closeModal();
-      await dispatch(getAllShifts({ page, pageSize, query, status }));
+      await dispatch(getAllShifts({ page, pageSize, query, status, shift_type }));
       toast.success('Staff created successfully');
     } else {
       setErrors(result?.payload?.errors);
@@ -89,6 +89,27 @@ export default function CreateShift() {
                   getOptionValue={(option: { value: any }) => option.value}
                   getOptionDisplayValue={(option: { value: any }) => getStatusBadge(option.value as any)}
                   displayValue={(selected: any) => getStatusBadge(selected)}
+                  dropdownClassName="!z-[1]"
+                  inPortal={false}
+                />
+              )}
+            />
+            <Controller
+              name="shift_type"
+              control={control}
+              render={({ field: { name, onChange, value } }) => (
+                <Select
+                  options={shiftTypeOptions}
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                  label="Shift Type"
+                  placeholder="Select a shift type"
+                  className="col-span-full"
+                  error={errors?.status?.message}
+                  getOptionValue={(option: { value: any }) => option.value}
+                  getOptionDisplayValue={(option: { value: any }) => getShiftTypeBadge(option.value as any)}
+                  displayValue={(selected: any) => getShiftTypeBadge(selected)}
                   dropdownClassName="!z-[1]"
                   inPortal={false}
                 />

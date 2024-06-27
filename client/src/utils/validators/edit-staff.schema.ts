@@ -4,7 +4,8 @@ import { validateEmail } from '@/utils/validators/common-rules';
 
 // form zod validation schema
 export const editStaffSchema = z.object({
-  name: z.string().min(1, { message: messages.fullNameIsRequired }),
+  first_name: z.string().min(1, { message: messages.firstNameRequired }),
+  last_name: z.string().min(1, { message: messages.lastNameRequired }),
   birthday: z.string().min(1, { message: messages.birthdayIsRequired }),
   phone: z.string().length(10, { message: messages.phoneIsRequired }),
   idcard: z.string().length(12, { message: messages.idcardIsRequired }),
@@ -14,6 +15,7 @@ export const editStaffSchema = z.object({
   email: validateEmail,
   role: z.string().min(1, { message: messages.roleIsRequired }),
   password: z.string().min(6, { message: messages.passwordLengthMin }),
+  gender: z.string().min(1, { message: messages.isRequired }),
 });
 
 // generate form types from zod validation schema

@@ -1,18 +1,20 @@
 'use client';
 
 import { useEffect, useMemo } from 'react';
-import { useColumn } from '@/hooks/use-column';
 import ControlledTable from '@/components/controlled-table';
-import { getColumns } from '@/app/shared/shift_detail_staff/colunm';
+import { getColumns } from '@/app/shared/attendance/colunm';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
-import { getAllStaffs, setPage, setPageSize } from '@/store/slices/staffSlice';
-import { getAllShiftUserDetails, getShiftUserDetails } from '@/store/slices/shift_user_detailSlice';
+import { getAllStaffs, getOneStaff, setPage, setPageSize } from '@/store/slices/staffSlice';
+import {
+  getAllShiftUserDetails,
+  getShiftUserDetails,
+  getShiftUserDetailsByUser,
+  setWorkShift,
+} from '@/store/slices/shift_user_detailSlice';
 import { useModal } from '../modal-views/use-modal';
 import { getShifts } from '@/store/slices/shiftSlice';
-import ModalButton from '../modal-button';
-import CreateWorkShift from './work_shift/create-work_shift';
 import dynamic from 'next/dynamic';
 import { getAllWorkShifts, getWorkShift } from '@/store/slices/workshiftSlice';
 const FilterElement = dynamic(() => import('@/app/shared/shift_detail_staff/work_shift/filter-element'), {
@@ -20,20 +22,22 @@ const FilterElement = dynamic(() => import('@/app/shared/shift_detail_staff/work
 });
 export default function ShiftDetailStaffTable() {
   const { openModal } = useModal();
-  const { data } = useSelector((state: RootState) => state.shift);
-  const { listShiftUserDetail, isLoading, workshift } = useSelector((state: RootState) => state.shift_user_detail);
+  const { active } = useSelector((state: RootState) => state.auth);
   const { oneWorkShift } = useSelector((state: RootState) => state.work_shift);
+  const { data } = useSelector((state: RootState) => state.staff);
+  const { isLoading, workshift, listShiftUserDetail } = useSelector((state: RootState) => state.shift_user_detail);
   useEffect(() => {
     dispatch(getShifts());
     dispatch(getAllStaffs(''));
   }, []);
   useEffect(() => {
     const fetch = async () => {
-      await dispatch(getShiftUserDetails(workshift));
       await dispatch(getWorkShift(workshift));
+      await dispatch(getShiftUserDetails(workshift));
+      await dispatch(getOneStaff(active));
     };
     fetch();
-  }, [workshift]);
+  }, [workshift, active]);
   useEffect(() => {
     dispatch(getAllWorkShifts());
   }, []);
@@ -53,7 +57,6 @@ export default function ShiftDetailStaffTable() {
       <div className="mt-0">
         <label style={{ fontWeight: 'bold', fontSize: '15px' }}>Work Shift:</label>
         <FilterElement />
-        <ModalButton label="Copy" view={<CreateWorkShift />} customSize="600px" className="mt-10 w-30 h-15 mb-4" />
         <ControlledTable
           variant="modern"
           data={data}

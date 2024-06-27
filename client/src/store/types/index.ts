@@ -250,6 +250,7 @@ export interface shiftType {
   totalRow: number;
   query: string;
   status: any;
+  shift_type: any;
   errors: any;
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
