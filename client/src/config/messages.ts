@@ -91,4 +91,5 @@ export const messages = {
   supplierisRequired: 'Suppliers is required',
   shiftTypeIsRequired: 'Shift Type is required',
   isRequired: 'required',
+  ImageRequired:'Image is required'
 };
