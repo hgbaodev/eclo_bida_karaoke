@@ -11,7 +11,7 @@ class Device extends Model
 {
     use HasFactory, SoftDeletes, GeneratesUniqueActive;
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [
         'active',

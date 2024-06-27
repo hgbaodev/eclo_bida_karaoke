@@ -5,7 +5,7 @@ import AvatarCard from '@/components/ui/avatar-card';
 import { HeaderCell } from '@/components/ui/table';
 import env from '@/env';
 import { ActionIcon, Badge, Text, Tooltip } from 'rizzui';
-import DeletePopover from '../delete-popover';
+import DeletePopover from '@/app/shared/delete-popover';
 
 export const getColumns = () => [
   {

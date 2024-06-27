@@ -13,19 +13,24 @@ class DeviceRepository implements DeviceRepositoryInterface
         $all = $request->input('all');
         $perPage = $request->input('perPage');
         $query = $request->input('query');
-        $deivies = Device::query();
+        $status = $request->input('status');
+
+        $devices = Device::query();
+        $devices->latest();
+
         if ($query) {
-            $deivies->where("id", "LIKE", "%$query%")
-                ->where("name", "LIKE", "%$query%")
-                ->where("description", "LIKE", "%$query%");
+            $devices->whereRaw("CONCAT(name, ' ', description) LIKE '%$query%'");
         }
-        $deivies->orderBy('id', 'desc');
-        if ($all && $all == true) {
-            $deivies = $deivies->get();
-        } else {
-            $deivies = $deivies->paginate($perPage ?? 10);
+        if ($status) {
+            $devices->where('status', $status);
         }
-        return new CollectionCustom($deivies);
+        if ($all) {
+            $devices = $devices->get();
+        }
+        else {
+            $devices = $devices->paginate($perPage);
+        }
+        return new CollectionCustom($devices);
     }
 
     function getDeviceById($id)

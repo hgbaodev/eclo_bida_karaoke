@@ -205,7 +205,9 @@ export interface deviceType {
   isFiltered: boolean;
   page: number;
   pageSize: number;
+  status: any;
   totalRow: number;
+  errors: string;
   query: string;
   isCreateLoading: boolean;
 }

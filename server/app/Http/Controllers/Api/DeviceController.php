@@ -17,17 +17,12 @@ class DeviceController extends Controller
     {
         $this->deviceRepository = $deviceRepository;
     }
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index(Request $request)
     {
         return $this->sentSuccessResponse($this->deviceRepository->getDevices($request));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreDeviceRequest $request)
     {
         $validated_data = $request->validated();
@@ -38,17 +33,11 @@ class DeviceController extends Controller
         return $this->sentSuccessResponse($device, 'The device has been created!!!', 200);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show($id)
     {
         return $this->sentSuccessResponse($this->deviceRepository->getDeviceById($id));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateDeviceRequest $request, $id)
     {
         $validated_data = $request->validated();
@@ -58,9 +47,6 @@ class DeviceController extends Controller
         return $this->sentSuccessResponse($this->deviceRepository->updateDeviceById($id, $validated_data), 'The device ' . $id . ' has been updated!!!', 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($id)
     {
         if (!$this->deviceRepository->getDeviceById($id)) {
