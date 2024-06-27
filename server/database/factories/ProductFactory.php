@@ -23,17 +23,16 @@ class ProductFactory extends Factory
     public function definition(): array
     {
 
-        $names = ['Sting', 'C2', 'Olong', '7Up'];
+        $names = ['Sting', 'C2', 'Olong', '7Up', 'Không độ', 'Mì tôm', 'Cơm chiên', 'Chuối chiên'];
 
 
         $name = $this->getUniqueName($names);
 
         return [
             "name" => $name,
-            "cost_price" => $this->faker->randomFloat(2, 1, 1000),
             "selling_price" => $this->faker->randomFloat(2, 1, 1000),
             'quantity' => $this->faker->numberBetween(1, 1000),
-
+            'id_type' => $this->faker->randomElement([1, 2]),
         ];
     }
     protected function getUniqueName(array $names): string

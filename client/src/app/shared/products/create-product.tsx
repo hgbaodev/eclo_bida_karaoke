@@ -20,6 +20,7 @@ export default function CreateStaff() {
   const [reset, setReset] = useState({});
   const [errors, setErrors] = useState<any>({});
   const { pageSize, page, query, isCreateLoading} = useSelector((state: RootState) => state.product);
+  const { listType } = useSelector((state: RootState) => state.product_type);
   // const { listPositions } = useSelector((state: RootState) => state.position);
   const onSubmit: SubmitHandler<CreateProductInput> = async (data) => {
     const result: any = await dispatch(createProduct(data));
@@ -27,9 +28,9 @@ export default function CreateStaff() {
     if (createProduct.fulfilled.match(result)) {
       setReset({
         name: '',
-        cost_price: '',
         selling_price: '',
         quantity: '',
+        product_type:'',
       
       });
       setErrors({});
@@ -68,23 +69,42 @@ export default function CreateStaff() {
               {...register('name')}
               error={errors.name?.message}
             />
+            
             <Input
-              label="Cost Price"
-              placeholder="Enter cost price"
-              {...register('cost_price')}
-              className="col-span-full"
-              error={errors.cost_price?.message}
-            />
-
-            <Input
+              
               label="Selling Price"
+              type="number"
               placeholder="Enter selling price"
-              {...register('selling_price')}
+              {...register('selling_price',{
+                valueAsNumber: true
+              })}
               className="col-span-full"
               error={errors.selling_price?.message}
             />
 
-            
+            <Controller
+              name='product_type'
+              control={control}
+              render={({ field: { name, onChange, value } }) => (
+                <Select
+                  options={listType}
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                  label="Product Type"
+                  className="col-span-full"
+                  placeholder="Select type of product"
+                  error={errors?.product_type?.message}
+                  getOptionValue={(option) => option.active}
+                  getOptionDisplayValue={(option) => option.type_name}
+                  displayValue={(selected: string) =>
+                    listType.find((option) => option.active === selected)?.type_name ?? selected
+                  }
+                  dropdownClassName="!z-[1]"
+                  inPortal={false}
+                />
+              )}
+            />
             
 
             <div className="col-span-full flex items-center justify-end gap-4">

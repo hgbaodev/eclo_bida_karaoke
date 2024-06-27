@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id('id');
             $table->string('name');
             $table->string('image')->default('deviceDefault.png');
-            $table->string('cost_price');
-            $table->string('selling_price');
+            $table->double('selling_price');
             $table->bigInteger('quantity')->nullable();
             $table->string('active')->unique();
+            $table->foreignId('id_type')->constrained('product_types');
             $table->softDeletes();
         });
     }

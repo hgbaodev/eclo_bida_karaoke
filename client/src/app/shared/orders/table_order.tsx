@@ -3,21 +3,24 @@ import AvatarCard from '@/components/ui/avatar-card';
 import { HeaderCell } from '@/components/ui/table';
 import env from '@/env';
 import { useColumn } from '@/hooks/use-column';
+import { RootState } from '@/store/types';
 import React, { useMemo } from 'react';
+import { useSelector } from 'react-redux';
 
 const TableOrder = () => {
+  const { order, isLoading } = useSelector((state: RootState) => state.order);
   const columns = useMemo(
     () => [
       {
         title: <HeaderCell title="Image" />,
-        dataIndex: 'name',
-        key: 'name',
-        width: 100,
-        render: (name: string) => (
+        dataIndex: 'image',
+        key: 'image',
+        width: 20,
+        render: (_: any, orderdetail: OrderDetail) => (
           <AvatarCard
-            src={env.API_STORAGE + 'deviceDefault.png'}
+            src={env.API_STORAGE + orderdetail.image}
             avatarProps={{
-              name: name,
+              name: orderdetail.image,
               size: 'lg',
               className: 'rounded-lg',
             }}
@@ -29,19 +32,22 @@ const TableOrder = () => {
         title: 'Name',
         dataIndex: 'name',
         key: 'name',
-        width: '50%',
-        render: (text: string) => <span>{text}</span>,
+        width: 50,
+        render: (_: any, orderdetail: OrderDetail) => orderdetail.name,
+      },
+      {
+        title: 'Price',
+        dataIndex: 'price',
+        key: 'selling_price',
+        width: 10,
+        render: (_: any, orderdetail: OrderDetail) => orderdetail.selling_price,
       },
       {
         title: 'Quantity',
         dataIndex: 'quantity',
         key: 'quantity',
-        width: '50%',
-        render: (text: number) => (
-          <div>
-            <input type="number" value={text} />
-          </div>
-        ),
+        width: 10,
+        render: (_: any, orderdetail: OrderDetail) => orderdetail.quantity,
       },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -51,10 +57,11 @@ const TableOrder = () => {
   return (
     <ControlledTable
       variant="minimal"
-      data={[]}
+      data={order?.products}
       showLoadingText={false}
       // @ts-ignore
       columns={visibleColumns}
+      isLoading={isLoading}
       emptyText={
         <div className="flex justify-center items-center">
           <div className="w-[60px] h-[50px]">
@@ -72,3 +79,11 @@ const TableOrder = () => {
 };
 
 export default TableOrder;
+
+export interface OrderDetail {
+  active: string;
+  quantity: number;
+  image: string;
+  name: string;
+  selling_price: number;
+}

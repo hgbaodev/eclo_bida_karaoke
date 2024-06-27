@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\KitchenOrderEnum;
 use App\Http\Controllers\Controller;
 use App\Interface\KitchenOrderRepositoryInterface;
 use App\Interface\NotificationRepositoryInterface;
@@ -39,6 +40,7 @@ class OrderController extends Controller
             $requestedProducts = $request->requestedProducts;
             $kitchenOrders = [];
 
+            // add products to database one by one
             foreach ($requestedProducts as $requestedProduct) {
                 $product = $this->productRepository->getProductByActive($requestedProduct['active']);
                 $data = [
@@ -62,19 +64,87 @@ class OrderController extends Controller
         return $this->sentSuccessResponse($this->kitchenOrderRepository->getKitchenOrders($request));
     }
 
-    public function markOrderRequestAsProcessing(Request $request)
+    public function markKitchenOrderAsProcessing(Request $request, string $active)
     {
-        // TODO: danh dau la dang xu ly
+        $kitchenOrder = $this->kitchenOrderRepository->getKitchenOrderByActive($active);
+
+        if (!$kitchenOrder) {
+            return $this->sentErrorResponse('Order not found');
+        }
+
+        $kitchenOrderData = $kitchenOrder->toArray();
+        $kitchenOrderData['status'] = KitchenOrderEnum::PROCESSING;
+
+        $updatedKitchenOrder = $this->kitchenOrderRepository->updateKitchenOrderByActive($active, $kitchenOrderData);
+
+        $eventData = [
+            'active'=> $active,
+        ];
+
+        $request->merge(['data' => $eventData]);
+
+        return $this->sentSuccessResponse($updatedKitchenOrder, 'Marked as processing');
     }
 
-    public function markOrderRequestAsWaiting(Request $request)
+    public function markKitchenOrderAsWaiting(Request $request, string $active)
     {
-        // TODO: danh dau la dang cho giao
+        try {
+            $repo = $this->kitchenOrderRepository;
+
+            $kitchenOrder = $repo->getKitchenOrderByActive($active);
+
+            // If no order is found, return an error response
+            if (!$kitchenOrder) {
+                return $this->sentErrorResponse('Order not found');
+            }
+
+            // Convert the kitchen order to an array and set the status to processing
+            $kitchenOrderData = $kitchenOrder->toArray();
+            $kitchenOrderData['status'] = KitchenOrderEnum::WAITING;
+
+            // Update the kitchen order and return the updated order with a success response
+            $updatedKitchenOrder = $repo->updateKitchenOrderByActive($active, $kitchenOrderData);
+
+            $serviceName = $kitchenOrder->order->service->name;
+            $productName = $kitchenOrder->product->name;
+
+            $eventData = [
+                'active'=> $active,
+                'serviceName' => $serviceName,
+                'productName' => $productName,
+                'quantity' => $kitchenOrder->quantity,
+            ];
+
+            $request->merge(['data' => $eventData]);
+
+            return $this->sentSuccessResponse($updatedKitchenOrder, 'Marked as waiting');
+        } catch (\Exception $e) {
+            return $this->sentErrorResponse($e->getMessage());
+        }
     }
 
-    public function markOrderRequestAsDone(Request $request)
+    public function markKitchenOrderAsDone( string $active)
     {
-        // TODO: danh dau la da xong
+        try {
+            $repo = $this->kitchenOrderRepository;
+            $kitchenOrder = $repo->getKitchenOrderByActive($active);
+
+            // If no order is found, return an error response
+            if (!$kitchenOrder) {
+                return $this->sentErrorResponse('Order not found');
+            }
+
+            // Convert the kitchen order to an array and set the status to processing
+            $kitchenOrderData = $kitchenOrder->toArray();
+            $kitchenOrderData['status'] = KitchenOrderEnum::DONE;
+
+            // Update the kitchen order and return the updated order with a success response
+            $updatedKitchenOrder = $repo->deleteKitchenOrderByActive($active);
+
+            return $this->sentSuccessResponse($updatedKitchenOrder, 'Marked as done');
+        } catch (\Exception $e) {
+            return $this->sentErrorResponse($e->getMessage());
+        }
     }
 
     public function index(Request $request)
@@ -86,6 +156,11 @@ class OrderController extends Controller
     public function show($active)
     {
         $returnedData = $this->orderRepository->getOrderByActive($active);
+        if (!$returnedData) {
+            return $this->sentErrorResponse('Order not found', 'errors', 404);
+        }
+
+        unset($returnedData['orderdetails']);
         return $this->sentSuccessResponse($returnedData);
     }
 

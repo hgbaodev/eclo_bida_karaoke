@@ -43,24 +43,21 @@ class KitchenOrderRepository implements KitchenOrderRepositoryInterface
      */
     public function getKitchenOrderByActive(string $active)
     {
-        // TODO: Implement getKitchenOrderByActive() method.
+        $kitchenOrder = KitchenOrder::where('active', $active)->firstOrFail();
+        return $kitchenOrder;
     }
 
-    /**
-     * @param string $active
-     * @return mixed
-     */
-    public function updateKitchenOrderByActive(string $active)
+    public function updateKitchenOrderByActive(string $active, array $data)
     {
-        // TODO: Implement updateKitchenOrderByActive() method.
+        $kitchenOrder = KitchenOrder::where('active', $active)->firstOrFail();
+        $kitchenOrder->update($data);
+        return $kitchenOrder;
     }
 
-    /**
-     * @param string $active
-     * @return mixed
-     */
     public function deleteKitchenOrderByActive(string $active)
     {
-        // TODO: Implement deleteKitchenOrderByActive() method.
+        $kitchenOrder = KitchenOrder::where('active', $active)->firstOrFail();
+        $kitchenOrder->delete();
+        return $kitchenOrder;
     }
 }

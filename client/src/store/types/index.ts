@@ -5,6 +5,7 @@ export interface RootState {
   logger: loggerType;
   service_type: service_typeType;
   product: productType;
+  product_type:product_typeType;
   product_import: product_ImportType;
   product_import_detail: product_Import_DetailType;
   customer: customerType;
@@ -26,14 +27,12 @@ export interface RootState {
 export interface kitchen_orderType {
   data: kitchenOrder[];
   isLoading: boolean;
-  isFiltered: boolean;
   page: number;
   pageSize: number;
-  query: string;
+  totalRow: number;
+  isFiltered: boolean;
   status: any;
   errors: string | null;
-  isCreateLoading: boolean;
-  isUpdateLoading: boolean;
 }
 
 export interface kitchenOrder {
@@ -42,9 +41,9 @@ export interface kitchenOrder {
   product_name: string;
   order_id: string;
   quantity: string;
-  product_id: string;
   created_at: string;
   updated_at: string;
+  isLoading: boolean;
 }
 
 export interface authType {
@@ -163,7 +162,8 @@ export interface productType {
   errors: any;
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
-  listProduct: any[];
+  listProduct:any[];
+  type:any;
 }
 export interface product_ImportType {
   data: [];
@@ -297,7 +297,6 @@ export interface work_shiftType {
   isUpdateLoading: boolean;
   oneWorkShift: any;
 }
-
 export interface serviceType {
   data: [];
   isLoading: boolean;
@@ -335,5 +334,48 @@ export interface serviceType {
 export interface orderType {
   areas: any[];
   isLoading: boolean;
-  order: any;
+  order: null | {
+    active: string;
+    checkin_time: string | number | Date;
+    checkout_time: string;
+    total_price: number;
+    service: {
+      name: string;
+      description: string;
+      price: {
+        pricePerHour: number;
+      };
+    };
+    user: {
+      first_name: string;
+      last_name: string;
+      email: string;
+      image: string;
+    };
+    customer: {
+      first_name: string;
+      last_name: string;
+      status: string;
+      image: string;
+      phone: string;
+      email: string;
+      active: string;
+    };
+    products: {
+      active: string;
+      quantity: number;
+      image: string;
+      name: string;
+      selling_price: number;
+    }[];
+  };
+  isLoadingGetOrder: boolean;
+  queryProduct: string;
+  isLoadingQueryProduct: boolean;
+  products: [];
+}
+export interface product_typeType {
+  data:[];
+  isLoading: boolean;
+  listType:any[];
 }

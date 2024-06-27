@@ -44,7 +44,7 @@ export default function CreateProductImportDetail() {
       closeModal();
       //@ts-expect-errorts-inogre
       await dispatch(getProductImportDetails ({ page, pageSize, query, active }));
-      toast.success('Import created successfully');
+      toast.success('Import product successfully');
     } else {
       setErrors(result?.payload?.errors);
     }

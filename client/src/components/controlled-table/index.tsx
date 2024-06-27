@@ -19,6 +19,7 @@ type ControlledTableProps = {
   paginatorOptions?: TablePaginationProps;
   tableFooter?: React.ReactNode;
   className?: string;
+  scrollY?: number;
   paginatorClassName?: string;
 } & TableProps;
 
@@ -31,6 +32,7 @@ export default function ControlledTable({
   showLoadingText,
   paginatorClassName,
   className,
+  scrollY,
   ...tableProps
 }: ControlledTableProps) {
   if (isLoading) {
@@ -51,7 +53,12 @@ export default function ControlledTable({
       {!isEmpty(filterOptions) && <TableFilter {...filterOptions}>{filterElement}</TableFilter>}
 
       <div className="relative">
-        <Table scroll={{ x: 100 }} rowKey={(record) => record.id} className={cn(className)} {...tableProps} />
+        <Table
+          scroll={{ x: 100, y: scrollY }}
+          rowKey={(record) => record.id}
+          className={cn(className)}
+          {...tableProps}
+        />
 
         {tableFooter ? tableFooter : null}
       </div>

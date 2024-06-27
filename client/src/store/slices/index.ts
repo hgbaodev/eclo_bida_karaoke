@@ -15,6 +15,7 @@ import work_shift from './workshiftSlice';
 import logger from './loggerSlice';
 
 import product from './productSlices';
+import product_type from './product_typeSlices';
 import product_import from './product_importSlice';
 import product_import_detail from './product_import_detailSlice';
 import area from './areaSlice';
@@ -42,6 +43,7 @@ const reducers = combineReducers({
   product,
   service_type,
   product_import,
+  product_type,
   customer,
   area,
   supplier,

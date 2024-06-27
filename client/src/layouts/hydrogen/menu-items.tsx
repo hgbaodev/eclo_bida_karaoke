@@ -9,6 +9,7 @@ import { FaProductHunt } from 'react-icons/fa';
 import { FaUserClock } from 'react-icons/fa6';
 import { LuClock } from 'react-icons/lu';
 import { BsPersonCheckFill } from 'react-icons/bs';
+import { TbToolsKitchen3 } from 'react-icons/tb';
 
 // Note: do not add href in the label object, it is rendering as label
 export const menuItems = [
@@ -128,7 +129,7 @@ export const menuItems = [
   {
     name: 'Kitchen orders',
     href: routes.admin.kitchen_orders,
-    icon: <PiFolderLockDuotone />,
+    icon: <TbToolsKitchen3 />,
   },
   {
     name: 'Products',

@@ -20,6 +20,7 @@ export default function EditProduct({ product, active }: { product: EditProductI
   const [reset, setReset] = useState<any>(product);
   const [errors, setErrors] = useState<any>({});
   const { pageSize, page, query, isUpdateLoading } = useSelector((state: RootState) => state.product);
+  const { listType } = useSelector((state: RootState) => state.product_type);
 //   const { listPositions } = useSelector((state: RootState) => state.position);
   const onSubmit: SubmitHandler<CreateProductInput> = async (data) => {
     const result: any = await dispatch(updateProduct({ product: data, active }));
@@ -27,16 +28,14 @@ export default function EditProduct({ product, active }: { product: EditProductI
     if (updateProduct.fulfilled.match(result)) {
       setReset({
         product_name: '',
-        cost_price: '',
         selling_price: '',
         quantity: '',
-        description:'',
-        unit:'',
+        product_type:'',
       });
       setErrors({});
       closeModal();
       await dispatch(getProducts({ page, pageSize, query }));
-      toast.success('User created successfully');
+      toast.success('Update successfully');
     } else {
       setErrors(result?.payload?.errors);
     }
@@ -68,20 +67,45 @@ export default function EditProduct({ product, active }: { product: EditProductI
               {...register('name')}
               error={errors.name?.message}
             />
-            <Input
+            {/* <Input
               label="Cost Price"
               type='number'
               placeholder="Enter cost price"
               {...register('cost_price')}
               className="col-span-full"
               error={errors.cost_price?.message}
+            /> */}
+              <Controller
+              name='product_type'
+              control={control}
+              render={({ field: { name, onChange, value } }) => (
+                <Select
+                  options={listType}
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                  label="Product Type"
+                  className="col-span-full"
+                  placeholder="Select type of product"
+                  error={errors?.product_type?.message}
+                  getOptionValue={(option) => option.active}
+                  getOptionDisplayValue={(option) => option.type_name}
+                  displayValue={(selected: string) =>
+                    listType.find((option) => option.active === selected)?.type_name ?? selected
+                  }
+                  dropdownClassName="!z-[1]"
+                  inPortal={false}
+                />
+              )}
             />
-
             <Input
               label="Selling Price"
               type='number'
-              placeholder="Enter staff birthday"
-              {...register('selling_price')}
+             
+              placeholder="Enter selling price"
+              {...register('selling_price',{
+                valueAsNumber: true
+              })}
               className="col-span-full"
               error={errors.selling_price?.message}
             />
