@@ -57,14 +57,14 @@ export default function EditDevice({ device, active }: { device: EditDeviceInput
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
-            <FileInput
+            {/* <FileInput
               label="Image"
               placeholder="Select an image"
               {...register('image')}
               className="col-span-full"
               accept="image/jpeg, image/jpg, image/png, image/webp"
               error={errors.image?.message?.toString() || ''}
-            />
+            /> */}
             <Input
               label="Name"
               placeholder="Enter device name"
