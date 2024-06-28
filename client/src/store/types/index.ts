@@ -381,9 +381,12 @@ export interface product_typeType {
   listType: any[];
 }
 export interface attendance {
-  data: any[];
+  dataAttendance: any[];
   isLoading: boolean;
   isFiltered: boolean;
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
+  month: number;
+  query: string;
+  year: number;
 }

@@ -4,24 +4,33 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { attendance } from '../types';
 import env from '@/env';
 import { EditAttendanceInput } from '@/utils/validators/attendance/edit-attendance-schema';
+const currentDate = new Date();
 const initialState: attendance = {
-  data: [],
+  dataAttendance: [],
   isLoading: false,
   isFiltered: false,
+  month: currentDate.getMonth() + 1,
+  year: currentDate.getFullYear(),
+  query: '',
   isCreateLoading: false,
   isUpdateLoading: false,
 };
 
-export const getAllAttendances = createAsyncThunk('attendances/getAllAttendances', async (query: string) => {
-  const url = new URL('/api/v1/attendances?all=true', env.NEXT_API_URL);
-  url.searchParams.set('query', query);
-  try {
-    const response = await axiosInstance.get(url.href);
-    return response.data;
-  } catch (error: any) {
-    throw error;
-  }
-});
+export const getAttendances = createAsyncThunk(
+  'attendances/getAllAttendances',
+  async ({ query, month, year }: { query: string; month: number; year: number }) => {
+    const url = new URL('/api/v1/attendances', env.NEXT_API_URL);
+    url.searchParams.set('query', query);
+    url.searchParams.set('month', `${month}`);
+    url.searchParams.set('year', `${year}`);
+    try {
+      const response = await axiosInstance.get(url.href);
+      return response.data;
+    } catch (error: any) {
+      throw error;
+    }
+  },
+);
 
 export const createAttendance = createAsyncThunk(
   'attendances/createAttendance',
@@ -71,18 +80,30 @@ export const updateAttendance = createAsyncThunk(
 const attendanceSlice = createSlice({
   name: 'attendance',
   initialState,
-  reducers: {},
+  reducers: {
+    setMonth: (state, action) => {
+      state.month = action.payload;
+      state.isFiltered = true;
+    },
+    setYear: (state, action) => {
+      state.year = action.payload;
+      state.isFiltered = true;
+    },
+    setQuery: (state, action) => {
+      state.query = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(getAllAttendances.pending, (state: attendance) => {
+      .addCase(getAttendances.pending, (state: attendance) => {
         state.isLoading = true;
       })
-      .addCase(getAllAttendances.fulfilled, (state, action) => {
+      .addCase(getAttendances.fulfilled, (state, action) => {
         const returneData = action.payload.data;
         state.isLoading = false;
-        state.data = returneData.result;
+        state.dataAttendance = returneData;
       })
-      .addCase(getAllAttendances.rejected, (state) => {
+      .addCase(getAttendances.rejected, (state) => {
         state.isLoading = false;
       })
       .addCase(createAttendance.pending, (state: attendance) => {
@@ -105,5 +126,6 @@ const attendanceSlice = createSlice({
       });
   },
 });
+export const { setMonth, setYear, setQuery } = attendanceSlice.actions;
 
 export default attendanceSlice.reducer;

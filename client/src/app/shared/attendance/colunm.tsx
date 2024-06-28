@@ -1,13 +1,36 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { HeaderCell } from '@/components/ui/table';
+interface MonthYear {
+  month: number;
+  year: number;
+}
+const getDatesBetween = (startDate: Date, endDate: Date): Date[] => {
+  const dates = [];
+  let currentDate = new Date(startDate);
 
-export const getColumns = (openModal: (args: any) => void, Data: ShiftUserDetail[], work_shift: any) => {
-  if (!work_shift || !work_shift.date_start || !work_shift.date_end) {
-    return [];
+  while (currentDate <= endDate) {
+    dates.push(new Date(currentDate));
+    currentDate.setDate(currentDate.getDate() + 1);
   }
-  const startDate = new Date(work_shift.date_start);
-  const endDate = new Date(work_shift.date_end);
+
+  return dates;
+};
+function getFirstAndLastDayOfMonth(month: number, year: number): { startDate: Date; endDate: Date } {
+  const startDate = new Date(year, month - 1, 1); // Để ý là month - 1 vì month trong Date bắt đầu từ 0 (0 = tháng 1, 1 = tháng 2, ..., 11 = tháng 12)
+  const endDate = new Date(year, month, 0);
+
+  return { startDate, endDate };
+}
+const formatDate = (date: Date): string => {
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+// Ví dụ lấy ngày đầu tháng và ngày cuối tháng cho tháng 6 năm 2024
+export const getColumns = (openModal: (args: any) => void, Data: Attendance[], month: number, year: number) => {
+  const { startDate, endDate } = getFirstAndLastDayOfMonth(month, year);
   const dates = getDatesBetween(startDate, endDate);
   const columns = [
     {
@@ -31,15 +54,23 @@ export const getColumns = (openModal: (args: any) => void, Data: ShiftUserDetail
       key: date.toLocaleDateString('en-US', { weekday: 'short' }),
       width: 100,
       render: (_: any, staff: Staff) => {
-        const dataForDate = Data.find(
-          (item) =>
-            item.day_of_week === date.toLocaleDateString('en-US', { weekday: 'long' }) &&
-            item.staff.active === staff.active,
-        );
-
-        if (dataForDate) {
-          return <div></div>;
+        const dataForDate = Data.filter((item) => item.day === formatDate(date) && item.staff.active === staff.active);
+        if (dataForDate.length > 0) {
+          // Đưa ra logic để xử lý dữ liệu
+          return (
+            <div>
+              {/* Ví dụ: hiển thị các thông tin từ dữ liệu */}
+              {dataForDate.map((item) => (
+                <div key={item.active}>
+                  {/* Hiển thị thông tin của item */}
+                  <p>{item.time_in}</p>
+                  <p>{item.time_out}</p>
+                </div>
+              ))}
+            </div>
+          );
         } else {
+          // Nếu không có dữ liệu, hiển thị "OFF" hoặc thông báo khác
           return <div>OFF</div>;
         }
       },
@@ -49,41 +80,16 @@ export const getColumns = (openModal: (args: any) => void, Data: ShiftUserDetail
   return columns;
 };
 
-export interface Shift {
-  time_in: string;
-  time_out: string;
-  active: string;
-  shift_type: string;
-}
-export interface WorkShift {
-  date_start: string;
-  date_end: string;
-  active: string;
-}
-export interface ShiftUserDetail {
-  day_of_week: string;
-  shift: {
-    active: string;
-    time_in: string;
-    time_out: string;
-  };
+export interface Attendance {
+  day: string;
   staff: {
     name: string;
     active: string;
   };
+  time_in: string;
+  time_out: string;
   active: string;
 }
-const getDatesBetween = (startDate: Date, endDate: Date): Date[] => {
-  const dates = [];
-  let currentDate = new Date(startDate);
-
-  while (currentDate <= endDate) {
-    dates.push(new Date(currentDate));
-    currentDate.setDate(currentDate.getDate() + 1);
-  }
-
-  return dates;
-};
 export interface Staff {
   active: string;
   first_name: string;

@@ -3,8 +3,7 @@ import { messages } from '@/config/messages';
 
 // form zod validation schema
 export const editAttendanceSchema = z.object({
-  time_in: z.string().nullable(),
-  time_out: z.string().nullable(),
+  time: z.string(),
   uuid: z.string().min(1, { message: messages.isRequired }),
   day: z.string().min(1, { message: messages.isRequired }),
 });

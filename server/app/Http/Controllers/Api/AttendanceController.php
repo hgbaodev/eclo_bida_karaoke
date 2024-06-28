@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Attendance\AttendanceRequest;
+use App\Http\Requests\Attendance\UpdateAttendanceRequest;
 use App\Interface\AttendanceRepositoryInterface;
 use App\Interface\StaffRepositoryInterface;
 use Illuminate\Http\Request;
@@ -36,7 +37,7 @@ class AttendanceController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(AttendanceRequest $request)
+    public function store(UpdateAttendanceRequest $request)
     {
         $validatedData = $request->validated();
         $staff = $this->staffRepo->getStaffByActive($validatedData['staff']);
@@ -73,9 +74,23 @@ class AttendanceController extends Controller
     public function update(AttendanceRequest $request)
     {
         $validatedData = $request->validated();
-        $attendance = $this->attendanceRepository->getAttendanceByUUIDAndDay($validatedData['uuid'], $validatedData['day']);
+        $staff = $this->staffRepo->getStaffByUUID($validatedData['uuid']);
+        if (!$staff) {
+            return $this->sentErrorResponse("Staff is not found", 'error', 404);
+        }
+        $attendance = $this->attendanceRepository->getAttendanceByUUIDAndDay($staff->id, $validatedData['day']);
         if (!$attendance) {
             return $this->sentErrorResponse("Attendance is not found", 'error', 404);
+        }
+        $time = $validatedData['time'];
+        if (!$attendance->time_in) {
+            $validatedData['time_in'] = $time;
+            unset($validatedData['time']);
+        } else if (!$attendance->time_out) {
+            $validatedData['time_out'] = $time;
+            unset($validatedData['time']);
+        } else {
+            return $this->sentErrorResponse("This staff is already attendanced", 'error', 404);
         }
         return $this->sentSuccessResponse($this->attendanceRepository->updateAttendanceByActive($attendance->active, $validatedData), "Attendance is updated successfully", 200);
     }

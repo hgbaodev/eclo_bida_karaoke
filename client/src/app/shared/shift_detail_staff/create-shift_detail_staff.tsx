@@ -40,7 +40,8 @@ export default function CreateShiftDetailStaff({ day_of_week, shift }: { day_of_
         staff: data.staff,
         day: formattedDate,
       };
-      dispatch(createAttendance(detail));
+      const resultAttendance: any = dispatch(createAttendance(detail));
+      console.log(resultAttendance);
     });
     if (createShiftUserDetail.fulfilled.match(result)) {
       setReset({});

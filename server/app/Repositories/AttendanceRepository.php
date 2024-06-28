@@ -10,33 +10,26 @@ class AttendanceRepository implements AttendanceRepositoryInterface
 {
     public function getAttendance($request)
     {
-        $all = $request->input('all');
-        $perPage = $request->input('perPage');
         $query = $request->input('query');
         $id = $request->input('id');
         $staff = $request->input('staff');
-        $day = $request->input('day');
-        $timein = $request->input('time_in');
-        $timeout = $request->input('time_out');
+        $year = $request->input('year');
+        $month = $request->input('month');
         $attendance = Attendance::query()->with(["staff"]);
-        // if ($query) {
-        //     $attendance->whereRaw("CONCAT(time_in, ' ', time_out) LIKE '%$query%'");
-        // }
+        if ($query) {
+            $attendance->whereRaw("CONCAT(staff.first_name, ' ',staff.last_name) LIKE ?", ["%$query%"]);
+        }
         if ($id) {
             $attendance->where("active", $id);
         }
-        if ($timein) {
-            $attendance->where("time_in", $timein);
+        if ($year) {
+            $attendance->whereYear("day", $year);
         }
-        if ($timeout) {
-            $attendance->where("time_out", $timeout);
+        if ($month) {
+            $attendance->whereMonth("day", $month);
         }
-        if ($all && $all == true) {
-            $attendance = $attendance->get();
-        } else {
-            $attendance = $attendance->paginate($perPage);
-        }
-        return new CollectionCustom($attendance);
+
+        return $attendance->get();
     }
     public function getAllAttendance()
     {

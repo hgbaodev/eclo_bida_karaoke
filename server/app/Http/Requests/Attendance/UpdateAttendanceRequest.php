@@ -4,7 +4,7 @@ namespace App\Http\Requests\Attendance;
 
 use App\Http\Helpers\HelperRequest;
 
-class AttendanceRequest extends HelperRequest
+class UpdateAttendanceRequest extends HelperRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +23,7 @@ class AttendanceRequest extends HelperRequest
     {
         return [
             "time" => 'nullable',
-            "uuid" => "required",
+            "staff" => "required",
             "day" => "required"
         ];
     }
