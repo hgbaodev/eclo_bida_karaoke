@@ -24,28 +24,32 @@ export default function EditDevice({ device, active }: { device: EditDeviceInput
     if (data['image'] && data['image'].length > 0) {
       const imageFile = data['image'][0];
       const formData = new FormData();
+
       formData.append('image', imageFile);
       formData.append('name', data.name);
+      formData.append('status', data.status);
+      formData.append('_method', 'PUT');
       formData.append('description', data.description);
-    }
-    try {
-      const result: any = await dispatch(updateDevice({ device: data, active }));
-      if (updateDevice.fulfilled.match(result)) {
-        setReset({
-          name: '',
-          status: '',
-          description: '',
-        });
-        setErrors({});
-        closeModal();
-        await dispatch(getDevices({ page, pageSize, query, status }));
-        toast.success('Device updated successfully');
-      } else {
-        setErrors(result?.payload?.errors);
+
+      try {
+        const result: any = await dispatch(updateDevice({ formData, active }));
+        if (updateDevice.fulfilled.match(result)) {
+          setReset({
+            name: '',
+            status: '',
+            description: '',
+          });
+          setErrors({});
+          closeModal();
+          await dispatch(getDevices({ page, pageSize, query, status }));
+          toast.success('Device updated successfully');
+        } else {
+          setErrors(result?.payload?.errors);
+        }
+      } catch (error) {
+        console.error('Failed to edit device', error);
+        toast.error('Failed to edit device');
       }
-    } catch (error) {
-      console.error('Failed to create device', error);
-      toast.error('Failed to create device');
     }
   };
 

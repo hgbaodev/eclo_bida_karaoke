@@ -9,6 +9,7 @@ use App\Http\Requests\Device\UpdateDeviceRequest;
 use App\Interface\DeviceRepositoryInterface;
 use App\Repositories\DeviceRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class DeviceController extends Controller
 {
@@ -26,6 +27,7 @@ class DeviceController extends Controller
     public function store(StoreDeviceRequest $request)
     {
         $validated_data = $request->validated();
+
         if ($request->hasFile('image')) {
             $validated_data['image'] = FileHandler::storeFile($request->file('image'));
         }
@@ -43,6 +45,10 @@ class DeviceController extends Controller
         $validated_data = $request->validated();
         if (!$this->deviceRepository->getDeviceByActive($active)) {
             return $this->sentErrorResponse('Device ' . $active . ' is not found');
+        }
+
+        if ($request->hasFile('image')) {
+            $validated_data['image'] = FileHandler::storeFile($request->file('image'));
         }
         return $this->sentSuccessResponse($this->deviceRepository->updateDeviceByActive($active, $validated_data), 'The device ' . $active . ' has been updated!!!', 200);
     }
