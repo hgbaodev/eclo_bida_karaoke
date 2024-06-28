@@ -24,6 +24,7 @@ class ProductImportRepository implements ProductImportInterface
         if ($id) {
             $product_import->where('id', $id);
         }
+        $product_import->orderBy('receive_time', 'desc');
         if ($all && $all == true) {
             $product_import = $product_import->get();
         } else {

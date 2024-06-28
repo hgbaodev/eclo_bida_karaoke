@@ -26,7 +26,7 @@ class PriceController extends Controller
     public function show(string $active)
     {
         $returnedData = $this->priceRepository->getPriceByActive($active);
-        if($returnedData==null){
+        if ($returnedData == null) {
             return $this->sentErrorResponse("Price not found");
         }
         return $this->sentErrorResponse($returnedData);
@@ -38,14 +38,14 @@ class PriceController extends Controller
             $validated_data = $request->validated();
             $this->priceRepository->createPrice($validated_data);
             return $this->sentSuccessResponse($validated_data);
-        } catch (e) {
+        } catch (Exception) {
             return $this->sentErrorResponse("Failed");
         }
     }
 
     public function update(UpdatePriceRequest $request, string $active)
     {
-        if(!$this->priceRepository->getPriceByActive($active)){
+        if (!$this->priceRepository->getPriceByActive($active)) {
             return $this->sentErrorResponse('The price was not found');
         }
 
@@ -60,7 +60,7 @@ class PriceController extends Controller
 
     public function destroy(string $active)
     {
-        if(!$this->priceRepository->getPriceByActive($active)){
+        if (!$this->priceRepository->getPriceByActive($active)) {
             return $this->sentErrorResponse('The price was not found');
         }
 

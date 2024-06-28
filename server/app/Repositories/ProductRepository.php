@@ -5,7 +5,9 @@ namespace App\Repositories;
 use App\Interface\ProductRepositoryInterface;
 use App\Http\Collections\CollectionCustom;
 use App\Models\Product;
+use App\Models\ProductImportDetail;
 
+use Illuminate\Support\Facades\DB;
 
 class ProductRepository implements ProductRepositoryInterface
 {
@@ -22,12 +24,35 @@ class ProductRepository implements ProductRepositoryInterface
         if ($id) {
             $product->where('id', $id);
         }
+        $product = $product->leftJoin('product_import_details', 'products.id', '=', 'product_import_details.id_product')
+            ->leftJoin('product_imports', 'product_import_details.import_id', '=', 'product_imports.id')
+            ->select('products.*', DB::raw('IFNULL(SUM(product_import_details.quantity), 0) as total_quantity'))
+            ->groupBy('products.id', 'products.name', 'products.image', 'products.selling_price', 'products.active', 'products.id_type', 'products.quantity')
+            ->orderBy(DB::raw('MAX(product_imports.receive_time)'), 'desc');
         if ($all && $all == true) {
-            $product = $product->get();
+            $products = $product->get();
         } else {
-            $product = $product->paginate($perPage);
+            $products = $product->paginate($perPage);
         }
-        return new CollectionCustom($product);
+        foreach ($products as $product) {
+            // Cập nhật số lượng sản phẩm
+            $product->quantity = $product->total_quantity;
+
+            // Truy vấn để lấy giá bán từ phiếu nhập có thời gian sớm nhất
+            $lastestSellingPrice = ProductImportDetail::query()
+                ->join('product_imports', 'product_import_details.import_id', '=', 'product_imports.id')
+                ->where('product_import_details.id_product', $product->id)
+                ->orderBy('product_imports.receive_time', 'desc')
+                ->value('product_import_details.selling_price');
+
+            // Cập nhật giá bán từ phiếu nhập có thời gian sớm nhất
+            if ($lastestSellingPrice !== null) {
+                $product->selling_price = $lastestSellingPrice;
+            }
+
+            $product->save();
+        }
+        return new CollectionCustom($products);
     }
     public function getAllProduct()
     {

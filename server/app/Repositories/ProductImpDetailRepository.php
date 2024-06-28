@@ -29,11 +29,13 @@ class ProductImpDetailRepository implements ProductImpDetailInterface
                 $query->where("active", $active);
             });
         }
+
         if ($all && $all == true) {
             $product_import_detail_query = $product_import_detail_query->get();
         } else {
             $product_import_detail_query = $product_import_detail_query->paginate($perPage);
         }
+
         return new CollectionCustom($product_import_detail_query);
     }
 

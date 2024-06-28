@@ -8,6 +8,7 @@ use App\Interface\ProductRepositoryInterface;
 use App\Interface\ProductTypeRepositoryInterface;
 use App\Repositories\ProductTypeRepository;
 use Illuminate\Http\Request;
+use App\Helpers\FileHandler;
 
 class ProductController extends Controller
 {
@@ -38,12 +39,13 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        // $validated = $request->validated();
-        // return $this->sentSuccessResponse($this->productRepository->create($validated), "product is created successfully", 200);
         $validated_data = $request->validated();
-        // dd($validated_data);
-        // dd($product->id);
+
+
         $product_type = $this->product_typeRepository->getProductTypeByActive($validated_data['product_type']);
+        if ($request->hasFile('image')) {
+            $validated_data['image'] = FileHandler::storeFile($request->file('image'));
+        }
         if (!$product_type) {
             return $this->sentErrorResponse("Type is not found", "error", 404);
         }

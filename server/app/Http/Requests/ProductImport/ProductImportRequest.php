@@ -22,10 +22,10 @@ class ProductImportRequest extends HelperRequest
     public function rules(): array
     {
         return [
-            'total_cost' => 'required',
+            'total_cost' => 'nullable',
             'create_time' => 'required',
             'receive_time' => 'required',
-            'status' => 'required',
+            'status' => 'nullable',
         ];
     }
 }
