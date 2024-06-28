@@ -10,18 +10,18 @@ export const editDeviceSchema = z.object({
     .string()
     .min(1, { message: 'Please enter description' })
     .max(100, { message: 'Description must not exceed 100 characters' }),
-  // image: z
-  //   .any()
-  //   .refine((files) => {
-  //     return files?.length > 0;
-  //   }, 'Please select an image.')
-  //   .refine((files) => {
-  //     return files?.[0]?.size <= MAX_FILE_SIZE;
-  //   }, `Max image size is 2MB.`)
-  //   .refine(
-  //     (files) => ACCEPTED_IMAGE_MIME_TYPES.includes(files?.[0]?.type),
-  //     'Only .jpg, .jpeg, .png and .webp formats are supported.',
-  //   ),
+  image: z
+    .any()
+    .refine((files) => {
+      return files?.length > 0;
+    }, 'Please select an image.')
+    .refine((files) => {
+      return files?.[0]?.size <= MAX_FILE_SIZE;
+    }, `Max image size is 2MB.`)
+    .refine(
+      (files) => ACCEPTED_IMAGE_MIME_TYPES.includes(files?.[0]?.type),
+      'Only .jpg, .jpeg, .png and .webp formats are supported.',
+    ),
   status: z.string().min(1, { message: messages.statusIsRequired }),
 });
 

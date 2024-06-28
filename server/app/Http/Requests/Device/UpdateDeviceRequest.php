@@ -26,6 +26,7 @@ class UpdateDeviceRequest extends HelperRequest
         return [
             'name' => ['required', Rule::unique('devices')->ignore($active, 'active')],
             'description' => 'required',
+            'image' => 'file|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'status' => 'required|in:A,D',
         ];
     }

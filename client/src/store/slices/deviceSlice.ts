@@ -2,7 +2,6 @@
 import axiosInstance from '@/api/axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import env from '@/env';
-import { EditDeviceInput } from '@/utils/validators/edit-device.schema';
 import { deviceType } from '../types';
 
 const initialState: deviceType = {
@@ -50,9 +49,9 @@ export const createDevice = createAsyncThunk('areas/createDevice', async (data: 
 
 export const updateDevice = createAsyncThunk(
   'devices/updateDevices',
-  async ({ device, active }: { device: EditDeviceInput; active: string }, { rejectWithValue }) => {
+  async ({ formData, active }: { formData: any; active: string }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.put(`devices/${active}`, device);
+      const response = await axiosInstance.post(`devices/${active}`, formData);
       return response.data;
     } catch (error: any) {
       if (!error.response) {

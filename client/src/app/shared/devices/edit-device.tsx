@@ -21,20 +21,35 @@ export default function EditDevice({ device, active }: { device: EditDeviceInput
   const [errors, setErrors] = useState<any>({});
   const { pageSize, page, query, status, isUpdateLoading } = useSelector((state: RootState) => state.device);
   const onSubmit: SubmitHandler<EditDeviceInput> = async (data) => {
-    console.log('UPDATE');
-    const result: any = await dispatch(updateDevice({ device: data, active }));
-    if (updateDevice.fulfilled.match(result)) {
-      setReset({
-        name: '',
-        status: '',
-        description: '',
-      });
-      setErrors({});
-      closeModal();
-      await dispatch(getDevices({ page, pageSize, query, status }));
-      toast.success('Device updated successfully');
-    } else {
-      setErrors(result?.payload?.errors);
+    if (data['image'] && data['image'].length > 0) {
+      const imageFile = data['image'][0];
+      const formData = new FormData();
+
+      formData.append('image', imageFile);
+      formData.append('name', data.name);
+      formData.append('status', data.status);
+      formData.append('_method', 'PUT');
+      formData.append('description', data.description);
+
+      try {
+        const result: any = await dispatch(updateDevice({ formData, active }));
+        if (updateDevice.fulfilled.match(result)) {
+          setReset({
+            name: '',
+            status: '',
+            description: '',
+          });
+          setErrors({});
+          closeModal();
+          await dispatch(getDevices({ page, pageSize, query, status }));
+          toast.success('Device updated successfully');
+        } else {
+          setErrors(result?.payload?.errors);
+        }
+      } catch (error) {
+        console.error('Failed to edit device', error);
+        toast.error('Failed to edit device');
+      }
     }
   };
 
@@ -57,14 +72,14 @@ export default function EditDevice({ device, active }: { device: EditDeviceInput
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
-            {/* <FileInput
+            <FileInput
               label="Image"
               placeholder="Select an image"
               {...register('image')}
               className="col-span-full"
               accept="image/jpeg, image/jpg, image/png, image/webp"
               error={errors.image?.message?.toString() || ''}
-            /> */}
+            />
             <Input
               label="Name"
               placeholder="Enter device name"

@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Middleware\Auth;
 use App\Http\Controllers\Api\DeviceController;
 
 Route::group(

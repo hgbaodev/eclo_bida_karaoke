@@ -23,9 +23,11 @@ export default function CreateDevice() {
     if (data['image'] && data['image'].length > 0) {
       const imageFile = data['image'][0];
       const formData = new FormData();
+
       formData.append('image', imageFile);
       formData.append('name', data.name);
       formData.append('description', data.description);
+      formData.append('status', data.status);
       try {
         const result: any = await dispatch(createDevice(formData));
         if (createDevice.fulfilled.match(result)) {
@@ -59,7 +61,6 @@ export default function CreateDevice() {
       className="grid grid-cols-1 gap-6 p-6 @container md:grid-cols-2 [&_.rizzui-input-label]:font-medium [&_.rizzui-input-label]:text-gray-900"
     >
       {({ setError, register, control, watch, formState: { errors } }) => {
-        console.log('errors', errors);
         return (
           <>
             <div className="col-span-full flex items-center justify-between">
