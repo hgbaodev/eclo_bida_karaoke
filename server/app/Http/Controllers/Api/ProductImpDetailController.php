@@ -10,6 +10,7 @@ use App\Interface\ProductImportInterface;
 use App\Interface\ProductRepositoryInterface;
 use App\Interface\SupplierRepositoryInterface;
 use App\Models\ProductImport;
+use Exception;
 
 class ProductImpDetailController extends Controller
 {
@@ -27,6 +28,7 @@ class ProductImpDetailController extends Controller
     }
     public function index(Request $request)
     {
+
         return $this->sentSuccessResponse($this->product_import_detail_Repository->getProductImports($request));
     }
     // public function show($active)
@@ -35,29 +37,38 @@ class ProductImpDetailController extends Controller
     // }
     public function store(ProductImpDetailRequest $request)
     {
-        $validated_data = $request->validated();
-        // dd($validated_data);
-        $product_import = $this->product_import_Repository->getProductImportByActive($validated_data['import']);
-        // dd($product_import);
-        $product = $this->product_Repository->getProductByActive($validated_data['product']);
-        // dd($product->id);
-        $supplier = $this->supplier_Repository->getSupplierByActive($validated_data['supplier']);
-        if (!$product_import) {
-            return $this->sentErrorResponse("Product import is not found", "error", 404);
+        try {
+            $validated_data = $request->validated();
+            $selling_price = $request->input('selling_price');
+            $cost_price = $request->input('cost_price');
+            $product_import = $this->product_import_Repository->getProductImportByActive($validated_data['import']);
+            // dd($product_import);
+            $product = $this->product_Repository->getProductByActive($validated_data['product']);
+            // dd($product->id);
+            $supplier = $this->supplier_Repository->getSupplierByActive($validated_data['supplier']);
+            if (!$product_import) {
+                return $this->sentErrorResponse("Product import is not found", "error", 404);
+            }
+            if (!$product) {
+                return $this->sentErrorResponse("Product is not found", "error", 404);
+            }
+            if (!$supplier) {
+                return $this->sentErrorResponse("Supplier is not found", "error", 404);
+            }
+            if ($cost_price >= $selling_price) {
+                return $this->sentErrorResponse("Selling price must be larger than cost price", "error", 404);
+            }
+            $validated_data["import_id"] = $product_import->id;
+            $validated_data["supplier_id"] = $supplier->id;
+            $validated_data["id_product"] = $product->id;
+            unset($validated_data['import']);
+            unset($validated_data['product']);
+            unset($validated_data['supplier']);
+            return $this->sentSuccessResponse($this->product_import_detail_Repository->create($validated_data));
+        } catch (\Exception $e) {
+
+            return $this->sentErrorResponse("Product is already imported", "error", 404);
         }
-        if (!$product) {
-            return $this->sentErrorResponse("Product is not found", "error", 404);
-        }
-        if (!$supplier) {
-            return $this->sentErrorResponse("Supplier is not found", "error", 404);
-        }
-        $validated_data["import_id"] = $product_import->id;
-        $validated_data["supplier_id"] = $supplier->id;
-        $validated_data["id_product"] = $product->id;
-        unset($validated_data['import']);
-        unset($validated_data['product']);
-        unset($validated_data['supplier']);
-        return $this->sentSuccessResponse($this->product_import_detail_Repository->create($validated_data));
     }
     // public function sum(string $active)
     // {

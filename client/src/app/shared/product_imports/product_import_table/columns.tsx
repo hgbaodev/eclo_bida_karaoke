@@ -72,13 +72,13 @@ export const getColumns = (openModal: (args: any) => void) => [
     
     render: (_: number, product_import: Product_Import) => product_import.total_cost,
   },
-  {
-    title: <HeaderCell title="Status" />,
-    dataIndex: 'status',
-    key: 'status',
-    width: 50,
-    render: (status: Product_Import['status']) => getStatusBadge(status),
-  },
+  // {
+  //   title: <HeaderCell title="Status" />,
+  //   dataIndex: 'status',
+  //   key: 'status',
+  //   width: 50,
+  //   render: (status: Product_Import['status']) => getStatusBadge(status),
+  // },
   {
     title: <HeaderCell title="Product" />,
     // dataIndex: 'status',

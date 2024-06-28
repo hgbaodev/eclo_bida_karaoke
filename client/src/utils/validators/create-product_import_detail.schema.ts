@@ -6,6 +6,7 @@ export const createProduct_Import_DetailSchema = z.object({
   product: z.string().min(1, { message: messages.productNameIsRequired }),
   supplier: z.string().min(1, { message: messages.supplierisRequired }),
   cost_price: z.string().min(1, { message: messages.CostPriceIsRequired }),
+  selling_price: z.string().min(1, { message: messages.SellingPriceIsRequired }),
   quantity: z.string().min(1, { message: messages.itemQtyIsRequired }),
   import: z.string().min(1, { message: messages.startDateIsRequired }),
 });
