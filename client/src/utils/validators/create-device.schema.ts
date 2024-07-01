@@ -22,6 +22,12 @@ export const createDeviceSchema = z.object({
       (files) => ACCEPTED_IMAGE_MIME_TYPES.includes(files?.[0]?.type),
       'Only .jpg, .jpeg, .png and .webp formats are supported.',
     ),
+  value: z.preprocess((val) => {
+    if (typeof val === 'string' || typeof val === 'number') {
+      return parseFloat(val as string);
+    }
+    return val;
+  }, z.number().min(0, { message: 'Value hour must be a positive number' })),
 });
 
 // generate form types from zod validation schema

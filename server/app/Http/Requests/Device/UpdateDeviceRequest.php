@@ -28,6 +28,7 @@ class UpdateDeviceRequest extends HelperRequest
             'description' => 'required',
             'image' => 'file|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'status' => 'required|in:A,D',
+            'value'=>['required', 'numeric', 'min:1'],
         ];
     }
 }

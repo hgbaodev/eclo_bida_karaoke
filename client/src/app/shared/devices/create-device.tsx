@@ -25,13 +25,17 @@ export default function CreateDevice() {
       const formData = new FormData();
 
       formData.append('image', imageFile);
-      formData.append('name', data.name);
-      formData.append('description', data.description);
-      formData.append('status', data.status);
+      formData.append('name', data.name.toString());
+      formData.append('status', data.status.toString());
+      formData.append('value', data.value.toString());
+      formData.append('_method', 'PUT');
+      formData.append('description', data.description.toString());
+
       try {
         const result: any = await dispatch(createDevice(formData));
         if (createDevice.fulfilled.match(result)) {
           setReset({
+            value: '',
             name: '',
             description: '',
             status: '',
@@ -56,6 +60,7 @@ export default function CreateDevice() {
   return (
     <Form<CreateDeviceInput>
       onSubmit={onSubmit}
+      // @ts-ignore
       validationSchema={createDeviceSchema}
       serverError={errors}
       className="grid grid-cols-1 gap-6 p-6 @container md:grid-cols-2 [&_.rizzui-input-label]:font-medium [&_.rizzui-input-label]:text-gray-900"
@@ -78,6 +83,14 @@ export default function CreateDevice() {
               className="col-span-full"
               accept="image/jpeg, image/jpg, image/png, image/webp"
               error={errors.image?.message?.toString() || ''}
+            />
+            <Input
+              label="Value (VND)"
+              type="number"
+              placeholder="Enter device value"
+              className="col-span-full"
+              {...register('value')}
+              error={errors.value?.message}
             />
             <Input
               label="Name"

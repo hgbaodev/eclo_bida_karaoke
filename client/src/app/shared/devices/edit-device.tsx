@@ -26,10 +26,11 @@ export default function EditDevice({ device, active }: { device: EditDeviceInput
       const formData = new FormData();
 
       formData.append('image', imageFile);
-      formData.append('name', data.name);
-      formData.append('status', data.status);
+      formData.append('name', data.name.toString());
+      formData.append('status', data.status.toString());
+      formData.append('value', data.value.toString());
       formData.append('_method', 'PUT');
-      formData.append('description', data.description);
+      formData.append('description', data.description.toString());
 
       try {
         const result: any = await dispatch(updateDevice({ formData, active }));
@@ -37,6 +38,7 @@ export default function EditDevice({ device, active }: { device: EditDeviceInput
           setReset({
             name: '',
             status: '',
+            value: '',
             description: '',
           });
           setErrors({});
@@ -57,6 +59,7 @@ export default function EditDevice({ device, active }: { device: EditDeviceInput
     <Form<EditDeviceInput>
       resetValues={reset}
       onSubmit={onSubmit}
+      // @ts-ignore
       validationSchema={editDeviceSchema}
       serverError={errors}
       className="grid grid-cols-1 gap-6 p-6 @container md:grid-cols-2 [&_.rizzui-input-label]:font-medium [&_.rizzui-input-label]:text-gray-900"
@@ -79,6 +82,14 @@ export default function EditDevice({ device, active }: { device: EditDeviceInput
               className="col-span-full"
               accept="image/jpeg, image/jpg, image/png, image/webp"
               error={errors.image?.message?.toString() || ''}
+            />
+            <Input
+              label="Value (VND)"
+              type="number"
+              placeholder="Enter device value"
+              className="col-span-full"
+              {...register('value')}
+              error={errors.value?.message}
             />
             <Input
               label="Name"

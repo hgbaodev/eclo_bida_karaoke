@@ -80,6 +80,8 @@ export const getColumns = (openModal: (args: any) => void) => [
                 name: device.name,
                 description: device.description,
                 status: device.status,
+                value: Number(device.value),
+                image: device.image,
               };
               openModal({
                 view: <EditDevice device={data} active={device.active} />,
