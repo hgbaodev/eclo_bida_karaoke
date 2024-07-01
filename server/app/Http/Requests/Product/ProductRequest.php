@@ -25,7 +25,6 @@ class ProductRequest extends HelperRequest
         return [
             'name' => 'required',
             'product_type' => 'required',
-            'selling_price' => 'required',
             'image' => 'required|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
