@@ -9,6 +9,7 @@ export interface ServiceDeviceDetail {
   quantity: string;
   maintaining_quantity: string;
   status: any;
+  device_value: number;
 }
 
 export enum ServiceDeviceStatusEnum {
@@ -79,6 +80,13 @@ export const getColumns = (openModal: (args: any) => void) => [
     key: 'quantity',
     width: 50,
     render: (_: string, device: ServiceDeviceDetail) => device.quantity,
+  },
+  {
+    title: <HeaderCell title="Value" />,
+    dataIndex: 'value',
+    key: 'value',
+    width: 50,
+    render: (_: string, device: ServiceDeviceDetail) => device.device_value,
   },
   {
     title: <HeaderCell title="Status" />,

@@ -17,6 +17,7 @@ class Device extends Model
         'active',
         'name',
         'description',
+        'value',
         'image',
         'status'
     ];
