@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Enums\KitchenOrderEnum;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Order\PayOrderRequest;
 use App\Interface\KitchenOrderRepositoryInterface;
 use App\Interface\NotificationRepositoryInterface;
 use App\Interface\OrderRepositoryInterface;
@@ -11,6 +12,9 @@ use App\Interface\ProductRepositoryInterface;
 use App\Notifications\OrderNotification;
 use Illuminate\Http\Request;
 use App\Http\Requests\Order\StoreOrderRequest;
+use App\Http\Requests\Order\UpdateOrderRequest;
+use App\Interface\CustomerRepositoryInterface;
+use App\Interface\OrderDetailRepositoryInterface;
 use App\Interface\ServiceRepositoryInterface;
 
 class OrderController extends Controller
@@ -19,18 +23,25 @@ class OrderController extends Controller
     protected $serviceRepository;
     protected $kitchenOrderRepository;
     protected $productRepository;
+    protected $customerRepository;
+    protected $orderDetailRepository;
 
     public function __construct(
         OrderRepositoryInterface $orderRepository,
         ServiceRepositoryInterface $serviceRepositoryInterface,
         KitchenOrderRepositoryInterface $kitchenOrderRepository,
-        ProductRepositoryInterface $productRepository
+        ProductRepositoryInterface $productRepository,
+        CustomerRepositoryInterface $customerRepository,
+        OrderDetailRepositoryInterface $orderDetailRepository
     ) {
         $this->orderRepository = $orderRepository;
         $this->serviceRepository =  $serviceRepositoryInterface;
         $this->kitchenOrderRepository = $kitchenOrderRepository;
         $this->productRepository = $productRepository;
+        $this->customerRepository = $customerRepository;
+        $this->orderDetailRepository = $orderDetailRepository;
     }
+
 
     public function addProductsToOrder(Request $request, string $active)
     {
@@ -86,7 +97,7 @@ class OrderController extends Controller
         $updatedKitchenOrder = $this->kitchenOrderRepository->updateKitchenOrderByActive($active, $kitchenOrderData);
 
         $eventData = [
-            'active'=> $active,
+            'active' => $active,
         ];
 
         $request->merge(['data' => $eventData]);
@@ -117,7 +128,7 @@ class OrderController extends Controller
             $productName = $kitchenOrder->product->name;
 
             $eventData = [
-                'active'=> $active,
+                'active' => $active,
                 'serviceName' => $serviceName,
                 'productName' => $productName,
                 'quantity' => $kitchenOrder->quantity,
@@ -149,7 +160,7 @@ class OrderController extends Controller
             // Update the kitchen order and return the updated order with a success response
             $updatedKitchenOrder = $repo->deleteKitchenOrderByActive($active);
             $eventData = [
-                'active'=> $active,
+                'active' => $active,
             ];
 
             $request->merge(['data' => $eventData]);
@@ -193,5 +204,49 @@ class OrderController extends Controller
         $validated_data['service_id'] = $service_id;
         $order = $this->orderRepository->createOrder($validated_data);
         return $this->sentSuccessResponse($order);
+    }
+
+    public function payOrder(PayOrderRequest $request, $active)
+    {
+        $validated_data = $request->validated();
+        $order = $this->orderRepository->findOrderByActive($active);
+        if (!$order) {
+            return $this->sentErrorResponse('Order not found', 'errors', 404);
+        }
+        if (isset($validated_data['products'])) {
+            if (count($validated_data['products']) > 0) {
+                $check = $this->orderDetailRepository->addProductsOrder($validated_data['products'], $order->id);
+                if (!$check) return $this->sentErrorResponse('No update products detail');
+            }
+        }
+        $order->checkout_time = $validated_data['checkout_time'];
+        $order->total_price = $validated_data['total_price'];
+        if (isset($validated_data['customer_active'])) {
+            $customer = $this->customerRepository->getCustomerByActive($validated_data['customer_active']);
+            $order->customer_id = $customer->id;
+        }
+        $order->save();
+        return $this->sentSuccessResponse($order, 'Order has been paid successfully', 200);
+    }
+
+    public function updateOrder(UpdateOrderRequest $request, $active)
+    {
+        $validated_data = $request->validated();
+        $order = $this->orderRepository->findOrderByActive($active);
+        if (!$order) {
+            return $this->sentErrorResponse('Order not found', 'errors', 404);
+        }
+        if (isset($validated_data['products'])) {
+            $check = $this->orderDetailRepository->addProductsOrder($validated_data['products'], $order->id);
+            if (!$check) return $this->sentErrorResponse('No update products detail');
+        }
+        if (isset($validated_data['customer_active'])) {
+            $customer = $this->customerRepository->getCustomerByActive($validated_data['customer_active']);
+            $order->customer_id = $customer->id;
+        } else {
+            $order->customer_id = null;
+        }
+        $order->save();
+        return $this->sentSuccessResponse($order, 'Order has been paid successfully', 200);
     }
 }

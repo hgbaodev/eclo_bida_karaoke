@@ -57,20 +57,6 @@ export const getColumns = () => [
   },
 ];
 
-// export interface Staff {
-//   active: string;
-//   name: string;
-//   phone: string;
-//   image: string;
-//   idcard: string;
-//   birthday: string;
-//   address: string;
-//   position: {
-//     name: string;
-//     active: string;
-//   };
-//   created_at: string;
-// }
 export interface Product {
   active: string;
   name: string;

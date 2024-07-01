@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('active')->unique();
             $table->foreignId('service_id')->constrained('services');
-            $table->dateTime('checkin_time')->default(now());
+            $table->timestamp('checkin_time')->default(now());
             $table->dateTime('checkout_time')->nullable();
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('customer_id')->nullable();

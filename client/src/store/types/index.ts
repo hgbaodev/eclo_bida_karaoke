@@ -376,6 +376,11 @@ export interface orderType {
   queryProduct: string;
   isLoadingQueryProduct: boolean;
   products: [];
+  queryCustomer: string;
+  isLoadingQueryCustomer: boolean;
+  customers: [];
+  isLoadingPayOrder: boolean;
+  isLoadingUpdateOrder: boolean;
 }
 export interface product_typeType {
   data: [];
