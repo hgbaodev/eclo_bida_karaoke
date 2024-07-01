@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\GeneratesUniqueActive;
@@ -48,7 +49,7 @@ class Order extends Model
 
     public function customer()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->hasOne(Customer::class, 'id', 'customer_id');
     }
 
     public function user()
@@ -68,6 +69,11 @@ class Order extends Model
 
     public function kitchenOrders()
     {
-        return $this->hasMany(KitchenOrders::class);
+        return $this->hasMany(KitchenOrder::class);
+    }
+
+    public function getActiveAttribute()
+    {
+        return Arr::get($this->attributes, 'active', null);
     }
 }

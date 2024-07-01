@@ -11,6 +11,8 @@ import { dispatch } from '@/store';
 import { changeStatusService, deleteService, getServices } from '@/store/slices/serviceSlice';
 import EditTableAndRoom from '../edit-tableandroom';
 import toast from 'react-hot-toast';
+import Link from 'next/link';
+import EyeIcon from '@/components/icons/eye';
 
 const statusOptions = [
   { label: 'Live', value: 'Live' },
@@ -153,6 +155,18 @@ export const getColumns = (openModal: any) => [
             <PencilIcon className="h-4 w-4" />
           </ActionIcon>
         </Tooltip>
+        <Tooltip size="sm" content={'See more detail'} placement="top" color="invert">
+          <Link
+            href={{
+              pathname: `/admin/services/tableandrooms/${service.active}`,
+            }}
+          >
+            <ActionIcon size="sm" variant="outline" className="inline-flex items-center">
+              <EyeIcon className="h-4 w-4" />
+            </ActionIcon>
+          </Link>
+        </Tooltip>
+
         <DeletePopover
           title={`Delete the job post`}
           description={`Are you sure you want to delete this job post?`}

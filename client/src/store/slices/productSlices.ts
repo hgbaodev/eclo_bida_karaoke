@@ -75,9 +75,9 @@ export const deleteProduct = createAsyncThunk('products/deleteProduct', async (a
   }
 });
 
-export const updateProduct = createAsyncThunk('products/updateProduct',async ({ product, active }: { product: EditProductInput; active: string }, { rejectWithValue }) => {
+export const updateProduct = createAsyncThunk('products/updateProduct',async ({ formData, active }: { formData: any; active: string }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.put(`products/${active}`, product);
+      const response = await axiosInstance.post(`products/${active}`, formData);
       return response.data;
     } catch (error: any) {
       if (!error.response) {

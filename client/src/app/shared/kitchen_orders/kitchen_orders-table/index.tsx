@@ -9,6 +9,7 @@ import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
 import usePusher from '@/hooks/use-pusher';
 import { getKitchenOrders, appendOrders } from '@/store/slices/kitchen_orderSlice';
+import toast from 'react-hot-toast';
 
 export default function KitchenOrdersTable() {
   const { data, isLoading, status } = useSelector((state: RootState) => state.kitchen_order);
@@ -21,10 +22,14 @@ export default function KitchenOrdersTable() {
     }
   }, []);
 
-  // Get notification & refresh after received an order
   usePusher('kitchenOrderEvent', (data: any) => {
-    console.log(data);
-    appendOrders(data);
+    if (Array.isArray(data) && data.length === 1) {
+      const order = data[0];
+      dispatch(appendOrders({ data: order }));
+      toast.success(`A customer just ordered a product: ${order.product_name}`);
+    } else {
+      console.error('Expected a single-element array.');
+    }
   });
 
   useEffect(() => {

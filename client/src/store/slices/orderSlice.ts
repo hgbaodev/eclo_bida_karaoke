@@ -11,6 +11,11 @@ const initialState: orderType = {
   queryProduct: '',
   isLoadingQueryProduct: false,
   products: [],
+  queryCustomer: '',
+  isLoadingQueryCustomer: false,
+  customers: [],
+  isLoadingPayOrder: false,
+  isLoadingUpdateOrder: false,
 };
 
 export const getAreas = createAsyncThunk('orders/getAreas', async () => {
@@ -49,6 +54,37 @@ export const getProducts = createAsyncThunk('orders/getProducts', async (query: 
   }
 });
 
+export const getCustomer = createAsyncThunk('orders/getCustomer', async (query: string) => {
+  try {
+    const response = await axiosInstance.get(`/customers?query=${query}&all=true`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+});
+
+export const payOrder = createAsyncThunk('orders/payOrder', async (data: any) => {
+  try {
+    const response = await axiosInstance.post(`/orders/${data.order_active}/pay`, data);
+    if (response) {
+      return response.data;
+    }
+  } catch (error) {
+    throw error;
+  }
+});
+
+export const updateOrder = createAsyncThunk('orders/updateOrder', async (data: any) => {
+  try {
+    const response = await axiosInstance.post(`/orders/${data.order_active}/update`, data);
+    if (response) {
+      return response.data;
+    }
+  } catch (error) {
+    throw error;
+  }
+});
+
 const orderSlice = createSlice({
   name: 'order',
   initialState,
@@ -59,6 +95,12 @@ const orderSlice = createSlice({
     setProducts: (state, action) => {
       state.products = action.payload;
     },
+    setQueryCustomer: (state, action) => {
+      state.queryCustomer = action.payload;
+    },
+    setCustomers: (state, action) => {
+      state.customers = action.payload;
+    },
     setAddProduct: (state, action) => {
       const product = action.payload;
       if (state.order) {
@@ -68,6 +110,25 @@ const orderSlice = createSlice({
         } else {
           state.order.products[index].quantity = state.order.products[index].quantity + 1;
         }
+        const newOrder = state.order;
+        state.order = newOrder;
+      }
+    },
+    changeQuantity: (state, action) => {
+      const { active, quantity } = action.payload;
+      if (state.order) {
+        const index = state.order.products.findIndex((item) => item.active === active);
+        if (index !== -1) {
+          state.order.products[index].quantity = quantity;
+          if (quantity == '0') {
+            state.order.products.splice(index, 1);
+          }
+        }
+      }
+    },
+    setCustomer: (state, action) => {
+      if (state.order) {
+        state.order.customer = action.payload;
       }
     },
   },
@@ -89,6 +150,10 @@ const orderSlice = createSlice({
       })
       .addCase(getOrder.fulfilled, (state, action) => {
         state.order = action.payload.data;
+        if (state.order) {
+          state.queryCustomer =
+            state.order.customer != null ? state.order.customer.first_name + ' ' + state.order.customer.last_name : '';
+        }
         state.isLoadingGetOrder = false;
       })
       .addCase(getOrder.rejected, (state) => {
@@ -103,10 +168,46 @@ const orderSlice = createSlice({
       })
       .addCase(getProducts.rejected, (state) => {
         state.isLoadingQueryProduct = false;
+      })
+      .addCase(getCustomer.pending, (state) => {
+        state.isLoadingQueryCustomer = true;
+      })
+      .addCase(getCustomer.fulfilled, (state, action) => {
+        state.customers = action.payload.data.result;
+        state.isLoadingQueryCustomer = false;
+      })
+      .addCase(getCustomer.rejected, (state) => {
+        state.isLoadingQueryCustomer = false;
+      })
+      .addCase(payOrder.pending, (state) => {
+        state.isLoadingPayOrder = true;
+      })
+      .addCase(payOrder.fulfilled, (state) => {
+        state.isLoadingPayOrder = false;
+      })
+      .addCase(payOrder.rejected, (state) => {
+        state.isLoadingPayOrder = false;
+      })
+      .addCase(updateOrder.pending, (state) => {
+        state.isLoadingUpdateOrder = true;
+      })
+      .addCase(updateOrder.fulfilled, (state) => {
+        state.isLoadingUpdateOrder = false;
+      })
+      .addCase(updateOrder.rejected, (state) => {
+        state.isLoadingUpdateOrder = false;
       });
   },
 });
 
-export const { setQueryProduct, setProducts, setAddProduct } = orderSlice.actions;
+export const {
+  setQueryProduct,
+  setProducts,
+  setAddProduct,
+  changeQuantity,
+  setQueryCustomer,
+  setCustomers,
+  setCustomer,
+} = orderSlice.actions;
 
 export default orderSlice.reducer;

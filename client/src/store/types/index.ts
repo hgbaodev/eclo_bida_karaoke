@@ -23,6 +23,8 @@ export interface RootState {
   order: orderType;
   kitchen_order: kitchen_orderType;
   attendance: attendance;
+  service_device_detail: service_device_detailType;
+
 }
 
 export interface kitchen_orderType {
@@ -40,7 +42,7 @@ export interface kitchenOrder {
   active: string;
   status: any;
   product_name: string;
-  order_id: string;
+  order_active: string;
   quantity: string;
   created_at: string;
   updated_at: string;
@@ -100,6 +102,20 @@ export interface priceType {
 }
 
 export interface customerType {
+  data: [];
+  isLoading: boolean;
+  isFiltered: boolean;
+  page: number;
+  pageSize: number;
+  totalRow: number;
+  status: any;
+  query: string;
+  errors: any;
+  isCreateLoading: boolean;
+  isUpdateLoading: boolean;
+}
+
+export interface service_device_detailType {
   data: [];
   isLoading: boolean;
   isFiltered: boolean;
@@ -202,13 +218,16 @@ export interface areaType {
 
 export interface deviceType {
   data: any[];
-  isLoading: boolean;
   isFiltered: boolean;
   page: number;
   pageSize: number;
+  status: any;
   totalRow: number;
+  errors: string;
   query: string;
+  isLoading: boolean;
   isCreateLoading: boolean;
+  isUpdateLoading: boolean;
 }
 export interface staffType {
   data: [];
@@ -374,6 +393,11 @@ export interface orderType {
   queryProduct: string;
   isLoadingQueryProduct: boolean;
   products: [];
+  queryCustomer: string;
+  isLoadingQueryCustomer: boolean;
+  customers: [];
+  isLoadingPayOrder: boolean;
+  isLoadingUpdateOrder: boolean;
 }
 export interface product_typeType {
   data: [];
@@ -389,4 +413,6 @@ export interface attendance {
   month: number;
   query: string;
   year: number;
+  isLoading: boolean;
+  listType: any[];
 }

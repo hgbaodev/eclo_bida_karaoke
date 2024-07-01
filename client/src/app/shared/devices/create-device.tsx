@@ -14,23 +14,35 @@ import { createDevice, getDevices } from '@/store/slices/deviceSlice';
 import toast from 'react-hot-toast';
 
 export default function CreateDevice() {
+  const [reset, setReset] = useState({});
   const { closeModal } = useModal();
   const [errors, setErrors] = useState<any>({});
-  const { page, pageSize, query, isCreateLoading } = useSelector((state: RootState) => state.device);
+  const { page, pageSize, query, isCreateLoading, status } = useSelector((state: RootState) => state.device);
 
   const onSubmit: SubmitHandler<CreateDeviceInput> = async (data: any) => {
     if (data['image'] && data['image'].length > 0) {
       const imageFile = data['image'][0];
       const formData = new FormData();
+
       formData.append('image', imageFile);
-      formData.append('name', data.name);
-      formData.append('description', data.description);
+      formData.append('name', data.name.toString());
+      formData.append('status', data.status.toString());
+      formData.append('value', data.value.toString());
+      formData.append('_method', 'PUT');
+      formData.append('description', data.description.toString());
+
       try {
         const result: any = await dispatch(createDevice(formData));
         if (createDevice.fulfilled.match(result)) {
+          setReset({
+            value: '',
+            name: '',
+            description: '',
+            status: '',
+          });
           setErrors({});
           closeModal();
-          await dispatch(getDevices({ page, pageSize, query }));
+          await dispatch(getDevices({ page, pageSize, query, status }));
           toast.success('Device created successfully');
         } else {
           setErrors(result?.payload?.errors);
@@ -48,12 +60,12 @@ export default function CreateDevice() {
   return (
     <Form<CreateDeviceInput>
       onSubmit={onSubmit}
+      // @ts-ignore
       validationSchema={createDeviceSchema}
       serverError={errors}
       className="grid grid-cols-1 gap-6 p-6 @container md:grid-cols-2 [&_.rizzui-input-label]:font-medium [&_.rizzui-input-label]:text-gray-900"
     >
       {({ setError, register, control, watch, formState: { errors } }) => {
-        console.log('errors', errors);
         return (
           <>
             <div className="col-span-full flex items-center justify-between">
@@ -71,6 +83,14 @@ export default function CreateDevice() {
               className="col-span-full"
               accept="image/jpeg, image/jpg, image/png, image/webp"
               error={errors.image?.message?.toString() || ''}
+            />
+            <Input
+              label="Value (VND)"
+              type="number"
+              placeholder="Enter device value"
+              className="col-span-full"
+              {...register('value')}
+              error={errors.value?.message}
             />
             <Input
               label="Name"

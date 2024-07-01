@@ -4,7 +4,7 @@ import { kitchen_orderType, kitchenOrder } from '../types';
 import env from '@/env';
 
 const initialState: kitchen_orderType = {
-  data: [],
+  data: [] as kitchenOrder[],
   isLoading: false,
   totalRow: 0,
   page: 1,
@@ -100,12 +100,10 @@ const kitchenOrderSlice = createSlice({
         state.data[index].isLoading = false; // Đặt lại isLoading về false
       }
     },
-    appendOrders: (state, action: PayloadAction<{ data: any }>) => {
-      const { data } = action.payload;
-      console.log('Data: ' + data);
+    appendOrders: (state, action: PayloadAction<{ data: kitchenOrder }>) => {
+      const data = action.payload.data;
       state.data.push(data);
     },
-
     removeOrder: (state, action: PayloadAction<string>) => {
       state.data = state.data.filter((order) => order.active !== action.payload);
     },

@@ -11,12 +11,13 @@ class Device extends Model
 {
     use HasFactory, SoftDeletes, GeneratesUniqueActive;
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [
         'active',
         'name',
         'description',
+        'value',
         'image',
         'status'
     ];
@@ -35,5 +36,10 @@ class Device extends Model
                 $model->active = self::generateUniqueActive();
             }
         });
+    }
+
+    public function ServiceDevices()
+    {
+        return $this->hasMany(ServiceDeviceDetail::class);
     }
 }

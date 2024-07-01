@@ -25,6 +25,7 @@ class StoreDeviceRequest extends HelperRequest
             'name' => 'required|unique:devices',
             'description' => 'required',
             'image' => 'required|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'value'=>['required', 'numeric', 'min:1'],
         ];
     }
 }

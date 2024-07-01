@@ -3,24 +3,34 @@
 import { useEffect, useMemo } from 'react';
 import { useColumn } from '@/hooks/use-column';
 import ControlledTable from '@/components/controlled-table';
+import dynamic from 'next/dynamic';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
+import { useModal } from '../../modal-views/use-modal';
 import { getColumns } from './columns';
 import { getDevices, setPage, setPageSize } from '@/store/slices/deviceSlice';
+const FilterElement = dynamic(() => import('@/app/shared/devices/devices-table/filter-element'), {
+  ssr: false,
+});
 
 export default function DevicesTable() {
-  const { data, isLoading, pageSize, page, totalRow, query } = useSelector((state: RootState) => state.device);
+  const { openModal } = useModal();
+  const { data, isLoading, pageSize, page, totalRow, query, status } = useSelector((state: RootState) => state.device);
 
   useEffect(() => {
     const fetch = async () => {
-      await dispatch(getDevices({ page, pageSize, query }));
+      try {
+        await dispatch(getDevices({ page, pageSize, query, status }));
+      } catch (error) {
+        console.error('Error:', error);
+      }
     };
     fetch();
-  }, [page, pageSize, query]);
+  }, [page, pageSize, query, status]);
 
   const columns = useMemo(
-    () => getColumns(),
+    () => getColumns(openModal),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
@@ -36,6 +46,7 @@ export default function DevicesTable() {
   const { visibleColumns } = useColumn(columns);
   return (
     <div className="mt-0">
+      <FilterElement />
       <ControlledTable
         variant="modern"
         data={data}

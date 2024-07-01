@@ -22,6 +22,16 @@ const initialState: serviceType = {
   selectedArea: '',
 };
 
+export const getServiceByActive = createAsyncThunk('services/show', async ({ active }: { active: string }) => {
+  const url = new URL(`/api/v1/services/${active}`, env.NEXT_API_URL);
+  try {
+    const response = await axiosInstance.get(url.href);
+    return response.data;
+  } catch (error: any) {
+    throw error;
+  }
+});
+
 export const getServices = createAsyncThunk(
   'services/index',
   async ({ page, pageSize, query, area }: { page: number; pageSize: number; query: string; area: string }) => {
@@ -189,6 +199,15 @@ const serviceSlice: any = createSlice({
         state.isEditLoading = false;
       })
       .addCase(editService.rejected, (state) => {
+        state.isEditLoading = false;
+      })
+      .addCase(getServiceByActive.pending, (state) => {
+        state.isEditLoading = true;
+      })
+      .addCase(getServiceByActive.fulfilled, (state) => {
+        state.isEditLoading = false;
+      })
+      .addCase(getServiceByActive.rejected, (state) => {
         state.isEditLoading = false;
       });
   },

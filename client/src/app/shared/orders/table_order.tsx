@@ -3,12 +3,17 @@ import AvatarCard from '@/components/ui/avatar-card';
 import { HeaderCell } from '@/components/ui/table';
 import env from '@/env';
 import { useColumn } from '@/hooks/use-column';
+import { dispatch } from '@/store';
+import { changeQuantity } from '@/store/slices/orderSlice';
 import { RootState } from '@/store/types';
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import { ActionIcon, Loader } from 'rizzui';
+import { IoIosAdd } from 'react-icons/io';
+import { VscChromeMinimize } from 'react-icons/vsc';
 
 const TableOrder = () => {
-  const { order, isLoading } = useSelector((state: RootState) => state.order);
+  const { order, isLoadingGetOrder } = useSelector((state: RootState) => state.order);
   const columns = useMemo(
     () => [
       {
@@ -49,11 +54,65 @@ const TableOrder = () => {
         width: 10,
         render: (_: any, orderdetail: OrderDetail) => orderdetail.quantity,
       },
+      {
+        title: <></>,
+        dataIndex: 'action',
+        key: 'action',
+        width: 10,
+        render: (_: string, orderdetail: OrderDetail) => (
+          <div className="flex items-center justify-end gap-3 pe-3">
+            <ActionIcon
+              onClick={() => {
+                const value = orderdetail.quantity - 1;
+                if (value == 0) {
+                  const check = confirm('Are you sure you want to delete this product?');
+                  if (!check) {
+                    return;
+                  }
+                }
+                const data = {
+                  active: orderdetail.active,
+                  quantity: value,
+                };
+                dispatch(changeQuantity(data));
+              }}
+              as="span"
+              size="sm"
+              variant="outline"
+              className="hover:!border-gray-900 hover:text-gray-700 cursor-pointer"
+            >
+              <VscChromeMinimize className="h-4 w-4" />
+            </ActionIcon>
+            <ActionIcon
+              onClick={() => {
+                const data = {
+                  active: orderdetail.active,
+                  quantity: orderdetail.quantity + 1,
+                };
+                dispatch(changeQuantity(data));
+              }}
+              as="span"
+              size="sm"
+              variant="outline"
+              className="hover:!border-gray-900 hover:text-gray-700 cursor-pointer"
+            >
+              <IoIosAdd className="h-4 w-4" />
+            </ActionIcon>
+          </div>
+        ),
+      },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
   const { visibleColumns } = useColumn(columns);
+  if (isLoadingGetOrder) {
+    return (
+      <div className="flex justify-center items-center">
+        <Loader variant="spinner" size="xl" color="info" />
+      </div>
+    );
+  }
   return (
     <ControlledTable
       variant="minimal"
@@ -61,7 +120,6 @@ const TableOrder = () => {
       showLoadingText={false}
       // @ts-ignore
       columns={visibleColumns}
-      isLoading={isLoading}
       emptyText={
         <div className="flex justify-center items-center">
           <div className="w-[60px] h-[50px]">

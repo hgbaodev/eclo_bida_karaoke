@@ -6,6 +6,7 @@ import { HeaderCell } from '@/components/ui/table';
 import PencilIcon from '@/components/icons/pencil';
 import AvatarCard from '@/components/ui/avatar-card';
 import DateCell from '@/components/ui/date-cell';
+import env from '@/env';
 import DeletePopover from '@/app/shared/delete-popover';
 import { dispatch } from '@/store';
 import { deleteProduct,getProducts } from '@/store/slices/productSlices';
@@ -19,6 +20,23 @@ export const getColumns = (openModal: (args: any) => void) => [
     key: 'id',
     width: 50,
     render: (_: any,  product: Product, index: number) => <div className="inline-flex ps-3">{index + 1}</div>,
+  },
+  {
+    title: <HeaderCell title="Image" />,
+    dataIndex: 'image',
+    key: 'image',
+    width: 50,
+    render: (_: string,  product: Product) => (
+      <AvatarCard
+        src={env.API_STORAGE + product.image}
+        avatarProps={{
+          name: product.name,
+          size: 'lg',
+          className: 'rounded-lg',
+        }}
+        name={''}
+      />
+    ),
   },
   {
     title: <HeaderCell title="Product name" />,
@@ -83,7 +101,7 @@ export const getColumns = (openModal: (args: any) => void) => [
             const result = await dispatch(deleteProduct(product.active)); // Remove the .then() block
             if (deleteProduct.fulfilled.match(result)) {
               await dispatch(getProducts({ page: 1, pageSize: 5, query: ''}));
-              toast.success(`Staff #${product.name} has been deleted successfully.`);
+              toast.success(`Product #${product.name} has been deleted successfully.`);
             } else {
               toast.error(`Failed to delete staff #${product.active}.`);
             }
@@ -113,6 +131,7 @@ export interface Product {
     name: string;
     selling_price: number;
     quantity: string;
+    image:string;
    product_type:{
     active:string
     type_name:string

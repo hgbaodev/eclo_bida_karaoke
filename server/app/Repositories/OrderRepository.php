@@ -25,9 +25,8 @@ class OrderRepository implements OrderRepositoryInterface
     {
         $all = $request->input('all');
         $perPage = $request->input('perPage');
-        $status = $request->input('status');
 
-        $orders = Order::query();
+        $orders = Order::with(['service', 'customer'])->where('checkout_time', '!=', null);
         $orders->latest();
         if ($all) {
             $orders = $orders->get();
@@ -46,6 +45,7 @@ class OrderRepository implements OrderRepositoryInterface
         }
 
         if ($order['orderdetails']->isEmpty()) {
+            $order['products'] = [];
             return $order;
         }
 
@@ -94,5 +94,14 @@ class OrderRepository implements OrderRepositoryInterface
             $notification->markAsRead();
             return $notification;
         }
+    }
+
+    public function findOrderByActive(string $active)
+    {
+        return Order::where('active', $active)->first();
+    }
+
+    public function payOrder($request)
+    {
     }
 }

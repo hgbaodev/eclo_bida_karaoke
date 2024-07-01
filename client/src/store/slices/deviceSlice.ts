@@ -10,18 +10,22 @@ const initialState: deviceType = {
   isFiltered: false,
   totalRow: 0,
   page: 1,
+  status: '',
   pageSize: 5,
+  errors: '',
   query: '',
+  isUpdateLoading: false,
   isCreateLoading: false,
 };
 
 export const getDevices = createAsyncThunk(
   'devices',
-  async ({ page, pageSize, query }: { page: number; pageSize: number; query: string }) => {
+  async ({ page, pageSize, query, status }: { page: number; pageSize: number; query: string; status: any }) => {
     const url = new URL('/api/v1/devices', env.NEXT_API_URL);
     url.searchParams.set('page', `${page}`);
     url.searchParams.set('perPage', `${pageSize}`);
     url.searchParams.set('query', query);
+    url.searchParams.set('status', `${status}`);
     try {
       const response = await axiosInstance.get(url.href);
       return response.data;
@@ -43,6 +47,33 @@ export const createDevice = createAsyncThunk('areas/createDevice', async (data: 
   }
 });
 
+export const updateDevice = createAsyncThunk(
+  'devices/updateDevices',
+  async ({ formData, active }: { formData: any; active: string }, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post(`devices/${active}`, formData);
+      return response.data;
+    } catch (error: any) {
+      if (!error.response) {
+        throw error;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
+
+export const deleteDevice = createAsyncThunk('devices/deleteDevice', async (active: string, { rejectWithValue }) => {
+  try {
+    const response = await axiosInstance.delete(`devices/${active}`);
+    return response.data;
+  } catch (error: any) {
+    if (!error.response) {
+      throw error;
+    }
+    return rejectWithValue(error.response.data);
+  }
+});
+
 const deviceSlice = createSlice({
   name: 'device',
   initialState,
@@ -55,6 +86,20 @@ const deviceSlice = createSlice({
     },
     setQuery: (state, action) => {
       state.query = action.payload;
+    },
+    setErrors: (state, action) => {
+      state.page = 1;
+      state.errors = action.payload;
+    },
+    setReset: (state) => {
+      state.page = 1;
+      state.status = '';
+      state.isFiltered = false;
+    },
+    setStatus: (state, action) => {
+      state.page = 1;
+      state.status = action.payload;
+      state.isFiltered = true;
     },
   },
   extraReducers: (builder) => {
@@ -79,10 +124,28 @@ const deviceSlice = createSlice({
       })
       .addCase(createDevice.rejected, (state) => {
         state.isCreateLoading = false;
+      })
+      .addCase(updateDevice.pending, (state) => {
+        state.isUpdateLoading = true;
+      })
+      .addCase(updateDevice.fulfilled, (state) => {
+        state.isUpdateLoading = false;
+      })
+      .addCase(updateDevice.rejected, (state) => {
+        state.isUpdateLoading = false;
+      })
+      .addCase(deleteDevice.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteDevice.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(deleteDevice.rejected, (state) => {
+        state.isLoading = false;
       });
   },
 });
 
-export const { setPage, setPageSize, setQuery } = deviceSlice.actions;
+export const { setPage, setPageSize, setQuery, setReset, setStatus } = deviceSlice.actions;
 
 export default deviceSlice.reducer;

@@ -12,7 +12,6 @@ class Service extends Model
     use HasFactory, SoftDeletes, GeneratesUniqueActive;
 
     protected $fillable = [
-        'id',
         'name',
         'description',
         'status',
@@ -24,6 +23,7 @@ class Service extends Model
     ];
 
     protected $hidden = [
+        'id',
         'area_id',
         'price_id',
         'service_type_id',
@@ -54,5 +54,10 @@ class Service extends Model
     public function serviceType()
     {
         return $this->belongsTo(ServiceType::class);
+    }
+
+    public function ServiceDevices()
+    {
+        return $this->hasMany(ServiceDeviceDetail::class);
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Device;
 
 use App\Http\Helpers\HelperRequest;
-use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateDeviceRequest extends HelperRequest
 {
@@ -22,10 +22,13 @@ class UpdateDeviceRequest extends HelperRequest
      */
     public function rules(): array
     {
+        $active = $this->route('active');
         return [
-            'name' => 'required|unique:devices',
+            'name' => ['required', Rule::unique('devices')->ignore($active, 'active')],
             'description' => 'required',
-            'status' => 'required|integer|min:0|max:1000'
+            'image' => 'file|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'status' => 'required|in:A,D',
+            'value'=>['required', 'numeric', 'min:1'],
         ];
     }
 }

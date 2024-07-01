@@ -11,7 +11,6 @@ use App\Interface\PriceRepositoryInterface;
 use App\Interface\ServiceRepositoryInterface;
 use App\Interface\ServiceTypeRepositoryInterface;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 
 class ServiceController extends Controller
 {
@@ -41,6 +40,11 @@ class ServiceController extends Controller
         $validatedData['price_id'] = $this->priceRepository->getPriceByActive($validatedData['price_active'])->id;
         $validatedData['service_type_id'] = $this->serviceTypeRepository->getServiceTypeByActive($validatedData['service_type_active'])->id;
         return $this->sentSuccessResponse($this->serviceRepository->createService($validatedData));
+    }
+
+    public function show(string $active) {
+        $data = $this->serviceRepository->getServiceByActive($active);
+        return $this->sentSuccessResponse($data);
     }
 
     public function changeStatus(ChangeStatusServiceRequest $request, $actvies)

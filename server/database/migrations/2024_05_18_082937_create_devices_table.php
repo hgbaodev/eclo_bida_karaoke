@@ -16,8 +16,10 @@ return new class extends Migration
             $table->string('active')->unique();
             $table->string('name');
             $table->longText('description');
+            $table->double('value')->default(0);
             $table->string('image')->default('deviceDefault.png');
             $table->string('status')->default('A');
+            $table->timestamps();
             $table->softDeletes();
         });
     }

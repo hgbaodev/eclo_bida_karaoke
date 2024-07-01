@@ -26,7 +26,7 @@ Route::group(
         )->middleware(
             'markKitchenOrderAsWaitingEvent'
         );
-//        mark as done
+        //        mark as done
         Route::put(
             '/mark-kitchen-order-as-done/{active}',
             [OrderController::class, 'markKitchenOrderAsDone']
@@ -35,5 +35,7 @@ Route::group(
         );
         Route::get('/{active}', [OrderController::class, 'show']);
         Route::post('/{active}/products', [OrderController::class, 'addProductsToOrder'])->middleware('dispatch.order.event');
+        Route::post('/{active}/pay', [OrderController::class, 'payOrder']);
+        Route::post('/{active}/update', [OrderController::class, 'updateOrder']);
     }
 );

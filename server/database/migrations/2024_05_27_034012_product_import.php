@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('product_imports', function (Blueprint $table) {
             $table->id('id');
-            $table->double('total_cost')->nullable();
+            $table->double('total_cost')->default(0);
             $table->date('create_time');
             $table->date('receive_time');
             $table->string('active')->unique();
-            $table->string('status');
+            $table->string('status')->nullable();
             $table->softDeletes();
         });
     }

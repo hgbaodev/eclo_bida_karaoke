@@ -2,17 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\KitchenOrder;
-use App\Models\Shift;
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
         $this->call([
@@ -45,6 +38,8 @@ class DatabaseSeeder extends Seeder
             ShiftDetailSeeder::class,
             ServiceSeeder::class,
             AttendanceSeeder::class,
+            KitchenOrderSeeder::class,
+            ServiceDeviceDetailSeeder::class,
         ]);
     }
 }
