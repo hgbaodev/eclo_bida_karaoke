@@ -8,7 +8,6 @@ import { Input, Button, ActionIcon, Title, Select, Textarea } from 'rizzui';
 import { useModal } from '@/app/shared/modal-views/use-modal';
 // import { createProduct, getProductImports } from '@/store/slices/product_importSlice';
 import { createProductImportDetail, getProductImportDetails } from '@/store/slices/product_import_detailSlice';
-
 import { CreateProduct_Import_DetailtInput, createProduct_Import_DetailSchema } from '@/utils/validators/create-product_import_detail.schema';
 import { dispatch } from '@/store';
 import toast from 'react-hot-toast';
@@ -37,6 +36,7 @@ export default function CreateProductImportDetail() {
         quantity: '',
         supplier : '',
         cost_price: '',
+        selling_price:'',
         import:'',
       
       });
@@ -47,6 +47,8 @@ export default function CreateProductImportDetail() {
       toast.success('Import product successfully');
     } else {
       setErrors(result?.payload?.errors);
+      closeModal();
+      toast.error(result.payload.errors);
     }
     console.log(data)
   };
@@ -131,6 +133,14 @@ export default function CreateProductImportDetail() {
               {...register('cost_price')}
               className="col-span-full"
               error={errors.cost_price?.message}
+            />
+              <Input
+             type="number"
+              label="Selling price"
+              placeholder="Enter Selling price of product "
+              {...register('selling_price')}
+              className="col-span-full"
+              error={errors.selling_price?.message}
             />
              <Input
              type="number"

@@ -11,7 +11,6 @@ use App\Interface\PriceRepositoryInterface;
 use App\Interface\ServiceRepositoryInterface;
 use App\Interface\ServiceTypeRepositoryInterface;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 
 class ServiceController extends Controller
 {

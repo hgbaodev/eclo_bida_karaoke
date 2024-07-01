@@ -25,6 +25,7 @@ class ProductImpDetailRequest extends HelperRequest
         return [
             'quantity' => 'required',
             'cost_price' => 'required',
+            'selling_price' => 'required',
             'product' => 'required',
             'supplier' => 'required',
             'import' => 'required',
