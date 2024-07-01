@@ -19,11 +19,11 @@ export const routes = {
     },
     services: {
       tableandrooms: '/admin/services/tableandrooms',
-      devices: '/admin/services/devices',
       service_types: '/admin/services/service_types',
       prices: '/admin/services/prices',
       books: '/admin/services/books',
     },
+    devices: '/admin/devices',
     customers: '/admin/customers',
     jobBoard: '/admin/job-board',
     suppliers: '/admin/suppliers',

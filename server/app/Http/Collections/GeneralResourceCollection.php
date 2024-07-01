@@ -5,8 +5,28 @@ namespace App\Http\Collections;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class CollectionCustom extends ResourceCollection
+class GeneralResourceCollection  extends ResourceCollection
 {
+    /**
+     * The resource class.
+     *
+     * @var string
+     */
+    protected $resourceClass;
+
+    /**
+     * Create a new collection instance.
+     *
+     * @param mixed $resource
+     * @param string $resourceClass
+     * @return void
+     */
+    public function __construct($resource, string $resourceClass)
+    {
+        $this->resourceClass = $resourceClass;
+        parent::__construct($resource);
+    }
+
     /**
      * Transform the resource collection into an array.
      *
@@ -16,7 +36,7 @@ class CollectionCustom extends ResourceCollection
     public function toArray($request)
     {
         $data = [
-            'result' => $this->collection,
+            'result' => $this->resourceClass::collection($this->collection),
         ];
 
         if ($this->resource instanceof LengthAwarePaginator) {

@@ -42,6 +42,11 @@ class ServiceController extends Controller
         return $this->sentSuccessResponse($this->serviceRepository->createService($validatedData));
     }
 
+    public function show(string $active) {
+        $data = $this->serviceRepository->getServiceByActive($active);
+        return $this->sentSuccessResponse($data);
+    }
+
     public function changeStatus(ChangeStatusServiceRequest $request, $actvies)
     {
         $service = $this->serviceRepository->getServiceByActive($actvies);
