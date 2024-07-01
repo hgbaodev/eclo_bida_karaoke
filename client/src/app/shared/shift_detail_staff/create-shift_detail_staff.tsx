@@ -39,6 +39,7 @@ export default function CreateShiftDetailStaff({ day_of_week, shift }: { day_of_
       const detail: Detail = {
         staff: data.staff,
         day: formattedDate,
+        shift: shift.active,
       };
       const resultAttendance: any = dispatch(createAttendance(detail));
       console.log(resultAttendance);
@@ -90,7 +91,7 @@ export default function CreateShiftDetailStaff({ day_of_week, shift }: { day_of_
                     isSearchable
                     styles={customStyles}
                     getOptionValue={(option) => option.active}
-                    getOptionLabel={(option) => `${option.last_name} ${option.first_name} - ${option.idcard}`}
+                    getOptionLabel={(option) => `${option.last_name} ${option.first_name} - ${option.uuid}`}
                     aria-invalid={errors.staff ? 'true' : 'false'}
                   />
                   {errors.staff && <span className="error-message">{errors.staff.message}</span>}
@@ -169,4 +170,5 @@ function getDaysOfWeekByName(startDate: Date, endDate: Date, dayOfWeek: string):
 export interface Detail {
   staff: string;
   day: string;
+  shift: string;
 }

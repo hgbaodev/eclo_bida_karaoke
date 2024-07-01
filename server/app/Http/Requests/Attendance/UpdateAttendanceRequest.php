@@ -23,8 +23,12 @@ class UpdateAttendanceRequest extends HelperRequest
     {
         return [
             "time" => 'nullable',
-            "staff" => "required",
-            "day" => "required"
+            "day" => "required",
+            "uuid" => "required",
+            "check_in" => 'nullable',
+            "check_out" => "nullable",
+            "type" => 'nullable',
+            "update" => 'required'
         ];
     }
 }

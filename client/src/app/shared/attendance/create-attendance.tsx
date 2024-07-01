@@ -1,8 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
-import Select, { StylesConfig } from 'react-select';
 import { PiXBold } from 'react-icons/pi';
-import { Controller, SubmitHandler } from 'react-hook-form';
+import { SubmitHandler } from 'react-hook-form';
 import { Form } from '@/components/ui/form';
 import { Input, Button, ActionIcon, Title } from 'rizzui';
 import { useModal } from '@/app/shared/modal-views/use-modal';
@@ -10,8 +9,8 @@ import { dispatch } from '@/store';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import toast from 'react-hot-toast';
-import { EditAttendanceInput, editAttendanceSchema } from '@/utils/validators/attendance/edit-attendance-schema';
-import { getAttendances, updateAttendance } from '@/store/slices/attendance';
+import { Attendance, getAttendances } from '@/store/slices/attendance';
+import { AttendanceInput, AttendanceSchema } from '@/utils/validators/attendance/attendance-schema';
 
 export default function CreateAttendance() {
   const { closeModal } = useModal();
@@ -30,21 +29,25 @@ export default function CreateAttendance() {
       const now = new Date();
       const hours = now.getHours().toString().padStart(2, '0');
       const minutes = now.getMinutes().toString().padStart(2, '0');
-      const seconds = now.getSeconds().toString().padStart(2, '0');
-      setCurrentTime(`${hours}:${minutes}:${seconds}`);
+      setCurrentTime(`${hours}:${minutes}`);
     }, []);
 
     return <Input type="time" label="Time" className="col-span-[1/2]" value={currentTime} readOnly />;
   };
-  const onSubmit: SubmitHandler<EditAttendanceInput> = async (data) => {
-    const result: any = await dispatch(updateAttendance(data));
-    console.log(result);
-    if (updateAttendance.fulfilled.match(result)) {
+  const onSubmit: SubmitHandler<AttendanceInput> = async (data) => {
+    const dataAttendance = {
+      uuid: data.uuid,
+      day: data.day,
+      time: data.time,
+      update: false,
+    };
+    const result: any = await dispatch(Attendance(dataAttendance));
+    if (Attendance.fulfilled.match(result)) {
       setReset({});
       setErrors({});
       closeModal();
       toast.success('Created successfully');
-      dispatch(getAttendances({ query: '', month, year }));
+      dispatch(getAttendances({ month, year }));
     } else {
       setErrors(result?.payload?.errors);
       toast.error(result.payload.errors);
@@ -52,10 +55,10 @@ export default function CreateAttendance() {
     }
   };
   return (
-    <Form<EditAttendanceInput>
+    <Form<AttendanceInput>
       resetValues={{ time: currentTime }}
       onSubmit={onSubmit}
-      validationSchema={editAttendanceSchema}
+      validationSchema={AttendanceSchema}
       serverError={errors}
       className="grid grid-cols-1 gap-6 p-6 @container md:grid-cols-2 [&_.rizzui-input-label]:font-medium [&_.rizzui-input-label]:text-gray-900"
     >

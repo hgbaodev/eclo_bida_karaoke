@@ -1,6 +1,9 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { HeaderCell } from '@/components/ui/table';
+import { ActionIcon, Tooltip } from 'rizzui';
+import PencilIcon from '@/components/icons/pencil';
+import EditAttendance from './edit-attendance';
 interface MonthYear {
   month: number;
   year: number;
@@ -28,6 +31,11 @@ const formatDate = (date: Date): string => {
   const day = date.getDate().toString().padStart(2, '0');
   return `${year}-${month}-${day}`;
 };
+const now = new Date();
+const Year = now.getFullYear();
+const Month = String(now.getMonth() + 1).padStart(2, '0');
+const day = String(now.getDate()).padStart(2, '0');
+const currentDate = `${Year}-${Month}-${day}`;
 // Ví dụ lấy ngày đầu tháng và ngày cuối tháng cho tháng 6 năm 2024
 export const getColumns = (openModal: (args: any) => void, Data: Attendance[], month: number, year: number) => {
   const { startDate, endDate } = getFirstAndLastDayOfMonth(month, year);
@@ -56,21 +64,41 @@ export const getColumns = (openModal: (args: any) => void, Data: Attendance[], m
       render: (_: any, staff: Staff) => {
         const dataForDate = Data.filter((item) => item.day === formatDate(date) && item.staff.active === staff.active);
         if (dataForDate.length > 0) {
-          // Đưa ra logic để xử lý dữ liệu
           return (
             <div>
-              {/* Ví dụ: hiển thị các thông tin từ dữ liệu */}
               {dataForDate.map((item) => (
                 <div key={item.active}>
-                  {/* Hiển thị thông tin của item */}
-                  <p>{item.time_in}</p>
-                  <p>{item.time_out}</p>
+                  <p>{item.check_in}</p>
+                  <p>{item.check_out}</p>
+                  {item.check_in && (
+                    <Tooltip size="sm" content={'Edit Attendance'} placement="top" color="invert">
+                      <ActionIcon
+                        onClick={() => {
+                          const data = {
+                            time: '',
+                            uuid: staff.uuid,
+                            day: '',
+                            check_in: item.check_in,
+                            check_out: item.check_out,
+                          };
+                          openModal({
+                            view: <EditAttendance attendance={data} currentDate={currentDate} />,
+                          });
+                        }}
+                        as="span"
+                        size="sm"
+                        variant="outline"
+                        className="hover:!border-gray-900 hover:text-gray-700 cursor-pointer"
+                      >
+                        <PencilIcon className="h-4 w-4" />
+                      </ActionIcon>
+                    </Tooltip>
+                  )}
                 </div>
               ))}
             </div>
           );
         } else {
-          // Nếu không có dữ liệu, hiển thị "OFF" hoặc thông báo khác
           return <div>OFF</div>;
         }
       },
@@ -86,8 +114,8 @@ export interface Attendance {
     name: string;
     active: string;
   };
-  time_in: string;
-  time_out: string;
+  check_in: string;
+  check_out: string;
   active: string;
 }
 export interface Staff {
@@ -96,6 +124,7 @@ export interface Staff {
   last_name: string;
   phone: string;
   image: string;
+  uuid: string;
   idcard: string;
   birthday: string;
   status: any;

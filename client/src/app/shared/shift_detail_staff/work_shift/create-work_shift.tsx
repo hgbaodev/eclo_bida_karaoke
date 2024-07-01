@@ -34,7 +34,6 @@ export default function CreateWorkShift() {
         };
         return shiftUserDetail;
       });
-      console.log(updatedList);
       for (const item of updatedList) {
         await dispatch(createShiftUserDetail(item));
         const days = getDaysOfWeekByName(workshift.date_start, workshift.date_end, item.day_of_week);
@@ -45,6 +44,7 @@ export default function CreateWorkShift() {
           const detail: Detail = {
             staff: item.staff,
             day: formattedDate,
+            shift: item.shift,
           };
           dispatch(createAttendance(detail));
         });
@@ -152,4 +152,5 @@ function getDaysOfWeekByName(startDate: Date, endDate: Date, dayOfWeek: string):
 export interface Detail {
   staff: string;
   day: string;
+  shift: string;
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Attendance\AttendanceRequest;
 use App\Http\Requests\Attendance\UpdateAttendanceRequest;
 use App\Interface\AttendanceRepositoryInterface;
+use App\Interface\ShiftRepositoryInterface;
 use App\Interface\StaffRepositoryInterface;
 use Illuminate\Http\Request;
 
@@ -13,10 +14,12 @@ class AttendanceController extends Controller
 {
     protected $attendanceRepository;
     protected $staffRepo;
-    public function __construct(AttendanceRepositoryInterface $attendanceRepository, StaffRepositoryInterface $staffRepositoryInterface)
+    protected $shiftRepo;
+    public function __construct(AttendanceRepositoryInterface $attendanceRepository, StaffRepositoryInterface $staffRepositoryInterface, ShiftRepositoryInterface $shiftRepositoryInterface)
     {
         $this->attendanceRepository = $attendanceRepository;
         $this->staffRepo = $staffRepositoryInterface;
+        $this->shiftRepo = $shiftRepositoryInterface;
     }
     /**
      * Display a listing of the resource.
@@ -37,15 +40,22 @@ class AttendanceController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(UpdateAttendanceRequest $request)
+    public function store(AttendanceRequest $request)
     {
         $validatedData = $request->validated();
+        $shift = $this->shiftRepo->getShiftByActive($validatedData['shift']);
+        if (!$shift) {
+            return $this->sentErrorResponse("Shift is not found", 'error', 404);
+        }
         $staff = $this->staffRepo->getStaffByActive($validatedData['staff']);
         if (!$staff) {
             return $this->sentErrorResponse("Staff is not found", 'error', 404);
         }
+        $validatedData['time_in'] = $shift->time_in;
+        $validatedData['time_out'] = $shift->time_out;
         $validatedData['staff_id'] = $staff->id;
         unset($validatedData['staff']);
+        unset($validatedData['shift']);
         return $this->sentSuccessResponse($this->attendanceRepository->createAttendance($validatedData));
     }
 
@@ -71,7 +81,7 @@ class AttendanceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(AttendanceRequest $request)
+    public function update(UpdateAttendanceRequest $request)
     {
         $validatedData = $request->validated();
         $staff = $this->staffRepo->getStaffByUUID($validatedData['uuid']);
@@ -80,18 +90,21 @@ class AttendanceController extends Controller
         }
         $attendance = $this->attendanceRepository->getAttendanceByUUIDAndDay($staff->id, $validatedData['day']);
         if (!$attendance) {
-            return $this->sentErrorResponse("Attendance is not found", 'error', 404);
+            return $this->sentErrorResponse("Staff don't have attendance today", 'error', 404);
         }
         $time = $validatedData['time'];
-        if (!$attendance->time_in) {
-            $validatedData['time_in'] = $time;
-            unset($validatedData['time']);
-        } else if (!$attendance->time_out) {
-            $validatedData['time_out'] = $time;
-            unset($validatedData['time']);
-        } else {
-            return $this->sentErrorResponse("This staff is already attendanced", 'error', 404);
+        $update = $validatedData['update'];
+        if (!$update) {
+            if (!$attendance->check_in) {
+                $validatedData['check_in'] = $time;
+            } else if (!$attendance->check_out) {
+                $validatedData['check_out'] = $time;
+            } else {
+                return $this->sentErrorResponse("This staff is already attendanced", 'error', 404);
+            }
         }
+        unset($validatedData['time']);
+        unset($validatedData['update']);
         return $this->sentSuccessResponse($this->attendanceRepository->updateAttendanceByActive($attendance->active, $validatedData), "Attendance is updated successfully", 200);
     }
 

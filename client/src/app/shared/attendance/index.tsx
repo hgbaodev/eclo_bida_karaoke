@@ -23,10 +23,10 @@ export default function ShiftDetailStaffTable() {
   const { data, query } = useSelector((state: RootState) => state.staff);
   useEffect(() => {
     dispatch(getAllStaffs(query));
-  }, []);
+  }, [query]);
   useEffect(() => {
     const fetch = async () => {
-      await dispatch(getAttendances({ query: '', month, year }));
+      await dispatch(getAttendances({ month, year }));
     };
     fetch();
   }, [setQuery, month, year]);
