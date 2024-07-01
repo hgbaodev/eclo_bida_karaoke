@@ -6,13 +6,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ActionIcon, Button, Input, Loader, Popover } from 'rizzui';
 import { IoMdAdd } from 'react-icons/io';
 import { RiFinderFill } from 'react-icons/ri';
-import { SiIconfinder } from 'react-icons/si';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { getProducts, setAddProduct, setProducts, setQueryProduct } from '@/store/slices/orderSlice';
 import { dispatch } from '@/store';
 import useDebounce from '@/hooks/use-debounce';
 import { PiMagnifyingGlassBold } from 'react-icons/pi';
+import { MdOutlineFindInPage } from 'react-icons/md';
 
 const SearchProduct = () => {
   const { queryProduct, isLoadingQueryProduct, products } = useSelector((state: RootState) => state.order);
@@ -63,7 +63,7 @@ const SearchProduct = () => {
                 </div>
               ) : queryProduct.length == 0 ? (
                 <div className="h-100px flex flex-col items-center justify-center">
-                  <SiIconfinder className="w-10 h-10" />
+                  <MdOutlineFindInPage className="w-10 h-10" />
                   <span className="text-gray-400 mt-2">Please enter name product</span>
                 </div>
               ) : products.length == 0 ? (
@@ -93,7 +93,7 @@ const SearchProduct = () => {
                             active: product.active,
                             name: product.name,
                             image: product.image,
-                            selling_price: product.name,
+                            selling_price: product.selling_price,
                             quantity: 1,
                           };
                           dispatch(setAddProduct(pro));

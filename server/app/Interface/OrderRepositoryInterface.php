@@ -4,7 +4,8 @@ namespace App\Interface;
 
 use Illuminate\Http\Request;
 
-interface OrderRepositoryInterface{
+interface OrderRepositoryInterface
+{
 
     /**
      * @param $request requestedProducts
@@ -17,4 +18,5 @@ interface OrderRepositoryInterface{
     public function updateOrderByActive(string $active, array $data);
     public function deleteOrderByActive(string $active);
     public function markOrderRequestAsRead(Request $request);
+    public function payOrder($request);
 }
