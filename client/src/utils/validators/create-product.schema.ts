@@ -6,8 +6,6 @@ const MAX_FILE_SIZE = 1024 * 1024 * 2;
 const ACCEPTED_IMAGE_MIME_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/svg'];
 export const createProductSchema = z.object({
   name: z.string().min(1, { message: messages.ProductNameIsRequired }),
-  // cost_price: z.string().min(1, { message: messages.CostPriceIsRequired }),
-  selling_price: z.number().min(1, { message: messages.SellingPriceIsRequired }),
   product_type: z.string().min(1, { message: messages.placeTypeIsRequired }),
   image: z
     .any()

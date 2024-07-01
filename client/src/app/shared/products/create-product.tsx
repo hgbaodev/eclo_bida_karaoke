@@ -29,7 +29,6 @@ export default function CreateStaff() {
       const formData = new FormData();
       formData.append('image', imageFile);
       formData.append('name', data.name);
-      formData.append('selling_price', data.selling_price.toString());
       formData.append('product_type', data.product_type);
       try {
         const result: any = await dispatch(createProduct(formData));
@@ -100,18 +99,6 @@ export default function CreateStaff() {
                 />
               )}
             />
-            <Input
-              
-              label="Selling Price"
-              type="number"
-              placeholder="Enter selling price"
-              {...register('selling_price',{
-                valueAsNumber: true
-              })}
-              className="col-span-full"
-              error={errors.selling_price?.message}
-            />
-
             <Controller
               name='product_type'
               control={control}

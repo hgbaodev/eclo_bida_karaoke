@@ -84,6 +84,10 @@ class ProductController extends Controller
         if (!$product_type) {
             return $this->sentErrorResponse("Type is not found", "error", 404);
         }
+
+        if ($request->hasFile('image')) {
+            $validated_data['image'] = FileHandler::storeFile($request->file('image'));
+        }
         $validated_data["id_type"] = $product_type->id;
         unset($validated_data['product_type']);
         return $this->sentSuccessResponse($this->productRepository->updateProductByActive($active, $validated_data), " product updated successfully", 200);
