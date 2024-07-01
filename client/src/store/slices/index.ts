@@ -28,6 +28,7 @@ import kitchen_order from './kitchen_orderSlice';
 import device from './deviceSlice';
 import supplier from './supplierSlice';
 import service from './serviceSlice';
+import service_device_detail from './service_device_detailSlice';
 
 import order from './orderSlice';
 
@@ -57,6 +58,7 @@ const reducers = combineReducers({
   work_shift,
   order,
   kitchen_order,
+  service_device_detail,
 });
 
 export default reducers;

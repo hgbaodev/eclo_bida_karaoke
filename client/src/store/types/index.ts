@@ -22,6 +22,7 @@ export interface RootState {
   work_shift: work_shiftType;
   order: orderType;
   kitchen_order: kitchen_orderType;
+  service_device_detail: service_device_detailType;
 }
 
 export interface kitchen_orderType {
@@ -99,6 +100,20 @@ export interface priceType {
 }
 
 export interface customerType {
+  data: [];
+  isLoading: boolean;
+  isFiltered: boolean;
+  page: number;
+  pageSize: number;
+  totalRow: number;
+  status: any;
+  query: string;
+  errors: any;
+  isCreateLoading: boolean;
+  isUpdateLoading: boolean;
+}
+
+export interface service_device_detailType {
   data: [];
   isLoading: boolean;
   isFiltered: boolean;

@@ -15,6 +15,7 @@ use App\Interface\ProductImportInterface;
 use App\Interface\ProductImpDetailInterface;
 use App\Interface\RoleFunctionalPermissionRepositoryInterface;
 use App\Interface\RoleRepositoryInterface;
+use App\Interface\ServiceDeviceDetailRepositoryInterface;
 use App\Interface\ServiceTypeRepositoryInterface;
 use App\Interface\ShiftRepositoryInterface;
 use App\Interface\StaffRepositoryInterface;
@@ -39,6 +40,7 @@ use App\Repositories\PriceRepository;
 use App\Repositories\ProductImportRepository;
 use App\Repositories\RoleFunctionalPermissionRepository;
 use App\Repositories\RoleRepository;
+use App\Repositories\ServiceDeviceDetailRepository;
 use App\Repositories\SupplierRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Support\ServiceProvider;
@@ -84,6 +86,8 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(AttendanceRepositoryInterface::class, AttendanceRepository::class);
         $this->app->bind(ProductTypeRepositoryInterface::class, ProductTypeRepository::class);
         $this->app->bind(KitchenOrderRepositoryInterface::class, KitchenOrderRepository::class);
+        $this->app->bind(ServiceDeviceDetailRepositoryInterface::class, ServiceDeviceDetailRepository::class);
+
     }
 
     /**

@@ -12,6 +12,22 @@ import { dispatch } from '@/store';
 import { getCustomers, deleteCustomer } from '@/store/slices/customerSlice';
 import toast from 'react-hot-toast';
 
+export interface Customer {
+  active: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  status: any;
+  image: string;
+  phone: string;
+  created_at: string;
+}
+
+export const STATUSES = {
+  Active: 'A',
+  InActive: 'D',
+} as const;
+
 export function getStatusBadge(status: Customer['status']) {
   switch (status) {
     case STATUSES.InActive:
@@ -127,19 +143,3 @@ export const getColumns = (openModal: (args: any) => void) => [
     ),
   },
 ];
-
-export interface Customer {
-  active: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  status: any;
-  image: string;
-  phone: string;
-  created_at: string;
-}
-
-export const STATUSES = {
-  Active: 'A',
-  InActive: 'D',
-} as const;

@@ -15,8 +15,8 @@ class ServiceDeviceDetailFactory extends Factory
     public function definition(): array
     {
         return [
-            'service_id' => $this->faker->numberBetween(1, 4),
-            'device_id' => $this->faker->numberBetween(1, 4),
+            'service_id' => $this->faker->numberBetween(1, 36),
+            'device_id' => $this->faker->numberBetween(1, 10),
             'quantity' => $this->faker->numberBetween(1, 6),
         ];
     }

@@ -8,6 +8,6 @@ class ServiceDeviceDetailSeeder extends Seeder
 {
     public function run(): void
     {
-        ServiceDeviceDetail::factory()->count(20)->create();
+        ServiceDeviceDetail::factory()->count(99)->create();
     }
 }

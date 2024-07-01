@@ -6,6 +6,7 @@ import { TbPackages } from 'react-icons/tb';
 import { HiOutlineUsers } from 'react-icons/hi2';
 import { MdOutlineBadge } from 'react-icons/md';
 import { FaProductHunt } from 'react-icons/fa';
+import { MdOutlineDevicesOther } from 'react-icons/md';
 import { FaUserClock } from 'react-icons/fa6';
 import { LuClock } from 'react-icons/lu';
 import { BsPersonCheckFill } from 'react-icons/bs';
@@ -63,10 +64,6 @@ export const menuItems = [
         href: routes.admin.services.tableandrooms,
       },
       {
-        name: 'Devices',
-        href: routes.admin.services.devices,
-      },
-      {
         name: 'Service types',
         href: routes.admin.services.service_types,
       },
@@ -75,6 +72,12 @@ export const menuItems = [
         href: routes.admin.services.prices,
       },
     ],
+  },
+
+  {
+    name: 'Devices',
+    href: routes.admin.devices,
+    icon: <MdOutlineDevicesOther />,
   },
   {
     name: 'Users',

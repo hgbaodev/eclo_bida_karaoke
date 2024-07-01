@@ -26,6 +26,7 @@ Route::group([
     require __DIR__ . '/api/shiftdetail.php';
     require __DIR__ . '/api/shiftuserdetail.php';
     require __DIR__ . '/api/workshift.php';
+    require __DIR__ . '/api/service_device_detail.php';
     require __DIR__ . '/api/service.php';
     require __DIR__ . '/api/product_type.php';
     require __DIR__ . '/api/attendance.php';

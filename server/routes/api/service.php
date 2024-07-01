@@ -10,6 +10,7 @@ Route::group(
   ],
   function () {
     Route::get('/', [ServiceController::class, 'index']);
+      Route::get('/{active}', [ServiceController::class, 'show']);
     Route::post('/', [ServiceController::class, 'store']);
     Route::put('/{active}/change_status', [ServiceController::class, 'changeStatus']);
     Route::put('/{active}', [ServiceController::class, 'update']);
