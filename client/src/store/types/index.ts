@@ -24,7 +24,6 @@ export interface RootState {
   kitchen_order: kitchen_orderType;
   attendance: attendance;
   service_device_detail: service_device_detailType;
-
 }
 
 export interface kitchen_orderType {
@@ -413,6 +412,4 @@ export interface attendance {
   month: number;
   query: string;
   year: number;
-  isLoading: boolean;
-  listType: any[];
 }
