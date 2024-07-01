@@ -1,13 +1,44 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { HeaderCell } from '@/components/ui/table';
+import { ActionIcon, Tooltip } from 'rizzui';
+import PencilIcon from '@/components/icons/pencil';
+import EditAttendance from './edit-attendance';
+interface MonthYear {
+  month: number;
+  year: number;
+}
+const getDatesBetween = (startDate: Date, endDate: Date): Date[] => {
+  const dates = [];
+  let currentDate = new Date(startDate);
 
-export const getColumns = (openModal: (args: any) => void, Data: ShiftUserDetail[], work_shift: any) => {
-  if (!work_shift || !work_shift.date_start || !work_shift.date_end) {
-    return [];
+  while (currentDate <= endDate) {
+    dates.push(new Date(currentDate));
+    currentDate.setDate(currentDate.getDate() + 1);
   }
-  const startDate = new Date(work_shift.date_start);
-  const endDate = new Date(work_shift.date_end);
+
+  return dates;
+};
+function getFirstAndLastDayOfMonth(month: number, year: number): { startDate: Date; endDate: Date } {
+  const startDate = new Date(year, month - 1, 1); // Để ý là month - 1 vì month trong Date bắt đầu từ 0 (0 = tháng 1, 1 = tháng 2, ..., 11 = tháng 12)
+  const endDate = new Date(year, month, 0);
+
+  return { startDate, endDate };
+}
+const formatDate = (date: Date): string => {
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+const now = new Date();
+const Year = now.getFullYear();
+const Month = String(now.getMonth() + 1).padStart(2, '0');
+const day = String(now.getDate()).padStart(2, '0');
+const currentDate = `${Year}-${Month}-${day}`;
+// Ví dụ lấy ngày đầu tháng và ngày cuối tháng cho tháng 6 năm 2024
+export const getColumns = (openModal: (args: any) => void, Data: Attendance[], month: number, year: number) => {
+  const { startDate, endDate } = getFirstAndLastDayOfMonth(month, year);
   const dates = getDatesBetween(startDate, endDate);
   const columns = [
     {
@@ -15,7 +46,7 @@ export const getColumns = (openModal: (args: any) => void, Data: ShiftUserDetail
       dataIndex: 'shift',
       key: 'shift',
       width: 50,
-      render: (_: string, staff: Staff) => staff.name,
+      render: (_: string, staff: Staff) => staff.last_name + ' ' + staff.first_name,
     },
     ...dates.map((date) => ({
       title: (
@@ -31,14 +62,42 @@ export const getColumns = (openModal: (args: any) => void, Data: ShiftUserDetail
       key: date.toLocaleDateString('en-US', { weekday: 'short' }),
       width: 100,
       render: (_: any, staff: Staff) => {
-        const dataForDate = Data.find(
-          (item) =>
-            item.day_of_week === date.toLocaleDateString('en-US', { weekday: 'long' }) &&
-            item.staff.active === staff.active,
-        );
-
-        if (dataForDate) {
-          return <div></div>;
+        const dataForDate = Data.filter((item) => item.day === formatDate(date) && item.staff.active === staff.active);
+        if (dataForDate.length > 0) {
+          return (
+            <div>
+              {dataForDate.map((item) => (
+                <div key={item.active}>
+                  <p>{item.check_in}</p>
+                  <p>{item.check_out}</p>
+                  {item.check_in && (
+                    <Tooltip size="sm" content={'Edit Attendance'} placement="top" color="invert">
+                      <ActionIcon
+                        onClick={() => {
+                          const data = {
+                            time: '',
+                            uuid: staff.uuid,
+                            day: '',
+                            check_in: item.check_in,
+                            check_out: item.check_out,
+                          };
+                          openModal({
+                            view: <EditAttendance attendance={data} currentDate={currentDate} />,
+                          });
+                        }}
+                        as="span"
+                        size="sm"
+                        variant="outline"
+                        className="hover:!border-gray-900 hover:text-gray-700 cursor-pointer"
+                      >
+                        <PencilIcon className="h-4 w-4" />
+                      </ActionIcon>
+                    </Tooltip>
+                  )}
+                </div>
+              ))}
+            </div>
+          );
         } else {
           return <div>OFF</div>;
         }
@@ -49,46 +108,23 @@ export const getColumns = (openModal: (args: any) => void, Data: ShiftUserDetail
   return columns;
 };
 
-export interface Shift {
-  time_in: string;
-  time_out: string;
-  active: string;
-  shift_type: string;
-}
-export interface WorkShift {
-  date_start: string;
-  date_end: string;
-  active: string;
-}
-export interface ShiftUserDetail {
-  day_of_week: string;
-  shift: {
-    active: string;
-    time_in: string;
-    time_out: string;
-  };
+export interface Attendance {
+  day: string;
   staff: {
     name: string;
     active: string;
   };
+  check_in: string;
+  check_out: string;
   active: string;
 }
-const getDatesBetween = (startDate: Date, endDate: Date): Date[] => {
-  const dates = [];
-  let currentDate = new Date(startDate);
-
-  while (currentDate <= endDate) {
-    dates.push(new Date(currentDate));
-    currentDate.setDate(currentDate.getDate() + 1);
-  }
-
-  return dates;
-};
 export interface Staff {
   active: string;
-  name: string;
+  first_name: string;
+  last_name: string;
   phone: string;
   image: string;
+  uuid: string;
   idcard: string;
   birthday: string;
   status: any;

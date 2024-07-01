@@ -22,7 +22,9 @@ export interface RootState {
   work_shift: work_shiftType;
   order: orderType;
   kitchen_order: kitchen_orderType;
+  attendance: attendance;
   service_device_detail: service_device_detailType;
+
 }
 
 export interface kitchen_orderType {
@@ -399,6 +401,18 @@ export interface orderType {
 }
 export interface product_typeType {
   data: [];
+  isLoading: boolean;
+  listType: any[];
+}
+export interface attendance {
+  dataAttendance: any[];
+  isLoading: boolean;
+  isFiltered: boolean;
+  isCreateLoading: boolean;
+  isUpdateLoading: boolean;
+  month: number;
+  query: string;
+  year: number;
   isLoading: boolean;
   listType: any[];
 }

@@ -12,7 +12,7 @@ Route::group(
     Route::get('/', [AttendanceController::class, 'index']);
     Route::get('/{active}', [AttendanceController::class, 'show']);
     Route::post('/', [AttendanceController::class, 'store']);
-    Route::put('/{active}', [AttendanceController::class, 'update']);
-    Route::delete('/{active}', [AttendanceController::class, 'destroy']);
+    Route::put('/', [AttendanceController::class, 'update']);
+    Route::delete('/{uuid}/{day}', [AttendanceController::class, 'destroy']);
   }
 );

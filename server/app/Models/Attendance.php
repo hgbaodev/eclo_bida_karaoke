@@ -17,8 +17,11 @@ class Attendance extends Model
     protected $fillable = [
         'staff_id',
         'day',
+        'check_in',
+        'check_out',
         'time_in',
         'time_out',
+        'type',
     ];
 
     protected $hidden = [
@@ -35,7 +38,7 @@ class Attendance extends Model
             }
         });
     }
-    public function product_type()
+    public function staff()
     {
         return $this->belongsTo(Staff::class, 'staff_id');
     }

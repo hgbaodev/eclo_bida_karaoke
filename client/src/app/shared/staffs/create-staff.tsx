@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { PiXBold } from 'react-icons/pi';
 import { Controller, SubmitHandler } from 'react-hook-form';
 import { Form } from '@/components/ui/form';
-import { Input, Button, ActionIcon, Title, Select, Textarea, Password, RadioGroup, Radio } from 'rizzui';
+import { Input, Button, ActionIcon, Title, Select, Textarea, Password, RadioGroup, Radio, FileInput } from 'rizzui';
 import { useModal } from '@/app/shared/modal-views/use-modal';
 import { createStaff, getStaffs } from '@/store/slices/staffSlice';
 import { CreateStaffInput, createStaffSchema } from '@/utils/validators/create-staff.schema';
@@ -25,58 +25,64 @@ export default function CreateStaff() {
   const { pageSize, page, query, isCreateLoading, position, status } = useSelector((state: RootState) => state.staff);
   const { listPositions } = useSelector((state: RootState) => state.position);
   const onSubmit: SubmitHandler<CreateStaffInput> = async (data) => {
-    try {
-      let active = '';
-      // Lưu thông tin người dùng nếu có
-      if (addUser) {
-        const dataUser = {
-          first_name: data.first_name,
-          last_name: data.last_name,
-          email: data.email,
-          password: data.password,
-          role: data.role,
-          status: 'A',
-        };
-        const userResult: any = await dispatch(createUser(dataUser));
-        if (!createUser.fulfilled.match(userResult)) {
-          setErrors(userResult?.payload?.errors);
-        } else {
-          active = userResult.payload.data.active;
+    if (data['image'] && data['image'].length > 0) {
+      const imageFile = data['image'][0];
+      try {
+        let active = '';
+        // Lưu thông tin người dùng nếu có
+        if (addUser) {
+          const dataUser = {
+            first_name: data.first_name,
+            last_name: data.last_name,
+            email: data.email,
+            password: data.password,
+            role: data.role,
+            status: 'A',
+          };
+          const userResult: any = await dispatch(createUser(dataUser));
+          if (!createUser.fulfilled.match(userResult)) {
+            setErrors(userResult?.payload?.errors);
+          } else {
+            active = userResult.payload.data.active;
+          }
         }
-      }
-      const dataStaff = {
-        first_name: data.first_name,
-        last_name: data.last_name,
-        birthday: data.birthday,
-        gender: data.gender,
-        phone: data.phone,
-        idcard: data.idcard,
-        address: data.address,
-        status: data.status,
-        position: data.position,
-        user: active,
-      };
-      const result: any = await dispatch(createStaff(dataStaff));
+        const formData = new FormData();
+        formData.append('image', imageFile);
+        formData.append('first_name', data.first_name);
+        formData.append('last_name', data.last_name);
+        formData.append('birthday', data.birthday);
+        formData.append('gender', data.gender);
+        formData.append('phone', data.phone);
+        formData.append('idcard', data.idcard);
+        formData.append('address', data.address);
+        formData.append('status', data.status);
+        formData.append('position', data.position);
+        formData.append('user', active);
+        const result: any = await dispatch(createStaff(formData));
 
-      if (createStaff.fulfilled.match(result)) {
-        setReset({
-          name: '',
-          birthday: '',
-          phone: '',
-          idcard: '',
-          address: '',
-          position: '',
-        });
-        setErrors({});
-        closeModal();
-        await dispatch(getStaffs({ page, pageSize, query, position, status }));
-        toast.success('Staff created successfully');
-      } else {
-        setErrors(result?.payload?.errors);
+        if (createStaff.fulfilled.match(result)) {
+          setReset({
+            name: '',
+            birthday: '',
+            phone: '',
+            idcard: '',
+            address: '',
+            position: '',
+          });
+          setErrors({});
+          closeModal();
+          await dispatch(getStaffs({ page, pageSize, query, position, status }));
+          toast.success('Staff created successfully');
+        } else {
+          setErrors(result?.payload?.errors);
+        }
+      } catch (error) {
+        console.error('Error submitting form:', error);
+        // Xử lý lỗi nếu cần thiết
       }
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      // Xử lý lỗi nếu cần thiết
+    } else {
+      console.error('Image is not valid', data['image']);
+      toast.error('Image is not valid');
     }
   };
   return (
@@ -98,6 +104,14 @@ export default function CreateStaff() {
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
+            <FileInput
+              label="Image"
+              placeholder="Select an image"
+              {...register('image')}
+              className="col-span-full"
+              accept="image/jpeg, image/jpg, image/png, image/webp"
+              error={errors.image?.message?.toString() || ''}
+            />
             <Input
               label="IDCard"
               placeholder="Enter staff idcard"

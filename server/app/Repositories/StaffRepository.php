@@ -20,7 +20,7 @@ class StaffRepository implements StaffRepositoryInterface
         $user = $request->input('user');
         $staffs = Staff::query()->with(['position', 'user', 'user.role']);
         if ($query) {
-            $staffs->whereRaw("CONCAT(name, ' ', phone, ' ', idcard) LIKE '%$query%'");
+            $staffs->whereRaw("CONCAT(first_name,' ',last_name, ' ', phone, ' ', idcard) LIKE '%$query%'");
         }
         if ($status) {
             $staffs->where('status', $status);
@@ -73,5 +73,10 @@ class StaffRepository implements StaffRepositoryInterface
     public function countSimilarPositions($positionID)
     {
         return Staff::where("position_id", $positionID)->count();
+    }
+
+    public function getStaffByUUID($uuid)
+    {
+        return Staff::where("uuid", $uuid)->first();
     }
 }

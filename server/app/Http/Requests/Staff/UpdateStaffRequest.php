@@ -30,6 +30,7 @@ class UpdateStaffRequest extends HelperRequest
             'idcard' => ['required', 'regex:/^[0-9]{12}$/', Rule::unique('staff')->ignore($active, 'active')],
             'birthday' => 'required',
             'gender' => ['required', Rule::in(['F', 'M'])],
+            'image' => 'required|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'address' => 'required',
             'position' => 'required',
             'status' => 'required',

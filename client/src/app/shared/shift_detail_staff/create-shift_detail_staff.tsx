@@ -21,6 +21,7 @@ import {
 } from '@/store/slices/shift_user_detailSlice';
 import toast from 'react-hot-toast';
 import { OptionType } from 'dayjs';
+import { createAttendance } from '@/store/slices/attendance';
 
 export default function CreateShiftDetailStaff({ day_of_week, shift }: { day_of_week: string; shift: any }) {
   const { closeModal } = useModal();
@@ -30,7 +31,19 @@ export default function CreateShiftDetailStaff({ day_of_week, shift }: { day_of_
   const { oneWorkShift } = useSelector((state: RootState) => state.work_shift);
   const onSubmit: SubmitHandler<CreateShiftUserDetailInput> = async (data) => {
     const result: any = await dispatch(createShiftUserDetail(data));
-    console.log(result);
+    const days = getDaysOfWeekByName(oneWorkShift.date_start, oneWorkShift.date_end, day_of_week);
+    days.map((day) => {
+      const formattedDate = `${day.getFullYear()}-${('0' + (day.getMonth() + 1)).slice(-2)}-${(
+        '0' + day.getDate()
+      ).slice(-2)}`;
+      const detail: Detail = {
+        staff: data.staff,
+        day: formattedDate,
+        shift: shift.active,
+      };
+      const resultAttendance: any = dispatch(createAttendance(detail));
+      console.log(resultAttendance);
+    });
     if (createShiftUserDetail.fulfilled.match(result)) {
       setReset({});
       setErrors({});
@@ -78,7 +91,7 @@ export default function CreateShiftDetailStaff({ day_of_week, shift }: { day_of_
                     isSearchable
                     styles={customStyles}
                     getOptionValue={(option) => option.active}
-                    getOptionLabel={(option) => `${option.name} - ${option.idcard}`}
+                    getOptionLabel={(option) => `${option.last_name} ${option.first_name} - ${option.uuid}`}
                     aria-invalid={errors.staff ? 'true' : 'false'}
                   />
                   {errors.staff && <span className="error-message">{errors.staff.message}</span>}
@@ -124,3 +137,38 @@ const customStyles: StylesConfig<OptionType, boolean> = {
     background: 'white',
   }),
 };
+function getDaysOfWeekByName(startDate: Date, endDate: Date, dayOfWeek: string): Date[] {
+  const days: Date[] = [];
+  let currentDate = new Date(startDate);
+  const end = new Date(endDate);
+
+  // Chuyển đổi tên ngày trong tuần sang giá trị số
+  const dayNameToIndex: { [key: string]: number } = {
+    Sunday: 0,
+    Monday: 1,
+    Tuesday: 2,
+    Wednesday: 3,
+    Thursday: 4,
+    Friday: 5,
+    Saturday: 6,
+  };
+
+  // Lấy giá trị số của ngày trong tuần từ chuỗi tên
+  const dayIndex = dayNameToIndex[dayOfWeek];
+
+  // Lặp qua mỗi ngày trong khoảng thời gian
+  while (currentDate <= end) {
+    if (currentDate.getDay() === dayIndex) {
+      days.push(new Date(currentDate));
+    }
+    // Tăng ngày hiện tại lên 1
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  return days;
+}
+export interface Detail {
+  staff: string;
+  day: string;
+  shift: string;
+}

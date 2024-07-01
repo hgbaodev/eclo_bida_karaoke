@@ -52,8 +52,10 @@ export interface ShiftUserDetail {
     time_out: string;
   };
   staff: {
-    name: string;
+    first_name: string;
+    last_name: string;
     active: string;
+    uuid: string;
   };
   active: string;
 }
