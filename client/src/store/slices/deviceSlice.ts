@@ -20,12 +20,28 @@ const initialState: deviceType = {
 
 export const getDevices = createAsyncThunk(
   'devices',
-  async ({ page, pageSize, query, status }: { page: number; pageSize: number; query: string; status: any }) => {
+  async ({
+    page,
+    pageSize,
+    query,
+    status,
+    all,
+  }: {
+    page: number;
+    pageSize: number;
+    query: string;
+    status: any;
+    all?: boolean;
+  }) => {
     const url = new URL('/api/v1/devices', env.NEXT_API_URL);
     url.searchParams.set('page', `${page}`);
     url.searchParams.set('perPage', `${pageSize}`);
     url.searchParams.set('query', query);
     url.searchParams.set('status', `${status}`);
+    if (all !== undefined) {
+      url.searchParams.set('all', `${all}`);
+    }
+
     try {
       const response = await axiosInstance.get(url.href);
       return response.data;
@@ -34,6 +50,18 @@ export const getDevices = createAsyncThunk(
     }
   },
 );
+
+export const getAllDevices = createAsyncThunk('allDevices', async () => {
+  const url = new URL('/api/v1/devices', env.NEXT_API_URL);
+  url.searchParams.set('all', 'true');
+
+  try {
+    const response = await axiosInstance.get(url.href);
+    return response.data;
+  } catch (error: any) {
+    throw error;
+  }
+});
 
 export const createDevice = createAsyncThunk('areas/createDevice', async (data: any, { rejectWithValue }) => {
   try {
@@ -114,6 +142,17 @@ const deviceSlice = createSlice({
         state.totalRow = result.meta.total;
       })
       .addCase(getDevices.rejected, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(getAllDevices.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAllDevices.fulfilled, (state, action) => {
+        const result = action.payload.data;
+        state.isLoading = false;
+        state.data = result.result;
+      })
+      .addCase(getAllDevices.rejected, (state) => {
         state.isLoading = false;
       })
       .addCase(createDevice.pending, (state) => {

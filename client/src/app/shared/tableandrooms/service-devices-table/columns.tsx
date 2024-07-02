@@ -2,7 +2,7 @@
 
 import { HeaderCell } from '@/components/ui/table';
 import { Text, Badge, Tooltip, ActionIcon } from 'rizzui';
-import EditServiceDeviceDetail from '../edit-service-device';
+import EditServiceDeviceDetail from '../edit-service-device-detail';
 import PencilIcon from '@/components/icons/pencil';
 
 export interface ServiceDeviceDetail {

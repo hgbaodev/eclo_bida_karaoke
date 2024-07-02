@@ -2,6 +2,8 @@ import axiosInstance from '@/api/axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { service_device_detailType } from '../types';
 import { EditServiceDeviceDetailInput } from '@/utils/validators/edit-service-device-detail.schema';
+import { CreateServiceDeviceDetailInput } from '@/utils/validators/create-service-device-detail.schema';
+
 import env from '@/env';
 
 const initialState: service_device_detailType = {
@@ -64,6 +66,20 @@ export const updateServiceDeviceDetail = createAsyncThunk(
   },
 );
 
+export const createServiceDeviceDetail = createAsyncThunk(
+  'createServiceDeviceDetail',
+  async ({ serviceDeviceDetail }: { serviceDeviceDetail: CreateServiceDeviceDetailInput }, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post(`service-device-detail/`, serviceDeviceDetail);
+      return response.data;
+    } catch (error: any) {
+      if (!error.response) {
+        throw error;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
 const serviceDeviceSlice = createSlice({
   name: 'service_device_detail',
   initialState,
@@ -114,6 +130,15 @@ const serviceDeviceSlice = createSlice({
         state.isUpdateLoading = false;
       })
       .addCase(updateServiceDeviceDetail.rejected, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(createServiceDeviceDetail.pending, (state: service_device_detailType) => {
+        state.isLoading = true;
+      })
+      .addCase(createServiceDeviceDetail.fulfilled, (state, action) => {
+        state.isUpdateLoading = false;
+      })
+      .addCase(createServiceDeviceDetail.rejected, (state) => {
         state.isLoading = false;
       });
   },
