@@ -1,15 +1,19 @@
 'use client';
 
 import { HeaderCell } from '@/components/ui/table';
-import { Text, Badge } from 'rizzui';
+import { Text, Badge, Tooltip, ActionIcon } from 'rizzui';
+import EditServiceDeviceDetail from '../edit-service-device';
+import PencilIcon from '@/components/icons/pencil';
 
 export interface ServiceDeviceDetail {
   active: string;
   device_name: string;
+  device_value: number;
+  device_active: string;
+  service_active: string;
   quantity: string;
   maintaining_quantity: string;
   status: any;
-  device_value: number;
 }
 
 export enum ServiceDeviceStatusEnum {
@@ -101,5 +105,42 @@ export const getColumns = (openModal: (args: any) => void) => [
     key: 'maintaining_quantity',
     width: 50,
     render: (_: string, device: ServiceDeviceDetail) => device.maintaining_quantity,
+  },
+  {
+    title: <>Action</>,
+    dataIndex: 'action',
+    key: 'action',
+    width: 10,
+    render: (_: string, serviceDeviceDetail: ServiceDeviceDetail) => (
+      <div className="flex items-center justify-end gap-3 pe-3">
+        <Tooltip size="sm" content={'Edit this record'} placement="top" color="invert">
+          <ActionIcon
+            onClick={() => {
+              const data = {
+                quantity: Number(serviceDeviceDetail.quantity),
+                device: serviceDeviceDetail.device_active,
+                maintaining_quantity: Number(serviceDeviceDetail.maintaining_quantity),
+                status: serviceDeviceDetail.status,
+              };
+              openModal({
+                view: (
+                  <EditServiceDeviceDetail
+                    serviceActive={serviceDeviceDetail.service_active}
+                    device={data}
+                    active={serviceDeviceDetail.active}
+                  />
+                ),
+              });
+            }}
+            as="span"
+            size="sm"
+            variant="outline"
+            className="hover:!border-gray-900 hover:text-gray-700 cursor-pointer"
+          >
+            <PencilIcon className="h-4 w-4" />
+          </ActionIcon>
+        </Tooltip>
+      </div>
+    ),
   },
 ];
