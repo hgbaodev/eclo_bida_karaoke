@@ -55,4 +55,8 @@ class Staff extends Model
     {
         $this->hasMany(Order::class);
     }
+    public function dayoff()
+    {
+        $this->hasMany(DayOffs::class);
+    }
 }

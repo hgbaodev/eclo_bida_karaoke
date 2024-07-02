@@ -22,7 +22,7 @@ export default function EditProduct({ product_import, active }: { product_import
   const [errors, setErrors] = useState<any>({});
   const { pageSize, page, query, isUpdateLoading } = useSelector((state: RootState) => state.product_import);
 //   const { listPositions } = useSelector((state: RootState) => state.position);
-  const onSubmit: SubmitHandler<CreateProduc_ImporttInput> = async (data) => {
+  const onSubmit: SubmitHandler<EditProduc_ImporttInput> = async (data) => {
     const result: any = await dispatch(updateProduct({product_import: data, active }));
 
     if (updateProduct.fulfilled.match(result)) {
@@ -30,7 +30,6 @@ export default function EditProduct({ product_import, active }: { product_import
         create_time: '',
         receive_time: '',
         status: '',
-        total_cost: '',
       });
       setErrors({});
       closeModal();
@@ -76,15 +75,15 @@ export default function EditProduct({ product_import, active }: { product_import
               error={errors.receive_time?.message}
             />
 
-            <Input
-              label="Total cost"
-              type='number'
-              placeholder="Enter total cost"
-              {...register('total_cost')}
-              className="col-span-full"
-              error={errors.total_cost?.message}
-              readOnly
-            />
+              {/* <Input
+                label="Total cost"
+                type='number'
+                placeholder="Enter total cost"
+                {...register('total_cost')}
+                className="col-span-full"
+                error={errors.total_cost?.message}
+                readOnly
+              /> */}
             <Controller
               name="status"
               control={control}
@@ -105,7 +104,7 @@ export default function EditProduct({ product_import, active }: { product_import
                   inPortal={false}
                 />
               )}
-            />
+            /> 
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
                 Cancel
