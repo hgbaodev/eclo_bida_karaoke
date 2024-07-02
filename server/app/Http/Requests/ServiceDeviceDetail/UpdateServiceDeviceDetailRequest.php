@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\ServiceType;
+namespace App\Http\Requests\ServiceDeviceDetail;
 
 use App\Http\Helpers\HelperRequest;
 
-class StoreServiceTypeRequest extends HelperRequest
+class UpdateServiceDeviceDetailRequest extends HelperRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,10 +21,11 @@ class StoreServiceTypeRequest extends HelperRequest
      */
     public function rules(): array
     {
-        $active = $this->route('active');
         return [
-            'name' => ['required',],
-            'status' => 'required|in:A,D',
+            'quantity'=>['required'],
+            'status'=>['required'],
+            'device'=>['required'],
+            'maintaining_quantity'=>['required'],
         ];
     }
 }

@@ -85,7 +85,7 @@ class ServiceDeviceDetailRepository implements ServiceDeviceDetailRepositoryInte
      * @param array $data
      * @return mixed
      */
-    public function updateServiceDeviceDetail(string $active, array $data)
+    public function updateServiceDeviceDetailByActive(string $active, array $data)
     {
         $returnedData = ServiceDeviceDetail::where('active', $active)->firstOrFail();
         $returnedData->update($data);
@@ -96,7 +96,7 @@ class ServiceDeviceDetailRepository implements ServiceDeviceDetailRepositoryInte
      * @param string $active
      * @return mixed
      */
-    public function deleteServiceDeviceDetail(string $active)
+    public function deleteServiceDeviceDetailByActive(string $active)
     {
         $returnedData = ServiceDeviceDetail::where('active', $active)->firstOrFail();
         $returnedData->delete();
