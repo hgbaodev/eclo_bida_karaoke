@@ -2,8 +2,12 @@
 
 import { HeaderCell } from '@/components/ui/table';
 import { Text, Badge, Tooltip, ActionIcon } from 'rizzui';
-import EditServiceDeviceDetail from '../edit-service-device';
+import EditServiceDeviceDetail from '../edit-service-device-detail';
+import DeletePopover from '@/app/shared/delete-popover';
 import PencilIcon from '@/components/icons/pencil';
+import { getServiceDevicesDetail, deleteServiceDeviceDetail } from '@/store/slices/service_device_detailSlice';
+import toast from 'react-hot-toast';
+import { dispatch } from '@/store';
 
 export interface ServiceDeviceDetail {
   active: string;
@@ -140,6 +144,27 @@ export const getColumns = (openModal: (args: any) => void) => [
             <PencilIcon className="h-4 w-4" />
           </ActionIcon>
         </Tooltip>
+        <DeletePopover
+          title={`Delete this record`}
+          description={`Are you sure you want to delete #${serviceDeviceDetail.device_name}?`}
+          onDelete={async () => {
+            const result = await dispatch(deleteServiceDeviceDetail(serviceDeviceDetail.active)); // Remove the .then() block
+            if (deleteServiceDeviceDetail.fulfilled.match(result)) {
+              await dispatch(
+                getServiceDevicesDetail({
+                  page: 1,
+                  pageSize: 5,
+                  query: '',
+                  status: '',
+                  serviceActive: serviceDeviceDetail.service_active,
+                }),
+              );
+              toast.success(`#${serviceDeviceDetail.device_name} has been deleted successfully.`);
+            } else {
+              toast.error(`Failed to delete #${serviceDeviceDetail.device_name}.`);
+            }
+          }}
+        />
       </div>
     ),
   },

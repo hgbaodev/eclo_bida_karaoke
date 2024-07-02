@@ -8,7 +8,7 @@ import { Input, Button, ActionIcon, Title, Select } from 'rizzui';
 import { useModal } from '@/app/shared/modal-views/use-modal';
 import { dispatch } from '@/store';
 import { getServiceDevicesDetail, updateServiceDeviceDetail } from '@/store/slices/service_device_detailSlice';
-import { getDevices } from '@/store/slices/deviceSlice';
+import { getAllDevices } from '@/store/slices/deviceSlice';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
@@ -40,7 +40,7 @@ export default function EditServiceDeviceDetail({
   useEffect(() => {
     const fetch = async () => {
       try {
-        await dispatch(getDevices({ page, pageSize, query, status }));
+        await dispatch(getAllDevices());
       } catch (error) {
         console.error('Error:', error);
       }
