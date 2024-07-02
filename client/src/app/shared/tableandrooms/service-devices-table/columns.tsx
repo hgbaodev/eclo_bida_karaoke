@@ -123,7 +123,13 @@ export const getColumns = (openModal: (args: any) => void) => [
                 status: serviceDeviceDetail.status,
               };
               openModal({
-                view: <EditServiceDeviceDetail device={data} active={serviceDeviceDetail.active} />,
+                view: (
+                  <EditServiceDeviceDetail
+                    serviceActive={serviceDeviceDetail.service_active}
+                    device={data}
+                    active={serviceDeviceDetail.active}
+                  />
+                ),
               });
             }}
             as="span"

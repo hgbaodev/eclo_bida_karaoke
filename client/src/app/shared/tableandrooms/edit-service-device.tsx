@@ -22,9 +22,11 @@ import { statusOptions } from './service-devices-table/type';
 export default function EditServiceDeviceDetail({
   device,
   active,
+  serviceActive,
 }: {
   device: EditServiceDeviceDetailInput;
   active: string;
+  serviceActive: string;
 }) {
   const { closeModal } = useModal();
   const [reset, setReset] = useState<any>(device);
