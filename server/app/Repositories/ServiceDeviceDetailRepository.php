@@ -27,7 +27,6 @@ class ServiceDeviceDetailRepository implements ServiceDeviceDetailRepositoryInte
         $serviceDeviceDetail = ServiceDeviceDetail::with('service', 'device');
         $serviceDeviceDetail->latest();
 
-        // Áp dụng điều kiện tìm kiếm trên các trường name của bảng devices và services
         if ($query) {
             $serviceDeviceDetail->where(function ($q) use ($query) {
                 $q->whereHas('device', function ($q2) use ($query) {
@@ -51,7 +50,7 @@ class ServiceDeviceDetailRepository implements ServiceDeviceDetailRepositoryInte
         if ($status) {
             $serviceDeviceDetail->where('status', $status);
         }
-        if($all){
+        if ($all) {
             $serviceDeviceDetail = $serviceDeviceDetail->get();
         } else {
             $serviceDeviceDetail = $serviceDeviceDetail->paginate($perPage);

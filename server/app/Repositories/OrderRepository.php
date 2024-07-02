@@ -38,7 +38,7 @@ class OrderRepository implements OrderRepositoryInterface
 
     public function getOrderByActive(string $active)
     {
-        $order = Order::with(['service.price', 'user', 'customer', 'orderdetails.product'])->where('active', $active)->first();
+        $order = Order::with(['service.price', 'user', 'customer', 'orderdetails.product', 'orderdevicedetails.device'])->where('active', $active)->first();
 
         if (!$order) {
             return null;
@@ -57,6 +57,8 @@ class OrderRepository implements OrderRepositoryInterface
             $order_detail['selling_price'] = $orderdetail->product->selling_price;
             return $order_detail;
         });
+
+
 
         return $order;
     }
