@@ -101,4 +101,9 @@ class ServiceDeviceDetailRepository implements ServiceDeviceDetailRepositoryInte
         $returnedData->delete();
         return $returnedData;
     }
+
+    public function existsServiceDeviceDetail($service_id, $device_id)
+    {
+        return ServiceDeviceDetail::where('service_id', $service_id)->where('device_id', $device_id)->exists();
+    }
 }

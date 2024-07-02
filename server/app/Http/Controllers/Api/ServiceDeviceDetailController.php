@@ -74,14 +74,27 @@ class ServiceDeviceDetailController extends Controller
             unset($validated_data['device']); // Remove the original device field
             unset($validated_data['service']); // Remove the original device field
 
-            $returnedData = $detailRepo->createServiceDeviceDetail( $validated_data);
+            // Check if the service-device detail already exists
+            if ($detailRepo->existsServiceDeviceDetail($validated_data['service_id'], $validated_data['device_id'])) {
+                return $this->sentErrorResponse('This device is already associated with the service.');
+            }
+
+            $returnedData = $detailRepo->createServiceDeviceDetail($validated_data);
             return $this->sentSuccessResponse($returnedData);
         } catch (\Exception $e) {
             return $this->sentErrorResponse($e->getMessage());
         }
     }
 
-    public function destroy(){
 
+    public function destroy(string $active){
+        try {
+            $detailRepo = $this->serviceDeviceDetailRepository;
+            $returnedData = $detailRepo->deleteServiceDeviceDetailByActive($active);
+            return $this->sentSuccessResponse($returnedData);
+        } catch (\Exception $e){
+            return $this->sentErrorResponse($e->getMessage());
+
+        }
     }
 }

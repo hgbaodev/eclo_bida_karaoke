@@ -80,6 +80,22 @@ export const createServiceDeviceDetail = createAsyncThunk(
     }
   },
 );
+
+export const deleteServiceDeviceDetail = createAsyncThunk(
+  'deleteServiceDeviceDetail',
+  async (active: string, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.delete(`service-device-detail/${active}`);
+      return response.data;
+    } catch (error: any) {
+      if (!error.response) {
+        throw error;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
+
 const serviceDeviceSlice = createSlice({
   name: 'service_device_detail',
   initialState,
@@ -139,6 +155,15 @@ const serviceDeviceSlice = createSlice({
         state.isUpdateLoading = false;
       })
       .addCase(createServiceDeviceDetail.rejected, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(deleteServiceDeviceDetail.pending, (state: service_device_detailType) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteServiceDeviceDetail.fulfilled, (state, action) => {
+        state.isUpdateLoading = false;
+      })
+      .addCase(deleteServiceDeviceDetail.rejected, (state) => {
         state.isLoading = false;
       });
   },

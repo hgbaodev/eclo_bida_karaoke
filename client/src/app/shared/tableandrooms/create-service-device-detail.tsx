@@ -43,20 +43,27 @@ export default function CreateServiceDeviceDetail({ serviceActive }: { serviceAc
   const onSubmit: SubmitHandler<CreateServiceDeviceDetailInput> = async (data) => {
     //@ts-ignore
     data['service'] = serviceActive;
-    const result: any = await dispatch(createServiceDeviceDetail({ serviceDeviceDetail: data }));
-    if (createServiceDeviceDetail.fulfilled.match(result)) {
-      setReset({
-        device: '',
-        quantity: 0,
-        maintaining_quantity: 0,
-        status: '',
-      });
-      setErrors({});
-      closeModal();
-      await dispatch(getServiceDevicesDetail({ page, pageSize, query, status, serviceActive }));
-      toast.success('Device updated successfully');
-    } else {
-      setErrors(result?.payload?.errors);
+    try {
+      const result: any = await dispatch(createServiceDeviceDetail({ serviceDeviceDetail: data }));
+      if (createServiceDeviceDetail.fulfilled.match(result)) {
+        setReset({
+          device: '',
+          quantity: 0,
+          maintaining_quantity: 0,
+          status: '',
+        });
+        setErrors({});
+        closeModal();
+        await dispatch(getServiceDevicesDetail({ page, pageSize, query, status, serviceActive }));
+        toast.success('Device updated successfully');
+      } else {
+        closeModal(); // Close the modal on failure
+        const errorMessage = result.payload?.errors || 'Failed to create service device detail.';
+        toast.error(errorMessage);
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      toast.error('Failed to create service device detail. Please try again.');
     }
   };
 
