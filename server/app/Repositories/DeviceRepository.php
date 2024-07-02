@@ -40,7 +40,7 @@ class DeviceRepository implements DeviceRepositoryInterface
 
     function getDeviceByActive(string $active)
     {
-        $device = Device::where('active', $active);
+        $device = Device::where('active', $active)->firstOrFail();
         return $device;
     }
 

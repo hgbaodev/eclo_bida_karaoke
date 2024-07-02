@@ -34,6 +34,7 @@ class DeviceFactory extends Factory
         return [
             'name' => $this->faker->unique()->randomElement($deviceNames),
             'description' => $this->faker->text(10),
+            'value' => $this->faker->randomFloat(5, 1),
             'status' => $this->faker->randomElement(['A', 'D'])
         ];
     }

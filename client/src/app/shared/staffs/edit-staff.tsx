@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { PiXBold } from 'react-icons/pi';
 import { Controller, SubmitHandler } from 'react-hook-form';
 import { Form } from '@/components/ui/form';
-import { Input, Button, ActionIcon, Title, Select, Password, Textarea, RadioGroup, Radio } from 'rizzui';
+import { Input, Button, ActionIcon, Title, Select, Password, Textarea, RadioGroup, Radio, FileInput } from 'rizzui';
 import { useModal } from '@/app/shared/modal-views/use-modal';
 import { updateStaff, getStaffs } from '@/store/slices/staffSlice';
 import { dispatch } from '@/store';
@@ -31,49 +31,56 @@ export default function EditStaff({
   const { pageSize, page, query, isUpdateLoading, position, status } = useSelector((state: RootState) => state.staff);
   const { listPositions } = useSelector((state: RootState) => state.position);
   const onSubmit: SubmitHandler<EditStaffInput> = async (data) => {
-    const dataUser = {
-      first_name: data.first_name,
-      last_name: data.last_name,
-      email: data.email,
-      password: data.password,
-      role: data.role,
-      status: 'A',
-    };
-    // Lưu thông tin người dùng nếu có
-    const userResult: any = await dispatch(updateUser({ user: dataUser, active: activeUser }));
-    if (!updateUser.fulfilled.match(userResult)) {
-      setErrors(userResult?.payload?.errors);
+    if (data['image'] && data['image'].length > 0) {
+      const imageFile = data['image'][0];
+      const dataUser = {
+        first_name: data.first_name,
+        last_name: data.last_name,
+        email: data.email,
+        password: data.password,
+        role: data.role,
+        status: 'A',
+      };
+      // Lưu thông tin người dùng nếu có
+      const userResult: any = await dispatch(updateUser({ user: dataUser, active: activeUser }));
+      if (!updateUser.fulfilled.match(userResult)) {
+        setErrors(userResult?.payload?.errors);
+      } else {
+        activeUser = userResult.payload.data.active;
+      }
+      const dataStaff = {
+        first_name: data.first_name,
+        last_name: data.last_name,
+        birthday: data.birthday,
+        phone: data.phone,
+        gender: data.gender,
+        image: imageFile,
+        idcard: data.idcard,
+        address: data.address,
+        status: data.status,
+        position: data.position,
+        user: activeUser,
+      };
+      const result: any = await dispatch(updateStaff({ staff: data, active }));
+      if (updateStaff.fulfilled.match(result)) {
+        setReset({
+          name: '',
+          birthday: '',
+          phone: '',
+          idcard: '',
+          address: '',
+          position: '',
+        });
+        setErrors({});
+        closeModal();
+        await dispatch(getStaffs({ page, pageSize, query, position, status }));
+        toast.success('Staff edited successfully');
+      } else {
+        setErrors(result?.payload?.errors);
+      }
     } else {
-      activeUser = userResult.payload.data.active;
-    }
-    const dataStaff = {
-      first_name: data.first_name,
-      last_name: data.last_name,
-      birthday: data.birthday,
-      phone: data.phone,
-      gender: data.gender,
-      idcard: data.idcard,
-      address: data.address,
-      status: data.status,
-      position: data.position,
-      user: activeUser,
-    };
-    const result: any = await dispatch(updateStaff({ staff: data, active }));
-    if (updateStaff.fulfilled.match(result)) {
-      setReset({
-        name: '',
-        birthday: '',
-        phone: '',
-        idcard: '',
-        address: '',
-        position: '',
-      });
-      setErrors({});
-      closeModal();
-      await dispatch(getStaffs({ page, pageSize, query, position, status }));
-      toast.success('Staff edited successfully');
-    } else {
-      setErrors(result?.payload?.errors);
+      console.error('Image is not valid', data['image']);
+      toast.error('Image is not valid');
     }
   };
   return (
@@ -96,6 +103,14 @@ export default function EditStaff({
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
+            <FileInput
+              label="Image"
+              placeholder="Select an image"
+              {...register('image')}
+              className="col-span-full"
+              accept="image/jpeg, image/jpg, image/png, image/webp"
+              error={errors.image?.message?.toString() || ''}
+            />
             <Input
               label="IDCard"
               placeholder="Enter staff idcard"

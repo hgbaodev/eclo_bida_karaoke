@@ -8,6 +8,7 @@ import { TiDeleteOutline } from 'react-icons/ti';
 import { deleteShiftUserDetail, getShiftUserDetails } from '@/store/slices/shift_user_detailSlice';
 import { dispatch } from '@/store';
 import { ActionIcon, Tooltip } from 'rizzui';
+import { deleteAttendance } from '@/store/slices/attendance';
 interface DayColumnProps {
   data: ShiftUserDetail[];
   dayOfWeek: string;
@@ -49,16 +50,23 @@ const DayColumn: React.FC<DayColumnProps> = ({ data, dayOfWeek, shift, workshift
                   onClick={async () => {
                     const result = await dispatch(deleteShiftUserDetail(dayData.active)); // Remove the .then() block
                     if (deleteShiftUserDetail.fulfilled.match(result)) {
+                      const days = getDaysOfWeekByName(workshift.date_start, workshift.date_end, dayOfWeek);
+                      days.map((day) => {
+                        const formattedDate = `${day.getFullYear()}-${('0' + (day.getMonth() + 1)).slice(-2)}-${(
+                          '0' + day.getDate()
+                        ).slice(-2)}`;
+                        dispatch(deleteAttendance({ uuid: dayData.staff.uuid, day: formattedDate }));
+                      });
                       await dispatch(getShiftUserDetails(workshift.active));
-                      toast.success(`Staff #${dayData.staff.name} has been deleted successfully.`);
+                      toast.success(`Staff #${dayData.staff.first_name} has been deleted successfully.`);
                     } else {
-                      toast.error(`Failed to delete staff #${dayData.staff.name}.`);
+                      toast.error(`Failed to delete staff #${dayData.staff.first_name}.`);
                     }
                   }}
                 />
               </ActionIcon>
             </Tooltip>
-            {dayData.staff.name} <br />
+            {dayData.staff.last_name + ' ' + dayData.staff.first_name} <br />
           </div>
         ))}
         <Create onClick={<CreateShiftDetailStaff day_of_week={dayOfWeek} shift={shift} />} />
@@ -72,4 +80,34 @@ const DayColumn: React.FC<DayColumnProps> = ({ data, dayOfWeek, shift, workshift
     );
   }
 };
+function getDaysOfWeekByName(startDate: Date, endDate: Date, dayOfWeek: string): Date[] {
+  const days: Date[] = [];
+  let currentDate = new Date(startDate);
+  const end = new Date(endDate);
+
+  // Chuyển đổi tên ngày trong tuần sang giá trị số
+  const dayNameToIndex: { [key: string]: number } = {
+    Sunday: 0,
+    Monday: 1,
+    Tuesday: 2,
+    Wednesday: 3,
+    Thursday: 4,
+    Friday: 5,
+    Saturday: 6,
+  };
+
+  // Lấy giá trị số của ngày trong tuần từ chuỗi tên
+  const dayIndex = dayNameToIndex[dayOfWeek];
+
+  // Lặp qua mỗi ngày trong khoảng thời gian
+  while (currentDate <= end) {
+    if (currentDate.getDay() === dayIndex) {
+      days.push(new Date(currentDate));
+    }
+    // Tăng ngày hiện tại lên 1
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  return days;
+}
 export default DayColumn;

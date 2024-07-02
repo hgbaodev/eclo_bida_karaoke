@@ -11,4 +11,6 @@ interface AttendanceRepositoryInterface
     public function createAttendance(array $data);
     public function updateAttendanceByActive($id, array $data);
     public function deleteAttendanceByActive($id);
+
+    public function getAttendanceByUUIDAndDay($id, $day);
 }

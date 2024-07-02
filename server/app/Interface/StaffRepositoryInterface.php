@@ -9,6 +9,7 @@ interface StaffRepositoryInterface
     public function getAllStaffs();
     public function countSimilarPositions($positionID);
     public function getStaffByActive($active);
+    public function getStaffByUUID($uuid);
     public function createStaff(array $data);
     public function updateStaffByActive($id, array $data);
     public function deleteStaffByActive($id);

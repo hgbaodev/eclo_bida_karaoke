@@ -28,6 +28,7 @@ class StaffRequest extends HelperRequest
             'phone' => 'required|unique:staff|regex:/^[0-9]{10}$/',
             'idcard' => 'required|unique:staff|regex:/^[0-9]{12}$/',
             'birthday' => 'required',
+            'image' => 'required|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'gender' => ['required', Rule::in(['F', 'M'])],
             'address' => 'required',
             'position' => 'required',

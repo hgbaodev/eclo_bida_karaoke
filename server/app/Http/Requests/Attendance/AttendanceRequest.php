@@ -22,10 +22,11 @@ class AttendanceRequest extends HelperRequest
     public function rules(): array
     {
         return [
-            "time_in" => "required",
-            "time_out" => "required",
-            "staff_id" => "required",
-            "day" => "required"
+            "time" => 'nullable',
+            "staff" => "required",
+            "shift" => 'required',
+            "day" => "required",
+            "type" => 'nullable',
         ];
     }
 }

@@ -53,6 +53,13 @@ export const getColumns = (openModal: (args: any) => void) => [
     render: (_: string, device: Device) => <Text className="text-[13px] text-gray-500">{device.description}</Text>,
   },
   {
+    title: <HeaderCell title="Value" />,
+    dataIndex: 'value',
+    key: 'value',
+    width: 10,
+    render: (_: string, device: Device) => <Text className="text-[13px] text-gray-500">{device.value}</Text>,
+  },
+  {
     title: <HeaderCell title="Status" />,
     dataIndex: 'status',
     key: 'status',
@@ -73,6 +80,8 @@ export const getColumns = (openModal: (args: any) => void) => [
                 name: device.name,
                 description: device.description,
                 status: device.status,
+                value: Number(device.value),
+                image: device.image,
               };
               openModal({
                 view: <EditDevice device={data} active={device.active} />,
@@ -110,6 +119,7 @@ export interface Device {
   description: string;
   image: string;
   status: string;
+  value: string;
 }
 
 export function getStatusBadge(status: Device['status']) {

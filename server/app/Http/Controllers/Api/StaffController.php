@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helpers\FileHandler;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Staff\StaffRequest;
 use App\Http\Requests\Staff\UpdateStaffRequest;
@@ -50,6 +51,9 @@ class StaffController extends Controller
     public function store(StaffRequest $request)
     {
         $validatedData = $request->validated();
+        if ($request->hasFile('image')) {
+            $validatedData['image'] = FileHandler::storeFile($request->file('image'));
+        }
         $position = $this->positionRepository->getPositionByActive($validatedData['position']);
         $user = $this->userRepository->getUserByActive($validatedData['user']);
         if (!$position) {
@@ -62,9 +66,9 @@ class StaffController extends Controller
         $positionName = $position->name;
         $UUID = '';
         $words = explode(' ', $positionName);
-
         foreach ($words as $word) {
-            $UUID .= ucfirst(substr($word, 0, 1));
+            $firstChar = mb_strtoupper(mb_substr($word, 0, 1));
+            $UUID .= $firstChar;
         }
         $countSimilarPositions = $this->staffRepository->countSimilarPositions($position->id);
         $countSuffix = str_pad($countSimilarPositions + 1, 3, '0', STR_PAD_LEFT);

@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Device;
+namespace App\Http\Requests\Attendance;
 
 use App\Http\Helpers\HelperRequest;
-use Illuminate\Validation\Rule;
 
-class UpdateDeviceRequest extends HelperRequest
+class UpdateAttendanceRequest extends HelperRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,13 +21,14 @@ class UpdateDeviceRequest extends HelperRequest
      */
     public function rules(): array
     {
-        $active = $this->route('active');
         return [
-            'name' => ['required', Rule::unique('devices')->ignore($active, 'active')],
-            'description' => 'required',
-            'image' => 'file|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'status' => 'required|in:A,D',
-            'value'=>['required', 'numeric', 'min:1'],
+            "time" => 'nullable',
+            "day" => "required",
+            "uuid" => "required",
+            "check_in" => 'nullable',
+            "check_out" => "nullable",
+            "type" => 'nullable',
+            "update" => 'required'
         ];
     }
 }

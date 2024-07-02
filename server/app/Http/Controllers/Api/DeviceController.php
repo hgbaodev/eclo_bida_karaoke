@@ -35,9 +35,9 @@ class DeviceController extends Controller
         return $this->sentSuccessResponse($device, 'The device has been created!!!', 200);
     }
 
-    public function show($id)
+    public function show($active)
     {
-        return $this->sentSuccessResponse($this->deviceRepository->getDeviceById($id));
+        return $this->sentSuccessResponse($this->deviceRepository->getDeviceByActive($active));
     }
 
     public function update(UpdateDeviceRequest $request, string $active)
