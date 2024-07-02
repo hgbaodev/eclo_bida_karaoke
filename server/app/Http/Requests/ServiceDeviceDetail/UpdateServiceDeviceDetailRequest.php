@@ -22,10 +22,14 @@ class UpdateServiceDeviceDetailRequest extends HelperRequest
     public function rules(): array
     {
         return [
-            'quantity'=>['required'],
-            'status'=>['required'],
-            'device'=>['required'],
-            'maintaining_quantity'=>['required'],
+            'quantity' => ['required', 'integer', 'max:1000'],
+            'status' => ['required', 'string', 'in:in_use,available,maintenance'],
+            'device' => [
+                'required',
+                'string',
+                'regex:/^[a-zA-Z0-9_-]{43}$/' // Chỉ cho phép các ký tự chữ cái, số, gạch ngang và gạch dưới, với độ dài cố định là 43
+            ],
+            'maintaining_quantity' => ['required', 'integer', 'lte:quantity'],
         ];
     }
 }

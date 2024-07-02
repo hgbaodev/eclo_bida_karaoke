@@ -50,7 +50,7 @@ class ServiceDeviceDetailController extends Controller
             return $this->sentErrorResponse($e->getMessage());
         }
     }
-    
+
     public function store(){
 
     }
