@@ -11,10 +11,10 @@ import { Dropdown, Text } from 'rizzui';
 import { Tab } from 'rizzui';
 import usePusher from '@/hooks/use-pusher';
 import toast from 'react-hot-toast';
-import NotificationDropdown from '@/layouts/notification-dropdown';
+import NotificationDropdown from '@/layouts/kitchen-notification-dropdown';
 import RingBellSolidIcon from '@/components/icons/ring-bell-solid';
 import { Badge, ActionIcon } from 'rizzui';
-import { appendNoti, setIsLoading, removeNoti } from '@/store/slices/kitchen_order_notificationSlice';
+import { appendNoti, removeNoti, setIsLoading } from '@/store/slices/kitchen_order_notificationSlice';
 
 const pageHeader = {
   title: 'Table & Rooms',
@@ -31,6 +31,7 @@ const pageHeader = {
 
 export default function BlankPage() {
   const { areas } = useSelector((state: RootState) => state.order);
+  const { data: notifications } = useSelector((state: RootState) => state.kitchen_order_notification);
 
   const navigate = useRouter();
 
@@ -53,34 +54,10 @@ export default function BlankPage() {
     toast.success(`An order has to be delivered: ${productName} - ${productQuantity} - ${serviceName}`);
   });
 
-  const mockNotifications = [
-    {
-      id: 1,
-      name: 'New order received',
-      icon: <RingBellSolidIcon />,
-      unRead: true,
-      sendTime: '2023-07-01T12:00:00Z',
-    },
-    {
-      id: 2,
-      name: 'Order #1234 shipped',
-      icon: <RingBellSolidIcon />,
-      unRead: false,
-      sendTime: '2023-07-02T14:00:00Z',
-    },
-    {
-      id: 3,
-      name: 'Payment received for order #5678',
-      icon: <RingBellSolidIcon />,
-      unRead: true,
-      sendTime: '2023-07-03T16:00:00Z',
-    },
-  ];
-
   return (
     <>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
-      <NotificationDropdown notifications={mockNotifications}>
+      <NotificationDropdown notifications={notifications}>
         <ActionIcon
           aria-label="Notification"
           variant="text"
