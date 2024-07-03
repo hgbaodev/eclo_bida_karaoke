@@ -20,11 +20,11 @@ class DayOffs extends Model
     ];
     protected $hidden = [
         "id",
-
+        "staff_id",
     ];
-    public function Staff_DayOff()
+    public function staff_dayoff()
     {
-        return $this->belongsTo(Staff::class);
+        return $this->belongsTo(Staff::class, "staff_id");
     }
     protected static function boot()
     {
