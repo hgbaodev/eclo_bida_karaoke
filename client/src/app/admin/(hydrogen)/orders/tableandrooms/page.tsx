@@ -5,11 +5,15 @@ import { createOrder, getAreas } from '@/store/slices/orderSlice';
 import { RootState } from '@/store/types';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import toast from 'react-hot-toast';
 import { MdMoreHoriz } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 import { Dropdown, Text } from 'rizzui';
 import { Tab } from 'rizzui';
+import usePusher from '@/hooks/use-pusher';
+import toast from 'react-hot-toast';
+import NotificationDropdown from '@/layouts/notification-dropdown';
+import RingBellSolidIcon from '@/components/icons/ring-bell-solid';
+import { Badge, ActionIcon } from 'rizzui';
 
 const pageHeader = {
   title: 'Table & Rooms',
@@ -33,9 +37,60 @@ export default function BlankPage() {
     dispatch(getAreas());
   }, []);
 
+  usePusher('kitchenOrderWaitingEvent', (data) => {
+    // Truy cập và xử lý dữ liệu từ đối tượng `data`
+    const active = data.active;
+    const productName = data.product_name;
+    const productActive = data.product_active;
+    const productQuantity = data.product_quantity;
+    const serviceName = data.service_name;
+    const serviceActive = data.service_active;
+
+    toast.success(`An order has to be delivered: ${productName} - ${productQuantity} - ${serviceName}`);
+  });
+
+  const mockNotifications = [
+    {
+      id: 1,
+      name: 'New order received',
+      icon: <RingBellSolidIcon />,
+      unRead: true,
+      sendTime: '2023-07-01T12:00:00Z',
+    },
+    {
+      id: 2,
+      name: 'Order #1234 shipped',
+      icon: <RingBellSolidIcon />,
+      unRead: false,
+      sendTime: '2023-07-02T14:00:00Z',
+    },
+    {
+      id: 3,
+      name: 'Payment received for order #5678',
+      icon: <RingBellSolidIcon />,
+      unRead: true,
+      sendTime: '2023-07-03T16:00:00Z',
+    },
+  ];
+
   return (
     <>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
+      <NotificationDropdown notifications={mockNotifications}>
+        <ActionIcon
+          aria-label="Notification"
+          variant="text"
+          className="relative h-[34px] w-[34px] shadow backdrop-blur-md md:h-9 md:w-9 dark:bg-gray-100"
+        >
+          <RingBellSolidIcon className="h-[18px] w-auto" />
+          <Badge
+            renderAsDot
+            color="warning"
+            enableOutlineRing
+            className="absolute right-2.5 top-2.5 -translate-y-1/3 translate-x-1/2"
+          />
+        </ActionIcon>
+      </NotificationDropdown>
       <Tab>
         <Tab.List>
           {areas.map((area) => (

@@ -4,8 +4,6 @@ import ServiceDevicesTable from '@/app/shared/tableandrooms/service-devices-tabl
 import { useEffect, useState } from 'react';
 import { dispatch } from '@/store';
 import { getServiceByActive } from '@/store/slices/serviceSlice';
-import ModalButton from '@/app/shared/modal-button';
-import CreateServiceDeviceDetail from '@/app/shared/tableandrooms/create-service-device-detail';
 
 const pageHeader = {
   title: 'Service detail',
@@ -38,12 +36,6 @@ export default function BlankPage({ params }: { params: { slug: string } }) {
     <>
       <PageHeader title={serviceName} breadcrumb={pageHeader.breadcrumb}>
         {' '}
-        <ModalButton
-          label="Add a new device"
-          view={<CreateServiceDeviceDetail serviceActive={params.slug} />}
-          customSize="600px"
-          className="mt-0"
-        />
       </PageHeader>
       <ServiceDevicesTable serviceActive={params.slug}></ServiceDevicesTable>
     </>

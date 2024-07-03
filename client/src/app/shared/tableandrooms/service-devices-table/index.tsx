@@ -9,6 +9,9 @@ import { RootState } from '@/store/types';
 import { dispatch, useSelector } from '@/store';
 import { getServiceDevicesDetail, setPage, setPageSize } from '@/store/slices/service_device_detailSlice';
 import { useModal } from '../../modal-views/use-modal';
+import ModalButton from '@/app/shared/modal-button';
+import CreateServiceDeviceDetail from '@/app/shared/tableandrooms/create-service-device-detail';
+
 const FilterElement = dynamic(() => import('@/app/shared/tableandrooms/service-devices-table/filter-elements'), {
   ssr: false,
 });
@@ -71,7 +74,15 @@ export default function ServiceDevicesTable({ serviceActive }: { serviceActive: 
   return (
     <div className="mt-0">
       <FilterElement />
-      <StatusLegend />
+      <div className="flex justify-between items-center mb-4">
+        <StatusLegend />
+        <ModalButton
+          label="Add a new device"
+          view={<CreateServiceDeviceDetail serviceActive={serviceActive} />}
+          customSize="600px"
+          className="mt-0 px-4 py-2 text-sm w-auto min-w-max"
+        />
+      </div>
       <ControlledTable
         variant="modern"
         data={data}
