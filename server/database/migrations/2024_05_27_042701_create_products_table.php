@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('image')->default('deviceDefault.png');
             $table->double('selling_price')->default(0);
-            $table->bigInteger('quantity')->default(0);
+            $table->integer('quantity')->default(0);
             $table->string('active')->unique();
             $table->foreignId('id_type')->constrained('product_types');
             $table->softDeletes();
