@@ -1,15 +1,16 @@
 'use client';
 import { useEffect, useState } from 'react';
-import Select, { StylesConfig } from 'react-select';
+// import Select, { StylesConfig } from 'react-select';
 import { PiXBold } from 'react-icons/pi';
 import { Controller, SubmitHandler } from 'react-hook-form';
 import { Form } from '@/components/ui/form';
-import { Input, Button, ActionIcon, Title } from 'rizzui';
+import { Input, Button, ActionIcon, Title ,Select} from 'rizzui';
 import { useModal } from '@/app/shared/modal-views/use-modal';
 import { dispatch } from '@/store';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
-
+import { statusOptions } from './type';
+import  {getStatusBadge}  from './colunm';
 import {
   CreateShiftUserDetailInput,
   createShiftUserDetailSchema,
@@ -66,13 +67,21 @@ export default function CreateDayOff() {
             </div>
             <Input label="Staff ID" placeholder="Enter staff id" className="col-span-full" />
             <Input label="Reason" placeholder="Reason for day off" className="col-span-full" />
-            {/* <Controller
+            <Input
+              type="date"
+              label="Day off"
+              placeholder="Enter day off"
+              {...register('birthday')}
+              className="col-span-[1/2]"
+              error={errors.birthday?.message}
+            />
+             <Controller
               name="status"
               control={control}
               render={({ field: { name, onChange, value } }) => (
                 <Select
-                  options={statusOptions}
                   value={value}
+                  options={statusOptions}
                   onChange={onChange}
                   name={name}
                   label="Status"
@@ -86,7 +95,8 @@ export default function CreateDayOff() {
                   inPortal={false}
                 />
               )}
-            /> */}
+            /> 
+            
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto" style={{ zIndex: 10 }}>
                 Cancel
@@ -102,16 +112,16 @@ export default function CreateDayOff() {
   );
 }
 
-const customStyles: StylesConfig<OptionType, boolean> = {
-  menu: (provided, state) => ({
-    ...provided,
-    zIndex: 9999,
-    position: 'absolute',
-    maxHeight: '300px',
-    marginTop: '-1px',
-    background: 'white',
-  }),
-};
+// const customStyles: StylesConfig<OptionType, boolean> = {
+//   menu: (provided, state) => ({
+//     ...provided,
+//     zIndex: 9999,
+//     position: 'absolute',
+//     maxHeight: '300px',
+//     marginTop: '-1px',
+//     background: 'white',
+//   }),
+// };
 
 // const App = () => {
 //   const [currentTime, setCurrentTime] = useState('');
