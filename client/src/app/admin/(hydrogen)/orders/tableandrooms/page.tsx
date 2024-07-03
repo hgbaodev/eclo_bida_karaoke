@@ -14,6 +14,7 @@ import toast from 'react-hot-toast';
 import NotificationDropdown from '@/layouts/notification-dropdown';
 import RingBellSolidIcon from '@/components/icons/ring-bell-solid';
 import { Badge, ActionIcon } from 'rizzui';
+import { appendNoti, setIsLoading, removeNoti } from '@/store/slices/kitchen_order_notificationSlice';
 
 const pageHeader = {
   title: 'Table & Rooms',
@@ -41,11 +42,14 @@ export default function BlankPage() {
     // Truy cập và xử lý dữ liệu từ đối tượng `data`
     const active = data.active;
     const productName = data.product_name;
-    const productActive = data.product_active;
     const productQuantity = data.product_quantity;
     const serviceName = data.service_name;
-    const serviceActive = data.service_active;
 
+    // Set loading state
+    dispatch(setIsLoading(true));
+
+    // Append the notification
+    dispatch(appendNoti(data));
     toast.success(`An order has to be delivered: ${productName} - ${productQuantity} - ${serviceName}`);
   });
 
