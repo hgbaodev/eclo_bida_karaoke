@@ -3,19 +3,24 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ServiceDeviceDetail\StoreServiceDeviceDetailRequest;
 use App\Http\Requests\ServiceDeviceDetail\UpdateServiceDeviceDetailRequest;
 use App\Interface\DeviceRepositoryInterface;
 use App\Interface\ServiceDeviceDetailRepositoryInterface;
+use App\Interface\ServiceRepositoryInterface;
 use Illuminate\Http\Request;
 
 class ServiceDeviceDetailController extends Controller
 {
     protected $serviceDeviceDetailRepository;
     protected $deviceRepository;
-    public function __construct(ServiceDeviceDetailRepositoryInterface $serviceDeviceDetailRepository,DeviceRepositoryInterface $deviceRepository)
+    protected $serviceRepository;
+
+    public function __construct(ServiceRepositoryInterface $serviceRepository, ServiceDeviceDetailRepositoryInterface $serviceDeviceDetailRepository,DeviceRepositoryInterface $deviceRepository)
     {
         $this->serviceDeviceDetailRepository = $serviceDeviceDetailRepository;
-        $this->deviceRepository=$deviceRepository;
+        $this->deviceRepository = $deviceRepository;
+        $this->serviceRepository = $serviceRepository;
     }
 
     public function index(Request $request){
@@ -51,11 +56,45 @@ class ServiceDeviceDetailController extends Controller
         }
     }
 
-    public function store(){
+    public function store(StoreServiceDeviceDetailRequest $request){
+        try {
+            $validated_data = $request->validated();
 
+            $detailRepo = $this->serviceDeviceDetailRepository;
+            $deviceRepo = $this->deviceRepository;
+            $serviceRepo = $this->serviceRepository;
+
+            // Convert device field to device_id
+            $device = $deviceRepo->getDeviceByActive($validated_data['device']);
+            $service = $serviceRepo->getServiceByActive($validated_data['service']);
+
+            $validated_data['device_id'] = $device->id;
+            $validated_data['service_id'] = $service->id;
+
+            unset($validated_data['device']); // Remove the original device field
+            unset($validated_data['service']); // Remove the original device field
+
+            // Check if the service-device detail already exists
+            if ($detailRepo->existsServiceDeviceDetail($validated_data['service_id'], $validated_data['device_id'])) {
+                return $this->sentErrorResponse('This device is already associated with the service.');
+            }
+
+            $returnedData = $detailRepo->createServiceDeviceDetail($validated_data);
+            return $this->sentSuccessResponse($returnedData);
+        } catch (\Exception $e) {
+            return $this->sentErrorResponse($e->getMessage());
+        }
     }
 
-    public function destroy(){
 
+    public function destroy(string $active){
+        try {
+            $detailRepo = $this->serviceDeviceDetailRepository;
+            $returnedData = $detailRepo->deleteServiceDeviceDetailByActive($active);
+            return $this->sentSuccessResponse($returnedData);
+        } catch (\Exception $e){
+            return $this->sentErrorResponse($e->getMessage());
+
+        }
     }
 }

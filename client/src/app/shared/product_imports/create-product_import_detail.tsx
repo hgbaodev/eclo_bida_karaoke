@@ -145,7 +145,7 @@ export default function CreateProductImportDetail() {
              <Input
              type="number"
               label="Quantity"
-              placeholder="Enter quantity of producrt"
+              placeholder="Enter quantity of product"
               {...register('quantity')}
               className="col-span-full"
               error={errors.quantity?.message}

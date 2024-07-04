@@ -64,7 +64,7 @@ export const getColumns = (openModal: (args: any) => void) => [
     dataIndex: 'quantity',
     key: 'quantity',
     width: 50,
-    render: (_: string,  product: Product) => product.quantity,
+    render: (_: number,  product: Product) => product.quantity,
   },
   {
     title: <></>,
@@ -130,7 +130,7 @@ export interface Product {
     active: string;
     name: string;
     selling_price: number;
-    quantity: string;
+    quantity: number;
     image:string;
    product_type:{
     active:string

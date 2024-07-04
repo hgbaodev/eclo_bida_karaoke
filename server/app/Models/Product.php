@@ -30,6 +30,7 @@ class Product extends Model
         'quantity' => 'integer'
     ];
     
+
     protected static function boot()
     {
         parent::boot();

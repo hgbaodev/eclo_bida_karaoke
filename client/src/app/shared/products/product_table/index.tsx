@@ -8,17 +8,15 @@ import { getColumns } from '@/app/shared/products/product_table/columns';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
-import {  getProducts, setPage, setPageSize } from '@/store/slices/productSlices';
+import { getProducts, setPage, setPageSize } from '@/store/slices/productSlices';
 import { getProductType } from '@/store/slices/product_typeSlices';
-
 import { useModal } from '../../modal-views/use-modal';
+
 const FilterElement = dynamic(() => import('@/app/shared/products/product_table/filter-elements'), {
   ssr: false,
 });
 
 export default function ProductsTable() {
-
-
   const { openModal } = useModal();
   const { data, isLoading, pageSize, page, totalRow, query } = useSelector((state: RootState) => state.product);
   useEffect(() => {
@@ -55,7 +53,6 @@ export default function ProductsTable() {
         showLoadingText={false}
         // @ts-ignore
         columns={visibleColumns}
-      
         paginatorOptions={{
           pageSize,
           setPageSize: handleChangePageSize,
