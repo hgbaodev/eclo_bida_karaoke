@@ -3,12 +3,8 @@
 namespace App\Repositories;
 
 use App\Http\Collections\CollectionCustom;
-use App\Interface\currentOrder;
 use App\Interface\OrderRepositoryInterface;
-use App\Interface\requestedProduct;
 use App\Models\Order;
-use App\Models\Product;
-use App\Notifications\OrderNotification;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\DatabaseNotification;
 
@@ -44,20 +40,29 @@ class OrderRepository implements OrderRepositoryInterface
             return null;
         }
 
-        if ($order['orderdetails']->isEmpty()) {
-            $order['products'] = [];
-            return $order;
-        }
+        $order['products'] = [];
 
         $order['products'] = $order['orderdetails']->map(function ($orderdetail) {
             $order_detail['active'] = $orderdetail->product->active;
             $order_detail['quantity'] = $orderdetail->quantity;
-            $order_detail['image'] = $orderdetail->product->image ?? 'default_image.png'; // Added a fallback for missing images
+            $order_detail['image'] = $orderdetail->product->image; // Added a fallback for missing images
             $order_detail['name'] = $orderdetail->product->name;
             $order_detail['selling_price'] = $orderdetail->product->selling_price;
+            $order_detail['quantity_stock'] = $orderdetail->product->quantity;
             return $order_detail;
         });
 
+        $order['devices'] = [];
+
+        $order['devices'] = $order['orderdevicedetails']->map(function ($orderdevice) {
+            $order_device['active'] = $orderdevice->device->active;
+            $order_device['image'] = $orderdevice->device->image;
+            $order_device['quantity'] = $orderdevice->quantity;
+            $order_device['name'] = $orderdevice->device->name;
+            $order_device['selling_price'] = $orderdevice->device->value;
+            $order_device['quantity_stock'] = $orderdevice->device->quantity;
+            return $order_device;
+        });
 
 
         return $order;
@@ -105,5 +110,20 @@ class OrderRepository implements OrderRepositoryInterface
 
     public function payOrder($request)
     {
+    }
+
+    public function getInvoices($request)
+    {
+        $all = $request->input('all');
+        $perPage = $request->input('perPage');
+
+        $orders = Order::with(['service', 'customer'])->where('checkout_time', '!=', null);
+        $orders->latest();
+        if ($all) {
+            $orders = $orders->get();
+        } else {
+            $orders = $orders->paginate($perPage);
+        }
+        return new CollectionCustom($orders);
     }
 }

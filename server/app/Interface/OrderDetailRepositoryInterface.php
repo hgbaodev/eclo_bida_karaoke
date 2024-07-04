@@ -11,4 +11,5 @@ interface OrderDetailRepositoryInterface
      * @return mixed
      */
     public function addProductsOrder($products, $order_id);
+    public function addDevicesOrder($devices, $order_id);
 }

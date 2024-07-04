@@ -13,6 +13,7 @@ import { dispatch } from '@/store';
 import useDebounce from '@/hooks/use-debounce';
 import { PiMagnifyingGlassBold } from 'react-icons/pi';
 import { MdOutlineFindInPage } from 'react-icons/md';
+import toast from 'react-hot-toast';
 
 const SearchProduct = () => {
   const { queryProduct, isLoadingQueryProduct, products } = useSelector((state: RootState) => state.order);
@@ -73,42 +74,55 @@ const SearchProduct = () => {
                 </div>
               ) : (
                 <>
-                  {products.map((product: { active: string; image: string; name: string; selling_price: number }) => (
-                    <div
-                      key={product?.active}
-                      className="flex justify-between items-center space-x-2 cursor-pointer rounded"
-                    >
-                      <AvatarCard
-                        src={env.API_STORAGE + product.image}
-                        avatarProps={{
-                          name: '',
-                          size: 'lg',
-                          className: 'rounded-lg',
-                        }}
-                        name={product.name}
-                      />
-                      <ActionIcon
-                        onClick={() => {
-                          const pro = {
-                            active: product.active,
-                            name: product.name,
-                            image: product.image,
-                            selling_price: product.selling_price,
-                            quantity: 1,
-                          };
-                          dispatch(setAddProduct(pro));
-                          setOpen(false);
-                          dispatch(setQueryProduct(''));
-                        }}
-                        as="span"
-                        size="sm"
-                        variant="outline"
-                        className="hover:!border-gray-900 hover:text-gray-700 cursor-pointer"
+                  {products.map(
+                    (product: {
+                      active: string;
+                      image: string;
+                      name: string;
+                      selling_price: number;
+                      quantity: number;
+                    }) => (
+                      <div
+                        key={product?.active}
+                        className="flex justify-between items-center space-x-2 cursor-pointer rounded"
                       >
-                        <IoMdAdd className="h-4 w-4" />
-                      </ActionIcon>
-                    </div>
-                  ))}
+                        <AvatarCard
+                          src={env.API_STORAGE + product.image}
+                          avatarProps={{
+                            name: '',
+                            size: 'lg',
+                            className: 'rounded-lg',
+                          }}
+                          name={product.name + ` (${product.quantity})`}
+                        />
+                        <ActionIcon
+                          onClick={() => {
+                            if (product.quantity == 0) {
+                              toast.error('Product out of stock');
+                              return;
+                            }
+                            const pro = {
+                              active: product.active,
+                              name: product.name,
+                              image: product.image,
+                              selling_price: product.selling_price,
+                              quantity: 1,
+                              quantity_stock: product.quantity,
+                            };
+                            dispatch(setAddProduct(pro));
+                            setOpen(false);
+                            dispatch(setQueryProduct(''));
+                          }}
+                          as="span"
+                          size="sm"
+                          variant="outline"
+                          className="hover:!border-gray-900 hover:text-gray-700 cursor-pointer"
+                        >
+                          <IoMdAdd className="h-4 w-4" />
+                        </ActionIcon>
+                      </div>
+                    ),
+                  )}
                 </>
               )}
             </div>

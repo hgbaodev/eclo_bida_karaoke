@@ -52,7 +52,7 @@ class ServiceDeviceDetailRepository implements ServiceDeviceDetailRepositoryInte
         }
         if ($all) {
             $serviceDeviceDetail = $serviceDeviceDetail->get();
-        } else {
+            } else {
             $serviceDeviceDetail = $serviceDeviceDetail->paginate($perPage ?? 10);
         }
 
