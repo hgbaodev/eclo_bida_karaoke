@@ -16,6 +16,7 @@ use App\Http\Requests\Order\UpdateOrderRequest;
 use App\Interface\CustomerRepositoryInterface;
 use App\Interface\OrderDetailRepositoryInterface;
 use App\Interface\ServiceRepositoryInterface;
+use App\Http\Controllers\Event\SendEvent;
 
 class OrderController extends Controller
 {
@@ -156,7 +157,6 @@ class OrderController extends Controller
         if (!$returnedData) {
             return $this->sentErrorResponse('Order not found', 'errors', 404);
         }
-
         return $this->sentSuccessResponse($returnedData);
     }
 
@@ -203,38 +203,38 @@ class OrderController extends Controller
         $order->save();
         return $this->sentSuccessResponse($order, 'Order has been paid successfully', 200);
     }
-    public function addProductsToOrder(Request $request, string $active)
+    public function addProductsToKitchenOrder(array $products, string $active)
     {
         try {
-            $order = $this->orderRepository->getOrderByActive($active);
-            $orderId = $order->id;
-            $requestedProducts = $request->requestedProducts;
-            $kitchenOrders = [];
+            $order = $this->orderRepository->findOrderByActive($active);
+            $data = [];
 
             // add products to database one by one
-            foreach ($requestedProducts as $requestedProduct) {
-                $product = $this->productRepository->getProductByActive($requestedProduct['active']);
-                $data = [
-                    'order_id' => $orderId,
-                    'quantity' => $requestedProduct['quantity'],
-                ];
-                $data['product_id'] = $product->id;
-                $newOrder = $this->kitchenOrderRepository->createKitchenOrder($data);
+            foreach ($products as $product) {
 
-                //Returned data
-                $eventData['status'] = 'R';
+                // Handle table storing
+                $product = $this->productRepository->getProductByActive($product['active']);
+
+                $newKitchenOrder = [
+                    'order_id' => $order->id,
+                    'quantity' => $product['quantity'],
+                ];
+                $newKitchenOrder['product_id'] = $product->id;
+
+
+                $newOrder = $this->kitchenOrderRepository->createKitchenOrder($newKitchenOrder);
+
+                // Handle evt data adding in order to send evt
+                $eventData['status'] = KitchenOrderEnum::RECEIVED;
                 $eventData['active'] = $newOrder['active'];
                 $eventData['order_active'] = $active;
-                $eventData['quantity'] = $data['quantity'];
+                $eventData['quantity'] = $newOrder['quantity'];
                 $eventData['product_name'] = $product->name;
 
-                $kitchenOrders[] = $eventData;
+                $data[] = $eventData;
             }
-
-            $request->merge(['data' => $kitchenOrders]);
-            return $this->sentSuccessResponse($kitchenOrders, 'This order has been requested successfully');
+            SendEvent::send('kitchenOrderEvent', $data);
         } catch (\Exception $e) {
-            return $this->sentErrorResponse($e->getMessage());
         }
     }
 
@@ -248,12 +248,13 @@ class OrderController extends Controller
         if (isset($validated_data['products'])) {
             $check = $this->orderDetailRepository->addProductsOrder($validated_data['products'], $order->id);
             if (!$check) return $this->sentErrorResponse('No update products detail');
-            //TODO: bao bep
+            //Handle add to kitchen order table
+            $this->addProductsToKitchenOrder($validated_data['products'], $active);
         }
         if (isset($validated_data['devices'])) {
             $check = $this->orderDetailRepository->addDevicesOrder($validated_data['devices'], $order->id);
             if (!$check) return $this->sentErrorResponse('No update devices detail');
-            //TODO: thietbep
+            //TODO: thiet bi
         }
         if (isset($validated_data['customer_active'])) {
             $customer = $this->customerRepository->getCustomerByActive($validated_data['customer_active']);

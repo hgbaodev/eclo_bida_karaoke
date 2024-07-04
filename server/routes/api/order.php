@@ -34,8 +34,7 @@ Route::group(
             'markKitchenOrderAsDoneEvent'
         );
         Route::get('/{active}', [OrderController::class, 'show']);
-        Route::post('/{active}/products', [OrderController::class, 'addProductsToOrder'])->middleware('dispatch.order.event');
         Route::post('/{active}/pay', [OrderController::class, 'payOrder']);
-        Route::post('/{active}/update', [OrderController::class, 'updateOrder']);
+        Route::put('/{active}/update', [OrderController::class, 'updateOrder']);
     }
 );
