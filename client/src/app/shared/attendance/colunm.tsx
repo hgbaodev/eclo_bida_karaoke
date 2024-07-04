@@ -40,18 +40,18 @@ const currentDate = `${Year}-${Month}-${day}`;
 // Ví dụ lấy ngày đầu tháng và ngày cuối tháng cho tháng 6 năm 2024
 export  function getStatusBadge(status: DayOff['status']) {
   switch (status) {
-    case STATUSES.Approved:
-      return (
-        <div className="flex items-center">
-          <Badge color="danger" renderAsDot />
-          <Text className="ms-2 font-medium text-red-dark">Approved</Text>
-        </div>
-      );
     case STATUSES.Unapproved:
       return (
         <div className="flex items-center">
+          <Badge color="danger" renderAsDot />
+          <Text className="ms-2 font-medium text-red-dark">Unapproved</Text>
+        </div>
+      );
+    case STATUSES.Approved:
+      return (
+        <div className="flex items-center">
           <Badge color="success" renderAsDot />
-          <Text className="ms-2 font-medium text-green-dark">Unapproved</Text>
+          <Text className="ms-2 font-medium text-green-dark">Approved</Text>
         </div>
       );
     default:

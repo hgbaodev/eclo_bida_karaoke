@@ -1,10 +1,10 @@
 export const statusOptions = [
     {
       value: 'A',
-      label: 'Approved',
+      label: 'Unapproved',
     },
     {
       value: 'D',
-      label: 'Unapproved',
+      label: 'Approved',
     },
   ];

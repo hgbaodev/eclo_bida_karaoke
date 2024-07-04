@@ -23,7 +23,11 @@ class DayOffController extends Controller
     public function store(DayOffRequest $request)
     {
         $validated_data = $request->validated();
-
+        $type = $request->input("type");
+        $reason = $request->input("reason");
+        if ($type == "D" && $reason != "") {
+            return $this->sentErrorResponse("Unapproved has no reason", "error", 404);
+        }
         $device = $this->dayOffRepository->create($validated_data);
         return $this->sentSuccessResponse($device, 'create successfully !!!', 200);
     }

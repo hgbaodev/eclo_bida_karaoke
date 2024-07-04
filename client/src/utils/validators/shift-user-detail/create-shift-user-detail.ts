@@ -8,6 +8,8 @@ export const createShiftUserDetailSchema = z.object({
   day_of_week: z.string().min(1, { message: messages.fullNameIsRequired }),
   staff: z.string().min(1, { message: messages.fullNameIsRequired }),
   status:z.string().min(1, { message: messages.statusIsRequired }),
+  day_off:z.string().min(1, { message: messages.DayoffIsRequired }),
+  
 });
 
 // generate form types from zod validation schema

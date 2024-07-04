@@ -32,6 +32,7 @@ import service from './serviceSlice';
 import service_device_detail from './service_device_detailSlice';
 
 import order from './orderSlice';
+import dayoff from './dayoffSlice'
 
 // ==============================|| COMBINE REDUCERS ||============================== //
 
@@ -61,6 +62,7 @@ const reducers = combineReducers({
   order,
   kitchen_order,
   service_device_detail,
+  dayoff,
 });
 
 export default reducers;

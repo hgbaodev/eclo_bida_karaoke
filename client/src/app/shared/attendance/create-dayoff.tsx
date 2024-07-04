@@ -12,14 +12,14 @@ import { RootState } from '@/store/types';
 import { statusOptions } from './type';
 import  {getStatusBadge}  from './colunm';
 import {
-  CreateShiftUserDetailInput,
-  createShiftUserDetailSchema,
-} from '@/utils/validators/shift-user-detail/create-shift-user-detail';
+  createDayOffSchema,
+  CreateDayOffInput,
+} from '@/utils/validators/dayoff/create-dayoff-schema';
 import {
-  createShiftUserDetail,
-  getAllShiftUserDetails,
-  getShiftUserDetails,
-} from '@/store/slices/shift_user_detailSlice';
+  createDayoff,
+  getDayoffs,
+  
+} from '@/store/slices/dayoffSlice';
 import toast from 'react-hot-toast';
 import { OptionType } from 'dayjs';
 
@@ -27,34 +27,41 @@ export default function CreateDayOff() {
   const { closeModal } = useModal();
   const [reset, setReset] = useState({});
   const [errors, setErrors] = useState<any>({});
-  const { isCreateLoading } = useSelector((state: RootState) => state.staff);
-  const { oneWorkShift } = useSelector((state: RootState) => state.work_shift);
-  const now = new Date();
-  const hours = now.getHours().toString().padStart(2, '0');
-  const minutes = now.getMinutes().toString().padStart(2, '0');
-  const onSubmit: SubmitHandler<CreateShiftUserDetailInput> = async (data) => {
-    const result: any = await dispatch(createShiftUserDetail(data));
-    if (createShiftUserDetail.fulfilled.match(result)) {
-      setReset({});
+  const { pageSize, page, query, isCreateLoading} = useSelector((state: RootState) => state.dayoff);
+  const onSubmit: SubmitHandler<CreateDayOffInput> = async (data) => {
+    const result: any = await dispatch(createDayoff(data));
+    if (createDayoff.fulfilled.match(result)) {
+    
+     setReset({
+        staff_id: '',
+        type: '',
+        reason:'',
+        day_off : '',
+
+      
+      });
       setErrors({});
       closeModal();
-      await dispatch(getShiftUserDetails(oneWorkShift.active));
+      await dispatch(getDayoffs({ page, pageSize, query }));
       toast.success('Created successfully');
     } else {
       setErrors(result?.payload?.errors);
       toast.error(result.payload.errors);
       closeModal();
+      
     }
+   
   };
   return (
-    <Form<CreateShiftUserDetailInput>
+    <Form<CreateDayOffInput>
       resetValues={reset}
       onSubmit={onSubmit}
-      validationSchema={createShiftUserDetailSchema}
+      validationSchema={createDayOffSchema}
       serverError={errors}
       className="grid grid-cols-1 gap-6 p-6 @container md:grid-cols-2 [&_.rizzui-input-label]:font-medium [&_.rizzui-input-label]:text-gray-900"
     >
       {({ setError, register, control, watch, formState: { errors } }) => {
+        console.log(errors)
         return (
           <>
             <div className="col-span-full flex items-center justify-between">
@@ -65,18 +72,23 @@ export default function CreateDayOff() {
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
-            <Input label="Staff ID" placeholder="Enter staff id" className="col-span-full" />
-            <Input label="Reason" placeholder="Reason for day off" className="col-span-full" />
+            <Input label="Staff ID" placeholder="Enter staff id" className="col-span-full"
+            error={errors.staff_id?.message}
+            {...register('staff_id')}
+            
+            />
+            <Input label="Reason" placeholder="Reason for day off" className="col-span-full" {...register('reason')}/>
+            
             <Input
               type="date"
               label="Day off"
               placeholder="Enter day off"
-              {...register('birthday')}
-              className="col-span-[1/2]"
-              error={errors.birthday?.message}
+              className="col-span-full"
+              {...register('day_off')}
+              error={errors.day_off?.message}
             />
              <Controller
-              name="status"
+              name="type"
               control={control}
               render={({ field: { name, onChange, value } }) => (
                 <Select
@@ -87,7 +99,7 @@ export default function CreateDayOff() {
                   label="Status"
                   placeholder="Select a status"
                   className="col-span-full"
-                  error={errors?.status?.message}
+                  error={errors?.type?.message}
                   getOptionValue={(option: { value: any }) => option.value}
                   getOptionDisplayValue={(option: { value: any }) => getStatusBadge(option.value as any)}
                   displayValue={(selected: any) => getStatusBadge(selected)}
@@ -98,13 +110,13 @@ export default function CreateDayOff() {
             /> 
             
             <div className="col-span-full flex items-center justify-end gap-4">
-              <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto" style={{ zIndex: 10 }}>
+              <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
                 Cancel
               </Button>
-              <Button type="submit" isLoading={isCreateLoading} className="w-full @xl:w-auto" style={{ zIndex: 10 }}>
-                Create
-              </Button>
-            </div>
+              <Button type="submit" isLoading={isCreateLoading} className="w-full @xl:w-auto">
+                Add
+             </Button>
+             </div>
           </>
         );
       }}
