@@ -60,4 +60,43 @@ class KitchenOrderRepository implements KitchenOrderRepositoryInterface
         $kitchenOrder->delete();
         return $kitchenOrder;
     }
+
+    public function getTotalQuantityByProductAndOrderActive($productActive, $orderActive)
+    {
+        return KitchenOrder::whereHas('order', function ($query) use ($orderActive) {
+            $query->where('active', $orderActive);
+        })
+            ->whereHas('product', function ($query) use ($productActive) {
+                $query->where('active', $productActive);
+            })
+            ->sum('quantity');
+    }
+
+    public function deductQuantityFromOldestOrders($productActive, $orderActive, $quantity)
+    {
+        $orders = KitchenOrder::whereHas('order', function ($query) use ($orderActive) {
+            $query->where('active', $orderActive);
+        })
+            ->whereHas('product', function ($query) use ($productActive) {
+                $query->where('active', $productActive);
+            })
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        foreach ($orders as $order) {
+            if ($quantity <= 0) {
+                break;
+            }
+
+            if ($order->quantity > $quantity) {
+                $order->quantity -= $quantity;
+                $order->save();
+                $quantity = 0;
+            } else {
+                $quantity -= $order->quantity;
+                $order->quantity = 0;
+                $order->delete();
+            }
+        }
+    }
 }
