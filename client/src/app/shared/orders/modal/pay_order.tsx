@@ -17,7 +17,7 @@ import toast from 'react-hot-toast';
 export default function PayOrder() {
   const router = useRouter();
   const { closeModal } = useModal();
-  const { order, isLoadingPayOrder } = useSelector((state: RootState) => state.order);
+  const { order, isLoadingPayOrder, isView } = useSelector((state: RootState) => state.order);
   const checkOutTime = dayjs(new Date()).format('YYYY-MM-DD HH:mm:ss');
   const hoursDiff = parseFloat((dayjs(new Date()).diff(dayjs(order?.checkin_time), 'minute') / 60).toFixed(2));
   const totalPriceProduct = order?.products.reduce((acc, cur) => acc + cur.selling_price * cur.quantity, 0);
@@ -119,15 +119,16 @@ export default function PayOrder() {
                 </Text>
                 <Text>{totalEnd} $</Text>
               </div>
-              {/* </div> */}
             </div>
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
                 Cancel
               </Button>
-              <Button type="submit" isLoading={isLoadingPayOrder} className="w-full @xl:w-auto">
-                Confirm
-              </Button>
+              {!isView && (
+                <Button type="submit" isLoading={isLoadingPayOrder} className="w-full @xl:w-auto">
+                  Confirm
+                </Button>
+              )}
             </div>
           </>
         );

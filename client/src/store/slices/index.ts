@@ -33,6 +33,7 @@ import service_device_detail from './service_device_detailSlice';
 import kitchen_order_notification from './kitchen_order_notificationSlice';
 
 import order from './orderSlice';
+import invoice from './invoiceSlice';
 
 // ==============================|| COMBINE REDUCERS ||============================== //
 
@@ -63,6 +64,7 @@ const reducers = combineReducers({
   kitchen_order,
   service_device_detail,
   kitchen_order_notification,
+  invoice,
 });
 
 export default reducers;

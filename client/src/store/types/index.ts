@@ -25,6 +25,7 @@ export interface RootState {
   attendance: attendance;
   service_device_detail: service_device_detailType;
   kitchen_order_notification: kitchen_order_notificationType;
+  invoice: invoiceType;
 }
 
 export interface kitchen_order_notificationType {
@@ -165,6 +166,16 @@ export interface supplierType {
 }
 
 export interface loggerType {
+  data: any[];
+  isLoading: boolean;
+  isFiltered: boolean;
+  page: number;
+  pageSize: number;
+  totalRow: number;
+  query: string;
+}
+
+export interface invoiceType {
   data: any[];
   isLoading: boolean;
   isFiltered: boolean;
@@ -412,6 +423,7 @@ export interface orderType {
   isLoadingPayOrder: boolean;
   isLoadingUpdateOrder: boolean;
   devices: [];
+  isView: boolean;
 }
 export interface product_typeType {
   data: [];

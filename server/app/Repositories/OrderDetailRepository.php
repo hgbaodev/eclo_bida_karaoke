@@ -15,9 +15,12 @@ class OrderDetailRepository implements OrderDetailRepositoryInterface
         OrderDetail::where('order_id', $order_id)->delete();
 
         $listProducts = array_map(function ($product) use ($order_id) {
-            $newProduct['product_id'] = Product::where('active', $product['active'])->first()->id;
+            $findPro = Product::where('active', $product['active'])->first();
+            $newProduct['product_id'] = $findPro->id;
             $newProduct['order_id'] = $order_id;
             $newProduct['quantity'] = $product['quantity'];
+            $findPro->quantity -= $product['quantity'];
+            $findPro->save();
             return $newProduct;
         }, $products);
 

@@ -9,7 +9,7 @@ import SearchProduct from '@/app/shared/orders/search_product';
 import TableOrder from '@/app/shared/orders/table_order';
 import PageHeader from '@/app/shared/page-header';
 import { dispatch } from '@/store';
-import { getOrder, updateOrder } from '@/store/slices/orderSlice';
+import { getOrder, setIsView, updateOrder } from '@/store/slices/orderSlice';
 import { RootState } from '@/store/types';
 import { formatDate } from '@/utils/format-date';
 import { useRouter } from 'next/navigation';
@@ -41,6 +41,7 @@ export default function BlankPage({ params }: { params: { slug: string } }) {
   }, [params]);
 
   const handlePay = () => {
+    dispatch(setIsView(false));
     openModal({ view: <PayOrder />, customSize: '660px' });
   };
 

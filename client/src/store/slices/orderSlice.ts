@@ -17,6 +17,7 @@ const initialState: orderType = {
   isLoadingPayOrder: false,
   isLoadingUpdateOrder: false,
   devices: [],
+  isView: false,
 };
 
 export const getAreas = createAsyncThunk('orders/getAreas', async () => {
@@ -173,6 +174,9 @@ const orderSlice = createSlice({
         state.order.customer = action.payload;
       }
     },
+    setIsView: (state, action) => {
+      state.isView = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -255,6 +259,7 @@ export const {
   setCustomer,
   setAddDevice,
   changeQuantityDevice,
+  setIsView,
 } = orderSlice.actions;
 
 export default orderSlice.reducer;

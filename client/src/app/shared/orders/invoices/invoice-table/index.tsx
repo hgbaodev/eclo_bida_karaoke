@@ -6,22 +6,19 @@ import ControlledTable from '@/components/controlled-table';
 import { getColumns } from './columns';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
-import { getServices, setPage, setPageSize } from '@/store/slices/serviceSlice';
+import { setPage, setPageSize } from '@/store/slices/invoiceSlice';
 import { dispatch } from '@/store';
 import { useModal } from '@/app/shared/modal-views/use-modal';
+import { getInvoices } from '@/store/slices/invoiceSlice';
 
 export default function InvoicesTable() {
-  const { data, pageSize, isLoading, page, totalRow, query, selectedArea } = useSelector(
-    (state: RootState) => state.service,
-  );
+  const { data, pageSize, isLoading, page, totalRow, query } = useSelector((state: RootState) => state.invoice);
 
   const { openModal } = useModal();
 
-  console.log({ selectedArea });
-
   useEffect(() => {
-    dispatch(getServices({ page, pageSize, query, area: selectedArea }));
-  }, [page, pageSize, query, selectedArea]);
+    dispatch(getInvoices({ page, pageSize, query }));
+  }, [page, pageSize, query]);
 
   const handlePaginate = (page: number) => {
     dispatch(setPage(page));
