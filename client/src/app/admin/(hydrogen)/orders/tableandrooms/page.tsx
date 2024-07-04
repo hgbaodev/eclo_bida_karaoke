@@ -14,7 +14,7 @@ import toast from 'react-hot-toast';
 import NotificationDropdown from '@/layouts/kitchen-notification-dropdown';
 import RingBellSolidIcon from '@/components/icons/ring-bell-solid';
 import { Badge, ActionIcon } from 'rizzui';
-import { appendNoti, removeNoti, setIsLoading } from '@/store/slices/kitchen_order_notificationSlice';
+import { appendNoti, setIsLoading } from '@/store/slices/kitchen_order_notificationSlice';
 
 const pageHeader = {
   title: 'Table & Rooms',

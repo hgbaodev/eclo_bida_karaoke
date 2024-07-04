@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { useMedia } from '@/hooks/use-media';
 import SimpleBar from '@/components/ui/simplebar';
 import { PiCheck } from 'react-icons/pi';
+import { appendNoti, setIsLoading } from '@/store/slices/kitchen_order_notificationSlice';
 
 dayjs.extend(relativeTime);
 
@@ -33,26 +34,17 @@ function NotificationsList({
                 className="group grid grid-cols-[auto_minmax(0,1fr)] gap-3 rounded-md px-2 py-2 pe-3 transition-colors hover:bg-gray-100 dark:hover:bg-gray-50"
               >
                 <div className="flex h-9 w-9 items-center justify-center rounded bg-gray-100/70 p-1 dark:bg-gray-50/50 [&>svg]:h-auto [&>svg]:w-5">
-                  {/* Icon or avatar if needed */}
+                  {/* Icon or avatar if needed */} b
                 </div>
                 <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center">
                   <div className="w-full">
                     <Title as="h6" className="mb-0.5 w-11/12 truncate text-sm font-semibold">
-                      {`${item.product_name} - SL: ${item.product_quantity} - ${item.service_name}`}
+                      {`Name: ${item.product_name}`}
                     </Title>
-                    <span className="ms-auto whitespace-nowrap pe-8 text-xs text-gray-500">
-                      {/* @ts-ignore */}
-                      {dayjs(item.sendTime).fromNow(true)}
-                    </span>
-                  </div>
-                  <div className="ms-auto flex-shrink-0">
-                    {item.unRead ? (
-                      <Badge renderAsDot size="lg" color="primary" className="scale-90" />
-                    ) : (
-                      <span className="inline-block rounded-full bg-gray-100 p-0.5 dark:bg-gray-50">
-                        <PiCheck className="h-auto w-[9px]" />
-                      </span>
-                    )}
+
+                    <Title as="h6" className="mb-0.5 w-11/12 truncate text-sm font-semibold">
+                      {`Quantity: ${item.product_quantity} - Service: ${item.service_name}`}
+                    </Title>
                   </div>
                 </div>
               </div>
