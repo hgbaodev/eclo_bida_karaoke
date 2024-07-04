@@ -23,12 +23,13 @@ export default function KitchenOrdersTable() {
   }, []);
 
   usePusher('kitchenOrderCreateEvent', (data: any) => {
-    if (Array.isArray(data) && data.length === 1) {
-      const order = data[0];
-      dispatch(appendOrders({ data: order }));
-      toast.success(`A customer just ordered a product: ${order.product_name}`);
+    if (Array.isArray(data)) {
+      data.forEach((order: any) => {
+        dispatch(appendOrders({ data: order }));
+        toast.success(`A customer just ordered a product: ${order.product_name}`);
+      });
     } else {
-      console.error('Expected a single-element array.');
+      console.error('Expected an array of orders.');
     }
   });
 
