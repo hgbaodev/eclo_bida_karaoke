@@ -25,9 +25,12 @@ class Product extends Model
     protected $hidden = [
         'pivot'
     ];
-    protected $casts = [
-        'quantity' => 'integer',
+    
+    protected $cats = [
+        'quantity' => 'integer'
     ];
+    
+
     protected static function boot()
     {
         parent::boot();

@@ -25,6 +25,7 @@ class PayOrderRequest extends HelperRequest
             'checkout_time' => 'required', // Changed from 'datetime' to 'date'
             'total_price' => 'required|numeric',
             'products' => 'nullable|array', // Changed from 'empty|array' to 'required|array'
+            'devices' => 'nullable|array', // Changed from 'empty|array' to 'required|array'
             'customer_active' => 'nullable|string|exists:customers,active', // Changed from 'customer_active' to 'customer_id' and 'customers,active' to 'customers,id'
         ];
     }

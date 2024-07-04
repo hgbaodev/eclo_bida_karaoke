@@ -22,7 +22,9 @@ export default function PayOrder() {
   const hoursDiff = parseFloat((dayjs(new Date()).diff(dayjs(order?.checkin_time), 'minute') / 60).toFixed(2));
   const totalPriceProduct = order?.products.reduce((acc, cur) => acc + cur.selling_price * cur.quantity, 0);
   const totalPriceService = hoursDiff * (order?.service.price.pricePerHour ?? 0);
-  const totalEnd = totalPriceProduct == undefined ? totalPriceService : totalPriceProduct + totalPriceService;
+  const totalDevices = order?.devices.reduce((acc, cur) => acc + cur.quantity * cur.selling_price, 0) ?? 0;
+  const totalEnd =
+    totalPriceProduct == undefined ? totalPriceService : totalPriceProduct + totalPriceService + totalDevices;
   return (
     <Form
       onSubmit={async () => {
@@ -31,6 +33,7 @@ export default function PayOrder() {
           total_price: totalEnd,
           checkout_time: checkOutTime,
           products: order?.products,
+          devices: order?.devices,
           customer_active: order?.customer?.active,
         };
 
@@ -91,6 +94,12 @@ export default function PayOrder() {
                   Price:
                 </Text>
                 <Text>{order?.service.price.pricePerHour}$ / 1 Hour</Text>
+              </div>
+              <div className="flex mt-3 text-red-500">
+                <Text as="b" className="w-[150px]">
+                  Total dervices:
+                </Text>
+                <Text>{totalDevices} $</Text>
               </div>
               <div className="flex mt-3">
                 <Text as="b" className="w-[150px]">

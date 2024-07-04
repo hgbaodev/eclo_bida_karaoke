@@ -366,6 +366,7 @@ export interface orderType {
     checkout_time: string;
     total_price: number;
     service: {
+      active: string;
       name: string;
       description: string;
       price: {
@@ -394,6 +395,12 @@ export interface orderType {
       name: string;
       selling_price: number;
     }[];
+    devices: {
+      active: string;
+      quantity: number;
+      name: string;
+      selling_price: number;
+    }[];
   };
   isLoadingGetOrder: boolean;
   queryProduct: string;
@@ -404,6 +411,7 @@ export interface orderType {
   customers: [];
   isLoadingPayOrder: boolean;
   isLoadingUpdateOrder: boolean;
+  devices: [];
 }
 export interface product_typeType {
   data: [];

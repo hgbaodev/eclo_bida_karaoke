@@ -19,4 +19,5 @@ interface OrderRepositoryInterface
     public function deleteOrderByActive(string $active);
     public function markOrderRequestAsRead(Request $request);
     public function payOrder($request);
+    public function getInvoices($request);
 }
