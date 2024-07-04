@@ -22,7 +22,7 @@ export default function KitchenOrdersTable() {
     }
   }, []);
 
-  usePusher('kitchenOrderEvent', (data: any) => {
+  usePusher('kitchenOrderCreateEvent', (data: any) => {
     if (Array.isArray(data) && data.length === 1) {
       const order = data[0];
       dispatch(appendOrders({ data: order }));
