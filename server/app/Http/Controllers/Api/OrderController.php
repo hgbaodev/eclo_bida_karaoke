@@ -246,6 +246,8 @@ class OrderController extends Controller
         }
 
         if (isset($validated_data['products'])) {
+            $check = $this->orderDetailRepository->addProductsOrder($validated_data['products'], $order->id);
+            if (!$check) return $this->sentErrorResponse('No update products detail');
             $products = $validated_data['products'];
             $data = [];
             foreach ($products as $productData) {
