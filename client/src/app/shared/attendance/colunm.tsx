@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { HeaderCell } from '@/components/ui/table';
 import { ActionIcon, Tooltip } from 'rizzui';
 import PencilIcon from '@/components/icons/pencil';

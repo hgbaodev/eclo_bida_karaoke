@@ -12,7 +12,7 @@ import { RootState } from '@/store/types';
 import { CreateWorkShiftInput, createWorkShiftSchema } from '@/utils/validators/work-shift/create-work-shift';
 import { createShiftUserDetail, setWorkShift } from '@/store/slices/shift_user_detailSlice';
 import { createWorkShift, getAllWorkShifts } from '@/store/slices/workshiftSlice';
-import { createAttendance } from '@/store/slices/attendance';
+import { createAttendance } from '@/store/slices/attendanceSlice';
 
 export default function CreateWorkShift() {
   const { closeModal } = useModal();

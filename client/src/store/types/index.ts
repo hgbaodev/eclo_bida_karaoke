@@ -24,6 +24,7 @@ export interface RootState {
   kitchen_order: kitchen_orderType;
   attendance: attendance;
   service_device_detail: service_device_detailType;
+  salary: salary;
 }
 
 export interface kitchen_orderType {
@@ -405,6 +406,16 @@ export interface product_typeType {
 }
 export interface attendance {
   dataAttendance: any[];
+  isLoading: boolean;
+  isFiltered: boolean;
+  isCreateLoading: boolean;
+  isUpdateLoading: boolean;
+  month: number;
+  query: string;
+  year: number;
+}
+export interface salary {
+  dataSalary: any[];
   isLoading: boolean;
   isFiltered: boolean;
   isCreateLoading: boolean;

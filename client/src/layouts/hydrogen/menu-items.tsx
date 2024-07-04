@@ -11,6 +11,7 @@ import { FaUserClock } from 'react-icons/fa6';
 import { LuClock } from 'react-icons/lu';
 import { BsPersonCheckFill } from 'react-icons/bs';
 import { TbToolsKitchen3 } from 'react-icons/tb';
+import { GiReceiveMoney } from 'react-icons/gi';
 
 // Note: do not add href in the label object, it is rendering as label
 export const menuItems = [
@@ -93,6 +94,11 @@ export const menuItems = [
     name: 'Staffs',
     href: routes.admin.staffs,
     icon: <FaUserTie />,
+  },
+  {
+    name: 'Salary',
+    href: routes.admin.salary,
+    icon: <GiReceiveMoney />,
   },
   {
     name: 'Positions',

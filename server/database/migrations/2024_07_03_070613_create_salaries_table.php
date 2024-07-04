@@ -11,18 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('attendances', function (Blueprint $table) {
+        Schema::create('salaries', function (Blueprint $table) {
             $table->id();
-            $table->string('active');
-            $table->softDeletes();
             $table->unsignedBigInteger('staff_id');
             $table->foreign('staff_id')->references('id')->on('staff');
-            $table->date("day");
-            $table->time("check_in")->nullable();
-            $table->time("check_out")->nullable();
-            $table->time("time_in");
-            $table->time("time_out");
-            $table->string("type")->nullable();
+            $table->integer("month");
+            $table->integer("year");
+            $table->integer("off_days")->nullable();
+            $table->integer("working_days")->nullable();
+            $table->double("total")->nullable();
+            $table->string('active');
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('attendances');
+        Schema::dropIfExists('salaries');
     }
 };

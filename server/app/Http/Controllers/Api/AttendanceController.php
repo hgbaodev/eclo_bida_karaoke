@@ -97,10 +97,39 @@ class AttendanceController extends Controller
         if (!$update) {
             if (!$attendance->check_in) {
                 $validatedData['check_in'] = $time;
+                if ($time > $attendance->time_in) {
+                    $validatedData['type'] = "in late";
+                }
             } else if (!$attendance->check_out) {
                 $validatedData['check_out'] = $time;
+                if ($time < $attendance->time_out) {
+                    if ($attendance->type) {
+                        $validatedData['type'] = $attendance->type . " and out early";
+                    } else {
+                        $validatedData['type'] = "out early";
+                    }
+                }
             } else {
                 return $this->sentErrorResponse("This staff is already attendanced", 'error', 404);
+            }
+        } else {
+            $validatedData['type'] = '';
+            $check_in = $attendance['check_in'];
+            $check_out = $attendance['check_out'];
+            // Kiểm tra đi muộn
+            if ($check_in > $attendance->time_in) {
+                $validatedData['type'] = 'in late';
+            }
+
+            // Kiểm tra về sớm
+            if ($check_out < $attendance->time_out) {
+                // Nếu type đã được đặt thành 'in late' trước đó, thì thêm 'out early' vào type
+                if ($validatedData['type'] === 'in late') {
+                    $validatedData['type'] .= ' and out early';
+                } else {
+                    // Nếu type chưa được đặt thành 'in late', thì đặt type thành 'out early'
+                    $validatedData['type'] = 'out early';
+                }
             }
         }
         unset($validatedData['time']);

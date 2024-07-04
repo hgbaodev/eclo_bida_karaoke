@@ -48,20 +48,20 @@ export default function EditStaff({
       } else {
         activeUser = userResult.payload.data.active;
       }
-      const dataStaff = {
-        first_name: data.first_name,
-        last_name: data.last_name,
-        birthday: data.birthday,
-        phone: data.phone,
-        gender: data.gender,
-        image: imageFile,
-        idcard: data.idcard,
-        address: data.address,
-        status: data.status,
-        position: data.position,
-        user: activeUser,
-      };
-      const result: any = await dispatch(updateStaff({ staff: data, active }));
+      const formData = new FormData();
+      formData.append('image', imageFile);
+      formData.append('first_name', data.first_name);
+      formData.append('last_name', data.last_name);
+      formData.append('birthday', data.birthday);
+      formData.append('gender', data.gender);
+      formData.append('phone', data.phone);
+      formData.append('idcard', data.idcard);
+      formData.append('address', data.address);
+      formData.append('_method', 'PUT');
+      formData.append('status', data.status);
+      formData.append('position', data.position);
+      formData.append('user', active);
+      const result: any = await dispatch(updateStaff({ staff: formData, active }));
       if (updateStaff.fulfilled.match(result)) {
         setReset({
           name: '',
@@ -92,7 +92,6 @@ export default function EditStaff({
       className="grid grid-cols-1 gap-6 p-6 @container md:grid-cols-2 [&_.rizzui-input-label]:font-medium [&_.rizzui-input-label]:text-gray-900"
     >
       {({ setError, register, control, watch, formState: { errors } }) => {
-        console.log('errors', errors);
         return (
           <>
             <div className="col-span-full flex items-center justify-between">

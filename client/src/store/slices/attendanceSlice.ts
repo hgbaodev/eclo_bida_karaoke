@@ -3,8 +3,6 @@ import axiosInstance from '@/api/axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { attendance } from '../types';
 import env from '@/env';
-import { EditAttendanceInput } from '@/utils/validators/attendance/edit-attendance-schema';
-import { AttendanceInput } from '@/utils/validators/attendance/attendance-schema';
 const currentDate = new Date();
 const initialState: attendance = {
   dataAttendance: [],

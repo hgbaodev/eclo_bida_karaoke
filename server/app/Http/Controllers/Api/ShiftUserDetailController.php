@@ -59,7 +59,7 @@ class ShiftUserDetailController extends Controller
         }
         $shiftuserdetail = $this->shiftUserDetailRes->checkUniqueByStaffDay($staff->id, $validateData["day_of_week"], $workshift->id);
         if ($shiftuserdetail->isNotEmpty()) {
-            return $this->sentErrorResponse("Shift User Detail is available", "error", 404);
+            return $this->sentErrorResponse("This staff already have one shift in this day", "error", 404);
         }
         $validateData["workshift_id"] = $workshift->id;
         $validateData["staff_id"] = $staff->id;

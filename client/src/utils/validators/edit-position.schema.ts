@@ -1,11 +1,11 @@
 import { z } from 'zod';
 import { messages } from '@/config/messages';
-import { validateEmail } from '@/utils/validators/common-rules';
 
 // form zod validation schema
 export const editPositionSchema = z.object({
   name: z.string().min(1, { message: messages.fullNameIsRequired }),
-  salary: z.string().min(1, { message: messages.birthdayIsRequired }),
+  base_salary: z.number().min(1, { message: messages.birthdayIsRequired }),
+  salary_structure: z.string(),
   status: z.string().min(1, { message: messages.statusIsRequired }),
 });
 

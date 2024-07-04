@@ -2,29 +2,22 @@
 
 namespace App\Models;
 
-use App\Traits\GeneratesUniqueActive;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Traits\GeneratesUniqueActive;
 
-class Position extends Model
+class Salary extends Model
 {
     use HasFactory, GeneratesUniqueActive;
-    use SoftDeletes;
     protected $fillable = [
-        "id",
-        "name",
-        "base_salary",
-        "salary_structure",
-        "status"
+        "staff_id",
+        "month",
+        "year",
+        "working_days",
+        "off_days",
+        "active",
+        "total"
     ];
-    protected $hidden = [
-        "id"
-    ];
-    public function staff()
-    {
-        return $this->hasOne(Staff::class);
-    }
     protected static function boot()
     {
         parent::boot();
@@ -33,5 +26,10 @@ class Position extends Model
                 $model->active = self::generateUniqueActive();
             }
         });
+    }
+
+    public function staff()
+    {
+        return $this->belongsTo(Staff::class, 'staff_id');
     }
 }
