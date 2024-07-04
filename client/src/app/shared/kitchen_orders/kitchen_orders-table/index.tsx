@@ -33,6 +33,10 @@ export default function KitchenOrdersTable() {
     }
   });
 
+  usePusher('kitchenOrderDeductEvent', (data: any) => {
+    fetchData();
+  });
+
   useEffect(() => {
     fetchData();
   }, [fetchData, status]);
