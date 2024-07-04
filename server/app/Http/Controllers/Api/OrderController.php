@@ -203,27 +203,30 @@ class OrderController extends Controller
         $order->save();
         return $this->sentSuccessResponse($order, 'Order has been paid successfully', 200);
     }
-    public function addProductsToKitchenOrder(array $products, string $active)
-    {
-        try {
-            $order = $this->orderRepository->findOrderByActive($active);
-            $data = [];
 
-            // add products to database one by one
-            foreach ($products as $product) {
+    public function handleKitchenOrder($products, $order, $active){
+        $data = [];
+        foreach ($products as $productData) {
+            $productActive = $productData['active'];
+            $newQuantity = $productData['quantity'];
 
-                // Handle table storing
-                $product = $this->productRepository->getProductByActive($product['active']);
+            // Lấy tổng số lượng hiện có từ kitchen_order
+            $totalQuantity = $this->kitchenOrderRepository->getTotalQuantityByProductAndOrderActive($productActive, $active);
 
+            if ($totalQuantity < $newQuantity) {
+                // Nếu tổng số lượng nhỏ hơn số lượng mới, tạo kitchen_order mới với số dư ra
+                $remainingQuantity = $newQuantity - $totalQuantity;
+
+                // Tạo kitchen_order mới với số dư ra
+                $product = $this->productRepository->getProductByActive($productActive);
                 $newKitchenOrder = [
                     'order_id' => $order->id,
-                    'quantity' => $product['quantity'],
+                    'product_id' => $product->id,
+                    'quantity' => $remainingQuantity,
                 ];
-                $newKitchenOrder['product_id'] = $product->id;
 
                 $newOrder = $this->kitchenOrderRepository->createKitchenOrder($newKitchenOrder);
 
-                // Handle evt data adding in order to send evt
                 $eventData['status'] = KitchenOrderEnum::RECEIVED;
                 $eventData['active'] = $newOrder['active'];
                 $eventData['order_active'] = $active;
@@ -231,10 +234,12 @@ class OrderController extends Controller
                 $eventData['product_name'] = $product->name;
 
                 $data[] = $eventData;
+            } else {
+                // Nếu tổng số lượng lớn hơn hoặc bằng số lượng mới, trừ bớt trong kitchen_order từ bản ghi cũ nhất tới mới nhất
+                $this->kitchenOrderRepository->deductQuantityFromOldestOrders($productActive, $active, $totalQuantity - $newQuantity);
             }
-            SendEvent::send('kitchenOrderEvent', $data);
-        } catch (\Exception $e) {
         }
+        SendEvent::send('kitchenOrderEvent', $data);
     }
 
     public function updateOrder(UpdateOrderRequest $request, $active)
@@ -248,42 +253,7 @@ class OrderController extends Controller
         if (isset($validated_data['products'])) {
             $check = $this->orderDetailRepository->addProductsOrder($validated_data['products'], $order->id);
             if (!$check) return $this->sentErrorResponse('No update products detail');
-            $products = $validated_data['products'];
-            $data = [];
-            foreach ($products as $productData) {
-                $productActive = $productData['active'];
-                $newQuantity = $productData['quantity'];
-
-                // Lấy tổng số lượng hiện có từ kitchen_order
-                $totalQuantity = $this->kitchenOrderRepository->getTotalQuantityByProductAndOrderActive($productActive, $active);
-
-                if ($totalQuantity < $newQuantity) {
-                    // Nếu tổng số lượng nhỏ hơn số lượng mới, tạo kitchen_order mới với số dư ra
-                    $remainingQuantity = $newQuantity - $totalQuantity;
-
-                    // Tạo kitchen_order mới với số dư ra
-                    $product = $this->productRepository->getProductByActive($productActive);
-                    $newKitchenOrder = [
-                        'order_id' => $order->id,
-                        'product_id' => $product->id,
-                        'quantity' => $remainingQuantity,
-                    ];
-
-                    $newOrder = $this->kitchenOrderRepository->createKitchenOrder($newKitchenOrder);
-
-                    $eventData['status'] = KitchenOrderEnum::RECEIVED;
-                    $eventData['active'] = $newOrder['active'];
-                    $eventData['order_active'] = $active;
-                    $eventData['quantity'] = $newOrder['quantity'];
-                    $eventData['product_name'] = $product->name;
-
-                    $data[] = $eventData;
-                } else {
-                    // Nếu tổng số lượng lớn hơn hoặc bằng số lượng mới, trừ bớt trong kitchen_order từ bản ghi cũ nhất tới mới nhất
-                    $this->kitchenOrderRepository->deductQuantityFromOldestOrders($productActive, $active, $totalQuantity - $newQuantity);
-                }
-            }
-            SendEvent::send('kitchenOrderEvent', $data);
+            $this->handleKitchenOrder($validated_data['products'], $order, $active);
         }
 
         if (isset($validated_data['devices'])) {
