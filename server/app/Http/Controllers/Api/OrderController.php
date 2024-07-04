@@ -117,6 +117,16 @@ class OrderController extends Controller
                 return $this->sentErrorResponse('Order not found');
             }
 
+
+            $eventData = [
+                'active' => $active,
+                'product_name' => $kitchenOrder->product->name,
+                'product_active' => $kitchenOrder->product->active,
+                'product_quantity' => $kitchenOrder->quantity,
+                'service_name' => $kitchenOrder->order->service->name,
+                'service_active' => $kitchenOrder->order->service->active,
+            ];
+
             // Convert the kitchen order to an array and set the status to processing
             $kitchenOrderData = $kitchenOrder->toArray();
             $kitchenOrderData['status'] = KitchenOrderEnum::WAITING;
@@ -126,13 +136,6 @@ class OrderController extends Controller
 
             $serviceName = $kitchenOrder->order->service->name;
             $productName = $kitchenOrder->product->name;
-
-            $eventData = [
-                'active' => $active,
-                'serviceName' => $serviceName,
-                'productName' => $productName,
-                'quantity' => $kitchenOrder->quantity,
-            ];
 
             $request->merge(['data' => $eventData]);
 
@@ -153,16 +156,21 @@ class OrderController extends Controller
                 return $this->sentErrorResponse('Order not found');
             }
 
+            $eventData = [
+                'active' => $active,
+                'product_name' => $kitchenOrder->product->name,
+                'product_active' => $kitchenOrder->product->active,
+                'product_quantity' => $kitchenOrder->quantity,
+                'service_name' => $kitchenOrder->order->service->name,
+                'service_active' => $kitchenOrder->order->service->active,
+            ];
+
             // Convert the kitchen order to an array and set the status to processing
             $kitchenOrderData = $kitchenOrder->toArray();
             $kitchenOrderData['status'] = KitchenOrderEnum::DONE;
 
             // Update the kitchen order and return the updated order with a success response
             $updatedKitchenOrder = $repo->deleteKitchenOrderByActive($active);
-            $eventData = [
-                'active' => $active,
-            ];
-
             $request->merge(['data' => $eventData]);
             return $this->sentSuccessResponse($updatedKitchenOrder, 'Marked as done');
         } catch (\Exception $e) {

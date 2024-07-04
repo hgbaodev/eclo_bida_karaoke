@@ -24,6 +24,13 @@ export interface RootState {
   kitchen_order: kitchen_orderType;
   attendance: attendance;
   service_device_detail: service_device_detailType;
+  kitchen_order_notification: kitchen_order_notificationType;
+}
+
+export interface kitchen_order_notificationType {
+  data: [];
+  isLoading: boolean;
+  errors: string | null;
 }
 
 export interface kitchen_orderType {
