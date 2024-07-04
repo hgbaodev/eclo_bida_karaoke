@@ -204,8 +204,11 @@ class OrderController extends Controller
         return $this->sentSuccessResponse($order, 'Order has been paid successfully', 200);
     }
 
-    public function handleKitchenOrder($products, $order, $active){
-        $data = [];
+    public function handleKitchenOrder($products, $order, $active)
+    {
+        $createData = [];
+        $deductData = [];
+
         foreach ($products as $productData) {
             $productActive = $productData['active'];
             $newQuantity = $productData['quantity'];
@@ -233,13 +236,28 @@ class OrderController extends Controller
                 $eventData['quantity'] = $newOrder['quantity'];
                 $eventData['product_name'] = $product->name;
 
-                $data[] = $eventData;
+                $createData[] = $eventData;
             } else {
                 // Nếu tổng số lượng lớn hơn hoặc bằng số lượng mới, trừ bớt trong kitchen_order từ bản ghi cũ nhất tới mới nhất
                 $this->kitchenOrderRepository->deductQuantityFromOldestOrders($productActive, $active, $totalQuantity - $newQuantity);
+
+                $deductEventData = [
+                    'status' => KitchenOrderEnum::DEDUCTED,
+                    'product_active' => $productActive,
+                    'order_active' => $active,
+                    'quantity' => $newQuantity,
+                ];
+                $deductData[] = $deductEventData;
             }
         }
-        SendEvent::send('kitchenOrderEvent', $data);
+
+        if (!empty($createData)) {
+            SendEvent::send('kitchenOrderCreateEvent', $createData);
+        }
+
+        if (!empty($deductData)) {
+            SendEvent::send('kitchenOrderDeductEvent', $deductData);
+        }
     }
 
     public function updateOrder(UpdateOrderRequest $request, $active)
