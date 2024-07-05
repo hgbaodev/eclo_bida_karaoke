@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Enums\KitchenOrderEnum;
 use App\Http\Resources\KitchenOrderResource;
 use App\Interface\KitchenOrderRepositoryInterface;
 use App\Models\KitchenOrder;
@@ -19,7 +20,9 @@ class KitchenOrderRepository implements KitchenOrderRepositoryInterface
         $perPage = $request->input('perPage');
         $status = $request->input('status');
 
-        $orders = KitchenOrder::with('product', 'order');
+        $orders = KitchenOrder::with('product', 'order')
+            ->where('status', '<>', KitchenOrderEnum::DONE);
+
         if ($all) {
             $orders = $orders->get();
         } else {
