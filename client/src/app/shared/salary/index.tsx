@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo } from 'react';
 import ControlledTable from '@/components/controlled-table';
-import { getColumns } from '@/app/shared/attendance/colunm';
+import { getColumns } from '@/app/shared/salary/colunm';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
@@ -10,35 +10,23 @@ import { getAllStaffs } from '@/store/slices/staffSlice';
 
 import { useModal } from '../modal-views/use-modal';
 import dynamic from 'next/dynamic';
-import { getAttendances } from '@/store/slices/attendanceSlice';
-import { setQuery } from '@/store/slices/product_importSlice';
+import { getSalaries } from '@/store/slices/salarySlice';
 const FilterElement = dynamic(() => import('@/app/shared/attendance/filter-element'), {
   ssr: false,
 });
-export default function ShiftDetailStaffTable() {
+export default function SalaryTable() {
   const { openModal } = useModal();
-  const { dataAttendance, isLoading, month, year } = useSelector((state: RootState) => state.attendance);
-  const { data, query } = useSelector((state: RootState) => state.staff);
+  const { dataSalary, isLoading, query, month, year } = useSelector((state: RootState) => state.salary);
   useEffect(() => {
-    dispatch(getAllStaffs(query));
+    dispatch(getSalaries({ month, year, query }));
   }, [query]);
-  useEffect(() => {
-    const fetch = async () => {
-      await dispatch(getAttendances({ month, year }));
-    };
-    fetch();
-  }, [setQuery, month, year]);
-  const columns = useMemo(
-    () => getColumns(openModal, dataAttendance, month, year),
-    [openModal, dataAttendance, month, year],
-  );
+  const columns = useMemo(() => getColumns(openModal), [openModal]);
   return (
     <div className="mt-0">
-      <label style={{ fontWeight: 'bold', fontSize: '15px' }}>Work Shift:</label>
       <FilterElement />
       <ControlledTable
         variant="modern"
-        data={data}
+        data={dataSalary}
         isLoading={isLoading}
         showLoadingText={false}
         // @ts-ignore

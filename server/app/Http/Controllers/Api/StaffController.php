@@ -108,7 +108,9 @@ class StaffController extends Controller
         $validatedData = $request->validated();
 
         $staff = $this->staffRepository->getStaffByActive($active);
-
+        if ($request->hasFile('image')) {
+            $validatedData['image'] = FileHandler::storeFile($request->file('image'));
+        }
         if (!$staff) {
             return $this->sentErrorResponse('Staff is not found', "error", 404);
         }

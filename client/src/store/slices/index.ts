@@ -11,7 +11,8 @@ import shift from './shiftSlice';
 import shift_detail from './shift_detailSlice';
 import shift_user_detail from './shift_user_detailSlice';
 import work_shift from './workshiftSlice';
-import attendance from './attendance';
+import attendance from './attendanceSlice';
+import salary from './salarySlice';
 
 import logger from './loggerSlice';
 
@@ -67,12 +68,10 @@ const reducers = combineReducers({
   order,
   kitchen_order,
   service_device_detail,
-
+  salary,
   dayoff,
-
   kitchen_order_notification,
   invoice,
-
 });
 
 export default reducers;

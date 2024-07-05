@@ -22,6 +22,7 @@ use App\Interface\ShiftRepositoryInterface;
 use App\Interface\StaffRepositoryInterface;
 use App\Interface\ProductRepositoryInterface;
 use App\Interface\ProductTypeRepositoryInterface;
+use App\Interface\SalaryRepositoryInterface;
 use App\Interface\ServiceRepositoryInterface;
 use App\Interface\ShiftDetailRepositoryInterface;
 use App\Interface\ShiftUserDetailRepositoryInterface;
@@ -53,6 +54,7 @@ use App\Repositories\StaffRepository;
 use App\Repositories\ProductImpDetailRepository;
 use App\Repositories\ProductRepository;
 use App\Repositories\ProductTypeRepository;
+use App\Repositories\SalaryRepository;
 use App\Repositories\ServiceReposirory;
 use App\Repositories\ShiftDetailRepository;
 use App\Repositories\ShiftUserDetailRepository;
@@ -92,7 +94,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(KitchenOrderRepositoryInterface::class, KitchenOrderRepository::class);
         $this->app->bind(ServiceDeviceDetailRepositoryInterface::class, ServiceDeviceDetailRepository::class);
         $this->app->bind(OrderDetailRepositoryInterface::class, OrderDetailRepository::class);
+
+        $this->app->bind(SalaryRepositoryInterface::class, SalaryRepository::class);
+
         $this->app->bind(DayOffRepositoryInterface::class, DayOffRepository::class);
+
     }
 
     /**

@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('positions', function (Blueprint $table) {
             $table->id('id');
             $table->string('name');
-            $table->string('salary');
+            $table->double('base_salary');
+            $table->string('salary_structure');
             $table->string('status');
             $table->softDeletes();
             $table->string('active')->unique();

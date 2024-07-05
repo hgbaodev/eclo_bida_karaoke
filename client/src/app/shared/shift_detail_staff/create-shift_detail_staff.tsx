@@ -21,7 +21,7 @@ import {
 } from '@/store/slices/shift_user_detailSlice';
 import toast from 'react-hot-toast';
 import { OptionType } from 'dayjs';
-import { createAttendance } from '@/store/slices/attendance';
+import { createAttendance } from '@/store/slices/attendanceSlice';
 
 export default function CreateShiftDetailStaff({ day_of_week, shift }: { day_of_week: string; shift: any }) {
   const { closeModal } = useModal();

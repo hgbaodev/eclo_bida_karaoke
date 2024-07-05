@@ -9,7 +9,7 @@ import { dispatch } from '@/store';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import toast from 'react-hot-toast';
-import { Attendance, getAttendances } from '@/store/slices/attendance';
+import { Attendance, getAttendances } from '@/store/slices/attendanceSlice';
 import { AttendanceInput, AttendanceSchema } from '@/utils/validators/attendance/attendance-schema';
 
 export default function CreateAttendance() {
@@ -42,6 +42,7 @@ export default function CreateAttendance() {
       update: false,
     };
     const result: any = await dispatch(Attendance(dataAttendance));
+    console.log(result);
     if (Attendance.fulfilled.match(result)) {
       setReset({});
       setErrors({});

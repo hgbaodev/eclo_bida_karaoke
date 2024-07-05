@@ -3,8 +3,6 @@ import axiosInstance from '@/api/axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { attendance } from '../types';
 import env from '@/env';
-import { EditAttendanceInput } from '@/utils/validators/attendance/edit-attendance-schema';
-import { AttendanceInput } from '@/utils/validators/attendance/attendance-schema';
 const currentDate = new Date();
 const initialState: attendance = {
   dataAttendance: [],
@@ -37,6 +35,20 @@ export const createAttendance = createAsyncThunk(
   async (data: any, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.post(`attendances`, data);
+      return response.data;
+    } catch (error: any) {
+      if (!error.response) {
+        throw error;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
+export const createAttendanceByWS = createAsyncThunk(
+  'attendances/createAttendanceByWS',
+  async (data: any, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post(`attendances/workshift`, data);
       return response.data;
     } catch (error: any) {
       if (!error.response) {
@@ -125,6 +137,15 @@ const attendanceSlice = createSlice({
         state.isCreateLoading = false;
       })
       .addCase(createAttendance.rejected, (state) => {
+        state.isCreateLoading = false;
+      })
+      .addCase(createAttendanceByWS.pending, (state: attendance) => {
+        state.isCreateLoading = true;
+      })
+      .addCase(createAttendanceByWS.fulfilled, (state, action) => {
+        state.isCreateLoading = false;
+      })
+      .addCase(createAttendanceByWS.rejected, (state) => {
         state.isCreateLoading = false;
       })
       .addCase(updateAttendance.pending, (state: attendance) => {

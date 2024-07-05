@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Position;
+namespace App\Http\Requests\Attendance;
 
 use App\Http\Helpers\HelperRequest;
 
-
-class PositionRequest extends HelperRequest
+class AttendanceByWSRequest extends HelperRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,10 +22,7 @@ class PositionRequest extends HelperRequest
     public function rules(): array
     {
         return [
-            "name" => "required",
-            "base_salary" => "required|regex:/^[0-9]{7,}$/",
-            "salary_structure" => 'nullable',
-            "status" => "required"
+            "detail" => "required",
         ];
     }
 }
