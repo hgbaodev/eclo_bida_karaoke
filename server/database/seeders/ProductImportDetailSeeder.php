@@ -23,6 +23,7 @@ class ProductImportDetailSeeder extends Seeder
         ProductImportDetail::create([
             "id_product" => 2,
             "cost_price" => 50000,
+
             "quantity" => 16,
             "supplier_id" => 1,
             "import_id" => 1,
@@ -30,6 +31,7 @@ class ProductImportDetailSeeder extends Seeder
         ProductImportDetail::create([
             "id_product" => 3,
             "cost_price" => 70000,
+
             "quantity" => 17,
             "supplier_id" => 1,
             "import_id" => 1,
@@ -37,6 +39,7 @@ class ProductImportDetailSeeder extends Seeder
         ProductImportDetail::create([
             "id_product" => 3,
             "cost_price" => 70000,
+
             "quantity" => 17,
             "supplier_id" => 2,
             "import_id" => 2,

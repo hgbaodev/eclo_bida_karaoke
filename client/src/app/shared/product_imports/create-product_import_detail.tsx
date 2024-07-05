@@ -16,6 +16,7 @@ import { RootState } from '@/store/types';
 import { statusOptions } from './type';
 import { useSearchParams } from 'next/navigation';
 import { values } from 'lodash';
+import { updateProduct } from '@/store/slices/productSlices';
 
 export default function CreateProductImportDetail() {
   const { closeModal } = useModal();
@@ -29,7 +30,7 @@ export default function CreateProductImportDetail() {
   const {data1 } = useSelector((state: RootState) => state.product_import);
   const onSubmit: SubmitHandler<CreateProduct_Import_DetailtInput> = async (data) => {
     const result: any = await dispatch(createProductImportDetail(data));
-
+    console.log(result)
     if (createProductImportDetail.fulfilled.match(result)) {
       setReset({
         product: '',
@@ -44,6 +45,7 @@ export default function CreateProductImportDetail() {
       closeModal();
       //@ts-expect-errorts-inogre
       await dispatch(getProductImportDetails ({ page, pageSize, query, active }));
+      // await dispatch(updateProduct({}));
       toast.success('Import product successfully');
     } else {
       setErrors(result?.payload?.errors);

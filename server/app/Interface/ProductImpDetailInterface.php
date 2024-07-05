@@ -11,5 +11,7 @@ interface ProductImpDetailInterface
     function getAllProductImppDetail();
     function create(array $data);
     function getProductImpDetailtByActive($active);
+    function getProductImportDetailByIdProdutImport($id);
+    function getProductImportDetailById($id);
     function sumCost($active);
 }

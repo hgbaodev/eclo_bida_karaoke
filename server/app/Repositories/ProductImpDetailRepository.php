@@ -57,4 +57,16 @@ class ProductImpDetailRepository implements ProductImpDetailInterface
     {
         return ProductImportDetail::where("active", $active)->first();
     }
+
+    function getProductImportDetailByIdProdutImport($id)
+    {
+        return ProductImportDetail::where("import_id", $id)->get();
+    }
+    function getProductImportDetailById($id)
+    {
+        return ProductImportDetail::where("id", $id)->first();
+    }
 }
+
+}
+

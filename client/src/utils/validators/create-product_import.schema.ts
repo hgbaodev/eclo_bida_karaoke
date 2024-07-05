@@ -5,7 +5,7 @@ import { messages } from '@/config/messages';
 export const createProduct_ImportSchema = z.object({
   create_time: z.string().min(1, { message: messages.createtimeIsRequired }),
   receive_time: z.string().min(1, { message: messages.receivetimeIsRequired }), 
-
+  status: z.string().min(1, { message: messages.statusIsRequired }), 
 });
 
 // generate form types from zod validation schema

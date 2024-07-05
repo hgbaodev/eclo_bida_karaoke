@@ -41,6 +41,7 @@ class ProductImpDetailController extends Controller
             $validated_data = $request->validated();
             $selling_price = $request->input('selling_price');
             $cost_price = $request->input('cost_price');
+            $quantity = $request->input('quantity');
             $product_import = $this->product_import_Repository->getProductImportByActive($validated_data['import']);
             // dd($product_import);
             $product = $this->product_Repository->getProductByActive($validated_data['product']);
@@ -64,6 +65,12 @@ class ProductImpDetailController extends Controller
             unset($validated_data['import']);
             unset($validated_data['product']);
             unset($validated_data['supplier']);
+
+
+            $product->quantity += $quantity;
+            $product->selling_price = $selling_price;
+            $product->save();
+
             return $this->sentSuccessResponse($this->product_import_detail_Repository->create($validated_data));
         } catch (\Exception $e) {
 
@@ -89,7 +96,6 @@ class ProductImpDetailController extends Controller
 
         // Gọi phương thức updateTotalCost() để cập nhật total_cost
         $import->updateTotalCost();
-
         return response()->json(['success' => 'Total cost updated successfully.', 'total_cost' => $import->total_cost]);
     }
 }

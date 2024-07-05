@@ -24,6 +24,9 @@ export interface RootState {
   kitchen_order: kitchen_orderType;
   attendance: attendance;
   service_device_detail: service_device_detailType;
+
+  dayoff: dayoffType;
+
   kitchen_order_notification: kitchen_order_notificationType;
   invoice: invoiceType;
 }
@@ -32,6 +35,7 @@ export interface kitchen_order_notificationType {
   data: [];
   isLoading: boolean;
   errors: string | null;
+
 }
 
 export interface kitchen_orderType {
@@ -439,4 +443,17 @@ export interface attendance {
   month: number;
   query: string;
   year: number;
+}
+export interface dayoffType {
+  data: [];
+  isLoading: boolean;
+  isFiltered: boolean;
+  page: number;
+  pageSize: number;
+  totalRow: number;
+  query: string;
+  status: any;
+  errors: any;
+  isCreateLoading: boolean;
+  isUpdateLoading: boolean;
 }

@@ -93,4 +93,5 @@ export const messages = {
   isRequired: 'required',
   ImageRequired: 'Image is required',
   deviceIsRequired: 'Device is required',
+  DayoffIsRequired:'Day off is required',
 };
