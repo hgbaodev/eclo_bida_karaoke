@@ -8,7 +8,7 @@ import { TiDeleteOutline } from 'react-icons/ti';
 import { deleteShiftUserDetail, getShiftUserDetails } from '@/store/slices/shift_user_detailSlice';
 import { dispatch } from '@/store';
 import { ActionIcon, Tooltip } from 'rizzui';
-import { deleteAttendance } from '@/store/slices/attendance';
+import { deleteAttendance } from '@/store/slices/attendanceSlice';
 interface DayColumnProps {
   data: ShiftUserDetail[];
   dayOfWeek: string;

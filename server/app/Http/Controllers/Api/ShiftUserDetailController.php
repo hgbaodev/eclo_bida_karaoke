@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ShiftUserDetail\CreateSUDByWorkShiftRequest;
 use App\Http\Requests\ShiftUserDetail\ShiftUserDetailRequest;
 use App\Interface\ShiftRepositoryInterface;
 use App\Interface\ShiftUserDetailRepositoryInterface;
@@ -68,6 +69,35 @@ class ShiftUserDetailController extends Controller
         unset($validateData['shift']);
         unset($validateData['staff']);
         return $this->sentSuccessResponse($this->shiftUserDetailRes->createShiftUserDetail($validateData), "Created successfully", 200);
+    }
+    public function storeByWorkShift(CreateSUDByWorkShiftRequest $request)
+    {
+        $validateData = $request->validated();
+        foreach ($validateData['detail'] as $item) {
+            $staff = $this->staffRes->getStaffByActive($item["staff"]);
+            if (!$staff) {
+                return $this->sentErrorResponse("Staff is not found", "error", 404);
+            }
+            $shift = $this->shiftRes->getShiftByActive($item["shift"]);
+            if (!$shift) {
+                return $this->sentErrorResponse("Shift is not found", "error", 404);
+            }
+            $workshift = $this->workshiftRes->getWorkShiftByActive($item["workshift"]);
+            if (!$workshift) {
+                return $this->sentErrorResponse("Work Shift is not found", "error", 404);
+            }
+            $shiftuserdetail = $this->shiftUserDetailRes->checkUniqueByStaffDay($staff->id, $item["day_of_week"], $workshift->id);
+            if ($shiftuserdetail->isNotEmpty()) {
+                return $this->sentErrorResponse("This staff already have one shift in this day", "error", 404);
+            }
+            $shiftuserdetails = [
+                'staff_id' => $staff->id,
+                'workshift_id' => $workshift->id,
+                'shift_id' => $shift->id,
+                'day_of_week' => $item["day_of_week"],
+            ];
+            $this->shiftUserDetailRes->createShiftUserDetail($shiftuserdetails);
+        }
     }
 
     /**

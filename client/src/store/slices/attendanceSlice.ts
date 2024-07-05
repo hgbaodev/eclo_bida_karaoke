@@ -44,6 +44,20 @@ export const createAttendance = createAsyncThunk(
     }
   },
 );
+export const createAttendanceByWS = createAsyncThunk(
+  'attendances/createAttendanceByWS',
+  async (data: any, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post(`attendances/workshift`, data);
+      return response.data;
+    } catch (error: any) {
+      if (!error.response) {
+        throw error;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
 
 export const deleteAttendance = createAsyncThunk(
   'attendances/deleteAttendance',
@@ -123,6 +137,15 @@ const attendanceSlice = createSlice({
         state.isCreateLoading = false;
       })
       .addCase(createAttendance.rejected, (state) => {
+        state.isCreateLoading = false;
+      })
+      .addCase(createAttendanceByWS.pending, (state: attendance) => {
+        state.isCreateLoading = true;
+      })
+      .addCase(createAttendanceByWS.fulfilled, (state, action) => {
+        state.isCreateLoading = false;
+      })
+      .addCase(createAttendanceByWS.rejected, (state) => {
         state.isCreateLoading = false;
       })
       .addCase(updateAttendance.pending, (state: attendance) => {

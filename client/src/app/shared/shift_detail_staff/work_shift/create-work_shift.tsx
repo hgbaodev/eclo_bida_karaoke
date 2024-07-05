@@ -10,9 +10,13 @@ import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { CreateWorkShiftInput, createWorkShiftSchema } from '@/utils/validators/work-shift/create-work-shift';
-import { createShiftUserDetail, setWorkShift } from '@/store/slices/shift_user_detailSlice';
+import {
+  createShiftUserDetail,
+  createShiftUserDetailByWorkShift,
+  setWorkShift,
+} from '@/store/slices/shift_user_detailSlice';
 import { createWorkShift, getAllWorkShifts } from '@/store/slices/workshiftSlice';
-import { createAttendance } from '@/store/slices/attendanceSlice';
+import { createAttendance, createAttendanceByWS } from '@/store/slices/attendanceSlice';
 
 export default function CreateWorkShift() {
   const { closeModal } = useModal();
@@ -34,8 +38,9 @@ export default function CreateWorkShift() {
         };
         return shiftUserDetail;
       });
+      const attendance: Detail[] = [];
+      await dispatch(createShiftUserDetailByWorkShift({ detail: updatedList }));
       for (const item of updatedList) {
-        await dispatch(createShiftUserDetail(item));
         const days = getDaysOfWeekByName(workshift.date_start, workshift.date_end, item.day_of_week);
         days.map((day) => {
           const formattedDate = `${day.getFullYear()}-${('0' + (day.getMonth() + 1)).slice(-2)}-${(
@@ -46,9 +51,10 @@ export default function CreateWorkShift() {
             day: formattedDate,
             shift: item.shift,
           };
-          dispatch(createAttendance(detail));
+          attendance.push(detail);
         });
       }
+      dispatch(createAttendanceByWS({ detail: attendance }));
       setReset({});
       setErrors({});
       closeModal();

@@ -70,6 +70,20 @@ export const createShiftUserDetail = createAsyncThunk(
     }
   },
 );
+export const createShiftUserDetailByWorkShift = createAsyncThunk(
+  'shiftuserdetails/createShiftUserDetailByWorkShift',
+  async (data: any, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post(`shiftuserdetails/workshift`, data);
+      return response.data;
+    } catch (error: any) {
+      if (!error.response) {
+        throw error;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
 
 export const deleteShiftUserDetail = createAsyncThunk(
   'shiftuserdetails/deleteShiftUserDetail',
@@ -133,6 +147,15 @@ const shiftUserDetailSlice = createSlice({
         state.isCreateLoading = false;
       })
       .addCase(createShiftUserDetail.rejected, (state) => {
+        state.isCreateLoading = false;
+      })
+      .addCase(createShiftUserDetailByWorkShift.pending, (state: shift_user_detailType) => {
+        state.isCreateLoading = true;
+      })
+      .addCase(createShiftUserDetailByWorkShift.fulfilled, (state, action) => {
+        state.isCreateLoading = false;
+      })
+      .addCase(createShiftUserDetailByWorkShift.rejected, (state) => {
         state.isCreateLoading = false;
       })
       .addCase(getAllShiftUserDetails.pending, (state: shift_user_detailType) => {

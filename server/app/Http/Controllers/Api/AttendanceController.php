@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Attendance\AttendanceByWSRequest;
 use App\Http\Requests\Attendance\AttendanceRequest;
 use App\Http\Requests\Attendance\UpdateAttendanceRequest;
 use App\Interface\AttendanceRepositoryInterface;
@@ -57,6 +58,27 @@ class AttendanceController extends Controller
         unset($validatedData['staff']);
         unset($validatedData['shift']);
         return $this->sentSuccessResponse($this->attendanceRepository->createAttendance($validatedData));
+    }
+    public function storeByWorkShift(AttendanceByWSRequest $request)
+    {
+        $validatedData = $request->validated();
+        foreach ($validatedData['detail'] as $item) {
+            $shift = $this->shiftRepo->getShiftByActive($item['shift']);
+            if (!$shift) {
+                return $this->sentErrorResponse("Shift is not found", 'error', 404);
+            }
+            $staff = $this->staffRepo->getStaffByActive($item['staff']);
+            if (!$staff) {
+                return $this->sentErrorResponse("Staff is not found", 'error', 404);
+            }
+            $attendance = [
+                'day' => $item['day'],
+                'staff_id' => $staff->id,
+                'time_in' => $shift->time_in,
+                'time_out' => $shift->time_out
+            ];
+            $this->attendanceRepository->createAttendance($attendance);
+        }
     }
 
     /**
