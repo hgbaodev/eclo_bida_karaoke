@@ -78,7 +78,7 @@ export const payOrder = createAsyncThunk('orders/payOrder', async (data: any) =>
 
 export const updateOrder = createAsyncThunk('orders/updateOrder', async (data: any) => {
   try {
-    const response = await axiosInstance.post(`/orders/${data.order_active}/update`, data);
+    const response = await axiosInstance.put(`/orders/${data.order_active}/update`, data);
     if (response) {
       return response.data;
     }
