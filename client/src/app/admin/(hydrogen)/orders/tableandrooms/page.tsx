@@ -5,11 +5,16 @@ import { createOrder, getAreas } from '@/store/slices/orderSlice';
 import { RootState } from '@/store/types';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import toast from 'react-hot-toast';
 import { MdMoreHoriz } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 import { Dropdown, Text } from 'rizzui';
 import { Tab } from 'rizzui';
+import usePusher from '@/hooks/use-pusher';
+import toast from 'react-hot-toast';
+import NotificationDropdown from '@/layouts/kitchen-notification-dropdown';
+import RingBellSolidIcon from '@/components/icons/ring-bell-solid';
+import { Badge, ActionIcon } from 'rizzui';
+import { appendNoti, setIsLoading } from '@/store/slices/kitchen_order_notificationSlice';
 
 const pageHeader = {
   title: 'Table & Rooms',
@@ -26,6 +31,7 @@ const pageHeader = {
 
 export default function BlankPage() {
   const { areas } = useSelector((state: RootState) => state.order);
+  const { data: notifications } = useSelector((state: RootState) => state.kitchen_order_notification);
 
   const navigate = useRouter();
 
@@ -33,9 +39,39 @@ export default function BlankPage() {
     dispatch(getAreas());
   }, []);
 
+  usePusher('kitchenOrderWaitingEvent', (data) => {
+    // Truy cập và xử lý dữ liệu từ đối tượng `data`
+    const active = data.active;
+    const productName = data.product_name;
+    const productQuantity = data.product_quantity;
+    const serviceName = data.service_name;
+
+    // Set loading state
+    dispatch(setIsLoading(true));
+
+    // Append the notification
+    dispatch(appendNoti(data));
+    toast.success(`An order has to be delivered: ${productName} - ${productQuantity} - ${serviceName}`);
+  });
+
   return (
     <>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
+      <NotificationDropdown notifications={notifications}>
+        <ActionIcon
+          aria-label="Notification"
+          variant="text"
+          className="relative h-[34px] w-[34px] shadow backdrop-blur-md md:h-9 md:w-9 dark:bg-gray-100"
+        >
+          <RingBellSolidIcon className="h-[18px] w-auto" />
+          <Badge
+            renderAsDot
+            color="warning"
+            enableOutlineRing
+            className="absolute right-2.5 top-2.5 -translate-y-1/3 translate-x-1/2"
+          />
+        </ActionIcon>
+      </NotificationDropdown>
       <Tab>
         <Tab.List>
           {areas.map((area) => (

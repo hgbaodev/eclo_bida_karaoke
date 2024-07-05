@@ -3,7 +3,6 @@
 namespace App\Http\Requests\ServiceType;
 
 use App\Http\Helpers\HelperRequest;
-use Illuminate\Foundation\Http\FormRequest;
 
 class StoreServiceTypeRequest extends HelperRequest
 {

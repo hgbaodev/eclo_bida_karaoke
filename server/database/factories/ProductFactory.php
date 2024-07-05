@@ -5,7 +5,6 @@ namespace Database\Factories;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\DB;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
@@ -30,6 +29,7 @@ class ProductFactory extends Factory
 
         return [
             "name" => $name,
+            'selling_price' => $this->faker->numberBetween(4, 20),
             'quantity' => $this->faker->numberBetween(1, 1000),
             'id_type' => $this->faker->randomElement([1, 2]),
         ];

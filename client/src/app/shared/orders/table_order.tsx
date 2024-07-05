@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import { ActionIcon, Loader } from 'rizzui';
 import { IoIosAdd } from 'react-icons/io';
 import { VscChromeMinimize } from 'react-icons/vsc';
+import toast from 'react-hot-toast';
 
 const TableOrder = () => {
   const { order, isLoadingGetOrder } = useSelector((state: RootState) => state.order);
@@ -85,6 +86,9 @@ const TableOrder = () => {
             </ActionIcon>
             <ActionIcon
               onClick={() => {
+                if (orderdetail.quantity > orderdetail.quantity_stock) {
+                  return toast.error('Product out of stock');
+                }
                 const data = {
                   active: orderdetail.active,
                   quantity: orderdetail.quantity + 1,
@@ -144,4 +148,5 @@ export interface OrderDetail {
   image: string;
   name: string;
   selling_price: number;
+  quantity_stock: number;
 }

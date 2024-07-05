@@ -17,7 +17,7 @@ class KitchenOrder extends Model
         'order_id',
         'product_id',
         'quantity',
-        ];
+    ];
 
     protected $hidden = [
         'id',

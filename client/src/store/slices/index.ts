@@ -31,8 +31,14 @@ import device from './deviceSlice';
 import supplier from './supplierSlice';
 import service from './serviceSlice';
 import service_device_detail from './service_device_detailSlice';
+import kitchen_order_notification from './kitchen_order_notificationSlice';
 
 import order from './orderSlice';
+
+import dayoff from './dayoffSlice'
+
+import invoice from './invoiceSlice';
+
 
 // ==============================|| COMBINE REDUCERS ||============================== //
 
@@ -63,6 +69,9 @@ const reducers = combineReducers({
   kitchen_order,
   service_device_detail,
   salary,
+  dayoff,
+  kitchen_order_notification,
+  invoice,
 });
 
 export default reducers;

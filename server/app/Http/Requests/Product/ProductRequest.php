@@ -26,6 +26,7 @@ class ProductRequest extends HelperRequest
             'name' => 'required',
             'product_type' => 'required',
             'image' => 'required|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'quantity' => 'nullable',
         ];
     }
 }

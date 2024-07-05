@@ -8,6 +8,8 @@ interface ServiceDeviceDetailRepositoryInterface
     public function getServiceDeviceDetail(Request $request);
     public function getServiceDeviceDetailByActive(string $active);
     public function createServiceDeviceDetail(array $data);
-    public function updateServiceDeviceDetail(string $active, array $data);
-    public function deleteServiceDeviceDetail(string $active);
+    public function updateServiceDeviceDetailByActive(string $active, array $data);
+    public function deleteServiceDeviceDetailByActive(string $active);
+    public function existsServiceDeviceDetail(string $service_id, string $device_id);
+
 }

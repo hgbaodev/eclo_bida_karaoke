@@ -34,7 +34,9 @@ export default function BlankPage({ params }: { params: { slug: string } }) {
 
   return (
     <>
-      <PageHeader title={serviceName} breadcrumb={pageHeader.breadcrumb}></PageHeader>
+      <PageHeader title={serviceName} breadcrumb={pageHeader.breadcrumb}>
+        {' '}
+      </PageHeader>
       <ServiceDevicesTable serviceActive={params.slug}></ServiceDevicesTable>
     </>
   );

@@ -27,7 +27,6 @@ class ServiceDeviceDetailRepository implements ServiceDeviceDetailRepositoryInte
         $serviceDeviceDetail = ServiceDeviceDetail::with('service', 'device');
         $serviceDeviceDetail->latest();
 
-        // Áp dụng điều kiện tìm kiếm trên các trường name của bảng devices và services
         if ($query) {
             $serviceDeviceDetail->where(function ($q) use ($query) {
                 $q->whereHas('device', function ($q2) use ($query) {
@@ -51,10 +50,10 @@ class ServiceDeviceDetailRepository implements ServiceDeviceDetailRepositoryInte
         if ($status) {
             $serviceDeviceDetail->where('status', $status);
         }
-        if($all){
+        if ($all) {
             $serviceDeviceDetail = $serviceDeviceDetail->get();
-        } else {
-            $serviceDeviceDetail = $serviceDeviceDetail->paginate($perPage);
+            } else {
+            $serviceDeviceDetail = $serviceDeviceDetail->paginate($perPage ?? 10);
         }
 
         $data = new GeneralResourceCollection($serviceDeviceDetail, ServiceDeviceDetailResource::class);
@@ -85,7 +84,7 @@ class ServiceDeviceDetailRepository implements ServiceDeviceDetailRepositoryInte
      * @param array $data
      * @return mixed
      */
-    public function updateServiceDeviceDetail(string $active, array $data)
+    public function updateServiceDeviceDetailByActive(string $active, array $data)
     {
         $returnedData = ServiceDeviceDetail::where('active', $active)->firstOrFail();
         $returnedData->update($data);
@@ -96,10 +95,16 @@ class ServiceDeviceDetailRepository implements ServiceDeviceDetailRepositoryInte
      * @param string $active
      * @return mixed
      */
-    public function deleteServiceDeviceDetail(string $active)
+    public function deleteServiceDeviceDetailByActive(string $active)
     {
         $returnedData = ServiceDeviceDetail::where('active', $active)->firstOrFail();
         $returnedData->delete();
         return $returnedData;
+    }
+
+
+    public function existsServiceDeviceDetail($service_id, $device_id)
+    {
+        return ServiceDeviceDetail::where('service_id', $service_id)->where('device_id', $device_id)->exists();
     }
 }

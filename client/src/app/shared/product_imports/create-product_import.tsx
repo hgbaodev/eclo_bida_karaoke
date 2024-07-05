@@ -87,7 +87,7 @@ export default function CreateStaff() {
             /> */}
             
             
-            {/* <Controller
+            <Controller
               name="status"
               control={control}
               render={({ field: { name, onChange, value } }) => (
@@ -107,7 +107,7 @@ export default function CreateStaff() {
                   inPortal={false}
                 />
               )}
-            /> */}
+            />
 
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">

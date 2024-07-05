@@ -25,7 +25,7 @@ class ProductImportRequest extends HelperRequest
             'total_cost' => 'nullable',
             'create_time' => 'required',
             'receive_time' => 'required',
-            'status' => 'nullable',
+            'status' => 'required',
         ];
     }
 }

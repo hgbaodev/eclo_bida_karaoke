@@ -1,7 +1,7 @@
-// userSlice.js
 import axiosInstance from '@/api/axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { orderType } from '../types';
+import toast from 'react-hot-toast';
 
 const initialState: orderType = {
   areas: [],
@@ -16,6 +16,8 @@ const initialState: orderType = {
   customers: [],
   isLoadingPayOrder: false,
   isLoadingUpdateOrder: false,
+  devices: [],
+  isView: false,
 };
 
 export const getAreas = createAsyncThunk('orders/getAreas', async () => {
@@ -76,7 +78,18 @@ export const payOrder = createAsyncThunk('orders/payOrder', async (data: any) =>
 
 export const updateOrder = createAsyncThunk('orders/updateOrder', async (data: any) => {
   try {
-    const response = await axiosInstance.post(`/orders/${data.order_active}/update`, data);
+    const response = await axiosInstance.put(`/orders/${data.order_active}/update`, data);
+    if (response) {
+      return response.data;
+    }
+  } catch (error) {
+    throw error;
+  }
+});
+
+export const getDevicesByService = createAsyncThunk('orders/getDevices', async (service_active: string) => {
+  try {
+    const response = await axiosInstance.get(`/service-device-detail?all=true&serviceActive=${service_active}`);
     if (response) {
       return response.data;
     }
@@ -114,6 +127,19 @@ const orderSlice = createSlice({
         state.order = newOrder;
       }
     },
+    setAddDevice: (state, action) => {
+      const device = action.payload;
+      if (state.order) {
+        const index = state.order.devices.findIndex((item) => item.active === device.active);
+        if (index === -1) {
+          state.order.devices.push(device);
+        } else {
+          state.order.devices[index].quantity = state.order.devices[index].quantity + 1;
+        }
+        const newOrder = state.order;
+        state.order = newOrder;
+      }
+    },
     changeQuantity: (state, action) => {
       const { active, quantity } = action.payload;
       if (state.order) {
@@ -126,10 +152,30 @@ const orderSlice = createSlice({
         }
       }
     },
+    changeQuantityDevice: (state, action) => {
+      const { active, quantity } = action.payload;
+      const findDevice: any = state.devices.find((item: { device_active: string }) => item?.device_active === active);
+      if (findDevice?.quantity < quantity) {
+        toast.error('Insufficient equipment quantity');
+        return;
+      }
+      if (state.order) {
+        const index = state.order.devices.findIndex((item) => item.active === active);
+        if (index !== -1) {
+          state.order.devices[index].quantity = quantity;
+          if (quantity == '0') {
+            state.order.devices.splice(index, 1);
+          }
+        }
+      }
+    },
     setCustomer: (state, action) => {
       if (state.order) {
         state.order.customer = action.payload;
       }
+    },
+    setIsView: (state, action) => {
+      state.isView = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -196,6 +242,9 @@ const orderSlice = createSlice({
       })
       .addCase(updateOrder.rejected, (state) => {
         state.isLoadingUpdateOrder = false;
+      })
+      .addCase(getDevicesByService.fulfilled, (state, action) => {
+        state.devices = action.payload.data.result;
       });
   },
 });
@@ -208,6 +257,9 @@ export const {
   setQueryCustomer,
   setCustomers,
   setCustomer,
+  setAddDevice,
+  changeQuantityDevice,
+  setIsView,
 } = orderSlice.actions;
 
 export default orderSlice.reducer;

@@ -91,5 +91,7 @@ export const messages = {
   supplierisRequired: 'Suppliers is required',
   shiftTypeIsRequired: 'Shift Type is required',
   isRequired: 'required',
-  ImageRequired:'Image is required'
+  ImageRequired: 'Image is required',
+  deviceIsRequired: 'Device is required',
+  DayoffIsRequired:'Day off is required',
 };

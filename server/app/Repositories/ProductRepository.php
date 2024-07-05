@@ -24,35 +24,41 @@ class ProductRepository implements ProductRepositoryInterface
         if ($id) {
             $product->where('id', $id);
         }
-        $product = $product->leftJoin('product_import_details', 'products.id', '=', 'product_import_details.id_product')
-            ->leftJoin('product_imports', 'product_import_details.import_id', '=', 'product_imports.id')
-            ->select('products.*', DB::raw('IFNULL(SUM(product_import_details.quantity), 0) as total_quantity'))
-            ->groupBy('products.id', 'products.name', 'products.image', 'products.selling_price', 'products.active', 'products.id_type', 'products.quantity')
-            ->orderBy(DB::raw('MAX(product_imports.receive_time)'), 'desc');
         if ($all && $all == true) {
-            $products = $product->get();
+            $product = $product->get();
         } else {
-            $products = $product->paginate($perPage);
+            $product = $product->paginate($perPage);
         }
-        foreach ($products as $product) {
-            // Cập nhật số lượng sản phẩm
-            $product->quantity = $product->total_quantity;
+        // $product = $product->leftJoin('product_import_details', 'products.id', '=', 'product_import_details.id_product')
+        //     ->leftJoin('product_imports', 'product_import_details.import_id', '=', 'product_imports.id')
+        //     ->select(
+        //         'products.*',
+        //         DB::raw('IFNULL(SUM(CASE WHEN product_imports.status = "A" THEN product_import_details.quantity ELSE 0 END), 0) as total_quantity'),
+        //         DB::raw('IFNULL(SUM(CASE WHEN product_imports.status = "A" THEN product_import_details.quantity * product_import_details.cost_price ELSE 0 END), 0) as total_cost')
+        //     )
+        //     ->groupBy('products.id', 'products.name', 'products.image', 'products.selling_price', 'products.active', 'products.id_type', 'products.quantity')
+        //     ->orderBy(DB::raw('MAX(product_imports.receive_time)'), 'desc');
 
-            // Truy vấn để lấy giá bán từ phiếu nhập có thời gian sớm nhất
-            $lastestSellingPrice = ProductImportDetail::query()
-                ->join('product_imports', 'product_import_details.import_id', '=', 'product_imports.id')
-                ->where('product_import_details.id_product', $product->id)
-                ->orderBy('product_imports.receive_time', 'desc')
-                ->value('product_import_details.selling_price');
+        // foreach ($products as $product) {
+        //     // Cập nhật số lượng sản phẩm
+        //     $product->quantity = $product->total_quantity;
 
-            // Cập nhật giá bán từ phiếu nhập có thời gian sớm nhất
-            if ($lastestSellingPrice !== null) {
-                $product->selling_price = $lastestSellingPrice;
-            }
+        //     // Truy vấn để lấy giá bán từ phiếu nhập có thời gian sớm nhất
+        //     $lastestSellingPrice = ProductImportDetail::query()
+        //         ->join('product_imports', 'product_import_details.import_id', '=', 'product_imports.id')
+        //         ->where('product_import_details.id_product', $product->id)
+        //         ->orderBy('product_imports.receive_time', 'desc')
+        //         ->value('product_import_details.selling_price');
 
-            $product->save();
-        }
-        return new CollectionCustom($products);
+        //     // Cập nhật giá bán từ phiếu nhập có thời gian sớm nhất
+        //     if ($lastestSellingPrice !== null) {
+        //         $product->selling_price = $lastestSellingPrice;
+        //     }
+
+
+        //     $product->save();
+        // }
+        return new CollectionCustom($product);
     }
     public function getAllProduct()
     {
@@ -77,5 +83,9 @@ class ProductRepository implements ProductRepositoryInterface
         $product = Product::where("active", $active)->first();
         $product->delete();
         return $product;
+    }
+    public function getProductByID($id)
+    {
+        return Product::where("id", $id)->first();
     }
 }

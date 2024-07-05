@@ -1,13 +1,15 @@
 'use client';
 
 import { useModal } from '@/app/shared/modal-views/use-modal';
+import TableDeviceOrder from '@/app/shared/orders/device_order';
 import PayOrder from '@/app/shared/orders/modal/pay_order';
 import SearchCustomer from '@/app/shared/orders/search_customer';
+import SearchDevice from '@/app/shared/orders/search_device';
 import SearchProduct from '@/app/shared/orders/search_product';
 import TableOrder from '@/app/shared/orders/table_order';
 import PageHeader from '@/app/shared/page-header';
 import { dispatch } from '@/store';
-import { getOrder, updateOrder } from '@/store/slices/orderSlice';
+import { getOrder, setIsView, updateOrder } from '@/store/slices/orderSlice';
 import { RootState } from '@/store/types';
 import { formatDate } from '@/utils/format-date';
 import { useRouter } from 'next/navigation';
@@ -39,6 +41,7 @@ export default function BlankPage({ params }: { params: { slug: string } }) {
   }, [params]);
 
   const handlePay = () => {
+    dispatch(setIsView(false));
     openModal({ view: <PayOrder />, customSize: '660px' });
   };
 
@@ -46,6 +49,7 @@ export default function BlankPage({ params }: { params: { slug: string } }) {
     const value = {
       order_active: order?.active,
       products: order?.products,
+      devices: order?.devices,
       customer_active: order?.customer?.active,
     };
 
@@ -67,6 +71,13 @@ export default function BlankPage({ params }: { params: { slug: string } }) {
               Product list
             </Title>
             <TableOrder />
+          </div>
+          <div className="mt-4 space-y-4">
+            <SearchDevice />
+            <Title as="h5" className="my-3">
+              Device list
+            </Title>
+            <TableDeviceOrder />
           </div>
         </div>
         <div>
