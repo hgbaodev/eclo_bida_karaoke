@@ -52,7 +52,7 @@ class ServiceDeviceDetailRepository implements ServiceDeviceDetailRepositoryInte
         }
         if ($all) {
             $serviceDeviceDetail = $serviceDeviceDetail->get();
-        } else {
+            } else {
             $serviceDeviceDetail = $serviceDeviceDetail->paginate($perPage ?? 10);
         }
 
@@ -101,6 +101,7 @@ class ServiceDeviceDetailRepository implements ServiceDeviceDetailRepositoryInte
         $returnedData->delete();
         return $returnedData;
     }
+
 
     public function existsServiceDeviceDetail($service_id, $device_id)
     {

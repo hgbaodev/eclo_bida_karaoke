@@ -4,7 +4,7 @@ import { HeaderCell } from '@/components/ui/table';
 import env from '@/env';
 import { useColumn } from '@/hooks/use-column';
 import { dispatch } from '@/store';
-import { changeQuantity } from '@/store/slices/orderSlice';
+import { changeQuantityDevice } from '@/store/slices/orderSlice';
 import { RootState } from '@/store/types';
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
@@ -13,7 +13,7 @@ import { IoIosAdd } from 'react-icons/io';
 import { VscChromeMinimize } from 'react-icons/vsc';
 import toast from 'react-hot-toast';
 
-const TableOrder = () => {
+const TableDeviceOrder = () => {
   const { order, isLoadingGetOrder } = useSelector((state: RootState) => state.order);
   const columns = useMemo(
     () => [
@@ -22,11 +22,11 @@ const TableOrder = () => {
         dataIndex: 'image',
         key: 'image',
         width: 20,
-        render: (_: any, orderdetail: OrderDetail) => (
+        render: (_: any, orderdevicedetail: DeviceDetail) => (
           <AvatarCard
-            src={env.API_STORAGE + orderdetail.image}
+            src={env.API_STORAGE + orderdevicedetail.image}
             avatarProps={{
-              name: orderdetail.image,
+              name: orderdevicedetail.image,
               size: 'lg',
               className: 'rounded-lg',
             }}
@@ -39,43 +39,43 @@ const TableOrder = () => {
         dataIndex: 'name',
         key: 'name',
         width: 50,
-        render: (_: any, orderdetail: OrderDetail) => orderdetail.name,
+        render: (_: any, orderdevicedetail: DeviceDetail) => orderdevicedetail.name,
       },
       {
         title: 'Price',
         dataIndex: 'price',
         key: 'selling_price',
         width: 10,
-        render: (_: any, orderdetail: OrderDetail) => orderdetail.selling_price,
+        render: (_: any, orderdevicedetail: DeviceDetail) => orderdevicedetail.selling_price,
       },
       {
         title: 'Quantity',
         dataIndex: 'quantity',
         key: 'quantity',
         width: 10,
-        render: (_: any, orderdetail: OrderDetail) => orderdetail.quantity,
+        render: (_: any, orderdevicedetail: DeviceDetail) => orderdevicedetail.quantity,
       },
       {
         title: <></>,
         dataIndex: 'action',
         key: 'action',
         width: 10,
-        render: (_: string, orderdetail: OrderDetail) => (
+        render: (_: string, orderdevicedetail: DeviceDetail) => (
           <div className="flex items-center justify-end gap-3 pe-3">
             <ActionIcon
               onClick={() => {
-                const value = orderdetail.quantity - 1;
+                const value = orderdevicedetail.quantity - 1;
                 if (value == 0) {
-                  const check = confirm('Are you sure you want to delete this product?');
+                  const check = confirm('Are you sure you want to delete this device?');
                   if (!check) {
                     return;
                   }
                 }
                 const data = {
-                  active: orderdetail.active,
+                  active: orderdevicedetail.active,
                   quantity: value,
                 };
-                dispatch(changeQuantity(data));
+                dispatch(changeQuantityDevice(data));
               }}
               as="span"
               size="sm"
@@ -86,14 +86,15 @@ const TableOrder = () => {
             </ActionIcon>
             <ActionIcon
               onClick={() => {
-                if (orderdetail.quantity > orderdetail.quantity_stock) {
-                  return toast.error('Product out of stock');
+                if (orderdevicedetail.quantity + 1 > orderdevicedetail.total_stock) {
+                  toast.error('Device out of stock');
+                  return;
                 }
                 const data = {
-                  active: orderdetail.active,
-                  quantity: orderdetail.quantity + 1,
+                  active: orderdevicedetail.active,
+                  quantity: orderdevicedetail.quantity + 1,
                 };
-                dispatch(changeQuantity(data));
+                dispatch(changeQuantityDevice(data));
               }}
               as="span"
               size="sm"
@@ -120,7 +121,7 @@ const TableOrder = () => {
   return (
     <ControlledTable
       variant="minimal"
-      data={order?.products}
+      data={order?.devices}
       showLoadingText={false}
       // @ts-ignore
       columns={visibleColumns}
@@ -140,13 +141,13 @@ const TableOrder = () => {
   );
 };
 
-export default TableOrder;
+export default TableDeviceOrder;
 
-export interface OrderDetail {
+export interface DeviceDetail {
   active: string;
-  quantity: number;
-  image: string;
   name: string;
+  image: string;
+  quantity: number;
   selling_price: number;
-  quantity_stock: number;
+  total_stock: number;
 }

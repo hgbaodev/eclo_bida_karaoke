@@ -17,12 +17,14 @@ import toast from 'react-hot-toast';
 export default function PayOrder() {
   const router = useRouter();
   const { closeModal } = useModal();
-  const { order, isLoadingPayOrder } = useSelector((state: RootState) => state.order);
+  const { order, isLoadingPayOrder, isView } = useSelector((state: RootState) => state.order);
   const checkOutTime = dayjs(new Date()).format('YYYY-MM-DD HH:mm:ss');
   const hoursDiff = parseFloat((dayjs(new Date()).diff(dayjs(order?.checkin_time), 'minute') / 60).toFixed(2));
   const totalPriceProduct = order?.products.reduce((acc, cur) => acc + cur.selling_price * cur.quantity, 0);
   const totalPriceService = hoursDiff * (order?.service.price.pricePerHour ?? 0);
-  const totalEnd = totalPriceProduct == undefined ? totalPriceService : totalPriceProduct + totalPriceService;
+  const totalDevices = order?.devices.reduce((acc, cur) => acc + cur.quantity * cur.selling_price, 0) ?? 0;
+  const totalEnd =
+    totalPriceProduct == undefined ? totalPriceService : totalPriceProduct + totalPriceService + totalDevices;
   return (
     <Form
       onSubmit={async () => {
@@ -31,6 +33,7 @@ export default function PayOrder() {
           total_price: totalEnd,
           checkout_time: checkOutTime,
           products: order?.products,
+          devices: order?.devices,
           customer_active: order?.customer?.active,
         };
 
@@ -92,6 +95,12 @@ export default function PayOrder() {
                 </Text>
                 <Text>{order?.service.price.pricePerHour}$ / 1 Hour</Text>
               </div>
+              <div className="flex mt-3 text-red-500">
+                <Text as="b" className="w-[150px]">
+                  Total dervices:
+                </Text>
+                <Text>{totalDevices} $</Text>
+              </div>
               <div className="flex mt-3">
                 <Text as="b" className="w-[150px]">
                   Total Product:
@@ -110,15 +119,16 @@ export default function PayOrder() {
                 </Text>
                 <Text>{totalEnd} $</Text>
               </div>
-              {/* </div> */}
             </div>
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
                 Cancel
               </Button>
-              <Button type="submit" isLoading={isLoadingPayOrder} className="w-full @xl:w-auto">
-                Confirm
-              </Button>
+              {!isView && (
+                <Button type="submit" isLoading={isLoadingPayOrder} className="w-full @xl:w-auto">
+                  Confirm
+                </Button>
+              )}
             </div>
           </>
         );

@@ -24,7 +24,18 @@ export interface RootState {
   kitchen_order: kitchen_orderType;
   attendance: attendance;
   service_device_detail: service_device_detailType;
+
   dayoff: dayoffType;
+
+  kitchen_order_notification: kitchen_order_notificationType;
+  invoice: invoiceType;
+}
+
+export interface kitchen_order_notificationType {
+  data: [];
+  isLoading: boolean;
+  errors: string | null;
+
 }
 
 export interface kitchen_orderType {
@@ -159,6 +170,16 @@ export interface supplierType {
 }
 
 export interface loggerType {
+  data: any[];
+  isLoading: boolean;
+  isFiltered: boolean;
+  page: number;
+  pageSize: number;
+  totalRow: number;
+  query: string;
+}
+
+export interface invoiceType {
   data: any[];
   isLoading: boolean;
   isFiltered: boolean;
@@ -360,6 +381,7 @@ export interface orderType {
     checkout_time: string;
     total_price: number;
     service: {
+      active: string;
       name: string;
       description: string;
       price: {
@@ -388,6 +410,12 @@ export interface orderType {
       name: string;
       selling_price: number;
     }[];
+    devices: {
+      active: string;
+      quantity: number;
+      name: string;
+      selling_price: number;
+    }[];
   };
   isLoadingGetOrder: boolean;
   queryProduct: string;
@@ -398,6 +426,8 @@ export interface orderType {
   customers: [];
   isLoadingPayOrder: boolean;
   isLoadingUpdateOrder: boolean;
+  devices: [];
+  isView: boolean;
 }
 export interface product_typeType {
   data: [];

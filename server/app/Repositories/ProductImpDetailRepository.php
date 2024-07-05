@@ -57,6 +57,7 @@ class ProductImpDetailRepository implements ProductImpDetailInterface
     {
         return ProductImportDetail::where("active", $active)->first();
     }
+
     function getProductImportDetailByIdProdutImport($id)
     {
         return ProductImportDetail::where("import_id", $id)->get();
@@ -66,3 +67,6 @@ class ProductImpDetailRepository implements ProductImpDetailInterface
         return ProductImportDetail::where("id", $id)->first();
     }
 }
+
+}
+
