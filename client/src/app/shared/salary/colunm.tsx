@@ -34,8 +34,8 @@ export const getColumns = (openModal: (args: any) => void) => {
     },
     {
       title: <HeaderCell title="Structure of Salary" />,
-      dataIndex: 'sop',
-      key: 'sop',
+      dataIndex: 'sos',
+      key: 'sos',
       width: 50,
       render: (_: string, salary: Salary) => salary.staff.position.salary_structure,
     },
