@@ -207,6 +207,7 @@ class OrderController extends Controller
     public function handleKitchenOrder($products, $order){
         $data = [];
         $deductData = [];
+        $deletedData = [];
 
         $existingProducts = $this->kitchenOrderRepository->getKitchenOrdersByOrderId($order->id);
         $requestProductActives = array_column($products, 'active');
@@ -255,6 +256,12 @@ class OrderController extends Controller
         foreach ($existingProducts as $existingProduct) {
             if (!in_array($existingProduct->product->active, $requestProductActives)) {
                 $this->kitchenOrderRepository->deleteKitchenOrderById($existingProduct->id);
+                $deletedEventData = [
+                    'product_active' => $existingProduct->product->active,
+                    'order_active' => $order->active,
+                    'quantity' => 0,
+                ];
+                $deletedData[] = $deletedEventData;
             }
         }
 
@@ -264,6 +271,10 @@ class OrderController extends Controller
 
         if (!empty($deductData)) {
             SendEvent::send('kitchenOrderDeductEvent', $deductData);
+        }
+
+        if (!empty($deletedData)) {
+            SendEvent::send('kitchenOrderDeleteEvent', $deletedData);
         }
     }
 
