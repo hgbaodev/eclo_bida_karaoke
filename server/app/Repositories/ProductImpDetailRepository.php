@@ -67,6 +67,3 @@ class ProductImpDetailRepository implements ProductImpDetailInterface
         return ProductImportDetail::where("id", $id)->first();
     }
 }
-
-}
-
