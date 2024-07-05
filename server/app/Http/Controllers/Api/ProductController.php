@@ -77,7 +77,9 @@ class ProductController extends Controller
     public function update(ProductRequest $request, string $active)
     {
         $validated_data = $request->validated();
-        if (!$this->productRepository->getProductByActive($active)) {
+        $quantity = $request->input('quantity');
+        $product = $this->productRepository->getProductByActive($active);
+        if (!$product) {
             return $this->sentErrorResponse('product' . $active . 'is not found', "error", 404);
         }
         $product_type = $this->product_typeRepository->getProductTypeByActive($validated_data['product_type']);
@@ -90,6 +92,10 @@ class ProductController extends Controller
         }
         $validated_data["id_type"] = $product_type->id;
         unset($validated_data['product_type']);
+
+        if ($quantity) {
+            $product->quantity += $quantity;
+        }
         return $this->sentSuccessResponse($this->productRepository->updateProductByActive($active, $validated_data), " product updated successfully", 200);
     }
 

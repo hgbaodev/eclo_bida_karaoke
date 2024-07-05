@@ -30,7 +30,6 @@ class ProductFactory extends Factory
 
         return [
             "name" => $name,
-            'quantity' => $this->faker->numberBetween(1, 1000),
             'id_type' => $this->faker->randomElement([1, 2]),
         ];
     }
