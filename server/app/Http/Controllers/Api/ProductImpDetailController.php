@@ -10,7 +10,6 @@ use App\Interface\ProductImportInterface;
 use App\Interface\ProductRepositoryInterface;
 use App\Interface\SupplierRepositoryInterface;
 use App\Models\ProductImport;
-use Exception;
 
 class ProductImpDetailController extends Controller
 {
@@ -31,10 +30,7 @@ class ProductImpDetailController extends Controller
 
         return $this->sentSuccessResponse($this->product_import_detail_Repository->getProductImports($request));
     }
-    // public function show($active)
-    // {
-    //     return $this->sentSuccessResponse($this->product_import_Repository->getProductImpDetailtByActive($active));
-    // }
+
     public function store(ProductImpDetailRequest $request)
     {
         try {
@@ -65,26 +61,19 @@ class ProductImpDetailController extends Controller
             unset($validated_data['import']);
             unset($validated_data['product']);
             unset($validated_data['supplier']);
-
-
             $product->quantity += $quantity;
             $product->selling_price = $selling_price;
             $product->save();
-
+            $product->quantity += $quantity;
+            $product->save();
             return $this->sentSuccessResponse($this->product_import_detail_Repository->create($validated_data));
         } catch (\Exception $e) {
 
             return $this->sentErrorResponse("Product is already imported", "error", 404);
         }
     }
-    // public function sum(string $active)
-    // {
 
-    //     $product_import = $this->product_import_Repository->getProductImportByActive($active);
-    //     $sum = $this->product_import_detail_Repository->sumCost($product_import->id);
-    //     // return $this->sentSuccessResponse($this->product_import_detail_Repository->sumCost($product_import));
-    //     return response()->json(['sum' => $sum]);
-    // }
+
     public function updateTotalCost($active)
     {
         // Lấy đối tượng Import theo ID

@@ -10,6 +10,10 @@ export const routes = {
   },
 
   admin: {
+    report: {
+      statistical: '/admin/report/statistical',
+      revenueEx: '/admin/report/revenue-expenditure',
+    },
     analytics: '/admin',
     users: '/admin/users',
     rolesPermissions: '/admin/roles-permissions',

@@ -12,7 +12,6 @@ import { dispatch } from '@/store';
 import { getOrder, setIsView, updateOrder } from '@/store/slices/orderSlice';
 import { RootState } from '@/store/types';
 import { formatDate } from '@/utils/format-date';
-import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
@@ -34,7 +33,6 @@ const pageHeader = {
 export default function BlankPage({ params }: { params: { slug: string } }) {
   const { order, isLoadingGetOrder, isLoadingUpdateOrder } = useSelector((state: RootState) => state.order);
   const { openModal } = useModal();
-  const router = useRouter();
 
   useEffect(() => {
     dispatch(getOrder(params.slug));
@@ -56,7 +54,6 @@ export default function BlankPage({ params }: { params: { slug: string } }) {
     const result = await dispatch(updateOrder(value));
     if (updateOrder.fulfilled.match(result)) {
       toast.success('Update success');
-      router.push('/admin/orders/tableandrooms');
     }
   };
 
