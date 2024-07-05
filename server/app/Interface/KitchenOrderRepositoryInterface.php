@@ -12,6 +12,8 @@ interface KitchenOrderRepositoryInterface
     public function updateKitchenOrderByActive(string $active, array $data);
     public function deleteKitchenOrderByActive(string $active);
     public function getTotalQuantityByProductAndOrderActive(string $productActive, string $orderActive);
-    public function deductQuantityFromOldestOrders(string $productActive, string $orderActive, int $quantity);
+    public function deductQuantityFromNewestOrders(string $productActive, string $orderActive, int $quantity);
+    public function getKitchenOrdersByOrderId(int $id);
+    public function deleteKitchenOrderById(int $id);
 
 }

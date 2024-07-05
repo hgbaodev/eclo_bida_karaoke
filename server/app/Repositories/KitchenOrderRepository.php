@@ -72,7 +72,7 @@ class KitchenOrderRepository implements KitchenOrderRepositoryInterface
             ->sum('quantity');
     }
 
-    public function deductQuantityFromOldestOrders($productActive, $orderActive, $quantity)
+    public function deductQuantityFromNewestOrders($productActive, $orderActive, $quantity)
     {
         $orders = KitchenOrder::whereHas('order', function ($query) use ($orderActive) {
             $query->where('active', $orderActive);
@@ -98,5 +98,16 @@ class KitchenOrderRepository implements KitchenOrderRepositoryInterface
                 $order->delete();
             }
         }
+    }
+
+    public function getKitchenOrdersByOrderId($id)
+    {
+        return KitchenOrder::where('order_id', $id)->get();
+    }
+
+    public function deleteKitchenOrderById($id)
+    {
+        $kitchenOrder = KitchenOrder::findOrFail($id);
+        $kitchenOrder->delete();
     }
 }

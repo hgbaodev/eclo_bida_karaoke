@@ -204,15 +204,20 @@ class OrderController extends Controller
         return $this->sentSuccessResponse($order, 'Order has been paid successfully', 200);
     }
 
-    public function handleKitchenOrder($products, $order, $active){
+    public function handleKitchenOrder($products, $order){
         $data = [];
         $deductData = [];
+
+        $existingProducts = $this->kitchenOrderRepository->getKitchenOrdersByOrderId($order->id);
+        $requestProductActives = array_column($products, 'active');
+
         foreach ($products as $productData) {
             $productActive = $productData['active'];
             $newQuantity = $productData['quantity'];
 
+
             // Lấy tổng số lượng hiện có từ kitchen_order
-            $totalQuantity = $this->kitchenOrderRepository->getTotalQuantityByProductAndOrderActive($productActive, $active);
+            $totalQuantity = $this->kitchenOrderRepository->getTotalQuantityByProductAndOrderActive($productActive, $order->active);
 
             if ($totalQuantity < $newQuantity) {
                 // Nếu tổng số lượng nhỏ hơn số lượng mới, tạo kitchen_order mới với số dư ra
@@ -230,20 +235,26 @@ class OrderController extends Controller
 
                 $eventData['status'] = KitchenOrderEnum::RECEIVED;
                 $eventData['active'] = $newOrder['active'];
-                $eventData['order_active'] = $active;
+                $eventData['order_active'] = $order->active;
                 $eventData['quantity'] = $newOrder['quantity'];
                 $eventData['product_name'] = $product->name;
 
                 $data[] = $eventData;
             } else {
                 // Nếu tổng số lượng lớn hơn hoặc bằng số lượng mới, trừ bớt trong kitchen_order từ bản ghi cũ nhất tới mới nhất
-                $this->kitchenOrderRepository->deductQuantityFromOldestOrders($productActive, $active, $totalQuantity - $newQuantity);
+                $this->kitchenOrderRepository->deductQuantityFromNewestOrders($productActive, $order->active, $totalQuantity - $newQuantity);
                 $deductEventData = [
                     'product_active' => $productActive,
-                    'order_active' => $active,
+                    'order_active' => $order->active,
                     'quantity' => $newQuantity,
                 ];
                 $deductData[] = $deductEventData;
+            }
+        }
+
+        foreach ($existingProducts as $existingProduct) {
+            if (!in_array($existingProduct->product->active, $requestProductActives)) {
+                $this->kitchenOrderRepository->deleteKitchenOrderById($existingProduct->id);
             }
         }
 
@@ -267,7 +278,7 @@ class OrderController extends Controller
         if (isset($validated_data['products'])) {
             $check = $this->orderDetailRepository->addProductsOrder($validated_data['products'], $order->id);
             if (!$check) return $this->sentErrorResponse('No update products detail');
-            $this->handleKitchenOrder($validated_data['products'], $order, $active);
+            $this->handleKitchenOrder($validated_data['products'], $order);
         }
 
         if (isset($validated_data['devices'])) {
