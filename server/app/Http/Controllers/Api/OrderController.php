@@ -136,8 +136,7 @@ class OrderController extends Controller
             $kitchenOrderData = $kitchenOrder->toArray();
             $kitchenOrderData['status'] = KitchenOrderEnum::DONE;
 
-            // Update the kitchen order and return the updated order with a success response
-            $updatedKitchenOrder = $repo->deleteKitchenOrderByActive($active);
+            $updatedKitchenOrder = $repo->updateKitchenOrderByActive($active, $kitchenOrderData);
             $request->merge(['data' => $eventData]);
             return $this->sentSuccessResponse($updatedKitchenOrder, 'Marked as done');
         } catch (\Exception $e) {
