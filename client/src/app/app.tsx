@@ -2,8 +2,6 @@
 import { useEffect, useState } from 'react';
 import { me } from '@/store/slices/authSlice';
 import { dispatch } from '@/store';
-// import { channel } from '@/helpers/pusherConfig';
-// import { addLogger } from '@/store/slices/loggerSlice';
 
 const App = ({ children }: { children: React.ReactNode }) => {
   const [isLoaded, setIsLoaded] = useState(false);
