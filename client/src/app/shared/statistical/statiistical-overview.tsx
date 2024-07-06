@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import WidgetCard from '@/components/cards/widget-card';
 import { CustomTooltip } from '@/components/charts/custom-tooltip';
 import { CustomYAxisTick } from '@/components/charts/custom-yaxis-tick';
@@ -12,114 +12,119 @@ import { Title, Text } from 'rizzui';
 import cn from '@/utils/class-names';
 import TrendingUpIcon from '@/components/icons/trending-up';
 import { formatNumber } from '@/utils/format-number';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store/types';
+import { dispatch } from '@/store';
+import { getStatTime, setSelectedStats } from '@/store/slices/statisticalSlice';
+import { set } from 'lodash';
 
 const dailyData = [
   {
     label: 'Sat',
-    activeJobs: 9800,
+    value: 9800,
   },
   {
     label: 'Sun',
-    activeJobs: 8700,
+    value: 8700,
   },
   {
     label: 'Mon',
-    activeJobs: 5000,
+    value: 5000,
   },
   {
     label: 'Tue',
-    activeJobs: 4500,
+    value: 4500,
   },
   {
     label: 'Wed',
-    activeJobs: 2500,
+    value: 2500,
   },
   {
     label: 'Thu',
-    activeJobs: 8000,
+    value: 8000,
   },
   {
     label: 'Fri',
-    activeJobs: 8700,
+    value: 8700,
   },
 ];
 
 const monthlyData = [
   {
     label: 'Jan',
-    activeJobs: 100,
+    value: 100,
   },
   {
     label: 'Feb',
-    activeJobs: 1890,
+    value: 1890,
   },
   {
     label: 'Mar',
-    activeJobs: 4300,
+    value: 4300,
   },
   {
     label: 'Apr',
-    activeJobs: 5710,
+    value: 5710,
   },
   {
     label: 'May',
-    activeJobs: 5710,
+    value: 5710,
   },
   {
     label: 'Jun',
-    activeJobs: 5710,
+    value: 5710,
   },
   {
     label: 'Jan',
-    activeJobs: 5650,
+    value: 5650,
   },
   {
     label: 'Feb',
-    activeJobs: 1890,
+    value: 1890,
   },
   {
     label: 'Mar',
-    activeJobs: 4300,
+    value: 4300,
   },
   {
     label: 'Apr',
-    activeJobs: 5710,
+    value: 5710,
   },
   {
     label: 'May',
-    activeJobs: 5710,
+    value: 5710,
   },
   {
     label: 'Jun',
-    activeJobs: 5710,
+    value: 5710,
   },
   {
     label: 'Jan',
-    activeJobs: 5650,
+    value: 5650,
   },
   {
     label: 'Feb',
-    activeJobs: 1890,
+    value: 1890,
   },
   {
     label: 'Mar',
-    activeJobs: 4300,
+    value: 4300,
   },
   {
     label: 'Apr',
-    activeJobs: 5710,
+    value: 5710,
   },
   {
     label: 'May',
-    activeJobs: 5710,
+    value: 5710,
   },
   {
     label: 'Jun',
-    activeJobs: 10000,
+    value: 10000,
   },
 ];
 
-const COLORS = ['#3962F7', '#2750AF', '#BBD6FF'];
+const COLORS = ['#3962F7'];
 
 const viewOptions = [
   {
@@ -133,20 +138,21 @@ const viewOptions = [
 ];
 
 export default function JobOverview({ className }: { className?: string }) {
+  const { dataStats, selectedStats } = useSelector((state: RootState) => state.statistical);
   const [data, setData] = useState(dailyData);
   const isTab = useMedia('(max-width: 768px)', false);
 
+  useEffect(() => {
+    dispatch(getStatTime(selectedStats));
+  }, [selectedStats]);
+
   function handleChange(viewType: string) {
-    if (viewType === 'month') {
-      setData(monthlyData);
-    } else {
-      setData(dailyData);
-    }
+    dispatch(setSelectedStats(viewType));
   }
 
   return (
     <WidgetCard
-      title="Job Overview"
+      title="Order Overview"
       className={cn('min-h-[28rem]', className)}
       titleClassName="font-normal text-sm sm:text-sm text-gray-500 mb-2.5 font-inter"
       action={
@@ -160,22 +166,11 @@ export default function JobOverview({ className }: { className?: string }) {
         </div>
       }
     >
-      <div className="flex items-center justify-start">
-        <Title as="h2" className="me-2 text-2xl">
-          80,345
-        </Title>
-        <Text className="flex items-center leading-none text-gray-500">
-          <Text as="span" className={cn('me-2 inline-flex items-center font-medium text-green')}>
-            <TrendingUpIcon className="me-1 h-4 w-4" />
-            32.40%
-          </Text>
-        </Text>
-      </div>
       <SimpleBar>
         <div className="h-[20rem] w-full pt-6 @lg:pt-8 lg:h-[24rem] 3xl:h-[25rem]">
           <ResponsiveContainer width="100%" height="100%" {...(isTab && { minWidth: '1100px' })}>
             <ComposedChart
-              data={data}
+              data={dataStats}
               margin={{
                 left: -6,
               }}
@@ -197,11 +192,11 @@ export default function JobOverview({ className }: { className?: string }) {
               <Tooltip content={<CustomTooltip formattedNumber />} />
 
               <defs>
-                <linearGradient id="activeJobs" x1="0" y1="0" x2="0" y2="100%" gradientUnits="userSpaceOnUse">
+                <linearGradient id="value" x1="0" y1="0" x2="0" y2="100%" gradientUnits="userSpaceOnUse">
                   <stop offset="1" stopColor="#3962F7" />
                 </linearGradient>
               </defs>
-              <Bar dataKey="activeJobs" fill="url(#activeJobs)" stroke={COLORS[0]} barSize={28} radius={[4, 4, 0, 0]} />
+              <Bar dataKey="value" fill="url(#value)" stroke={COLORS[0]} barSize={28} radius={[4, 4, 0, 0]} />
             </ComposedChart>
           </ResponsiveContainer>
         </div>
