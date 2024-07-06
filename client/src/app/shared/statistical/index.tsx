@@ -1,5 +1,5 @@
-import JobOverview from './job-overview';
-import JobStats from './job-stats';
+import JobOverview from './statiistical-overview';
+import JobStats from './statistical-stats';
 
 export default function Statistical() {
   return (

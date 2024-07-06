@@ -24,22 +24,17 @@ export interface RootState {
   kitchen_order: kitchen_orderType;
   attendance: attendance;
   service_device_detail: service_device_detailType;
-
   salary: salary;
-
-
   dayoff: dayoffType;
-
   kitchen_order_notification: kitchen_order_notificationType;
   invoice: invoiceType;
+  statistical: statisticalType;
 }
 
 export interface kitchen_order_notificationType {
   data: [];
   isLoading: boolean;
   errors: string | null;
-
-
 }
 
 export interface kitchen_orderType {
@@ -458,6 +453,7 @@ export interface salary {
   month: number;
   query: string;
   year: number;
+}
 
 export interface dayoffType {
   data: [];
@@ -471,5 +467,17 @@ export interface dayoffType {
   errors: any;
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
+}
 
+export interface statisticalType {
+  dataOverview: {
+    label: string;
+    value: number;
+  }[];
+  isLoadingOverView: boolean;
+  dataStats: {
+    label: string;
+    value: number;
+  }[];
+  selectedStats: string;
 }
