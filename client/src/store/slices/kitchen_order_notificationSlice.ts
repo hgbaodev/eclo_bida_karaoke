@@ -25,7 +25,7 @@ const kitchenOrderNotificationSlice = createSlice({
     removeNoti: (state, action: PayloadAction<string>) => {
       //@ts-ignore
       state.data = state.data.filter((noti) => noti.active !== action.payload);
-      state.isLoading = false; // Reset loading state after removing notification
+      state.isLoading = false;
     },
   },
 });

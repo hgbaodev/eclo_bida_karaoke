@@ -3,21 +3,23 @@
 import { RefObject, useState } from 'react';
 import * as dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { Popover, Title, Badge, Checkbox } from 'rizzui';
+import { Popover, Title, Checkbox } from 'rizzui';
 import Link from 'next/link';
 import { useMedia } from '@/hooks/use-media';
 import SimpleBar from '@/components/ui/simplebar';
-import { PiCheck } from 'react-icons/pi';
-import { appendNoti, setIsLoading } from '@/store/slices/kitchen_order_notificationSlice';
+import { removeNoti, setIsLoading } from '@/store/slices/kitchen_order_notificationSlice';
+import { dispatch } from '@/store';
 
 dayjs.extend(relativeTime);
 
 function NotificationsList({
   setIsOpen,
   notifications,
+  handleRemoveNoti,
 }: {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   notifications: any[];
+  handleRemoveNoti: (active: string) => void;
 }) {
   return (
     <div className="w-[320px] text-left sm:w-[360px] 2xl:w-[420px] rtl:text-right">
@@ -46,6 +48,9 @@ function NotificationsList({
                       {`Quantity: ${item.product_quantity} - Service: ${item.service_name}`}
                     </Title>
                   </div>
+                  <button className="text-red-500 hover:text-red-700" onClick={() => handleRemoveNoti(item.active)}>
+                    Delete
+                  </button>
                 </div>
               </div>
             ))
@@ -74,11 +79,23 @@ export default function NotificationDropdown({
 }) {
   const isMobile = useMedia('(max-width: 480px)', false);
   const [isOpen, setIsOpen] = useState(false);
+
+  const handleRemoveNoti = (active: string) => {
+    dispatch(setIsLoading(true));
+    try {
+      dispatch(removeNoti(active));
+    } catch (error) {
+      console.error('Error removing notification: ', error);
+    } finally {
+      dispatch(setIsLoading(false));
+    }
+  };
+
   return (
     <Popover isOpen={isOpen} setIsOpen={setIsOpen} shadow="sm" placement={isMobile ? 'bottom' : 'bottom-end'}>
       <Popover.Trigger>{children}</Popover.Trigger>
       <Popover.Content className="z-[9999] px-0 pb-4 pe-6 pt-5 dark:bg-gray-100 [&>svg]:hidden sm:[&>svg]:inline-flex [&>svg]:dark:fill-gray-100">
-        <NotificationsList setIsOpen={setIsOpen} notifications={notifications} />
+        <NotificationsList setIsOpen={setIsOpen} notifications={notifications} handleRemoveNoti={handleRemoveNoti} />
       </Popover.Content>
     </Popover>
   );
