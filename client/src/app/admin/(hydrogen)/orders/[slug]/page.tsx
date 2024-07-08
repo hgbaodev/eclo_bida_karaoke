@@ -80,7 +80,25 @@ export default function BlankPage({ params }: { params: { slug: string } }) {
 
   return (
     <>
-      <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
+      <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb}>
+        <NotificationDropdown notifications={notifications}>
+          <ActionIcon
+            aria-label="Notification"
+            variant="text"
+            className="relative h-[34px] w-[34px] shadow backdrop-blur-md md:h-9 md:w-9 dark:bg-gray-100"
+          >
+            <RingBellSolidIcon className="h-[18px] w-auto" />
+            {notifications.length > 0 && (
+              <Badge
+                renderAsDot
+                color="warning"
+                enableOutlineRing
+                className="absolute right-2.5 top-2.5 -translate-y-1/3 translate-x-1/2"
+              />
+            )}
+          </ActionIcon>
+        </NotificationDropdown>
+      </PageHeader>
 
       {isLoadingGetOrder ? (
         <div className="flex justify-center items-center h-[100px]">

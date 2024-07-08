@@ -64,12 +64,14 @@ export default function BlankPage() {
             className="relative h-[34px] w-[34px] shadow backdrop-blur-md md:h-9 md:w-9 dark:bg-gray-100"
           >
             <RingBellSolidIcon className="h-[18px] w-auto" />
-            <Badge
-              renderAsDot
-              color="warning"
-              enableOutlineRing
-              className="absolute right-2.5 top-2.5 -translate-y-1/3 translate-x-1/2"
-            />
+            {notifications.length > 0 && (
+              <Badge
+                renderAsDot
+                color="warning"
+                enableOutlineRing
+                className="absolute right-2.5 top-2.5 -translate-y-1/3 translate-x-1/2"
+              />
+            )}
           </ActionIcon>
         </NotificationDropdown>
       </PageHeader>
