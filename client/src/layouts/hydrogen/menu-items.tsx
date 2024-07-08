@@ -9,7 +9,7 @@ import { FaProductHunt } from 'react-icons/fa';
 import { MdOutlineDevicesOther } from 'react-icons/md';
 import { FaUserClock } from 'react-icons/fa6';
 import { LuClock } from 'react-icons/lu';
-import { BsPersonCheckFill } from 'react-icons/bs';
+import { BsPersonCheckFill,BsReceiptCutoff } from 'react-icons/bs';
 import { TbToolsKitchen3 } from 'react-icons/tb';
 
 // Note: do not add href in the label object, it is rendering as label
@@ -108,6 +108,11 @@ export const menuItems = [
     name: 'Attendance',
     href: routes.admin.attendance,
     icon: <BsPersonCheckFill />,
+  },
+  {
+    name: 'Dayoff',
+    href: routes.admin.dayoff,
+    icon: <BsReceiptCutoff />,
   },
   {
     name: 'Schedule',

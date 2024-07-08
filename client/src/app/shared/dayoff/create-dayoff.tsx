@@ -9,8 +9,8 @@ import { useModal } from '@/app/shared/modal-views/use-modal';
 import { dispatch } from '@/store';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
-import { statusOptions } from './type';
-import  {getStatusBadge}  from './colunm';
+import { statusOptions } from '../attendance/type';
+import  {getStatusBadge}  from '../attendance/colunm';
 import {
   createDayOffSchema,
   CreateDayOffInput,
