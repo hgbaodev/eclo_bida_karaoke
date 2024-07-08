@@ -19,7 +19,7 @@ class ServiceDeviceDetail extends Model
         'service_id',
         'device_id',
         'quantity',
-        'maintaining_quantity',
+        'maintenance_quantity',
     ];
 
     protected $hidden = [

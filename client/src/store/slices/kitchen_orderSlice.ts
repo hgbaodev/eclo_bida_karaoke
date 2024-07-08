@@ -98,7 +98,6 @@ const kitchenOrderSlice = createSlice({
       const index = state.data.findIndex((order) => order.active === active);
       if (index !== -1) {
         state.data[index].status = status;
-        state.data[index].isLoading = false; // Đặt lại isLoading về false
       }
     },
     appendOrders: (state, action: PayloadAction<{ data: kitchenOrder }>) => {

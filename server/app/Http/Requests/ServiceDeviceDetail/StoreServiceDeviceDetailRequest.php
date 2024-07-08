@@ -34,7 +34,7 @@ class StoreServiceDeviceDetailRequest extends HelperRequest
                 'string',
                 'regex:/^[a-zA-Z0-9_-]{43}$/' // Chỉ cho phép các ký tự chữ cái, số, gạch ngang và gạch dưới, với độ dài cố định là 43
             ],
-            'maintaining_quantity' => ['required', 'integer', 'lte:quantity'],
+            'maintenance_quantity' => ['required', 'integer', 'lte:quantity'],
         ];
     }
 }

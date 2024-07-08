@@ -15,7 +15,11 @@ import { formatDate } from '@/utils/format-date';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
-import { Button, Loader, Text, Title } from 'rizzui';
+import { Button, Loader, Text, Title, Badge, ActionIcon } from 'rizzui';
+import { appendNoti, setIsLoading } from '@/store/slices/kitchen_order_notificationSlice';
+import RingBellSolidIcon from '@/components/icons/ring-bell-solid';
+import NotificationDropdown from '@/layouts/kitchen-notification-dropdown';
+import usePusher from '@/hooks/use-pusher';
 
 const pageHeader = {
   title: 'Order',
@@ -31,6 +35,8 @@ const pageHeader = {
 };
 
 export default function BlankPage({ params }: { params: { slug: string } }) {
+  const { data: notifications } = useSelector((state: RootState) => state.kitchen_order_notification);
+
   const { order, isLoadingGetOrder, isLoadingUpdateOrder } = useSelector((state: RootState) => state.order);
   const { openModal } = useModal();
 
@@ -42,6 +48,21 @@ export default function BlankPage({ params }: { params: { slug: string } }) {
     dispatch(setIsView(false));
     openModal({ view: <PayOrder />, customSize: '660px' });
   };
+
+  usePusher('kitchenOrderWaitingEvent', (data) => {
+    // Truy cập và xử lý dữ liệu từ đối tượng `data`
+    const active = data.active;
+    const productName = data.product_name;
+    const productQuantity = data.product_quantity;
+    const serviceName = data.service_name;
+
+    // Set loading state
+    dispatch(setIsLoading(true));
+
+    // Append the notification
+    dispatch(appendNoti(data));
+    toast.success(`An order has to be delivered: ${productName} - ${productQuantity} - ${serviceName}`);
+  });
 
   const handleUpdate = async () => {
     const value = {
@@ -60,6 +81,22 @@ export default function BlankPage({ params }: { params: { slug: string } }) {
   return (
     <>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
+      <NotificationDropdown notifications={notifications}>
+        <ActionIcon
+          aria-label="Notification"
+          variant="text"
+          className="relative h-[34px] w-[34px] shadow backdrop-blur-md md:h-9 md:w-9 dark:bg-gray-100"
+        >
+          <RingBellSolidIcon className="h-[18px] w-auto" />
+          <Badge
+            renderAsDot
+            color="warning"
+            enableOutlineRing
+            className="absolute right-2.5 top-2.5 -translate-y-1/3 translate-x-1/2"
+          />
+        </ActionIcon>
+      </NotificationDropdown>
+
       {isLoadingGetOrder ? (
         <div className="flex justify-center items-center h-[100px]">
           <Loader variant="spinner" size="xl" color="info" />
