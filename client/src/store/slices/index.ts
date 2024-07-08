@@ -22,23 +22,18 @@ import product_import from './product_importSlice';
 import product_import_detail from './product_import_detailSlice';
 import area from './areaSlice';
 import service_type from './serviceTypeSlice';
-
 import customer from './customerSlice';
 import price from './priceSlice';
 import kitchen_order from './kitchen_orderSlice';
-
 import device from './deviceSlice';
 import supplier from './supplierSlice';
 import service from './serviceSlice';
 import service_device_detail from './service_device_detailSlice';
 import kitchen_order_notification from './kitchen_order_notificationSlice';
-
 import order from './orderSlice';
-
-import dayoff from './dayoffSlice'
-
+import dayoff from './dayoffSlice';
 import invoice from './invoiceSlice';
-
+import statistical from './statisticalSlice';
 
 // ==============================|| COMBINE REDUCERS ||============================== //
 
@@ -72,6 +67,7 @@ const reducers = combineReducers({
   dayoff,
   kitchen_order_notification,
   invoice,
+  statistical,
 });
 
 export default reducers;
