@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\WorkShift\WorkShiftRequest;
 use App\Interface\WorkShiftRepositoryInterface;
@@ -36,6 +37,19 @@ class WorkShiftController extends Controller
     public function store(WorkShiftRequest $request)
     {
         $validateData = $request->validated();
+        $input_date_start = Carbon::createFromFormat('Y-m-d', $validateData['date_start']);
+        $input_date_end = Carbon::createFromFormat('Y-m-d', $validateData['date_end']);
+        $workshifts = $this->workshiftRes->getAllWorkShift();
+        foreach ($workshifts as $workshift) {
+            $date_start = Carbon::createFromFormat('Y-m-d', $workshift->date_start);
+            $date_end = Carbon::createFromFormat('Y-m-d', $workshift->date_end);
+            if ($input_date_start->between($date_start, $date_end)) {
+                return $this->sentErrorResponse("Date start is already in other work-shift");
+            }
+            if ($input_date_end->between($date_start, $date_end)) {
+                return $this->sentErrorResponse("Date end is already in other work-shift");
+            }
+        }
         return $this->sentSuccessResponse($this->workshiftRes->createWorkShift($validateData));
     }
 

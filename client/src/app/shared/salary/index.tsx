@@ -6,12 +6,11 @@ import { getColumns } from '@/app/shared/salary/colunm';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
-import { getAllStaffs } from '@/store/slices/staffSlice';
 
 import { useModal } from '../modal-views/use-modal';
 import dynamic from 'next/dynamic';
 import { getSalaries } from '@/store/slices/salarySlice';
-const FilterElement = dynamic(() => import('@/app/shared/attendance/filter-element'), {
+const FilterElement = dynamic(() => import('@/app/shared/salary/filter-element'), {
   ssr: false,
 });
 export default function SalaryTable() {
@@ -19,7 +18,7 @@ export default function SalaryTable() {
   const { dataSalary, isLoading, query, month, year } = useSelector((state: RootState) => state.salary);
   useEffect(() => {
     dispatch(getSalaries({ month, year, query }));
-  }, [query]);
+  }, [query, month, year]);
   const columns = useMemo(() => getColumns(openModal), [openModal]);
   return (
     <div className="mt-0">

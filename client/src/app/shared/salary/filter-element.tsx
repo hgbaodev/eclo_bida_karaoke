@@ -8,11 +8,10 @@ import { RootState } from '@/store/types';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import useDebounce from '@/hooks/use-debounce';
-import { setQuery } from '@/store/slices/staffSlice';
-import { setMonth, setYear } from '@/store/slices/attendance';
+import { setMonth, setYear, setQuery } from '@/store/slices/salarySlice';
 
 export default function FilterElement() {
-  const { month, year } = useSelector((state: RootState) => state.attendance);
+  const { month, year } = useSelector((state: RootState) => state.salary);
   const { query } = useSelector((state: RootState) => state.staff);
   const [searchTerm, setSearchTerm] = useState(query);
   const debounceSearchTerm = useDebounce(searchTerm, 1000);

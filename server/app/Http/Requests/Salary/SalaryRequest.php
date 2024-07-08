@@ -22,7 +22,7 @@ class SalaryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "staff" => "required",
+            "staff" => "nullable",
             "month" => "required",
             "year" => "required",
             "working_days" => "nullable",

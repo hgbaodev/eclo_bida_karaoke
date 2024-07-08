@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer("off_days")->nullable();
             $table->integer("working_days")->nullable();
             $table->double("total")->nullable();
+            $table->unique(["staff_id", "month", "year"]);
             $table->string('active');
             $table->timestamps();
         });

@@ -27,7 +27,6 @@ export interface RootState {
 
   salary: salary;
 
-
   dayoff: dayoffType;
 
   kitchen_order_notification: kitchen_order_notificationType;
@@ -38,8 +37,6 @@ export interface kitchen_order_notificationType {
   data: [];
   isLoading: boolean;
   errors: string | null;
-
-
 }
 
 export interface kitchen_orderType {
@@ -458,7 +455,7 @@ export interface salary {
   month: number;
   query: string;
   year: number;
-
+}
 export interface dayoffType {
   data: [];
   isLoading: boolean;
@@ -471,5 +468,4 @@ export interface dayoffType {
   errors: any;
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
-
 }

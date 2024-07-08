@@ -27,6 +27,7 @@ export default function CreateWorkShift() {
 
   const onSubmit: SubmitHandler<CreateWorkShiftInput> = async (data) => {
     const result: any = await dispatch(createWorkShift(data));
+    console.log(result);
     if (createWorkShift.fulfilled.match(result)) {
       const workshift = result.payload.data;
       const updatedList = listShiftUserDetail.map((item) => {
@@ -55,14 +56,14 @@ export default function CreateWorkShift() {
         });
       }
       dispatch(createAttendanceByWS({ detail: attendance }));
-      setReset({});
-      setErrors({});
       closeModal();
       await dispatch(getAllWorkShifts());
       dispatch(setWorkShift(workshift.active));
       toast.success('Work Shift created successfully');
     } else {
       setErrors(result?.payload?.errors);
+      toast.error(result.payload.errors);
+      closeModal();
     }
   };
   return (
