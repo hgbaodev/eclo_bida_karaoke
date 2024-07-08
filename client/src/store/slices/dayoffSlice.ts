@@ -17,6 +17,7 @@ const initialState: dayoffType = {
   errors: null,
   isCreateLoading: false,
   isUpdateLoading: false,
+  staff:'',
 };
 
 export const getDayoffs = createAsyncThunk(

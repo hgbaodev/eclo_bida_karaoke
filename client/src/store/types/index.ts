@@ -467,6 +467,7 @@ export interface dayoffType {
   errors: any;
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
+  staff:any;
 }
 
 export interface statisticalType {
