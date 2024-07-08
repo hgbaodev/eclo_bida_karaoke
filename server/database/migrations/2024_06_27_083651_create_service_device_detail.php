@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('service_id')->constrained('services');
             $table->string('status')->default(ServiceDeviceStatusEnum::IN_USE);
             $table->integer('quantity');
-            $table->integer('maintaining_quantity')->default(0);
+            $table->integer('maintenance_quantity')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

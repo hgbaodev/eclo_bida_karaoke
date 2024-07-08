@@ -25,7 +25,7 @@ class ServiceDeviceDetailResource extends JsonResource
             'device_image' => $this->device->image,
             'quantity' => $this->quantity,
             'device_value' => $this->device->value,
-            'maintaining_quantity' => $this->maintaining_quantity,
+            'maintenance_quantity' => $this->maintenance_quantity,
         ];
     }
 }

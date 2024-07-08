@@ -5,11 +5,14 @@ namespace App\Http\Controllers\Api;
 use App\Enums\KitchenOrderEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Order\PayOrderRequest;
+use App\Interface\DeviceRepositoryInterface;
 use App\Interface\KitchenOrderRepositoryInterface;
 use App\Interface\NotificationRepositoryInterface;
 use App\Interface\OrderRepositoryInterface;
 use App\Interface\ProductRepositoryInterface;
+use App\Interface\ServiceDeviceDetailRepositoryInterface;
 use App\Notifications\OrderNotification;
+use App\Repositories\ServiceDeviceDetailRepository;
 use Illuminate\Http\Request;
 use App\Http\Requests\Order\StoreOrderRequest;
 use App\Http\Requests\Order\UpdateOrderRequest;
@@ -26,6 +29,8 @@ class OrderController extends Controller
     protected $productRepository;
     protected $customerRepository;
     protected $orderDetailRepository;
+    protected $serviceDeviceDetailRepository;
+    protected $deviceRepository;
 
     public function __construct(
         OrderRepositoryInterface $orderRepository,
@@ -33,7 +38,10 @@ class OrderController extends Controller
         KitchenOrderRepositoryInterface $kitchenOrderRepository,
         ProductRepositoryInterface $productRepository,
         CustomerRepositoryInterface $customerRepository,
-        OrderDetailRepositoryInterface $orderDetailRepository
+        OrderDetailRepositoryInterface $orderDetailRepository,
+        ServiceDeviceDetailRepositoryInterface $serviceDeviceDetailRepository,
+        DeviceRepositoryInterface $deviceRepository,
+
     ) {
         $this->orderRepository = $orderRepository;
         $this->serviceRepository =  $serviceRepositoryInterface;
@@ -41,6 +49,8 @@ class OrderController extends Controller
         $this->productRepository = $productRepository;
         $this->customerRepository = $customerRepository;
         $this->orderDetailRepository = $orderDetailRepository;
+        $this->serviceDeviceDetailRepository = $serviceDeviceDetailRepository;
+        $this->deviceRepository = $deviceRepository;
     }
 
 
@@ -277,6 +287,26 @@ class OrderController extends Controller
         }
     }
 
+    public function handleDeviceOrder($devices, $service)
+    {
+        try {
+            $serviceId = $service->id;
+            foreach ($devices as $device){
+                $maintenance_quantiy = $device['quantity'];
+                $device = $this->deviceRepository->getDeviceByActive($device['active']);
+                $serviceDeviceDetail = $this->serviceDeviceDetailRepository
+                    ->updateMaintenanceQuantity(
+                        $serviceId,
+                        $device->id,
+                        $maintenance_quantiy,
+                    );
+            }
+        } catch (\Exception $e) {
+            dd($e);
+        }
+
+    }
+
     public function updateOrder(UpdateOrderRequest $request, $active)
     {
         $validated_data = $request->validated();
@@ -294,6 +324,7 @@ class OrderController extends Controller
         if (isset($validated_data['devices'])) {
             $check = $this->orderDetailRepository->addDevicesOrder($validated_data['devices'], $order->id);
             if (!$check) return $this->sentErrorResponse('No update devices detail');
+            $this->handleDeviceOrder($validated_data['devices'], $order->service);
         }
 
         if (isset($validated_data['customer_active'])) {
