@@ -1,17 +1,16 @@
 'use client';
 import { useState } from 'react';
 import { PiXBold } from 'react-icons/pi';
-import { Controller, SubmitHandler } from 'react-hook-form';
+import { SubmitHandler } from 'react-hook-form';
 import { Form } from '@/components/ui/form';
-import { Input, Button, ActionIcon, Title, Select, Password, Textarea, RadioGroup, Radio, FileInput } from 'rizzui';
+import { Input, Button, ActionIcon, Title } from 'rizzui';
 import { useModal } from '@/app/shared/modal-views/use-modal';
 import { dispatch } from '@/store';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
-import { getStatusBadge } from '../users/users-table/columns';
 import { EditAttendanceInput, editAttendanceSchema } from '@/utils/validators/attendance/edit-attendance-schema';
-import { getAttendances, updateAttendance } from '@/store/slices/attendance';
+import { getAttendances, updateAttendance } from '@/store/slices/attendanceSlice';
 
 export default function EditAttendance({
   attendance,
@@ -36,7 +35,6 @@ export default function EditAttendance({
       update: true,
     };
     const result: any = await dispatch(updateAttendance(dataAttendance));
-    console.log(result);
     if (updateAttendance.fulfilled.match(result)) {
       setReset({});
       setErrors({});
@@ -48,6 +46,15 @@ export default function EditAttendance({
       toast.error(result.payload.errors);
       closeModal();
     }
+  };
+  const handleClearCheckIn = () => {
+    // Xóa giá trị check_in
+    setReset({ ...reset, check_in: null });
+  };
+
+  const handleClearCheckOut = () => {
+    // Xóa giá trị check_out
+    setReset({ ...reset, check_out: null });
   };
   return (
     <Form<EditAttendanceInput>
@@ -84,6 +91,14 @@ export default function EditAttendance({
               {...register('check_in')}
               error={errors.check_in?.message}
             />
+            <div className="col-span-[1/2] flex justify-center">
+              {reset.check_in !== null && (
+                <Button variant="outline" type="button" onClick={handleClearCheckIn} className="w-full @xl:w-auto mt-6">
+                  Clear Check In
+                </Button>
+              )}
+            </div>
+
             <Input
               type="time"
               label="Check out"
@@ -91,6 +106,18 @@ export default function EditAttendance({
               {...register('check_out')}
               error={errors.check_out?.message}
             />
+            <div className="col-span-[1/2] flex justify-center">
+              {reset.check_out !== null && (
+                <Button
+                  variant="outline"
+                  type="button"
+                  onClick={handleClearCheckOut}
+                  className="w-full @xl:w-auto mt-6"
+                >
+                  Clear Check Out
+                </Button>
+              )}
+            </div>
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
                 Cancel

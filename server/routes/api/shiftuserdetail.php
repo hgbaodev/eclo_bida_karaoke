@@ -12,6 +12,7 @@ Route::group(
         Route::get('/', [ShiftUserDetailController::class, 'index']);
         Route::get('/{active}', [ShiftUserDetailController::class, 'show']);
         Route::post('/', [ShiftUserDetailController::class, 'store']);
+        Route::post('/workshift', [ShiftUserDetailController::class, 'storeByWorkShift']);
         Route::put('/{active}', [ShiftUserDetailController::class, 'update']);
         Route::delete('/{active}', [ShiftUserDetailController::class, 'destroy']);
     }

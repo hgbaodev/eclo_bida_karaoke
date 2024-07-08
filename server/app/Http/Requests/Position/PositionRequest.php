@@ -24,7 +24,8 @@ class PositionRequest extends HelperRequest
     {
         return [
             "name" => "required",
-            "salary" => "required|regex:/^[0-9]{7,}$/",
+            "base_salary" => "required|regex:/^[0-9]{7,}$/",
+            "salary_structure" => 'nullable',
             "status" => "required"
         ];
     }

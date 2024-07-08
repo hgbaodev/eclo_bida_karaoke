@@ -16,7 +16,7 @@ export interface ServiceDeviceDetail {
   device_active: string;
   service_active: string;
   quantity: string;
-  maintaining_quantity: string;
+  maintenance_quantity: string;
   status: any;
 }
 
@@ -108,7 +108,7 @@ export const getColumns = (openModal: (args: any) => void) => [
     dataIndex: 'maintaining_quantity',
     key: 'maintaining_quantity',
     width: 50,
-    render: (_: string, device: ServiceDeviceDetail) => device.maintaining_quantity,
+    render: (_: string, device: ServiceDeviceDetail) => device.maintenance_quantity,
   },
   {
     title: <>Action</>,
@@ -123,7 +123,7 @@ export const getColumns = (openModal: (args: any) => void) => [
               const data = {
                 quantity: Number(serviceDeviceDetail.quantity),
                 device: serviceDeviceDetail.device_active,
-                maintaining_quantity: Number(serviceDeviceDetail.maintaining_quantity),
+                maintenance_quantity: Number(serviceDeviceDetail.maintenance_quantity),
                 status: serviceDeviceDetail.status,
               };
               openModal({

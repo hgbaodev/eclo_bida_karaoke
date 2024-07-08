@@ -20,6 +20,7 @@ class KitchenOrderResource extends JsonResource
             'order_active' => $this->order->active,
             'quantity' => $this->quantity,
             'product_name' => $this->product->name,
+            'created_at' => $this->created_at,
         ];
     }
 }

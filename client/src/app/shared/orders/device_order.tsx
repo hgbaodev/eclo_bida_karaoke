@@ -107,7 +107,6 @@ const TableDeviceOrder = () => {
         ),
       },
     ],
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
   const { visibleColumns } = useColumn(columns);

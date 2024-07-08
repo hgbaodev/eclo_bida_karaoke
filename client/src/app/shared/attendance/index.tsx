@@ -9,10 +9,8 @@ import { dispatch } from '@/store';
 import { getAllStaffs } from '@/store/slices/staffSlice';
 
 import { useModal } from '../modal-views/use-modal';
-import { getShifts } from '@/store/slices/shiftSlice';
 import dynamic from 'next/dynamic';
-import { get } from 'lodash';
-import { getAttendances } from '@/store/slices/attendance';
+import { getAttendances } from '@/store/slices/attendanceSlice';
 import { setQuery } from '@/store/slices/product_importSlice';
 const FilterElement = dynamic(() => import('@/app/shared/attendance/filter-element'), {
   ssr: false,

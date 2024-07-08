@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Position;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class PositionSeeder extends Seeder
@@ -15,32 +14,38 @@ class PositionSeeder extends Seeder
     {
         Position::create([
             "name" => "Giám đốc",
-            "salary" => "40000000",
+            "base_salary" => 40000000,
+            "salary_structure" => "Month",
             "status" => "A"
         ]);
         Position::create([
             "name" => "Quản lý nhân sự",
-            "salary" => "15000000",
+            "base_salary" => 15000000,
+            "salary_structure" => "Month",
             "status" => "A"
         ]);
         Position::create([
             "name" => "Quản lý cửa hàng",
-            "salary" => "15000000",
+            "base_salary" => 15000000,
+            "salary_structure" => "Month",
             "status" => "A"
         ]);
         Position::create([
             "name" => "Nhân viên",
-            "salary" => "8000000",
+            "base_salary" => 35000,
+            "salary_structure" => "Hour",
             "status" => "A"
         ]);
         Position::create([
             "name" => "Đầu bếp",
-            "salary" => "14000000",
+            "base_salary" => 14000000,
+            "salary_structure" => "Month",
             "status" => "A"
         ]);
         Position::create([
             "name" => "Nhân viên pha chế",
-            "salary" => "14000000",
+            "base_salary" => 30000,
+            "salary_structure" => "Hour",
             "status" => "A"
         ]);
     }

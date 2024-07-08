@@ -55,6 +55,7 @@
     "react-use": "^17.5.0",
     "recharts": "^2.12.7",
     "redux": "^5.0.1",
+    "redux-persist": "^6.0.0",
     "rizzui": "^0.8.4",
     "simplebar-react": "^3.2.6",
     "tailwind-merge": "^2.3.0",

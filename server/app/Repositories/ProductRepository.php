@@ -5,9 +5,6 @@ namespace App\Repositories;
 use App\Interface\ProductRepositoryInterface;
 use App\Http\Collections\CollectionCustom;
 use App\Models\Product;
-use App\Models\ProductImportDetail;
-
-use Illuminate\Support\Facades\DB;
 
 class ProductRepository implements ProductRepositoryInterface
 {
@@ -29,27 +26,31 @@ class ProductRepository implements ProductRepositoryInterface
         } else {
             $product = $product->paginate($perPage);
         }
-
         return new CollectionCustom($product);
     }
+
     public function getAllProduct()
     {
         return Product::all();
     }
+
     public function create(array $data)
     {
         return Product::create($data);
     }
+
     public function getProductByActive($active)
     {
         return Product::where("active", $active)->first();
     }
+
     public function updateProductByActive($active, array $data)
     {
         $product = Product::where("active", $active)->first();
         $product->update($data);
         return $product;
     }
+
     public function deleteByActive($active)
     {
         $product = Product::where("active", $active)->first();

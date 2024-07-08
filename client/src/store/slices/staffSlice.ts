@@ -96,9 +96,10 @@ export const deleteStaff = createAsyncThunk('staffs/deleteStaff', async (active:
 
 export const updateStaff = createAsyncThunk(
   'staffs/updateStaff',
-  async ({ staff, active }: { staff: EditStaffInput; active: string }, { rejectWithValue }) => {
+  async ({ staff, active }: { staff: any; active: string }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.put(`staffs/${active}`, staff);
+      console.log(staff);
+      const response = await axiosInstance.post(`staffs/${active}`, staff);
       return response.data;
     } catch (error: any) {
       if (!error.response) {

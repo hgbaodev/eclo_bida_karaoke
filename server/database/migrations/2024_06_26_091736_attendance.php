@@ -22,7 +22,7 @@ return new class extends Migration
             $table->time("check_out")->nullable();
             $table->time("time_in");
             $table->time("time_out");
-            $table->time("type")->nullable();
+            $table->string("type")->nullable();
             $table->timestamps();
         });
     }

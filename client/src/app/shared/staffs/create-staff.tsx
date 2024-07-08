@@ -94,6 +94,7 @@ export default function CreateStaff() {
       className="grid grid-cols-1 gap-6 p-6 @container md:grid-cols-2 [&_.rizzui-input-label]:font-medium [&_.rizzui-input-label]:text-gray-900"
     >
       {({ setError, register, control, watch, formState: { errors } }) => {
+        console.log(errors);
         return (
           <>
             <div className="col-span-full flex items-center justify-between">

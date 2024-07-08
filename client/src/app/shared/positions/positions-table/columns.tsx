@@ -53,11 +53,18 @@ export const getColumns = (openModal: (args: any) => void) => [
     render: (_: string, position: Position) => position.name,
   },
   {
-    title: <HeaderCell title="Salary" />,
-    dataIndex: 'salary',
-    key: 'salary',
+    title: <HeaderCell title="Base Salary" />,
+    dataIndex: 'basesalary',
+    key: 'basesalary',
     width: 100,
-    render: (_: string, position: Position) => position.salary,
+    render: (_: string, position: Position) => position.base_salary,
+  },
+  {
+    title: <HeaderCell title="Salary Structure" />,
+    dataIndex: 'salarystructure',
+    key: 'salarystructure',
+    width: 100,
+    render: (_: string, position: Position) => position.salary_structure,
   },
   {
     title: <HeaderCell title="Status" />,
@@ -85,7 +92,8 @@ export const getColumns = (openModal: (args: any) => void) => [
             onClick={() => {
               const data = {
                 name: position.name,
-                salary: position.salary,
+                base_salary: position.base_salary,
+                salary_structure: position.salary_structure,
                 status: position.status,
               };
               openModal({
@@ -121,7 +129,8 @@ export const getColumns = (openModal: (args: any) => void) => [
 export interface Position {
   active: string;
   name: string;
-  salary: string;
+  base_salary: string;
+  salary_structure: string;
   status: any;
   created_at: string;
 }

@@ -41,7 +41,11 @@ export const getColumns = (openModal: any) => [
     dataIndex: 'total_price',
     key: 'total_price',
     width: 50,
-    render: (total_price: string) => <Text className="text-sm">{total_price}</Text>,
+    render: (total_price: string) => (
+      <Text as="b" className="text-sm">
+        {total_price} $
+      </Text>
+    ),
   },
   {
     title: <HeaderCell title="Action" />,

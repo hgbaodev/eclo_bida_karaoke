@@ -49,7 +49,7 @@ export default function CreateServiceDeviceDetail({ serviceActive }: { serviceAc
         setReset({
           device: '',
           quantity: 0,
-          maintaining_quantity: 0,
+          maintenance_quantity: 0,
           status: '',
         });
         setErrors({});
@@ -145,9 +145,9 @@ export default function CreateServiceDeviceDetail({ serviceActive }: { serviceAc
             <Input
               label="Under maintenace"
               placeholder="Under maintenace quantity"
-              {...register('maintaining_quantity')}
+              {...register('maintenance_quantity')}
               className="col-span-[1/2]"
-              error={errors.maintaining_quantity?.message}
+              error={errors.maintenance_quantity?.message}
             />
 
             <div className="col-span-full flex items-center justify-end gap-4">
