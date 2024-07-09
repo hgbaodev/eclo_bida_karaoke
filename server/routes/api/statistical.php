@@ -11,5 +11,6 @@ Route::group(
     function () {
         Route::get('/over-view', [StatisticalController::class, 'getOverview']);
         Route::get('/time', [StatisticalController::class, 'getTime']);
+        Route::post('/revenue-ex', [StatisticalController::class, 'getRevenueEx']);
     }
 );

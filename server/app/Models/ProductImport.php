@@ -50,4 +50,8 @@ class ProductImport extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+    public static function getRevenueEx($startDay, $endDay)
+    {
+        return self::whereBetween('receive_time', [$startDay, $endDay])->get();
+    }
 }

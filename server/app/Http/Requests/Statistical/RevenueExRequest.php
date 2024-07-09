@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Staff;
+namespace App\Http\Requests\Statistical;
 
 use App\Http\Helpers\HelperRequest;
 

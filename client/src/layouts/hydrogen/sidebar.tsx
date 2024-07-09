@@ -32,7 +32,6 @@ export default function Sidebar({ className }: { className?: string }) {
               (dropdownItem) => dropdownItem.href === pathname,
             );
             const isDropdownOpen = Boolean(pathnameExistInDropdowns?.length);
-
             return (
               <Fragment key={item.name + '-' + index}>
                 {item?.href ? (

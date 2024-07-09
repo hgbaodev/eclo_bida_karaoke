@@ -99,6 +99,12 @@ export const MenuItems = [
     name: 'Users',
     href: routes.admin.users,
     icon: <HiOutlineUsers />,
+    permission: [
+      {
+        functional: 'user',
+        action: 'View',
+      },
+    ],
   },
   {
     name: 'Roles & Permissions',
