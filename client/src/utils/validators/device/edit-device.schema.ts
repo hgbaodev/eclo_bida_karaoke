@@ -12,16 +12,15 @@ export const editDeviceSchema = z.object({
     .max(100, { message: 'Description must not exceed 100 characters' }),
   image: z
     .any()
+    .nullable()
     .refine((files) => {
-      return files?.length > 0;
-    }, 'Please select an image.')
-    .refine((files) => {
-      return files?.[0]?.size <= MAX_FILE_SIZE;
+      if (files === null) return true; // Allow null value
+      return files.length === 0 || (files.length > 0 && files[0]?.size <= MAX_FILE_SIZE);
     }, `Max image size is 2MB.`)
-    .refine(
-      (files) => ACCEPTED_IMAGE_MIME_TYPES.includes(files?.[0]?.type),
-      'Only .jpg, .jpeg, .png and .webp formats are supported.',
-    ),
+    .refine((files) => {
+      if (files === null) return true; // Allow null value
+      return files.length === 0 || ACCEPTED_IMAGE_MIME_TYPES.includes(files[0]?.type);
+    }, 'Only .jpg, .jpeg, .png and .webp formats are supported.'),
   status: z.string().min(1, { message: messages.statusIsRequired }),
   value: z.preprocess((val) => {
     if (typeof val === 'string' || typeof val === 'number') {

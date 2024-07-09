@@ -21,37 +21,37 @@ export default function EditDevice({ device, active }: { device: EditDeviceInput
   const [errors, setErrors] = useState<any>({});
   const { pageSize, page, query, status, isUpdateLoading } = useSelector((state: RootState) => state.device);
   const onSubmit: SubmitHandler<EditDeviceInput> = async (data) => {
+    const formData = new FormData();
     if (data['image'] && data['image'].length > 0) {
       const imageFile = data['image'][0];
-      const formData = new FormData();
-
       formData.append('image', imageFile);
-      formData.append('name', data.name.toString());
-      formData.append('status', data.status.toString());
-      formData.append('value', data.value.toString());
-      formData.append('_method', 'PUT');
-      formData.append('description', data.description.toString());
+    }
+    formData.append('name', data.name);
+    formData.append('status', data.status);
+    formData.append('value', data.value.toString());
+    formData.append('_method', 'PUT');
+    formData.append('description', data.description);
 
-      try {
-        const result: any = await dispatch(updateDevice({ formData, active }));
-        if (updateDevice.fulfilled.match(result)) {
-          setReset({
-            name: '',
-            status: '',
-            value: '',
-            description: '',
-          });
-          setErrors({});
-          closeModal();
-          await dispatch(getDevices({ page, pageSize, query, status }));
-          toast.success('Device updated successfully');
-        } else {
-          setErrors(result?.payload?.errors);
-        }
-      } catch (error) {
-        console.error('Failed to edit device', error);
-        toast.error('Failed to edit device');
+    try {
+      const result: any = await dispatch(updateDevice({ formData, active }));
+      if (updateDevice.fulfilled.match(result)) {
+        setReset({
+          name: '',
+          status: '',
+          value: '',
+          description: '',
+          image: '',
+        });
+        setErrors({});
+        closeModal();
+        await dispatch(getDevices({ page, pageSize, query, status }));
+        toast.success('Device updated successfully');
+      } else {
+        setErrors(result?.payload?.errors);
       }
+    } catch (error) {
+      console.error('Failed to edit device', error);
+      toast.error('Failed to edit device');
     }
   };
 
@@ -132,7 +132,7 @@ export default function EditDevice({ device, active }: { device: EditDeviceInput
                 Cancel
               </Button>
               <Button type="submit" isLoading={isUpdateLoading} className="w-full @xl:w-auto">
-                Update device
+                Update
               </Button>
             </div>
           </>
