@@ -9,7 +9,7 @@ import AvatarCard from '@/components/ui/avatar-card';
 import DateCell from '@/components/ui/date-cell';
 import DeletePopover from '@/app/shared/delete-popover';
 import { dispatch } from '@/store';
-import { deleteProduct,getProductImports } from '@/store/slices/product_importSlice';
+import { deleteDayoff,getDayoffs } from '@/store/slices/dayoffSlice';
 import toast from 'react-hot-toast';
 // import EditDayOff from './edit-dayoff';
 // import EditProduct_Detail from '../create-product_import_detail';
@@ -89,6 +89,31 @@ export const getColumns = (openModal: (args: any) => void) => [
     key: 'type',
     width: 50,
     render: (type: DayOff['type']) => getStatusBadge(type),
+  },
+  {
+    title: <></>,
+    dataIndex: 'action',
+    key: 'action',
+    width: 10,
+    render: (_: string, dayoff: DayOff) => (
+      <div className=" ">
+       
+       
+        <DeletePopover
+          title={`Delete day off`}
+          description={`Are you sure you want to delete this  `}
+          onDelete={async () => {
+            const result = await dispatch(deleteDayoff(dayoff.active)); // Remove the .then() block
+            if (deleteDayoff.fulfilled.match(result)) {
+              await dispatch(getDayoffs({ page: 1, pageSize: 5, query: ''}));
+              toast.success(`Day off  has been deleted successfully.`);
+            } else {
+              toast.error(`Failed to delete import #${dayoff.active}.`);
+            }
+          }}
+        />
+      </div>
+    ),
   },
 ];
   export interface DayOff {

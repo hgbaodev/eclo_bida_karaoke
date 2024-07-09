@@ -51,6 +51,13 @@ export const getColumns = (openModal: (args: any) => void) => [
     render: (_: any,  product_import: Product_Import, index: number) => <div className="inline-flex ps-3">{index + 1}</div>,
   },
   {
+    title: <HeaderCell title="User Import" />,
+    dataIndex: 'user_import',
+    key: 'user_import',
+    width: 50,
+    render: (_: string,  product_import: Product_Import) => product_import.user_import.first_name + ' ' +  product_import.user_import.last_name,
+  },
+  {
     title: <HeaderCell title="Create Time" />,
     dataIndex: 'create_time',
     key: 'create_time',
@@ -215,6 +222,10 @@ export interface Product_Import {
     receive_time: string;
     create_time: string;
     total_cost: any;
+    user_import:{
+      first_name:string,
+      last_name:string,
+    };
     status: string;
   }
   export const STATUSES = {

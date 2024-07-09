@@ -5,14 +5,18 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DayOff\DayOffRequest;
 use App\Interface\DayOffRepositoryInterface;
+use App\Interface\StaffRepositoryInterface;;
+
 use Illuminate\Http\Request;
 
 class DayOffController extends Controller
 {
     protected $dayOffRepository;
-    public function __construct(DayOffRepositoryInterface $dayOffRepository)
+    protected $staffRes;
+    public function __construct(DayOffRepositoryInterface $dayOffRepository, StaffRepositoryInterface $staffRepositoryInterface)
     {
         $this->dayOffRepository = $dayOffRepository;
+        $this->staffRes = $staffRepositoryInterface;
     }
 
     public function index(Request $request)
@@ -24,10 +28,16 @@ class DayOffController extends Controller
     {
         $validated_data = $request->validated();
         $type = $request->input("type");
+        $staff = $this->staffRes->getStaffByActive($validated_data["staff"]);
         $reason = $request->input("reason");
         if ($type == "D" && $reason != "") {
             return $this->sentErrorResponse("Unapproved has no reason", "error", 404);
         }
+        if (!$staff) {
+            return $this->sentErrorResponse("Staff is not found", "error", 404);
+        }
+        $validated_data["staff_id"] = $staff->id;
+        unset($validated_data['staff']);
         $device = $this->dayOffRepository->create($validated_data);
         return $this->sentSuccessResponse($device, 'create successfully !!!', 200);
     }
