@@ -11,6 +11,7 @@ import { dispatch } from '@/store';
 import { deleteUser, getUsers } from '@/store/slices/userSlice';
 import toast from 'react-hot-toast';
 import EditUser from '../edit-user';
+import WithPermission from '@/guards/with-permisson';
 
 export function getStatusBadge(status: User['status']) {
   switch (status) {
@@ -84,41 +85,45 @@ export const getColumns = (openModal: (args: any) => void) => [
     width: 10,
     render: (_: string, user: User) => (
       <div className="flex items-center justify-end gap-3 pe-3">
-        <Tooltip size="sm" content={'Edit User'} placement="top" color="invert">
-          <ActionIcon
-            onClick={() => {
-              const data = {
-                first_name: user.first_name,
-                last_name: user.last_name,
-                email: user.email,
-                role: user.role.active,
-                status: user.status,
-              };
-              openModal({
-                view: <EditUser user={data} active={user.active} />,
-              });
+        <WithPermission permission="user.Update">
+          <Tooltip size="sm" content={'Edit User'} placement="top" color="invert">
+            <ActionIcon
+              onClick={() => {
+                const data = {
+                  first_name: user.first_name,
+                  last_name: user.last_name,
+                  email: user.email,
+                  role: user.role.active,
+                  status: user.status,
+                };
+                openModal({
+                  view: <EditUser user={data} active={user.active} />,
+                });
+              }}
+              as="span"
+              size="sm"
+              variant="outline"
+              className="hover:!border-gray-900 hover:text-gray-700 cursor-pointer"
+            >
+              <PencilIcon className="h-4 w-4" />
+            </ActionIcon>
+          </Tooltip>
+        </WithPermission>
+        <WithPermission permission="user.Delete">
+          <DeletePopover
+            title={`Delete this user`}
+            description={`Are you sure you want to delete this #${user.last_name} user?`}
+            onDelete={async () => {
+              const result = await dispatch(deleteUser(user.active)); // Remove the .then() block
+              if (deleteUser.fulfilled.match(result)) {
+                await dispatch(getUsers({ page: 1, pageSize: 5, query: '', role: '', status: '' }));
+                toast.success(`User #${user.first_name} ${user.last_name} has been deleted successfully.`);
+              } else {
+                toast.error(`Failed to delete user #${user.active}.`);
+              }
             }}
-            as="span"
-            size="sm"
-            variant="outline"
-            className="hover:!border-gray-900 hover:text-gray-700 cursor-pointer"
-          >
-            <PencilIcon className="h-4 w-4" />
-          </ActionIcon>
-        </Tooltip>
-        <DeletePopover
-          title={`Delete this user`}
-          description={`Are you sure you want to delete this #${user.last_name} user?`}
-          onDelete={async () => {
-            const result = await dispatch(deleteUser(user.active)); // Remove the .then() block
-            if (deleteUser.fulfilled.match(result)) {
-              await dispatch(getUsers({ page: 1, pageSize: 5, query: '', role: '', status: '' }));
-              toast.success(`User #${user.first_name} ${user.last_name} has been deleted successfully.`);
-            } else {
-              toast.error(`Failed to delete user #${user.active}.`);
-            }
-          }}
-        />
+          />
+        </WithPermission>
       </div>
     ),
   },

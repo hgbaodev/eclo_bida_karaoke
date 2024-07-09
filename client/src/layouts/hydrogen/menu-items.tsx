@@ -15,24 +15,7 @@ import { GiReceiveMoney } from 'react-icons/gi';
 import { AiOutlineBarChart } from 'react-icons/ai';
 
 // Note: do not add href in the label object, it is rendering as label
-export const MenuItems = [
-  // label start
-  {
-    name: 'Overview',
-  },
-  // label end
-  {
-    name: 'Analytics',
-    href: routes.admin.analytics,
-    icon: <PiChartBarDuotone />,
-    badge: '',
-  },
-  {
-    name: 'Job Board',
-    href: routes.admin.jobBoard,
-    icon: <PiShapesDuotone />,
-    badge: 'NEW',
-  },
+export const menuItems = [
   {
     name: 'Sell',
   },
@@ -99,12 +82,7 @@ export const MenuItems = [
     name: 'Users',
     href: routes.admin.users,
     icon: <HiOutlineUsers />,
-    permission: [
-      {
-        functional: 'user',
-        action: 'View',
-      },
-    ],
+    permission: 'user.View',
   },
   {
     name: 'Roles & Permissions',
@@ -155,6 +133,7 @@ export const MenuItems = [
     name: 'Customers',
     href: routes.admin.customers,
     icon: <PiUserList />,
+    permission: 'customer.View',
   },
   {
     name: 'Suppliers',
