@@ -10,6 +10,10 @@ export const routes = {
   },
 
   admin: {
+    report: {
+      statistical: '/admin/report/statistical',
+      revenueEx: '/admin/report/revenue-expenditure',
+    },
     analytics: '/admin',
     users: '/admin/users',
     rolesPermissions: '/admin/roles-permissions',
@@ -38,6 +42,7 @@ export const routes = {
     shift_detail_staff: '/admin/shift_detail_staff',
     schedule: '/admin/schedule',
     attendance: '/admin/attendance',
+    dayoff:'/admin/dayoff',
     salary: '/admin/salary',
   },
   auth: {

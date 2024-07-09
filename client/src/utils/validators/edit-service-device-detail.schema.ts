@@ -10,7 +10,7 @@ export const EditServiceDeviceDetailSchema = z.object({
     }
     return val;
   }, z.number().min(0, { message: 'Quantity must be a positive number' })),
-  maintaining_quantity: z.preprocess((val) => {
+  maintenance_quantity: z.preprocess((val) => {
     if (typeof val === 'string' || typeof val === 'number') {
       return parseInt(val as string);
     }

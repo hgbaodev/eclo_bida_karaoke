@@ -30,6 +30,7 @@ use App\Interface\SupplierRepositoryInterface;
 use App\Interface\UserRepositoryInterface;
 use App\Interface\WorkShiftRepositoryInterface;
 use App\Interface\DayOffRepositoryInterface;
+use App\Interface\StatisticalRepositoryInterface;
 use App\Models\Price;
 use App\Repositories\AreaRepository;
 use App\Repositories\CustomerRepository;
@@ -60,6 +61,7 @@ use App\Repositories\ShiftDetailRepository;
 use App\Repositories\ShiftUserDetailRepository;
 use App\Repositories\WorkShiftRepository;
 use App\Repositories\DayOffRepository;
+use App\Repositories\StatisticalRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -94,11 +96,9 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(KitchenOrderRepositoryInterface::class, KitchenOrderRepository::class);
         $this->app->bind(ServiceDeviceDetailRepositoryInterface::class, ServiceDeviceDetailRepository::class);
         $this->app->bind(OrderDetailRepositoryInterface::class, OrderDetailRepository::class);
-
         $this->app->bind(SalaryRepositoryInterface::class, SalaryRepository::class);
-
         $this->app->bind(DayOffRepositoryInterface::class, DayOffRepository::class);
-
+        $this->app->bind(StatisticalRepositoryInterface::class, StatisticalRepository::class);
     }
 
     /**

@@ -91,6 +91,18 @@ class ServiceDeviceDetailRepository implements ServiceDeviceDetailRepositoryInte
         return $returnedData;
     }
 
+    public function updateMaintenanceQuantity(int $serviceId, int $deviceId, int $maintenanceQuantity)
+    {
+        $serviceDeviceDetail = ServiceDeviceDetail::where('service_id', $serviceId)
+            ->where('device_id', $deviceId)
+            ->firstOrFail();
+
+        $serviceDeviceDetail->maintenance_quantity = $maintenanceQuantity;
+        $serviceDeviceDetail->save();
+
+        return $serviceDeviceDetail;
+    }
+
     /**
      * @param string $active
      * @return mixed

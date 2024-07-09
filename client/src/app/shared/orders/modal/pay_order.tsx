@@ -18,8 +18,17 @@ export default function PayOrder() {
   const router = useRouter();
   const { closeModal } = useModal();
   const { order, isLoadingPayOrder, isView } = useSelector((state: RootState) => state.order);
-  const checkOutTime = dayjs(new Date()).format('YYYY-MM-DD HH:mm:ss');
-  const hoursDiff = parseFloat((dayjs(new Date()).diff(dayjs(order?.checkin_time), 'minute') / 60).toFixed(2));
+  const checkOutTime = dayjs(order?.checkout_time == null ? new Date() : order.checkout_time).format(
+    'YYYY-MM-DD HH:mm:ss',
+  );
+  const hoursDiff = parseFloat(
+    (
+      dayjs(order?.checkout_time == null ? new Date() : order.checkout_time).diff(
+        dayjs(order?.checkin_time),
+        'minute',
+      ) / 60
+    ).toFixed(2),
+  );
   const totalPriceProduct = order?.products.reduce((acc, cur) => acc + cur.selling_price * cur.quantity, 0);
   const totalPriceService = hoursDiff * (order?.service.price.pricePerHour ?? 0);
   const totalDevices = order?.devices.reduce((acc, cur) => acc + cur.quantity * cur.selling_price, 0) ?? 0;
@@ -75,7 +84,11 @@ export default function PayOrder() {
                   </div>
                   <div className="flex">
                     <Text className="w-[100px]">Time end:</Text>
-                    <Text>{dayjs(new Date()).format('HH:mm DD/MM/YYYY')}</Text>
+                    <Text>
+                      {dayjs(order?.checkout_time == null ? new Date() : order.checkout_time).format(
+                        'HH:mm DD/MM/YYYY',
+                      )}
+                    </Text>
                   </div>
                   <div className="flex">
                     <Text className="w-[100px]">Time used:</Text>

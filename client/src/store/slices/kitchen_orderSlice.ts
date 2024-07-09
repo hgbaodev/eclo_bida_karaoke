@@ -1,3 +1,4 @@
+'use client';
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axiosInstance from '@/api/axios';
 import { kitchen_orderType, kitchenOrder } from '../types';
@@ -15,9 +16,9 @@ const initialState: kitchen_orderType = {
 };
 
 // Thunk action để lấy danh sách đơn hàng từ API với tham số `all`
-export const getKitchenOrders = createAsyncThunk<any, { all?: boolean }, {}>(
+export const getKitchenOrders = createAsyncThunk(
   'kitchen_orders/getKitchenOrders',
-  async ({ all }) => {
+  async ({ all }: { all?: boolean }) => {
     const url = new URL('/api/v1/orders/kitchen-orders', env.NEXT_API_URL);
     url.searchParams.set('all', `${all}`);
     try {
@@ -97,7 +98,6 @@ const kitchenOrderSlice = createSlice({
       const index = state.data.findIndex((order) => order.active === active);
       if (index !== -1) {
         state.data[index].status = status;
-        state.data[index].isLoading = false; // Đặt lại isLoading về false
       }
     },
     appendOrders: (state, action: PayloadAction<{ data: kitchenOrder }>) => {
@@ -119,6 +119,60 @@ const kitchenOrderSlice = createSlice({
       })
       .addCase(getKitchenOrders.rejected, (state) => {
         state.isLoading = false;
+      })
+      .addCase(markKitchenOrderAsProcessing.pending, (state, action) => {
+        const index = state.data.findIndex((order) => order.active === action.meta.arg);
+        if (index !== -1) {
+          state.data[index].isLoading = true;
+        }
+      })
+      .addCase(markKitchenOrderAsProcessing.fulfilled, (state, action) => {
+        const index = state.data.findIndex((order) => order.active === action.meta.arg);
+        if (index !== -1) {
+          state.data[index].isLoading = false;
+        }
+      })
+      .addCase(markKitchenOrderAsProcessing.rejected, (state, action) => {
+        const index = state.data.findIndex((order) => order.active === action.meta.arg);
+        if (index !== -1) {
+          state.data[index].isLoading = false;
+        }
+      })
+      .addCase(markKitchenOrderAsWaiting.pending, (state, action) => {
+        const index = state.data.findIndex((order) => order.active === action.meta.arg);
+        if (index !== -1) {
+          state.data[index].isLoading = true;
+        }
+      })
+      .addCase(markKitchenOrderAsWaiting.fulfilled, (state, action) => {
+        const index = state.data.findIndex((order) => order.active === action.meta.arg);
+        if (index !== -1) {
+          state.data[index].isLoading = false;
+        }
+      })
+      .addCase(markKitchenOrderAsWaiting.rejected, (state, action) => {
+        const index = state.data.findIndex((order) => order.active === action.meta.arg);
+        if (index !== -1) {
+          state.data[index].isLoading = false;
+        }
+      })
+      .addCase(markKitchenOrderAsDone.pending, (state, action) => {
+        const index = state.data.findIndex((order) => order.active === action.meta.arg);
+        if (index !== -1) {
+          state.data[index].isLoading = true;
+        }
+      })
+      .addCase(markKitchenOrderAsDone.fulfilled, (state, action) => {
+        const index = state.data.findIndex((order) => order.active === action.meta.arg);
+        if (index !== -1) {
+          state.data.splice(index, 1);
+        }
+      })
+      .addCase(markKitchenOrderAsDone.rejected, (state, action) => {
+        const index = state.data.findIndex((order) => order.active === action.meta.arg);
+        if (index !== -1) {
+          state.data[index].isLoading = false;
+        }
       });
   },
 });

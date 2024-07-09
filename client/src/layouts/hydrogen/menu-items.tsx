@@ -9,9 +9,10 @@ import { FaProductHunt } from 'react-icons/fa';
 import { MdOutlineDevicesOther } from 'react-icons/md';
 import { FaUserClock } from 'react-icons/fa6';
 import { LuClock } from 'react-icons/lu';
-import { BsPersonCheckFill } from 'react-icons/bs';
+import { BsPersonCheckFill,BsReceiptCutoff } from 'react-icons/bs';
 import { TbToolsKitchen3 } from 'react-icons/tb';
 import { GiReceiveMoney } from 'react-icons/gi';
+import { AiOutlineBarChart } from 'react-icons/ai';
 
 // Note: do not add href in the label object, it is rendering as label
 export const menuItems = [
@@ -54,6 +55,21 @@ export const menuItems = [
   {
     name: 'Apps Kit',
   },
+  {
+    name: 'Report',
+    href: '#yhgtnu',
+    icon: <AiOutlineBarChart />,
+    dropdownItems: [
+      {
+        name: 'Statistical',
+        href: routes.admin.report.statistical,
+      },
+      {
+        name: 'Revenue and expenditure',
+        href: routes.admin.report.revenueEx,
+      },
+    ],
+  },
   // label end
   {
     name: 'Services',
@@ -74,7 +90,6 @@ export const menuItems = [
       },
     ],
   },
-
   {
     name: 'Devices',
     href: routes.admin.devices,
@@ -114,6 +129,11 @@ export const menuItems = [
     name: 'Attendance',
     href: routes.admin.attendance,
     icon: <BsPersonCheckFill />,
+  },
+  {
+    name: 'Dayoff',
+    href: routes.admin.dayoff,
+    icon: <BsReceiptCutoff />,
   },
   {
     name: 'Schedule',
