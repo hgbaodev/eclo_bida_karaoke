@@ -1,27 +1,34 @@
 import createMiddleware from 'next-intl/middleware';
 
-export default createMiddleware({
-  // A list of all locales that are supported
-  locales: ['en', 'vi'],
+const defaultLocale = typeof navigator !== 'undefined' ? navigator.language.split('-')[0] : 'en';
 
-  // Used when no locale matches
-  defaultLocale: 'en',
+export default createMiddleware({
+  locales: ['en', 'vi'],
+  defaultLocale: defaultLocale,
 });
 
 export const config = {
-  // Match only internationalized pathnames
-  matcher: ['/', '/admin/:path*', '/(vi|en)/:path*'],
+  // Match only internationalized pathnames and specific paths
+  matcher: ['/', '/admin/:path*', '/auth/:path*', '/(vi|en)/:path*'],
 };
-
-// Custom middleware function to handle /admin/ routes
+// Custom middleware function to handle specific routes
 export function customMiddleware(req: any, res: any, next: any) {
   const { url } = req;
 
-  // Check if the URL starts with /admin/ and doesn't have a locale prefix
-  if (url.startsWith('/admin/') && !url.startsWith('/en/admin/') && !url.startsWith('/vi/admin/')) {
-    // Redirect to /en/admin/...
-    const redirectedUrl = `/en${url}`;
-    res.writeHead(307, { Location: redirectedUrl });
+  // List of specific paths to redirect
+  const pathsToRedirect = ['/admin/', '/auth/']; // Add more paths as needed
+
+  // Check if the URL starts with any of the paths to redirect and doesn't have a locale prefix
+  const shouldRedirect = pathsToRedirect.some((path) => {
+    return url.startsWith(path) && !url.startsWith(`/en${path}`) && !url.startsWith(`/vi${path}`);
+  });
+
+  if (shouldRedirect) {
+    // Determine the correct locale prefix based on the current URL
+    const currentPath = pathsToRedirect.find((path) => url.startsWith(path));
+    const redirectedUrl = `/en${url.replace(currentPath, `${currentPath}`)}`;
+
+    res.writeHead(301, { Location: redirectedUrl });
     res.end();
     return;
   }
