@@ -7,8 +7,6 @@ import { Form } from '@/components/ui/form';
 import Select1, { StylesConfig } from 'react-select';
 
 import { Input, Button, ActionIcon, Title, Select } from 'rizzui';
-import { useModal } from '@/app/shared/modal-views/use-modal';
-import { Input, Button, ActionIcon, Title, Select } from 'rizzui';
 import { useModal } from '@/app/[locale]/shared/modal-views/use-modal';
 import { dispatch } from '@/store';
 import { useSelector } from 'react-redux';
