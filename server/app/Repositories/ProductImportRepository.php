@@ -15,7 +15,7 @@ class ProductImportRepository implements ProductImportInterface
         $perPage = $request->input('perPage');
         $query = $request->input('query');
         $id = $request->input('id');
-        $product_import = ProductImport::query();
+        $product_import = ProductImport::query()->with("user_import");
         if ($query) {
             $product_import->whereRaw("create_time LIKE '%$query%'")
                 ->whereRaw("recieve_time LIKE '%$query%'")

@@ -8,6 +8,7 @@ use App\Interface\ProductImportInterface;
 use App\Interface\ProductRepositoryInterface;
 use App\Interface\ProductImpDetailInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\ProductImport;
 
 class ProductImportController extends Controller
@@ -28,6 +29,8 @@ class ProductImportController extends Controller
     public function store(ProductImportRequest $request)
     {
         $validated_data = $request->validated();
+        $userId = Auth::id();
+        $validated_data['user_id'] = $userId;
         return $this->sentSuccessResponse($this->product_import_Repository->create($validated_data));
     }
     public function show($active)
