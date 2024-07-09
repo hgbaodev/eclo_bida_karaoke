@@ -7,6 +7,7 @@ import ControlledTable from '@/components/controlled-table';
 import { getColumns } from '@/app/shared/dayoff/dayoff_table/column';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
+import { getAllStaffs } from '@/store/slices/staffSlice';
 import { dispatch, useDispatch } from '@/store';
 import { useSearchParams } from 'next/navigation';
 import { useModal } from '../../modal-views/use-modal';
@@ -23,10 +24,18 @@ export default function DayOff_table() {
   useEffect(() => {
     const fetch = async () => {
         // @ts-ignore
+  
       await dispatch(getDayoffs({ page, pageSize, query }));
     };
     fetch();
   }, [page, pageSize, query]);
+  useEffect(() => {
+    const fetch = async () => {
+      await dispatch(getAllStaffs(''));
+    };
+    fetch();
+  },);
+ 
   const columns = useMemo(
     () => getColumns(openModal),
     // eslint-disable-next-line react-hooks/exhaustive-deps
