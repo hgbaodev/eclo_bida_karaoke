@@ -32,6 +32,7 @@ export default function EditDevice({ device, active }: { device: EditDeviceInput
     formData.append('_method', 'PUT');
     formData.append('description', data.description);
 
+    console.log(formData);
     try {
       const result: any = await dispatch(updateDevice({ formData, active }));
       if (updateDevice.fulfilled.match(result)) {
