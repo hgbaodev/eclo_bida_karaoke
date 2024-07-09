@@ -1,4 +1,3 @@
-
 'use client';
 import { useState } from 'react';
 import { PiXBold } from 'react-icons/pi';
@@ -8,7 +7,10 @@ import { Input, Button, ActionIcon, Title, Select, Textarea } from 'rizzui';
 import { useModal } from '@/app/shared/modal-views/use-modal';
 // import { createProduct, getProductImports } from '@/store/slices/product_importSlice';
 import { createProductImportDetail, getProductImportDetails } from '@/store/slices/product_import_detailSlice';
-import { CreateProduct_Import_DetailtInput, createProduct_Import_DetailSchema } from '@/utils/validators/create-product_import_detail.schema';
+import {
+  CreateProduct_Import_DetailtInput,
+  createProduct_Import_DetailSchema,
+} from '@/utils/validators/product/create-product_import_detail.schema';
 import { dispatch } from '@/store';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
@@ -20,31 +22,30 @@ import { updateProduct } from '@/store/slices/productSlices';
 
 export default function CreateProductImportDetail() {
   const { closeModal } = useModal();
-  const searchParams = useSearchParams(); 
+  const searchParams = useSearchParams();
   const active = searchParams.get('active');
   const [reset, setReset] = useState({});
   const [errors, setErrors] = useState<any>({});
-  const { pageSize, page, query, isCreateLoading} = useSelector((state: RootState) => state.product_import_detail);
+  const { pageSize, page, query, isCreateLoading } = useSelector((state: RootState) => state.product_import_detail);
   const { listProduct } = useSelector((state: RootState) => state.product);
-  const { listSupplier} = useSelector((state: RootState) => state.supplier);
-  const {data1 } = useSelector((state: RootState) => state.product_import);
+  const { listSupplier } = useSelector((state: RootState) => state.supplier);
+  const { data1 } = useSelector((state: RootState) => state.product_import);
   const onSubmit: SubmitHandler<CreateProduct_Import_DetailtInput> = async (data) => {
     const result: any = await dispatch(createProductImportDetail(data));
-    console.log(result)
+    console.log(result);
     if (createProductImportDetail.fulfilled.match(result)) {
       setReset({
         product: '',
         quantity: '',
-        supplier : '',
+        supplier: '',
         cost_price: '',
-        selling_price:'',
-        import:'',
-      
+        selling_price: '',
+        import: '',
       });
       setErrors({});
       closeModal();
       //@ts-expect-errorts-inogre
-      await dispatch(getProductImportDetails ({ page, pageSize, query, active }));
+      await dispatch(getProductImportDetails({ page, pageSize, query, active }));
       // await dispatch(updateProduct({}));
       toast.success('Import product successfully');
     } else {
@@ -52,11 +53,11 @@ export default function CreateProductImportDetail() {
       closeModal();
       toast.error(result.payload.errors);
     }
-    console.log(data)
+    console.log(data);
   };
   return (
     <Form<CreateProduct_Import_DetailtInput>
-      resetValues={{import:data1.active , ...reset }}
+      resetValues={{ import: data1.active, ...reset }}
       onSubmit={onSubmit}
       validationSchema={createProduct_Import_DetailSchema}
       serverError={errors}
@@ -129,44 +130,41 @@ export default function CreateProductImportDetail() {
             />
 
             <Input
-             type="number"
+              type="number"
               label="Cost price"
               placeholder="Enter cost price of product "
               {...register('cost_price')}
               className="col-span-full"
               error={errors.cost_price?.message}
             />
-              <Input
-             type="number"
+            <Input
+              type="number"
               label="Selling price"
               placeholder="Enter Selling price of product "
               {...register('selling_price')}
               className="col-span-full"
               error={errors.selling_price?.message}
             />
-             <Input
-             type="number"
+            <Input
+              type="number"
               label="Quantity"
               placeholder="Enter quantity of product"
               {...register('quantity')}
               className="col-span-full"
               error={errors.quantity?.message}
             />
-            
-          
 
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
                 Cancel
               </Button>
               <Button type="submit" isLoading={isCreateLoading} className="w-full @xl:w-auto">
-                Add product 
-             </Button>
-             </div>
-             </>
+                Add product
+              </Button>
+            </div>
+          </>
         );
       }}
-      
     </Form>
   );
 }

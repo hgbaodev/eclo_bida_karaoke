@@ -6,24 +6,36 @@ import { Form } from '@/components/ui/form';
 import { Input, Button, ActionIcon, Title, Select, Password, Textarea } from 'rizzui';
 import { useModal } from '@/app/shared/modal-views/use-modal';
 import { updateProduct, getProductImports } from '@/store/slices/product_importSlice';
-import { CreateProduc_ImporttInput, createProduct_ImportSchema } from '@/utils/validators/create-product_import.schema';
+import {
+  CreateProduc_ImporttInput,
+  createProduct_ImportSchema,
+} from '@/utils/validators/product/create-product_import.schema';
 import { dispatch } from '@/store';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
-import { EditProduc_ImporttInput, editProduct_ImportSchema } from '@/utils/validators/edit-product_import.schema';
+import {
+  EditProduc_ImporttInput,
+  editProduct_ImportSchema,
+} from '@/utils/validators/product/edit-product_import.schema';
 import { number } from 'zod';
-import  {getStatusBadge}  from './product_import_table/columns';
+import { getStatusBadge } from './product_import_table/columns';
 import { statusOptions } from './type';
 
-export default function EditProduct({ product_import, active }: { product_import: EditProduc_ImporttInput; active: string }) {
+export default function EditProduct({
+  product_import,
+  active,
+}: {
+  product_import: EditProduc_ImporttInput;
+  active: string;
+}) {
   const { closeModal } = useModal();
   const [reset, setReset] = useState<any>(product_import);
   const [errors, setErrors] = useState<any>({});
   const { pageSize, page, query, isUpdateLoading } = useSelector((state: RootState) => state.product_import);
-//   const { listPositions } = useSelector((state: RootState) => state.position);
+  //   const { listPositions } = useSelector((state: RootState) => state.position);
   const onSubmit: SubmitHandler<EditProduc_ImporttInput> = async (data) => {
-    const result: any = await dispatch(updateProduct({product_import: data, active }));
+    const result: any = await dispatch(updateProduct({ product_import: data, active }));
 
     if (updateProduct.fulfilled.match(result)) {
       setReset({
@@ -75,7 +87,7 @@ export default function EditProduct({ product_import, active }: { product_import
               error={errors.receive_time?.message}
             />
 
-              {/* <Input
+            {/* <Input
                 label="Total cost"
                 type='number'
                 placeholder="Enter total cost"
@@ -104,7 +116,7 @@ export default function EditProduct({ product_import, active }: { product_import
                   inPortal={false}
                 />
               )}
-            /> 
+            />
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
                 Cancel

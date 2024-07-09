@@ -3,7 +3,7 @@ import axiosInstance from '@/api/axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { staffType } from '../types';
 import env from '@/env';
-import { EditStaffInput } from '@/utils/validators/edit-staff.schema';
+import { EditStaffInput } from '@/utils/validators/staff/edit-staff.schema';
 const initialState: staffType = {
   data: [],
   isLoading: false,

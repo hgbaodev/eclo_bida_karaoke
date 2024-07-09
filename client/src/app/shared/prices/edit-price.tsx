@@ -11,7 +11,7 @@ import { getPrices, updatePrice } from '@/store/slices/priceSlice';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
-import { EditPriceInput, EditPriceSchema } from '@/utils/validators/edit-price.schema';
+import { EditPriceInput, EditPriceSchema } from '@/utils/validators/price/edit-price.schema';
 import { getStatusBadge } from './prices-table/columns';
 import { statusOptions } from './type';
 

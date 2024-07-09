@@ -5,7 +5,7 @@ import { PiXBold } from 'react-icons/pi';
 import { Controller, SubmitHandler } from 'react-hook-form';
 import { Form } from '@/components/ui/form';
 import { Input, Button, ActionIcon, Title, Select } from 'rizzui';
-import { CreateUserInput, createUserSchema } from '@/utils/validators/create-user.schema';
+import { CreateUserInput, createUserSchema } from '@/utils/validators/user/create-user.schema';
 import { useModal } from '@/app/shared/modal-views/use-modal';
 import { permissions, roles, statuses } from '@/app/shared/roles-permissions/utils';
 export default function CreateUser() {

@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { getShiftTypeBadge, getStatusBadge } from './shifts-table/colunms';
 import { createShift, getAllShifts } from '@/store/slices/shiftSlice';
-import { CreateShiftInput, createShiftSchema } from '@/utils/validators/create-shift.schema';
+import { CreateShiftInput, createShiftSchema } from '@/utils/validators/shift/create-shift.schema';
 
 export default function CreateShift() {
   const { closeModal } = useModal();

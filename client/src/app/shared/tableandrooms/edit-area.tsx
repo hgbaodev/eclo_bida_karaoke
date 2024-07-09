@@ -6,7 +6,7 @@ import { SubmitHandler } from 'react-hook-form';
 import { Form } from '@/components/ui/form';
 import { Input, Button, ActionIcon, Title, Textarea } from 'rizzui';
 import { useModal } from '@/app/shared/modal-views/use-modal';
-import { CreateAreaInput, createAreaSchema } from '@/utils/validators/create-area.schema';
+import { CreateAreaInput, createAreaSchema } from '@/utils/validators/area/create-area.schema';
 import { dispatch } from '@/store';
 import { editArea } from '@/store/slices/areaSlice';
 import toast from 'react-hot-toast';

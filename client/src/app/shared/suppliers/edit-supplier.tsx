@@ -11,7 +11,7 @@ import { getSuppliers, updateSupplier } from '@/store/slices/supplierSlice';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
-import { EditSupplierInput, EditSupplierSchema } from '@/utils/validators/edit-supplier.schema';
+import { EditSupplierInput, EditSupplierSchema } from '@/utils/validators/supplier/edit-supplier.schema';
 import { getStatusBadge } from './suppliers-table/columns';
 import { statusOptions } from './type';
 

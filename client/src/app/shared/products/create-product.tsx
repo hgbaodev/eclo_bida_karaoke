@@ -1,13 +1,12 @@
-
 'use client';
 import { useState } from 'react';
 import { PiXBold } from 'react-icons/pi';
 import { Controller, SubmitHandler } from 'react-hook-form';
 import { Form } from '@/components/ui/form';
-import { Input, Button, ActionIcon, Title, Select, Textarea ,FileInput} from 'rizzui';
+import { Input, Button, ActionIcon, Title, Select, Textarea, FileInput } from 'rizzui';
 import { useModal } from '@/app/shared/modal-views/use-modal';
 import { createProduct, getProducts } from '@/store/slices/productSlices';
-import { CreateProductInput, createProductSchema } from '@/utils/validators/create-product.schema';
+import { CreateProductInput, createProductSchema } from '@/utils/validators/product/create-product.schema';
 import { dispatch } from '@/store';
 import toast from 'react-hot-toast';
 
@@ -15,12 +14,11 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { string } from 'zod';
 
-
 export default function CreateStaff() {
   const { closeModal } = useModal();
   const [reset, setReset] = useState({});
   const [errors, setErrors] = useState<any>({});
-  const { pageSize, page, query, isCreateLoading} = useSelector((state: RootState) => state.product);
+  const { pageSize, page, query, isCreateLoading } = useSelector((state: RootState) => state.product);
   const { listType } = useSelector((state: RootState) => state.product_type);
   // const { listPositions } = useSelector((state: RootState) => state.position);
   const onSubmit: SubmitHandler<CreateProductInput> = async (data) => {
@@ -38,11 +36,11 @@ export default function CreateStaff() {
           //   selling_price: '',
           //   image:'',
           //   product_type:'',
-          
+
           // });
           setErrors({});
           closeModal();
-          await dispatch(getProducts ({ page, pageSize, query }));
+          await dispatch(getProducts({ page, pageSize, query }));
           toast.success('Product created successfully');
         } else {
           setErrors(result?.payload?.errors);
@@ -100,7 +98,7 @@ export default function CreateStaff() {
               )}
             />
             <Controller
-              name='product_type'
+              name="product_type"
               control={control}
               render={({ field: { name, onChange, value } }) => (
                 <Select
@@ -122,7 +120,6 @@ export default function CreateStaff() {
                 />
               )}
             />
-            
 
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
@@ -130,13 +127,11 @@ export default function CreateStaff() {
               </Button>
               <Button type="submit" isLoading={isCreateLoading} className="w-full @xl:w-auto">
                 Create Product
-             </Button>
-             </div>
-             </>
+              </Button>
+            </div>
+          </>
         );
       }}
-      
     </Form>
   );
 }
-

@@ -7,7 +7,7 @@ import { Controller, SubmitHandler } from 'react-hook-form';
 import { Form } from '@/components/ui/form';
 import { Input, Button, Tooltip, ActionIcon, Title } from 'rizzui';
 import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard';
-import { CreateRoleInput, createRoleSchema } from '@/utils/validators/create-role.schema';
+import { CreateRoleInput, createRoleSchema } from '@/utils/validators/role/create-role.schema';
 import { useModal } from '@/app/shared/modal-views/use-modal';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';

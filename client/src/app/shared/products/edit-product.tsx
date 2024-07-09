@@ -11,9 +11,9 @@ import { getProducts, updateProduct } from '@/store/slices/productSlices';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
-import { EditProductInput, editProductSchema } from '@/utils/validators/edit-product.schema';
+import { EditProductInput, editProductSchema } from '@/utils/validators/product/edit-product.schema';
 
-export default function EditProduct({ product, active }: { product: EditProductInput ; active: string }) {
+export default function EditProduct({ product, active }: { product: EditProductInput; active: string }) {
   const { closeModal } = useModal();
   const [reset, setReset] = useState<any>(product);
   const [errors, setErrors] = useState<any>({});
@@ -31,7 +31,7 @@ export default function EditProduct({ product, active }: { product: EditProductI
 
       try {
         const result: any = await dispatch(updateProduct({ formData, active }));
-        console.log(result)
+        console.log(result);
         if (updateProduct.fulfilled.match(result)) {
           setReset({
             name: '',
@@ -86,7 +86,7 @@ export default function EditProduct({ product, active }: { product: EditProductI
               error={errors.name?.message}
             />
             <Controller
-              name='product_type'
+              name="product_type"
               control={control}
               render={({ field: { name, onChange, value } }) => (
                 <Select

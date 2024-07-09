@@ -1,8 +1,8 @@
 import axiosInstance from '@/api/axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { service_device_detailType } from '../types';
-import { EditServiceDeviceDetailInput } from '@/utils/validators/edit-service-device-detail.schema';
-import { CreateServiceDeviceDetailInput } from '@/utils/validators/create-service-device-detail.schema';
+import { EditServiceDeviceDetailInput } from '@/utils/validators/service-device-detail/edit-service-device-detail.schema';
+import { CreateServiceDeviceDetailInput } from '@/utils/validators/service-device-detail/create-service-device-detail.schema';
 
 import env from '@/env';
 

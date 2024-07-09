@@ -6,7 +6,7 @@ import { Form } from '@/components/ui/form';
 import { Input, Button, ActionIcon, Title, Select, Textarea, Password, RadioGroup, Radio, FileInput } from 'rizzui';
 import { useModal } from '@/app/shared/modal-views/use-modal';
 import { createStaff, getStaffs } from '@/store/slices/staffSlice';
-import { CreateStaffInput, createStaffSchema } from '@/utils/validators/create-staff.schema';
+import { CreateStaffInput, createStaffSchema } from '@/utils/validators/staff/create-staff.schema';
 import { dispatch } from '@/store';
 import toast from 'react-hot-toast';
 import { statusOptions } from './type';

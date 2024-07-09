@@ -11,7 +11,7 @@ import { getServiceTypes, updateServiceType } from '@/store/slices/serviceTypeSl
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
-import { EditServiceTypeInput, EditServiceTypeSchema } from '@/utils/validators/edit-service_type.schema';
+import { EditServiceTypeInput, EditServiceTypeSchema } from '@/utils/validators/service-type/edit-service_type.schema';
 import { getStatusBadge } from './service_types-table/columns';
 import { statusOptions } from './type';
 

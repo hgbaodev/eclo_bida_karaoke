@@ -11,7 +11,7 @@ import { getCustomers, updateCustomer } from '@/store/slices/customerSlice';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
-import { EditCustomerInput, editCustomerSchema } from '@/utils/validators/edit-customer.schema';
+import { EditCustomerInput, editCustomerSchema } from '@/utils/validators/customer/edit-customer.schema';
 import { getStatusBadge } from './customers-table/columns';
 import { statusOptions } from './type';
 

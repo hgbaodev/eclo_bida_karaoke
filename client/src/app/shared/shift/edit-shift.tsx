@@ -11,7 +11,7 @@ import { shiftTypeOptions, statusOptions } from './type';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { getShiftTypeBadge, getStatusBadge } from './shifts-table/colunms';
-import { EditShiftInput, editShiftSchema } from '@/utils/validators/edit-shift.schema';
+import { EditShiftInput, editShiftSchema } from '@/utils/validators/shift/edit-shift.schema';
 import { getAllShifts, updateShift } from '@/store/slices/shiftSlice';
 
 export default function EditShift({ shift, active }: { shift: EditShiftInput; active: string }) {

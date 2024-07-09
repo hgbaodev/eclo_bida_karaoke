@@ -5,7 +5,7 @@ import { PiXBold } from 'react-icons/pi';
 import { Controller, SubmitHandler } from 'react-hook-form';
 import { Form } from '@/components/ui/form';
 import { Input, Button, ActionIcon, Title, Select } from 'rizzui';
-import { CreatePriceInput, CreatePriceSchema } from '@/utils/validators/create-price.schema';
+import { CreatePriceInput, CreatePriceSchema } from '@/utils/validators/price/create-price.schema';
 import { useModal } from '@/app/shared/modal-views/use-modal';
 import { statusOptions } from './type';
 import { dispatch } from '@/store';

@@ -8,7 +8,7 @@ import { Input, Button, ActionIcon, Title, Textarea, FileInput, Tab } from 'rizz
 import { useModal } from '@/app/shared/modal-views/use-modal';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
-import { CreateDeviceInput, createDeviceSchema } from '@/utils/validators/create-device.schema';
+import { CreateDeviceInput, createDeviceSchema } from '@/utils/validators/device/create-device.schema';
 import { dispatch } from '@/store';
 import { createDevice, getDevices } from '@/store/slices/deviceSlice';
 import toast from 'react-hot-toast';

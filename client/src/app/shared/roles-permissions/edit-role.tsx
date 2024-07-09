@@ -8,7 +8,7 @@ import { useModal } from '@/app/shared/modal-views/use-modal';
 import { ActionIcon, AdvancedCheckbox, Title, Button, CheckboxGroup } from 'rizzui';
 import { PERMISSIONS } from '@/data/users-data';
 import { Form } from '@/components/ui/form';
-import { RolePermissionInput, rolePermissionSchema } from '@/utils/validators/edit-role.schema';
+import { RolePermissionInput, rolePermissionSchema } from '@/utils/validators/role/edit-role.schema';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { dispatch } from '@/store';

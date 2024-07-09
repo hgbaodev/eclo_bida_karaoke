@@ -1,4 +1,3 @@
-
 'use client';
 import { useState } from 'react';
 import { PiXBold } from 'react-icons/pi';
@@ -7,10 +6,13 @@ import { Form } from '@/components/ui/form';
 import { Input, Button, ActionIcon, Title, Select, Textarea } from 'rizzui';
 import { useModal } from '@/app/shared/modal-views/use-modal';
 import { createProduct, getProductImports } from '@/store/slices/product_importSlice';
-import { CreateProduc_ImporttInput, createProduct_ImportSchema } from '@/utils/validators/create-product_import.schema';
+import {
+  CreateProduc_ImporttInput,
+  createProduct_ImportSchema,
+} from '@/utils/validators/product/create-product_import.schema';
 import { dispatch } from '@/store';
 import toast from 'react-hot-toast';
-import  {getStatusBadge}  from './product_import_table/columns';
+import { getStatusBadge } from './product_import_table/columns';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { statusOptions } from './type';
@@ -19,7 +21,7 @@ export default function CreateStaff() {
   const { closeModal } = useModal();
   const [reset, setReset] = useState({});
   const [errors, setErrors] = useState<any>({});
-  const { pageSize, page, query, isCreateLoading} = useSelector((state: RootState) => state.product_import);
+  const { pageSize, page, query, isCreateLoading } = useSelector((state: RootState) => state.product_import);
   // const { listPositions } = useSelector((state: RootState) => state.position);
   const onSubmit: SubmitHandler<CreateProduc_ImporttInput> = async (data) => {
     const result: any = await dispatch(createProduct(data));
@@ -30,11 +32,10 @@ export default function CreateStaff() {
         receive_time: '',
         status: '',
         total_cost: '',
-      
       });
       setErrors({});
       closeModal();
-      await dispatch(getProductImports ({ page, pageSize, query }));
+      await dispatch(getProductImports({ page, pageSize, query }));
       toast.success('Import created successfully');
     } else {
       setErrors(result?.payload?.errors);
@@ -69,7 +70,7 @@ export default function CreateStaff() {
               error={errors.create_time?.message}
             />
             <Input
-             type="date"
+              type="date"
               label="Receive time"
               {...register('receive_time')}
               className="col-span-full"
@@ -85,8 +86,7 @@ export default function CreateStaff() {
           
               error={errors.total_cost?.message}
             /> */}
-            
-            
+
             <Controller
               name="status"
               control={control}
@@ -114,13 +114,12 @@ export default function CreateStaff() {
                 Cancel
               </Button>
               <Button type="submit" isLoading={isCreateLoading} className="w-full @xl:w-auto">
-                Create import 
-             </Button>
-             </div>
-             </>
+                Create import
+              </Button>
+            </div>
+          </>
         );
       }}
-      
     </Form>
   );
 }

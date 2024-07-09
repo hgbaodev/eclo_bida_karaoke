@@ -5,7 +5,10 @@ import { PiXBold } from 'react-icons/pi';
 import { Controller, SubmitHandler } from 'react-hook-form';
 import { Form } from '@/components/ui/form';
 import { Input, Button, ActionIcon, Title, Select } from 'rizzui';
-import { CreateServiceTypeInput, CreateServiceTypeSchema } from '@/utils/validators/create-service_type.schema';
+import {
+  CreateServiceTypeInput,
+  CreateServiceTypeSchema,
+} from '@/utils/validators/service-type/create-service_type.schema';
 import { useModal } from '@/app/shared/modal-views/use-modal';
 import { statusOptions } from './type';
 import { dispatch } from '@/store';

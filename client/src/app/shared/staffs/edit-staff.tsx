@@ -11,7 +11,7 @@ import toast from 'react-hot-toast';
 import { statusOptions } from './type';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
-import { EditStaffInput, editStaffSchema } from '@/utils/validators/edit-staff.schema';
+import { EditStaffInput, editStaffSchema } from '@/utils/validators/staff/edit-staff.schema';
 import { getStatusBadge } from '../users/users-table/columns';
 import { updateUser } from '@/store/slices/userSlice';
 

@@ -15,7 +15,7 @@ import { RootState } from '@/store/types';
 import {
   EditServiceDeviceDetailInput,
   EditServiceDeviceDetailSchema,
-} from '@/utils/validators/edit-service-device-detail.schema';
+} from '@/utils/validators/service-device-detail/edit-service-device-detail.schema';
 import { getStatusBadge } from './service-devices-table/columns';
 import { statusOptions } from './service-devices-table/type';
 

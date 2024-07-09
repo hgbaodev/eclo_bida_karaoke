@@ -3,7 +3,7 @@ import axiosInstance from '@/api/axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { positionType } from '../types';
 import env from '@/env';
-import { EditPositionInput } from '@/utils/validators/edit-position.schema';
+import { EditPositionInput } from '@/utils/validators/position/edit-position.schema';
 const initialState: positionType = {
   data: [],
   fetchDataLoading: false,

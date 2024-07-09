@@ -1,7 +1,7 @@
 import axiosInstance from '@/api/axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { customerType } from '../types';
-import { EditCustomerInput } from '@/utils/validators/edit-customer.schema';
+import { EditCustomerInput } from '@/utils/validators/customer/edit-customer.schema';
 import env from '@/env';
 
 const initialState: customerType = {

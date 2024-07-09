@@ -13,7 +13,7 @@ import { deleteRole } from '@/store/slices/roleSlice';
 import { dispatch } from '@/store';
 import toast from 'react-hot-toast';
 import { permissions } from './utils';
-import { RolePermissionInput } from '@/utils/validators/edit-role.schema';
+import { RolePermissionInput } from '@/utils/validators/role/edit-role.schema';
 
 type User = {
   id: number;

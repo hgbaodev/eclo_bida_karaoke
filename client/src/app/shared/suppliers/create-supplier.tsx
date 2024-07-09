@@ -5,7 +5,7 @@ import { PiXBold } from 'react-icons/pi';
 import { Controller, SubmitHandler } from 'react-hook-form';
 import { Form } from '@/components/ui/form';
 import { Input, Button, ActionIcon, Title, Select } from 'rizzui';
-import { CreateSupplierInput, CreateSupplierSchema } from '@/utils/validators/create-supplier.schema';
+import { CreateSupplierInput, CreateSupplierSchema } from '@/utils/validators/supplier/create-supplier.schema';
 import { useModal } from '@/app/shared/modal-views/use-modal';
 import { statusOptions } from './type';
 import { dispatch } from '@/store';

@@ -6,7 +6,7 @@ import { Form } from '@/components/ui/form';
 import { Input, Button, ActionIcon, Title, Select, Textarea } from 'rizzui';
 import { useModal } from '@/app/shared/modal-views/use-modal';
 import { createPosition, getAllPositions } from '@/store/slices/positionSlice';
-import { CreatePositionInput, createPositionSchema } from '@/utils/validators/create-position.schema';
+import { CreatePositionInput, createPositionSchema } from '@/utils/validators/position/create-position.schema';
 import { dispatch } from '@/store';
 import toast from 'react-hot-toast';
 import { statusOptions, SalaryStructureOptions } from './type';

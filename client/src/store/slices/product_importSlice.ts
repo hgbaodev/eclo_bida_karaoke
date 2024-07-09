@@ -3,7 +3,7 @@ import axiosInstance from '@/api/axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { product_ImportType } from '../types';
 import env from '@/env';
-import { EditProduc_ImporttInput } from '@/utils/validators/edit-product_import.schema';
+import { EditProduc_ImporttInput } from '@/utils/validators/product/edit-product_import.schema';
 const initialState: product_ImportType = {
   data: [],
   isLoading: false,
@@ -15,20 +15,20 @@ const initialState: product_ImportType = {
   errors: null,
   isCreateLoading: false,
   isUpdateLoading: false,
-  product:'',
-  supplier:'',
-  data1:{},
-  data2:{},
+  product: '',
+  supplier: '',
+  data1: {},
+  data2: {},
 };
 
-export const getProductImports= createAsyncThunk(
+export const getProductImports = createAsyncThunk(
   'product_imports',
   async ({ page, pageSize, query }: { page: number; pageSize: number; query: string }) => {
     const url = new URL('/api/v1/product_imports', env.NEXT_API_URL);
     url.searchParams.set('page', `${page}`);
     url.searchParams.set('perPage', `${pageSize}`);
     url.searchParams.set('query', query);
- 
+
     try {
       const response = await axiosInstance.get(url.href);
       return response.data;
@@ -37,7 +37,7 @@ export const getProductImports= createAsyncThunk(
     }
   },
 );
-export const getSinghle_ProductImport = createAsyncThunk('product_import/getProductImport',async (active: string,) => {
+export const getSinghle_ProductImport = createAsyncThunk('product_import/getProductImport', async (active: string) => {
   try {
     const response = await axiosInstance.get(`product_imports/${active}`);
     return response.data;
@@ -45,31 +45,42 @@ export const getSinghle_ProductImport = createAsyncThunk('product_import/getProd
     throw error;
   }
 });
-export const createProduct = createAsyncThunk('product_imports/createProductImport', async (data: any, { rejectWithValue }) => {
-  try {
-    const response = await axiosInstance.post(`product_imports`, data);
-    return response.data;
-  } catch (error: any) {
-    if (!error.response) {
-      throw error;
+export const createProduct = createAsyncThunk(
+  'product_imports/createProductImport',
+  async (data: any, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post(`product_imports`, data);
+      return response.data;
+    } catch (error: any) {
+      if (!error.response) {
+        throw error;
+      }
+      return rejectWithValue(error.response.data);
     }
-    return rejectWithValue(error.response.data);
-  }
-});
+  },
+);
 
-export const deleteProduct = createAsyncThunk('product_imports/deleteProductImport', async (active: string, { rejectWithValue }) => {
-  try {
-    const response = await axiosInstance.delete(`product_imports/${active}`);
-    return response.data;
-  } catch (error: any) {
-    if (!error.response) {
-      throw error;
+export const deleteProduct = createAsyncThunk(
+  'product_imports/deleteProductImport',
+  async (active: string, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.delete(`product_imports/${active}`);
+      return response.data;
+    } catch (error: any) {
+      if (!error.response) {
+        throw error;
+      }
+      return rejectWithValue(error.response.data);
     }
-    return rejectWithValue(error.response.data);
-  }
-});
+  },
+);
 
-export const updateProduct = createAsyncThunk('product_imports/updateProductImport',async ({ product_import, active }: { product_import: EditProduc_ImporttInput; active: string }, { rejectWithValue }) => {
+export const updateProduct = createAsyncThunk(
+  'product_imports/updateProductImport',
+  async (
+    { product_import, active }: { product_import: EditProduc_ImporttInput; active: string },
+    { rejectWithValue },
+  ) => {
     try {
       const response = await axiosInstance.put(`product_imports/${active}`, product_import);
       return response.data;
@@ -96,7 +107,6 @@ const product_importSlices = createSlice({
       state.query = action.payload;
     },
     setReset: (state) => {
-      
       state.isFiltered = false;
     },
     setErrors: (state, action) => {
@@ -124,7 +134,7 @@ const product_importSlices = createSlice({
         const result = action.payload.data;
         state.isLoading = false;
         state.data1 = result;
-        console.log(state.data1)
+        console.log(state.data1);
       })
       .addCase(getSinghle_ProductImport.rejected, (state) => {
         state.isLoading = false;
@@ -132,7 +142,7 @@ const product_importSlices = createSlice({
       .addCase(createProduct.pending, (state: product_ImportType) => {
         state.isCreateLoading = true;
       })
-      .addCase(createProduct.fulfilled, (state,action) => {
+      .addCase(createProduct.fulfilled, (state, action) => {
         state.isCreateLoading = false;
       })
       .addCase(createProduct.rejected, (state) => {

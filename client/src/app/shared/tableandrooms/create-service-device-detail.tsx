@@ -15,7 +15,7 @@ import { RootState } from '@/store/types';
 import {
   CreateServiceDeviceDetailInput,
   CreateServiceDeviceDetailSchema,
-} from '@/utils/validators/create-service-device-detail.schema';
+} from '@/utils/validators/service-device-detail/create-service-device-detail.schema';
 import { getStatusBadge } from './service-devices-table/columns';
 import { statusOptions } from './service-devices-table/type';
 

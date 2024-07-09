@@ -11,7 +11,7 @@ import toast from 'react-hot-toast';
 import { statusOptions, SalaryStructureOptions } from './type';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
-import { EditPositionInput, editPositionSchema } from '@/utils/validators/edit-position.schema';
+import { EditPositionInput, editPositionSchema } from '@/utils/validators/position/edit-position.schema';
 import { getStatusBadge } from '../users/users-table/columns';
 
 export default function EditPosition({ position, active }: { position: EditPositionInput; active: string }) {

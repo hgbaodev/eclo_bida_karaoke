@@ -11,7 +11,7 @@ import { getDevices, updateDevice } from '@/store/slices/deviceSlice';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
-import { EditDeviceInput, editDeviceSchema } from '@/utils/validators/edit-device.schema';
+import { EditDeviceInput, editDeviceSchema } from '@/utils/validators/device/edit-device.schema';
 import { getStatusBadge } from './devices-table/columns';
 import { statusOptions } from './type';
 

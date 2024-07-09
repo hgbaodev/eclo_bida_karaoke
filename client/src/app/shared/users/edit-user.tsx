@@ -12,7 +12,7 @@ import { getUsers, updateUser } from '@/store/slices/userSlice';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
-import { EditUserInput, editUserSchema } from '@/utils/validators/edit-user.schema';
+import { EditUserInput, editUserSchema } from '@/utils/validators/user/edit-user.schema';
 import { getStatusBadge } from './users-table/columns';
 
 export default function EditUser({ user, active }: { user: EditUserInput; active: string }) {
