@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { messages } from '@/config/messages';
 
 // form zod validation schema
-export const createDayOffSchema = z.object({
+export const editDayOffSchema = z.object({
 
   staff: z.string().min(1, { message: messages.isRequired }),
   type:z.string().min(1, { message: messages.statusIsRequired }),
@@ -12,4 +12,4 @@ export const createDayOffSchema = z.object({
 });
 
 // generate form types from zod validation schema
-export type CreateDayOffInput = z.infer<typeof createDayOffSchema>;
+export type EditDayOffInput = z.infer<typeof editDayOffSchema>;

@@ -20,11 +20,11 @@ class ProductImport extends Model
         'create_time',
         'receive_time',
         'status',
-
+        'user_id',
         'active',
     ];
     protected $hidden = [
-        'id',
+        'id', 'user_id',
     ];
     public function updateTotalCost()
     {
@@ -45,5 +45,9 @@ class ProductImport extends Model
     public function productimport()
     {
         return $this->hasMany(ProductImportDetail::class, 'import_id');
+    }
+    public function user_import()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

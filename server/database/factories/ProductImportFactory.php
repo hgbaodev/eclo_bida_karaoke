@@ -22,6 +22,7 @@ class ProductImportFactory extends Factory
         return [
             "create_time" => $this->faker->dateTimeThisYear('now'),
             "receive_time" => $this->faker->dateTimeBetween('now', '+1 month'),
+            "user_id" => $this->faker->randomElement(['1', '2', '3']),
             "status" => $this->faker->randomElement(['A', 'D']),
         ];
     }

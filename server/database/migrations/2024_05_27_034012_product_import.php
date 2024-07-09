@@ -16,6 +16,7 @@ return new class extends Migration
             $table->double('total_cost')->default(0);
             $table->date('create_time');
             $table->date('receive_time');
+            $table->foreignId('user_id')->constrained('users');
             $table->string('active')->unique();
             $table->string('status')->nullable();
             $table->softDeletes();

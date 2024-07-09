@@ -27,4 +27,8 @@ class StatisticalController extends Controller
     $result = $this->statisticalRepository->getStatisticalTime($request);
     return $this->sentSuccessResponse($result, 'Get statistical time successfully', 200);
   }
+
+  public function getRevenueEx(){
+    
+  }
 }

@@ -99,38 +99,36 @@ export default function BlankPage({ params }: { params: { slug: string } }) {
           </ActionIcon>
         </NotificationDropdown>
       </PageHeader>
-
-      {isLoadingGetOrder ? (
-        <div className="flex justify-center items-center h-[100px]">
-          <Loader variant="spinner" size="xl" color="info" />
-        </div>
-      ) : (
-        <>
-          <SearchCustomer />
-          <Text className="mt-4">
-            Full name: {order?.customer != null ? order?.customer.first_name + ' ' + order?.customer.last_name : ''}
-          </Text>
-          <Text className="mt-2">Phone: {order?.customer?.phone}</Text>
-          <Text className="mt-2">Email: {order?.customer?.email}</Text>
-          <Title as="h5" className="mt-4">
-            Invoice information
-          </Title>
-          <Text className="mt-1">Code Invoice: {params.slug}</Text>
-          <Text className="mt-1">Service: {order?.service?.name}</Text>
-          <Text className="mt-1">Price: {order?.service?.price?.pricePerHour}$/ 1 Hours</Text>
-          <Text className="mt-1">
-            Check in: {formatDate(new Date(order?.checkin_time ?? ''), 'DD/MM/YYYY, hh:mm:ss')}
-          </Text>
-          <div className="mt-[100px] space-x-3 flex justify-end">
-            <Button onClick={handleUpdate} isLoading={isLoadingUpdateOrder} className="w-[80px]" color="primary">
-              Update
-            </Button>
-            <Button onClick={handlePay} className="w-[80px]" color="danger">
-              Pay
-            </Button>
+      <div className="grid  grid-cols-1 lg:grid-cols-2 lg:space-x-4 space-y-4">
+        {isLoadingGetOrder ? (
+          <div className="flex justify-center items-center h-[100px]">
+            <Loader variant="spinner" size="xl" color="info" />
           </div>
-        </>
-      )}
+        ) : (
+          <>
+            <div>
+              <Title as="h5" className="mt-4">
+                Invoice information
+              </Title>
+              <Text className="mt-1">Code Invoice: {params.slug}</Text>
+              <Text className="mt-1">Service: {order?.service?.name}</Text>
+              <Text className="mt-1">Price: {order?.service?.price?.pricePerHour}$/ 1 Hours</Text>
+              <Text className="mt-1">
+                Check in: {formatDate(new Date(order?.checkin_time ?? ''), 'DD/MM/YYYY, hh:mm:ss')}
+              </Text>
+            </div>
+            <div>
+              <SearchCustomer />
+              <Text className="mt-4">
+                Full name: {order?.customer != null ? order?.customer.first_name + ' ' + order?.customer.last_name : ''}
+              </Text>
+              <Text className="mt-2">Phone: {order?.customer?.phone}</Text>
+              <Text className="mt-2">Email: {order?.customer?.email}</Text>
+            </div>
+          </>
+        )}
+      </div>
+
       <div className="grid  grid-cols-1 lg:grid-cols-2 lg:space-x-4 space-y-4">
         <div className="mt-[18px]">
           <SearchProduct />
@@ -142,7 +140,7 @@ export default function BlankPage({ params }: { params: { slug: string } }) {
           </div>
         </div>
         <div>
-          <div className="space-y-4">
+          <div className="space-y-3">
             <SearchDevice />
             <Title as="h5" className="my-3">
               Device list
@@ -150,6 +148,14 @@ export default function BlankPage({ params }: { params: { slug: string } }) {
             <TableDeviceOrder />
           </div>
         </div>
+      </div>
+      <div className="mt-[100px] space-x-3 flex justify-end">
+        <Button onClick={handleUpdate} isLoading={isLoadingUpdateOrder} className="w-[80px]" color="primary">
+          Update
+        </Button>
+        <Button onClick={handlePay} className="w-[80px]" color="danger">
+          Pay
+        </Button>
       </div>
     </>
   );

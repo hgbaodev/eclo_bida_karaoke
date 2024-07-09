@@ -4,6 +4,10 @@ import { useEffect, useState } from 'react';
 import { PiXBold } from 'react-icons/pi';
 import { Controller, SubmitHandler } from 'react-hook-form';
 import { Form } from '@/components/ui/form';
+import Select1, { StylesConfig } from 'react-select';
+
+import { Input, Button, ActionIcon, Title, Select } from 'rizzui';
+import { useModal } from '@/app/shared/modal-views/use-modal';
 import { Input, Button, ActionIcon, Title, Select } from 'rizzui';
 import { useModal } from '@/app/[locale]/shared/modal-views/use-modal';
 import { dispatch } from '@/store';
@@ -21,11 +25,12 @@ export default function CreateDayOff() {
   const [reset, setReset] = useState({});
   const [errors, setErrors] = useState<any>({});
   const { pageSize, page, query, isCreateLoading } = useSelector((state: RootState) => state.dayoff);
+  const { listStaffs } = useSelector((state: RootState) => state.staff);
   const onSubmit: SubmitHandler<CreateDayOffInput> = async (data) => {
     const result: any = await dispatch(createDayoff(data));
     if (createDayoff.fulfilled.match(result)) {
       setReset({
-        staff_id: '',
+        staff: '',
         type: '',
         reason: '',
         day_off: '',
@@ -60,12 +65,32 @@ export default function CreateDayOff() {
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
-            <Input
-              label="Staff ID"
-              placeholder="Enter staff id"
-              className="col-span-full"
-              error={errors.staff_id?.message}
-              {...register('staff_id')}
+            {/* <Input label="Staff ID" placeholder="Enter staff id" className="col-span-full"
+            error={errors.staff_id?.message}
+            {...register('staff_id')}
+            
+            /> */}
+            <Controller
+              name="staff"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <Select1
+                    options={listStaffs}
+                    value={listStaffs.find((option) => option.active === field.value)}
+                    onChange={(option) => field.onChange(option.active)}
+                    name={field.name}
+                    className="col-span-full"
+                    placeholder="Select a staff"
+                    isSearchable
+                    styles={customStyles}
+                    getOptionValue={(option) => option.active}
+                    getOptionLabel={(option) => `${option.last_name} ${option.first_name} - ${option.uuid}`}
+                    aria-invalid={errors.staff ? 'true' : 'false'}
+                  />
+                  {errors.staff && <span className="error-message">{errors.staff.message}</span>}
+                </>
+              )}
             />
             <Input label="Reason" placeholder="Reason for day off" className="col-span-full" {...register('reason')} />
 
@@ -113,7 +138,16 @@ export default function CreateDayOff() {
     </Form>
   );
 }
-
+const customStyles: StylesConfig<OptionType, boolean> = {
+  menu: (provided, state) => ({
+    ...provided,
+    zIndex: 9999,
+    position: 'absolute',
+    maxHeight: '300px',
+    marginTop: '-1px',
+    background: 'white',
+  }),
+};
 // const customStyles: StylesConfig<OptionType, boolean> = {
 //   menu: (provided, state) => ({
 //     ...provided,

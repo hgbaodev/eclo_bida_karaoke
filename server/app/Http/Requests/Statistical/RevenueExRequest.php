@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\ProductImport;
+namespace App\Http\Requests\Staff;
 
 use App\Http\Helpers\HelperRequest;
 
-class ProductImportRequest extends HelperRequest
+class RevenueExRequest extends HelperRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,8 @@ class ProductImportRequest extends HelperRequest
     public function rules(): array
     {
         return [
-            'user_import' => 'nullable',
-            'total_cost' => 'nullable',
-            'create_time' => 'required',
-            'receive_time' => 'required',
-            'status' => 'required',
+            'start_day' => 'required',
+            'end_day' => 'required',
         ];
     }
 }
