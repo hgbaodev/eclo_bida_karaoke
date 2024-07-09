@@ -9,6 +9,8 @@ use App\Interface\SalaryRepositoryInterface;
 use App\Interface\StaffRepositoryInterface;
 use Illuminate\Http\Request;
 
+use function PHPUnit\Framework\isEmpty;
+
 class SalaryController extends Controller
 {
     protected $salaryRepo;
@@ -37,13 +39,28 @@ class SalaryController extends Controller
     public function store(SalaryRequest $request)
     {
         $validateData = $request->validated();
-        $staff = $this->staffRepo->getStaffByActive($validateData['staff']);
-        if (!$staff) {
-            return $this->sentErrorResponse("Staff is not found", 'error', 404);
+        $month = $validateData['month'];
+        $year = $validateData['year'];
+        if (isset($validateData['staff'])) {
+            $staff = $this->staffRepo->getStaffByActive($validateData['staff']);
+            if (!$staff) {
+                return $this->sentErrorResponse("Staff is not found", 'error', 404);
+            }
+            $validateData['staff_id'] = $staff->id;
+            unset($validateData['staff']);
+            $result = $this->salaryRepo->createSalary($validateData);
+        } else {
+            $staffs = $this->staffRepo->getAllStaffs();
+            foreach ($staffs as $staff) {
+                $salary = [
+                    'staff_id' => $staff->id,
+                    'month' => $month,
+                    'year' => $year
+                ];
+                $result = $this->salaryRepo->createSalary($salary);
+            }
         }
-        $validateData['staff_id'] = $staff->id;
-        unset($validateData['staff']);
-        return $this->sentSuccessResponse($this->salaryRepo->createSalary($validateData));
+        return $this->sentSuccessResponse($result);
     }
 
     /**
@@ -68,13 +85,15 @@ class SalaryController extends Controller
     public function update(UpdateSalaryRequest $request)
     {
         $validateData = $request->validated();
+        $month = $validateData['month'];
+        $year = $validateData['year'];
         $staff = $this->staffRepo->getStaffByActive($validateData['staff']);
         if (!$staff) {
             return $this->sentErrorResponse("Staff is not found", "error", 404);
         }
         $validateData["staff_id"] = $staff->id;
         unset($validateData['staff']);
-        $salary = $this->salaryRepo->getSalaryByStaffAndDate($staff->id, $validateData['month'], $validateData['year']);
+        $salary = $this->salaryRepo->getSalaryByStaffAndDate($staff->id, $month, $year);
         return $this->sentSuccessResponse($this->salaryRepo->updateSalaryByActive($salary->active, $validateData), "Updated successfully");
     }
 

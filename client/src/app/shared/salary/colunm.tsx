@@ -1,7 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { HeaderCell } from '@/components/ui/table';
-// Ví dụ lấy ngày đầu tháng và ngày cuối tháng cho tháng 6 năm 2024
 export const getColumns = (openModal: (args: any) => void) => {
   const columns = [
     {
@@ -38,6 +37,13 @@ export const getColumns = (openModal: (args: any) => void) => {
       key: 'sos',
       width: 50,
       render: (_: string, salary: Salary) => salary.staff.position.salary_structure,
+    },
+    {
+      title: <HeaderCell title="Working Days" />,
+      dataIndex: 'wd',
+      key: 'wd',
+      width: 50,
+      render: (_: string, salary: Salary) => salary.working_days,
     },
     {
       title: <HeaderCell title="Total" />,

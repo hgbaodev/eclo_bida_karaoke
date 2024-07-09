@@ -454,7 +454,6 @@ export interface salary {
   query: string;
   year: number;
 }
-
 export interface dayoffType {
   data: [];
   isLoading: boolean;

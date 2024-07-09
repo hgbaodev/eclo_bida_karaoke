@@ -54,6 +54,48 @@ class StaffSeeder extends Seeder
             "position_id" => 2,
             "user_id" => 3
         ]);
+        Staff::create([
+            "first_name" => "Van D",
+            "last_name" => "Nguyen",
+            "birthday" => "2002-02-13",
+            "gender" => 'M',
+            "image" => "",
+            "phone" => "0923464389",
+            "idcard" => "077234567356",
+            "address" => "Q5",
+            "uuid" => "NV-001",
+            "status" => "A",
+            "position_id" => 4,
+            "user_id" => 4
+        ]);
+        Staff::create([
+            "first_name" => "Van F",
+            "last_name" => "Nguyen",
+            "birthday" => "1999-05-12",
+            "gender" => 'M',
+            "image" => "",
+            "phone" => "0923464489",
+            "idcard" => "077234560356",
+            "address" => "Q5",
+            "uuid" => "NV-002",
+            "status" => "A",
+            "position_id" => 4,
+            "user_id" => 5
+        ]);
+        Staff::create([
+            "first_name" => "Van E",
+            "last_name" => "Nguyen",
+            "birthday" => "1999-01-12",
+            "gender" => 'M',
+            "image" => "",
+            "phone" => "0923064389",
+            "idcard" => "077230567356",
+            "address" => "Q5",
+            "uuid" => "NV-003",
+            "status" => "A",
+            "position_id" => 4,
+            "user_id" => 6
+        ]);
         // Staff::factory()->count(20)->create();
     }
 }
