@@ -3,8 +3,7 @@
 import { RefObject, useState } from 'react';
 import * as dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { Popover, Title, Checkbox } from 'rizzui';
-import Link from 'next/link';
+import { Popover, Title } from 'rizzui';
 import { useMedia } from '@/hooks/use-media';
 import SimpleBar from '@/components/ui/simplebar';
 import { removeNoti, setIsLoading } from '@/store/slices/kitchen_order_notificationSlice';
@@ -22,10 +21,9 @@ function NotificationsList({
   handleRemoveNoti: (active: string) => void;
 }) {
   return (
-    <div className="w-[320px] text-left sm:w-[360px] 2xl:w-[420px] rtl:text-right">
+    <div className="w-[400px] text-left sm:w-[440px] 2xl:w-[500px] rtl:text-right">
       <div className="mb-3 flex items-center justify-between ps-6">
-        <Title as="h5">Notifications</Title>
-        <Checkbox label="Mark All As Read" />
+        <Title as="h5">Kitchen notifications</Title>
       </div>
       <SimpleBar className="max-h-[420px]">
         <div className="grid cursor-pointer grid-cols-1 gap-1 ps-4">
@@ -33,25 +31,22 @@ function NotificationsList({
             notifications.map((item) => (
               <div
                 key={item.active}
-                className="group grid grid-cols-[auto_minmax(0,1fr)] gap-3 rounded-md px-2 py-2 pe-3 transition-colors hover:bg-gray-100 dark:hover:bg-gray-50"
+                className="group flex items-center justify-between gap-3 rounded-md px-2 py-2 pe-3 transition-colors hover:bg-gray-100 dark:hover:bg-gray-50"
               >
-                <div className="flex h-9 w-9 items-center justify-center rounded bg-gray-100/70 p-1 dark:bg-gray-50/50 [&>svg]:h-auto [&>svg]:w-5">
-                  {/* Icon or avatar if needed */} b
+                <div className="flex flex-col flex-grow">
+                  <Title as="h6" className="mb-0.5 truncate text-sm font-semibold">
+                    {`Name: ${item.product_name}`}
+                  </Title>
+                  <Title as="h6" className="mb-0.5 truncate text-sm font-light">
+                    {`Quantity: ${item.product_quantity}`}
+                  </Title>
+                  <Title as="h6" className="mb-0.5 truncate text-sm font-light">
+                    {`Service: ${item.service_name}`}
+                  </Title>
                 </div>
-                <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center">
-                  <div className="w-full">
-                    <Title as="h6" className="mb-0.5 w-11/12 truncate text-sm font-semibold">
-                      {`Name: ${item.product_name}`}
-                    </Title>
-
-                    <Title as="h6" className="mb-0.5 w-11/12 truncate text-sm font-semibold">
-                      {`Quantity: ${item.product_quantity} - Service: ${item.service_name}`}
-                    </Title>
-                  </div>
-                  <button className="text-red-500 hover:text-red-700" onClick={() => handleRemoveNoti(item.active)}>
-                    Delete
-                  </button>
-                </div>
+                <button className="text-red-500 hover:text-red-700 ml-3" onClick={() => handleRemoveNoti(item.active)}>
+                  Delete
+                </button>
               </div>
             ))
           ) : (
@@ -59,13 +54,6 @@ function NotificationsList({
           )}
         </div>
       </SimpleBar>
-      <Link
-        href={'#'}
-        onClick={() => setIsOpen(false)}
-        className="-me-6 block px-6 pb-0.5 pt-3 text-center hover:underline"
-      >
-        View All Activity
-      </Link>
     </div>
   );
 }
