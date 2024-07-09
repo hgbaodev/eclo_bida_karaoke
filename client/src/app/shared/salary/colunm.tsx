@@ -46,6 +46,13 @@ export const getColumns = (openModal: (args: any) => void) => {
       render: (_: string, salary: Salary) => salary.working_days,
     },
     {
+      title: <HeaderCell title="Off Days" />,
+      dataIndex: 'od',
+      key: 'od',
+      width: 50,
+      render: (_: string, salary: Salary) => salary.off_days,
+    },
+    {
       title: <HeaderCell title="Total" />,
       dataIndex: 'total',
       key: 'total',

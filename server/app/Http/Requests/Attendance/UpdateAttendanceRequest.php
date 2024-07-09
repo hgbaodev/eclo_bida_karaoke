@@ -28,7 +28,8 @@ class UpdateAttendanceRequest extends HelperRequest
             "check_in" => 'nullable',
             "check_out" => "nullable",
             "type" => 'nullable',
-            "update" => 'required'
+            "update" => 'nullable',
+            "day_off" => 'nullable'
         ];
     }
 }

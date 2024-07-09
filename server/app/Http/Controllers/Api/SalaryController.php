@@ -55,7 +55,9 @@ class SalaryController extends Controller
                 $salary = [
                     'staff_id' => $staff->id,
                     'month' => $month,
-                    'year' => $year
+                    'year' => $year,
+                    'working_days' => 0,
+                    'off_days' => 0
                 ];
                 $result = $this->salaryRepo->createSalary($salary);
             }

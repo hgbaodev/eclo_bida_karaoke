@@ -13,4 +13,5 @@ interface AttendanceRepositoryInterface
     public function deleteAttendanceByActive($id);
 
     public function getAttendanceByUUIDAndDay($id, $day);
+    public function countAttendanceComplete($staff_id, $month, $year);
 }
