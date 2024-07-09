@@ -1,5 +1,5 @@
 {
-  "hello": "Hello",
-  "welcome": "Welcome to Eclo",
-  "overview": "Overview"
+  "Index": {
+    "title": "Device"
+  }
 }
