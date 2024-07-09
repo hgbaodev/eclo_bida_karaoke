@@ -1,4 +1,4 @@
-import { useModal } from '@/app/shared/modal-views/use-modal';
+import { useModal } from '@/app/[locale]/shared/modal-views/use-modal';
 import React from 'react';
 import { ActionIcon, Tooltip } from 'rizzui';
 import { PiPlusBold } from 'react-icons/pi';

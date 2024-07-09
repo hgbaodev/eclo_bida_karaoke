@@ -3,7 +3,7 @@ import axiosInstance from '@/api/axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { userType } from '../types';
 import env from '@/env';
-import { EditUserInput } from '@/utils/validators/edit-user.schema';
+import { EditUserInput } from '@/utils/validators/user/edit-user.schema';
 
 const initialState: userType = {
   data: [],
@@ -134,7 +134,6 @@ const userSlice = createSlice({
         state.data = result.result;
         state.totalRow = result.meta.total;
         console.log(result);
-        
       })
       .addCase(getUsers.rejected, (state) => {
         state.isLoading = false;

@@ -7,7 +7,7 @@ import { Title, Collapse } from 'rizzui';
 import { cn } from '@/utils/class-names';
 import { PiCaretDownBold } from 'react-icons/pi';
 import SimpleBar from '@/components/ui/simplebar';
-import { menuItems } from '@/layouts/hydrogen/menu-items';
+import { MenuItems } from '@/layouts/hydrogen/menu-items';
 
 export default function Sidebar({ className }: { className?: string }) {
   const pathname = usePathname();
@@ -26,7 +26,7 @@ export default function Sidebar({ className }: { className?: string }) {
 
       <SimpleBar className="h-[calc(100%-80px)]">
         <div className="mt-4 pb-3 3xl:mt-6">
-          {menuItems.map((item, index) => {
+          {MenuItems.map((item, index) => {
             const isActive = pathname === (item?.href as string);
             const pathnameExistInDropdowns: any = item?.dropdownItems?.filter(
               (dropdownItem) => dropdownItem.href === pathname,

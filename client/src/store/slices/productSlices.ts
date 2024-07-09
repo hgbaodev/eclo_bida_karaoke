@@ -3,7 +3,7 @@ import axiosInstance from '@/api/axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { productType } from '../types';
 import env from '@/env';
-import { EditProductInput } from '@/utils/validators/edit-product.schema';
+import { EditProductInput } from '@/utils/validators/product/edit-product.schema';
 const initialState: productType = {
   data: [],
   isLoading: false,
@@ -15,18 +15,18 @@ const initialState: productType = {
   errors: null,
   isCreateLoading: false,
   isUpdateLoading: false,
-  listProduct:[],
-  type:'',
+  listProduct: [],
+  type: '',
 };
 
-export const getProducts= createAsyncThunk(
+export const getProducts = createAsyncThunk(
   'products',
   async ({ page, pageSize, query }: { page: number; pageSize: number; query: string }) => {
     const url = new URL('/api/v1/products', env.NEXT_API_URL);
     url.searchParams.set('page', `${page}`);
     url.searchParams.set('perPage', `${pageSize}`);
     url.searchParams.set('query', query);
- 
+
     try {
       const response = await axiosInstance.get(url.href);
       return response.data;
@@ -75,7 +75,9 @@ export const deleteProduct = createAsyncThunk('products/deleteProduct', async (a
   }
 });
 
-export const updateProduct = createAsyncThunk('products/updateProduct',async ({ formData, active }: { formData: any; active: string }, { rejectWithValue }) => {
+export const updateProduct = createAsyncThunk(
+  'products/updateProduct',
+  async ({ formData, active }: { formData: any; active: string }, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.post(`products/${active}`, formData);
       return response.data;
@@ -102,7 +104,6 @@ const productSlices = createSlice({
       state.query = action.payload;
     },
     setReset: (state) => {
-      
       state.isFiltered = false;
     },
     setErrors: (state, action) => {
@@ -152,7 +153,7 @@ const productSlices = createSlice({
       .addCase(createProduct.pending, (state: productType) => {
         state.isCreateLoading = true;
       })
-      .addCase(createProduct.fulfilled, (state,action) => {
+      .addCase(createProduct.fulfilled, (state, action) => {
         state.isCreateLoading = false;
       })
       .addCase(createProduct.rejected, (state) => {

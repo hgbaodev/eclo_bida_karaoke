@@ -9,13 +9,13 @@ import { FaProductHunt } from 'react-icons/fa';
 import { MdOutlineDevicesOther } from 'react-icons/md';
 import { FaUserClock } from 'react-icons/fa6';
 import { LuClock } from 'react-icons/lu';
-import { BsPersonCheckFill,BsReceiptCutoff } from 'react-icons/bs';
+import { BsPersonCheckFill, BsReceiptCutoff } from 'react-icons/bs';
 import { TbToolsKitchen3 } from 'react-icons/tb';
 import { GiReceiveMoney } from 'react-icons/gi';
 import { AiOutlineBarChart } from 'react-icons/ai';
 
 // Note: do not add href in the label object, it is rendering as label
-export const menuItems = [
+export const MenuItems = [
   // label start
   {
     name: 'Overview',

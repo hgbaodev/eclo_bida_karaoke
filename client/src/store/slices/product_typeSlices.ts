@@ -3,11 +3,11 @@ import axiosInstance from '@/api/axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { product_typeType } from '../types';
 import env from '@/env';
-import { EditProductInput } from '@/utils/validators/edit-product.schema';
+import { EditProductInput } from '@/utils/validators/product/edit-product.schema';
 const initialState: product_typeType = {
   data: [],
   isLoading: false,
-  listType:[],
+  listType: [],
 };
 
 // export const getProducts= createAsyncThunk(
@@ -17,7 +17,7 @@ const initialState: product_typeType = {
 //     url.searchParams.set('page', `${page}`);
 //     url.searchParams.set('perPage', `${pageSize}`);
 //     url.searchParams.set('query', query);
- 
+
 //     try {
 //       const response = await axiosInstance.get(url.href);
 //       return response.data;
@@ -34,7 +34,7 @@ const initialState: product_typeType = {
 //     throw error;
 //   }
 // });
-export const getProductType = createAsyncThunk('product_type/getProductType',async () => {
+export const getProductType = createAsyncThunk('product_type/getProductType', async () => {
   try {
     const response = await axiosInstance.get(`product_types`);
     return response.data;
@@ -93,7 +93,6 @@ const product_typeSlices = createSlice({
     //   state.query = action.payload;
     // },
     // setReset: (state) => {
-      
     //   state.isFiltered = false;
     // },
     // setErrors: (state, action) => {
@@ -126,40 +125,40 @@ const product_typeSlices = createSlice({
       // .addCase(getSinghle_Product.rejected, (state) => {
       //   state.isLoading = false;
       // })
-      .addCase(getProductType.pending, (state:product_typeType) => {
+      .addCase(getProductType.pending, (state: product_typeType) => {
         state.isLoading = true;
       })
       .addCase(getProductType.fulfilled, (state, action) => {
         state.isLoading = false;
         const result = action.payload.data;
         state.listType = result;
-        console.log("result:" + result)
-        state.data =result;
+        console.log('result:' + result);
+        state.data = result;
       })
       .addCase(getProductType.rejected, (state) => {
         state.isLoading = false;
-      })
-      // .addCase(createProduct.pending, (state: product_typeType) => {
-      //   state.isCreateLoading = true;
-      // })
-      // .addCase(createProduct.fulfilled, (state,action) => {
-      //   state.isCreateLoading = false;
-      // })
-      // .addCase(createProduct.rejected, (state) => {
-      //   state.isCreateLoading = false;
-      // })
-      // .addCase(updateProduct.pending, (state: productType) => {
-      //   state.isUpdateLoading = true;
-      // })
-      // .addCase(updateProduct.fulfilled, (state, action) => {
-      //   state.isUpdateLoading = false;
-      // })
-      // .addCase(updateProduct.rejected, (state) => {
-      //   state.isUpdateLoading = false;
-      // });
+      });
+    // .addCase(createProduct.pending, (state: product_typeType) => {
+    //   state.isCreateLoading = true;
+    // })
+    // .addCase(createProduct.fulfilled, (state,action) => {
+    //   state.isCreateLoading = false;
+    // })
+    // .addCase(createProduct.rejected, (state) => {
+    //   state.isCreateLoading = false;
+    // })
+    // .addCase(updateProduct.pending, (state: productType) => {
+    //   state.isUpdateLoading = true;
+    // })
+    // .addCase(updateProduct.fulfilled, (state, action) => {
+    //   state.isUpdateLoading = false;
+    // })
+    // .addCase(updateProduct.rejected, (state) => {
+    //   state.isUpdateLoading = false;
+    // });
   },
 });
 
-export const {  } = product_typeSlices.actions;
+export const {} = product_typeSlices.actions;
 
 export default product_typeSlices.reducer;

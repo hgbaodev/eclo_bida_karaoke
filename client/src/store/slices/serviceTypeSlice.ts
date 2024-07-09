@@ -3,7 +3,7 @@ import axiosInstance from '@/api/axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { service_typeType } from '../types';
 import env from '@/env';
-import { EditServiceTypeInput } from '@/utils/validators/edit-service_type.schema';
+import { EditServiceTypeInput } from '@/utils/validators/service-type/edit-service_type.schema';
 
 const initialState: service_typeType = {
   data: [],
