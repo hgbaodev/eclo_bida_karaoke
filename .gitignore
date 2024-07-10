@@ -1,3 +1,4 @@
 
 client/pnpm-lock.yaml
 *.yaml
+server/composer.lock

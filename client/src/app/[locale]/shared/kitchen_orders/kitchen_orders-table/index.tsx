@@ -49,9 +49,9 @@ export default function KitchenOrdersTable() {
   }, [fetchData, status]);
 
   const columns = useMemo(
-    () => DataColumns(data),
+    () => DataColumns(data, t),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [data],
+    [data, t],
   );
 
   const { visibleColumns } = useColumn(columns);

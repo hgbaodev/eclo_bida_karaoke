@@ -14,12 +14,10 @@ export const STATUSES = {
   Processing: 'P',
 } as const;
 
-export function DataColumns(data: kitchenOrder[]) {
-  // const t = useTranslations('kitchen-orders');
-
+export function DataColumns(data: kitchenOrder[], t: any) {
   return [
     {
-      title: <HeaderCell title="No." key="header-no" />,
+      title: <HeaderCell title={t('no')} key="header-no" />,
       dataIndex: 'no.',
       key: 'no.',
       width: 8,
@@ -28,28 +26,28 @@ export function DataColumns(data: kitchenOrder[]) {
       ),
     },
     {
-      title: <HeaderCell title="Name" />,
+      title: <HeaderCell title={t('name')} />,
       dataIndex: 'name',
       key: 'name',
       width: 20,
       render: (_: string, kitchenOrder: KitchenOrder) => kitchenOrder.product_name,
     },
     {
-      title: <HeaderCell title="Quantity" />,
+      title: <HeaderCell title={t('quantity')} />,
       dataIndex: 'quantity',
       key: 'quantity',
       width: 12,
       render: (_: string, kitchenOrder: KitchenOrder) => kitchenOrder.quantity,
     },
     {
-      title: <HeaderCell title="Status" />,
+      title: <HeaderCell title={t('status')} />,
       dataIndex: 'status',
       key: 'status',
       width: 20,
-      render: (status: KitchenOrder['status']) => StatusBadge(status),
+      render: (status: KitchenOrder['status']) => StatusBadge(status, t),
     },
     {
-      title: <HeaderCell title="Action" />,
+      title: <HeaderCell title={t('action')} />,
       dataIndex: 'action',
       key: 'action',
       width: 20,
