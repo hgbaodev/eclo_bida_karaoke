@@ -24,7 +24,7 @@ export interface MenuItem {
 }
 
 export const MenuItems = () => {
-  const t = useTranslations('menu-items');
+  const t = useTranslations('menu_items');
   // label start
   return [
     {
@@ -37,7 +37,7 @@ export const MenuItems = () => {
       badge: '',
     },
     {
-      name: t('job-board'),
+      name: t('job_board'),
       href: routes.admin.jobBoard,
       icon: <PiShapesDuotone />,
       badge: 'NEW',
@@ -51,7 +51,7 @@ export const MenuItems = () => {
       icon: <PiPackageDuotone />,
       dropdownItems: [
         {
-          name: t('table-rooms'),
+          name: t('table_rooms'),
           href: routes.admin.order.tableandrooms,
         },
         {
@@ -61,7 +61,7 @@ export const MenuItems = () => {
       ],
     },
     {
-      name: t('app-kits'),
+      name: t('app_kits'),
     },
     {
       name: t('report'),
@@ -73,7 +73,7 @@ export const MenuItems = () => {
           href: routes.admin.report.statistical,
         },
         {
-          name: t('revenue-and-expenditure'),
+          name: t('revenue_and_expenditure'),
           href: routes.admin.report.revenueEx,
         },
       ],
@@ -84,15 +84,15 @@ export const MenuItems = () => {
       icon: <PiPackageDuotone />,
       dropdownItems: [
         {
-          name: t('table-rooms'),
+          name: t('table_rooms'),
           href: routes.admin.services.tableandrooms,
         },
         {
-          name: t('service-types'),
+          name: t('service_types'),
           href: routes.admin.services.service_types,
         },
         {
-          name: t('prices-setting'),
+          name: t('prices_setting'),
           href: routes.admin.services.prices,
         },
       ],
@@ -114,7 +114,7 @@ export const MenuItems = () => {
       ],
     },
     {
-      name: t('roles-permissions'),
+      name: t('roles_permissions'),
       href: routes.admin.rolesPermissions,
       icon: <PiFolderLockDuotone />,
     },
@@ -154,7 +154,7 @@ export const MenuItems = () => {
       icon: <AiOutlineSchedule />,
     },
     {
-      name: t('shift-details-for-staff'),
+      name: t('shift_details_for_staff'),
       href: routes.admin.shift_detail_staff,
       icon: <FaUserClock />,
     },
@@ -169,7 +169,7 @@ export const MenuItems = () => {
       icon: <TbPackages />,
     },
     {
-      name: t('kitchen-orders'),
+      name: t('kitchen_orders'),
       href: routes.admin.kitchen_orders,
       icon: <TbToolsKitchen3 />,
     },

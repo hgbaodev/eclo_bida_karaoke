@@ -1,19 +1,19 @@
 {
-  "menu-items": {
+  "menu_items": {
     "overview": "Tổng quan",
     "analytics": "Phân tích",
-    "job-board": "Bảng công việc",
+    "job_board": "Bảng công việc",
     "sell": "Bán hàng",
     "order": "Đơn hàng",
     "invoices": "Hoá đơn",
-    "app-kits": "Công cụ",
+    "app_kits": "Công cụ",
     "services": "Dịch vụ",
-    "table-rooms": "Bàn & Phòng",
-    "service-types": "Cấu hình loại dịch vụ",
-    "prices-setting": "Cấu hình giá",
+    "table_rooms": "Bàn & Phòng",
+    "service_types": "Cấu hình loại dịch vụ",
+    "prices_setting": "Cấu hình giá",
     "devices": "Thiết bị",
     "users": "Người dùng",
-    "roles-permissions": "Vai trò & Quyền hạn",
+    "roles_permissions": "Vai trò & Quyền hạn",
     "staffs": "Nhân viên",
     "salary": "Lương",
     "positions": "Chức vụ",
@@ -21,26 +21,26 @@
     "attendance": "Chấm công",
     "dayoff": "Nghỉ phép",
     "schedule": "Lịch trình",
-    "shift-details-for-staff": "Chi tiết ca cho nhân viên",
+    "shift_details_for_staff": "Chi tiết ca cho nhân viên",
     "customers": "Khách hàng",
     "suppliers": "Nhà cung cấp",
-    "kitchen-orders": "Đơn bếp",
+    "kitchen_orders": "Đơn bếp",
     "products": "Sản phẩm",
     "import": "Nhập khẩu",
     "loggers": "Logger",
     "report": "Báo cáo",
     "statistical": "Thống kê",
-    "revenue-and-expenditure": "Doanh thu và Chi phí"
+    "revenue_and_expenditure": "Doanh thu và Chi phí"
   },
-  "kitchen-orders": {
+  "kitchen_orders": {
     "order_requests": "Yêu cầu đặt hàng",
     "analytics": "Phân tích",
     "requests": "Yêu cầu",
     "received": "Đã nhận",
     "processing": "Đang xử lý",
-    "done-waiting": "Đã xong/Chờ giao",
+    "done_waiting": "Đã xong/Chờ giao",
     "a_customer_just_ordered_a_product": "Một khách hàng vừa đặt một sản phẩm",
-    "received-processing": "Đã nhận/Đang chế biến",
+    "received_processing": "Đã nhận/Đang chế biến",
     "confirm_processing": "Xác nhận đang chế biến",
     "notify_staff_to_pick_up": "Thông báo cho nhân viên đến lấy",
     "confirm_staff_picked_up": "Xác nhận nhân viên đã lấy",
@@ -54,5 +54,17 @@
     "quantity": "Số lượng",
     "status": "Trạng thái",
     "action": "Hành động"
+  },
+  "tables_rooms": {
+    "analytics": "Phân tích",
+    "tables_rooms": "Bàn & Phòng"
+  },
+  "kitchen_notifications": {
+    "title": "Thông báo từ bếp",
+    "name": "Tên",
+    "quantity": "Số lượng",
+    "location": "Địa điểm",
+    "delete": "Xoá",
+    "no_notifications_is_available": "Không có thông báo"
   }
 }

@@ -1,19 +1,19 @@
 {
-  "menu-items": {
+  "menu_items": {
     "overview": "Overview",
     "analytics": "Analytics",
-    "job-board": "Job Board",
+    "job_board": "Job Board",
     "sell": "Sell",
     "order": "Order",
     "invoices": "Invoices",
-    "app-kits": "App kits",
+    "app_kits": "App kits",
     "services": "Services",
-    "table-rooms": "Tables & Rooms",
-    "service-types": "Service Type",
-    "prices-setting": "Price Setting",
+    "table_rooms": "Tables & Rooms",
+    "service_types": "Service Type",
+    "prices_setting": "Price Setting",
     "devices": "Devices",
     "users": "Users",
-    "roles-permissions": "Roles & Permissions",
+    "roles_permissions": "Roles & Permissions",
     "staffs": "Staffs",
     "salary": "Salary",
     "positions": "Positions",
@@ -21,26 +21,26 @@
     "attendance": "Attendance",
     "dayoff": "Dayoff",
     "schedule": "Schedule",
-    "shift-details-for-staff": "Shift Details For Staff",
+    "shift_details_for_staff": "Shift Details For Staff",
     "customers": "Customers",
     "suppliers": "Suppliers",
-    "kitchen-orders": "Kitchen Orders",
+    "kitchen_orders": "Kitchen Orders",
     "products": "Products",
     "import": "Import",
     "loggers": "Loggers",
     "report": "Report",
     "statistical": "Statistical",
-    "revenue-and-expenditure": "Revenue and Expenditure"
+    "revenue_and_expenditure": "Revenue and Expenditure"
   },
-  "kitchen-orders": {
+  "kitchen_orders": {
     "order_requests": "Order Requests",
     "analytics": "Analytics",
     "requests": "Requests",
     "received": "Received",
     "processing": "Processing",
-    "done-waiting": "Done/Waiting",
+    "done_waiting": "Done/Waiting",
     "a_customer_just_ordered_a_product": "A customer just ordered a product",
-    "received-processing": "Received/Processing",
+    "received_processing": "Received/Processing",
     "confirm_processing": "Confirm processing",
     "notify_staff_to_pick_up": "Notify staff to pick up",
     "confirm_staff_picked_up": "Confirm staff picked up",
@@ -54,5 +54,17 @@
     "quantity": "Quantity",
     "status": "Status",
     "action": "Action"
+  },
+  "tables_rooms": {
+    "analytics": "Analytics",
+    "tables_rooms": "Tables & Rooms"
+  },
+  "kitchen_notifications": {
+    "title": "Kitchen notifications",
+    "name": "Name",
+    "quantity": "Quantity",
+    "location": "Location",
+    "delete": "Delete",
+    "no_notifications_is_available": "No notifications is available"
   }
 }

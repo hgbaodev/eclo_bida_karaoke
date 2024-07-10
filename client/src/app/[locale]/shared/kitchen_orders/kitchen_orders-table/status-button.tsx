@@ -22,7 +22,7 @@ export const STATUSES = {
 } as const;
 
 export function StatusButton({ status, active }: { status: KitchenOrder['status']; active: string }) {
-  const t = useTranslations('kitchen-orders');
+  const t = useTranslations('kitchen_orders');
   const [isLoading, setLoading] = useState(false); // Sử dụng useState để quản lý trạng thái loading
 
   const buttonClass =

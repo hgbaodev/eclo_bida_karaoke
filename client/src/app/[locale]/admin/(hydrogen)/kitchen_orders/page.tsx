@@ -4,7 +4,7 @@ import KitchenOrdersTable from '@/app/[locale]/shared/kitchen_orders/kitchen_ord
 import { useTranslations } from 'next-intl';
 
 export default function BlankPage() {
-  const t = useTranslations('kitchen-orders');
+  const t = useTranslations('kitchen_orders');
   const pageHeader = {
     title: t('order_requests'),
     breadcrumb: [

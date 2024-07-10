@@ -13,7 +13,7 @@ import toast from 'react-hot-toast';
 import { useTranslations } from 'next-intl';
 
 export default function KitchenOrdersTable() {
-  const t = useTranslations('kitchen-orders');
+  const t = useTranslations('kitchen_orders');
 
   const { data, isLoading, status } = useSelector((state: RootState) => state.kitchen_order);
 
@@ -78,13 +78,13 @@ export default function KitchenOrdersTable() {
         </p>
         <p className="text-sm text-green-600 flex items-center">
           <span className="inline-block w-3 h-3 bg-green-600 mr-2 rounded-full"></span>
-          {t('done-waiting')}
+          {t('done_waiting')}
         </p>
       </div>
 
       <div className="grid grid-cols-2 gap-4 mt-4">
         <div>
-          <h2 className="text-lg font-bold mb-2">{t('received-processing')}</h2>
+          <h2 className="text-lg font-bold mb-2">{t('received_processing')}</h2>
           <ControlledTable
             variant="modern"
             data={dataR}
@@ -97,7 +97,7 @@ export default function KitchenOrdersTable() {
           />
         </div>
         <div>
-          <h2 className="text-lg font-bold mb-2">{t('done-waiting')}</h2>
+          <h2 className="text-lg font-bold mb-2">{t('done_waiting')}</h2>
           <ControlledTable
             variant="modern"
             data={dataW}
