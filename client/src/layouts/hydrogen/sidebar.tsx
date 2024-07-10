@@ -7,19 +7,21 @@ import { cn } from '@/utils/class-names';
 import { PiCaretDownBold } from 'react-icons/pi';
 import SimpleBar from '@/components/ui/simplebar';
 import { MenuItems, MenuItem } from '@/layouts/hydrogen/menu-items';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store/types';
 
 export default function Sidebar({ className }: { className?: string }) {
   const { role } = useSelector((state: RootState) => state.auth);
 
-  const checkRoleMenuItems = menuItems.filter((item) => {
-    if (item.permission) {
-      if (role.permissions.includes(item.permission as never)) {
-        return item;
-      }
-    } else {
-      return item;
-    }
-  });
+  // const checkRoleMenuItems = MenuItems.filter((item) => {
+  //   if (item.permission) {
+  //     if (role.permissions.includes(item.permission as never)) {
+  //       return item;
+  //     }
+  //   } else {
+  //     return item;
+  //   }
+  // });
 
   const pathname = usePathname();
   return (
