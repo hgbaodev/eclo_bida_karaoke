@@ -6,14 +6,14 @@ import { useTranslations } from 'next-intl';
 export default function BlankPage() {
   const t = useTranslations('kitchen_orders');
   const pageHeader = {
-    title: t('order_requests'),
+    title: t('title'),
     breadcrumb: [
       {
         href: '/admin',
         name: t('analytics'),
       },
       {
-        name: t('order_requests'),
+        name: t('title'),
       },
     ],
   };

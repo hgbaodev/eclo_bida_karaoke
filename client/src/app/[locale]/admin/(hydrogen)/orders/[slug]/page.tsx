@@ -20,21 +20,21 @@ import { appendNoti, setIsLoading } from '@/store/slices/kitchen_order_notificat
 import RingBellSolidIcon from '@/components/icons/ring-bell-solid';
 import NotificationDropdown from '@/layouts/kitchen-notification-dropdown';
 import usePusher from '@/hooks/use-pusher';
-
-const pageHeader = {
-  title: 'Order',
-  breadcrumb: [
-    {
-      href: '/admin',
-      name: 'Analytics',
-    },
-    {
-      name: 'Order',
-    },
-  ],
-};
+import { useTranslations } from 'next-intl';
 
 export default function BlankPage({ params }: { params: { slug: string } }) {
+  const t = useTranslations('order');
+  const pageHeader = {
+    breadcrumb: [
+      {
+        href: '/admin',
+        name: t('breadcrumb_analytics'),
+      },
+      {
+        name: t('title'),
+      },
+    ],
+  };
   const { data: notifications } = useSelector((state: RootState) => state.kitchen_order_notification);
 
   const { order, isLoadingGetOrder, isLoadingUpdateOrder } = useSelector((state: RootState) => state.order);
@@ -80,7 +80,7 @@ export default function BlankPage({ params }: { params: { slug: string } }) {
 
   return (
     <>
-      <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb}>
+      <PageHeader title={t('title')} breadcrumb={pageHeader.breadcrumb}>
         <NotificationDropdown notifications={notifications}>
           <ActionIcon
             aria-label="Notification"
@@ -108,22 +108,33 @@ export default function BlankPage({ params }: { params: { slug: string } }) {
           <>
             <div>
               <Title as="h5" className="mt-4">
-                Invoice information
+                {t('invoice_info')}
               </Title>
-              <Text className="mt-1">Code Invoice: {params.slug}</Text>
-              <Text className="mt-1">Service: {order?.service?.name}</Text>
-              <Text className="mt-1">Price: {order?.service?.price?.pricePerHour}$/ 1 Hours</Text>
               <Text className="mt-1">
-                Check in: {formatDate(new Date(order?.checkin_time ?? ''), 'DD/MM/YYYY, hh:mm:ss')}
+                {t('code_invoice')}: {params.slug}
+              </Text>
+              <Text className="mt-1">
+                {t('service')}: {order?.service?.name}
+              </Text>
+              <Text className="mt-1">
+                {t('price')}: {order?.service?.price?.pricePerHour}$/ 1 Hours
+              </Text>
+              <Text className="mt-1">
+                {t('check_in')}: {formatDate(new Date(order?.checkin_time ?? ''), 'DD/MM/YYYY, hh:mm:ss')}
               </Text>
             </div>
             <div>
               <SearchCustomer />
               <Text className="mt-4">
-                Full name: {order?.customer != null ? order?.customer.first_name + ' ' + order?.customer.last_name : ''}
+                {t('full_name')}:{' '}
+                {order?.customer != null ? order?.customer.first_name + ' ' + order?.customer.last_name : ''}
               </Text>
-              <Text className="mt-2">Phone: {order?.customer?.phone}</Text>
-              <Text className="mt-2">Email: {order?.customer?.email}</Text>
+              <Text className="mt-2">
+                {t('phone')}: {order?.customer?.phone}
+              </Text>
+              <Text className="mt-2">
+                {t('email')}: {order?.customer?.email}
+              </Text>
             </div>
           </>
         )}
@@ -134,7 +145,7 @@ export default function BlankPage({ params }: { params: { slug: string } }) {
           <SearchProduct />
           <div className="flex flex-col">
             <Title as="h5" className="my-3">
-              Product list
+              {t('product_list')}
             </Title>
             <TableOrder />
           </div>
@@ -143,7 +154,7 @@ export default function BlankPage({ params }: { params: { slug: string } }) {
           <div className="space-y-3">
             <SearchDevice />
             <Title as="h5" className="my-3">
-              Device list
+              {t('device_list')}
             </Title>
             <TableDeviceOrder />
           </div>
@@ -151,10 +162,10 @@ export default function BlankPage({ params }: { params: { slug: string } }) {
       </div>
       <div className="mt-[100px] space-x-3 flex justify-end">
         <Button onClick={handleUpdate} isLoading={isLoadingUpdateOrder} className="w-[80px]" color="primary">
-          Update
+          {t('update')}
         </Button>
         <Button onClick={handlePay} className="w-[80px]" color="danger">
-          Pay
+          {t('pay')}
         </Button>
       </div>
     </>

@@ -33,7 +33,7 @@
     "revenue_and_expenditure": "Doanh thu và Chi phí"
   },
   "kitchen_orders": {
-    "order_requests": "Yêu cầu đặt hàng",
+    "title": "Yêu cầu đặt hàng",
     "analytics": "Phân tích",
     "requests": "Yêu cầu",
     "received": "Đã nhận",
@@ -66,5 +66,22 @@
     "location": "Địa điểm",
     "delete": "Xoá",
     "no_notifications_is_available": "Không có thông báo"
+  },
+  "order": {
+    "title": "Đặt hàng",
+    "breadcrumb_analytics": "Phân tích",
+    "breadcrumb_order": "Đặt hàng",
+    "invoice_info": "Thông tin hóa đơn",
+    "code_invoice": "Mã hóa đơn",
+    "service": "Dịch vụ",
+    "price": "Giá",
+    "check_in": "Thời gian vào",
+    "full_name": "Họ và tên",
+    "phone": "Điện thoại",
+    "email": "Email",
+    "product_list": "Danh sách sản phẩm",
+    "device_list": "Danh sách thiết bị",
+    "update": "Cập nhật",
+    "pay": "Thanh toán"
   }
 }

@@ -33,7 +33,7 @@
     "revenue_and_expenditure": "Revenue and Expenditure"
   },
   "kitchen_orders": {
-    "order_requests": "Order Requests",
+    "title": "Order Requests",
     "analytics": "Analytics",
     "requests": "Requests",
     "received": "Received",
@@ -66,5 +66,23 @@
     "location": "Location",
     "delete": "Delete",
     "no_notifications_is_available": "No notifications is available"
+  },
+  "order": {
+    "title": "Order",
+    "analytics": "Analytics",
+    "breadcrumb_analytics": "Analytics",
+    "breadcrumb_order": "Order",
+    "invoice_info": "Invoice information",
+    "code_invoice": "Code Invoice",
+    "service": "Service",
+    "price": "Price",
+    "check_in": "Check in",
+    "full_name": "Full name",
+    "phone": "Phone",
+    "email": "Email",
+    "product_list": "Product list",
+    "device_list": "Device list",
+    "update": "Update",
+    "pay": "Pay"
   }
 }
