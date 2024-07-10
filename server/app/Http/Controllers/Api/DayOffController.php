@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DayOff\DayOffRequest;
 use App\Interface\DayOffRepositoryInterface;
+use App\Interface\SalaryRepositoryInterface;
 use App\Interface\StaffRepositoryInterface;;
 
 use Illuminate\Http\Request;
@@ -13,10 +14,12 @@ class DayOffController extends Controller
 {
     protected $dayOffRepository;
     protected $staffRes;
-    public function __construct(DayOffRepositoryInterface $dayOffRepository, StaffRepositoryInterface $staffRepositoryInterface)
+    protected $salaryRepo;
+    public function __construct(DayOffRepositoryInterface $dayOffRepository, StaffRepositoryInterface $staffRepositoryInterface, SalaryRepositoryInterface $salaryRepositoryInterface)
     {
         $this->dayOffRepository = $dayOffRepository;
         $this->staffRes = $staffRepositoryInterface;
+        $this->salaryRepo = $salaryRepositoryInterface;
     }
 
     public function index(Request $request)
@@ -39,6 +42,14 @@ class DayOffController extends Controller
         $validated_data["staff_id"] = $staff->id;
         unset($validated_data['staff']);
         $device = $this->dayOffRepository->create($validated_data);
+        $month = date('m', strtotime($validated_data['day_off']));
+        $year = date('Y', strtotime($validated_data['day_off']));
+        $salary = $this->salaryRepo->getSalaryByStaffAndDate($staff->id, $month, $year);
+        $count = $this->dayOffRepository->countDayOffByStaff($staff->id, $month, $year);
+        $updateSalary = [
+            "off_days" => $count
+        ];
+        $this->salaryRepo->updateSalaryByActive($salary->active, $updateSalary);
         return $this->sentSuccessResponse($device, 'create successfully !!!', 200);
     }
 

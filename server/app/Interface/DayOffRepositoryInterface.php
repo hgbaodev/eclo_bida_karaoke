@@ -11,4 +11,6 @@ interface DayOffRepositoryInterface
     public function getDayOffByActive($active);
     public function updateDayOffByActive($active, array $data);
     public function deleteByActive($active);
+
+    public function countDayOffByStaff($staff_id, $month, $year);
 }

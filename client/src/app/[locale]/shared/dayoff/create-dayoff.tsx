@@ -17,6 +17,7 @@ import { createDayOffSchema, CreateDayOffInput } from '@/utils/validators/dayoff
 import { createDayoff, getDayoffs } from '@/store/slices/dayoffSlice';
 import toast from 'react-hot-toast';
 import { OptionType } from 'dayjs';
+import { updateAttendance } from '@/store/slices/attendanceSlice';
 
 export default function CreateDayOff() {
   const { closeModal } = useModal();
@@ -26,6 +27,15 @@ export default function CreateDayOff() {
   const { listStaffs } = useSelector((state: RootState) => state.staff);
   const onSubmit: SubmitHandler<CreateDayOffInput> = async (data) => {
     const result: any = await dispatch(createDayoff(data));
+    const dataAttendance = {
+      staff: data.staff,
+      day: data.day_off,
+      time: '',
+      check_in: '',
+      check_out: '',
+      day_off: data.type === 'A' ? true : false,
+    };
+    dispatch(updateAttendance(dataAttendance));
     if (createDayoff.fulfilled.match(result)) {
       setReset({
         staff: '',

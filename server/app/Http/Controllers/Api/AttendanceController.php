@@ -110,7 +110,7 @@ class AttendanceController extends Controller
     public function update(UpdateAttendanceRequest $request)
     {
         $validatedData = $request->validated();
-        $staff = $this->staffRepo->getStaffByUUID($validatedData['uuid']);
+        $staff = $this->staffRepo->getStaffByActive($validatedData['staff']);
         if (!$staff) {
             return $this->sentErrorResponse("Staff is not found", 'error', 404);
         }
