@@ -26,7 +26,8 @@ class SalaryRequest extends FormRequest
             "month" => "required",
             "year" => "required",
             "working_days" => "nullable",
-            "off_days" => "nullable"
+            "off_days" => "nullable",
+            "working_hours" => "nullable"
         ];
     }
 }

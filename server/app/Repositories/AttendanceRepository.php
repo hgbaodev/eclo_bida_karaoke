@@ -71,4 +71,13 @@ class AttendanceRepository implements AttendanceRepositoryInterface
             ->whereNotNull("check_in");
         return $attendance->count();
     }
+    public function getAttendanceComplete($staff_id, $month, $year)
+    {
+        $attendance = Attendance::where("staff_id", $staff_id)
+            ->whereMonth("day", $month)
+            ->whereYear("day", $year)
+            ->whereNotNull("check_out")
+            ->whereNotNull("check_in");
+        return $attendance->get();
+    }
 }

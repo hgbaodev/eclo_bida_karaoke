@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer("year");
             $table->integer("off_days")->nullable();
             $table->integer("working_days")->nullable();
+            $table->double("working_hours")->nullable();
             $table->double("total")->nullable();
             $table->unique(["staff_id", "month", "year"]);
             $table->string('active');

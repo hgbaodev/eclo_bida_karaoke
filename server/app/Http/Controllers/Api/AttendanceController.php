@@ -11,6 +11,7 @@ use App\Interface\SalaryRepositoryInterface;
 use App\Interface\ShiftRepositoryInterface;
 use App\Interface\StaffRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class AttendanceController extends Controller
 {
@@ -172,9 +173,37 @@ class AttendanceController extends Controller
         unset($validatedData['update']);
         $updateAtt = $this->attendanceRepository->updateAttendanceByActive($attendance->active, $validatedData);
         $count = $this->attendanceRepository->countAttendanceComplete($staff->id, $month, $year);
-        $updateSal = [
-            'working_days' => $count,
-        ];
+        if ($salary->staff->position->salary_structure === 'Day') {
+            $updateSal = [
+                'working_days' => $count,
+                'total' => $count * $salary->staff->position->base_salary,
+            ];
+        } else if ($salary->staff->position->salary_structure === 'Hour') {
+            $currentDate = Carbon::today();
+            $attendances = $this->attendanceRepository->getAttendanceComplete($staff->id, $month, $year);
+            $hours = 0;
+            foreach ($attendances as $item) {
+                $check_in = Carbon::parse($currentDate->toDateString() . ' ' . $item->check_in);
+                $check_out = Carbon::parse($currentDate->toDateString() . ' ' . $item->check_out);
+                $hours += $check_in->diffInHours($check_out);
+            }
+            $updateSal = [
+                'working_days' => $count,
+                'working_hours' => $hours,
+                'total' => $hours * $salary->staff->position->base_salary,
+            ];
+        } else {
+            if ($count >= 27) {
+                $updateSal = [
+                    'working_days' => $count,
+                    'total' => $salary->staff->position->base_salary,
+                ];
+            } else {
+                $updateSal = [
+                    'working_days' => $count,
+                ];
+            }
+        }
         $this->salaryRepo->updateSalaryByActive($salary->active, $updateSal);
         return $this->sentSuccessResponse($updateAtt, "Attendance is updated successfully", 200);
     }
