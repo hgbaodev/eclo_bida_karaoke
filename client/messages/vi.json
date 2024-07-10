@@ -1,5 +1,29 @@
 {
-  "Index": {
-    "title": "Thiết bị"
+  "menu-items": {
+    "overview": "Tổng quan",
+    "analytics": "Phân tích",
+    "job-board": "Bảng công việc",
+    "order": "Đơn hàng",
+    "services": "Dịch vụ",
+    "devices": "Thiết bị",
+    "users": "Người dùng",
+    "roles-permissions": "Vai trò & Quyền hạn",
+    "staffs": "Nhân viên",
+    "salary": "Lương",
+    "positions": "Chức vụ",
+    "shifts": "Ca làm việc",
+    "attendance": "Chấm công",
+    "dayoff": "Nghỉ phép",
+    "schedule": "Lịch trình",
+    "shift-details-for-staff": "Chi tiết ca cho nhân viên",
+    "customers": "Khách hàng",
+    "suppliers": "Nhà cung cấp",
+    "kitchen-orders": "Đơn bếp",
+    "products": "Sản phẩm",
+    "import": "Nhập khẩu",
+    "loggers": "Logger",
+    "report": "Báo cáo",
+    "statistical": "Thống kê",
+    "revenue-and-expenditure": "Doanh thu và Chi phí"
   }
 }

@@ -5,6 +5,7 @@ const defaultLocale = typeof navigator !== 'undefined' ? navigator.language.spli
 export default createMiddleware({
   locales: ['en', 'vi'],
   defaultLocale: defaultLocale,
+  localePrefix: 'never',
 });
 
 export const config = {

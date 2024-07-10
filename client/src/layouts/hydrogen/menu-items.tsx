@@ -13,172 +13,180 @@ import { BsPersonCheckFill, BsReceiptCutoff } from 'react-icons/bs';
 import { TbToolsKitchen3 } from 'react-icons/tb';
 import { GiReceiveMoney } from 'react-icons/gi';
 import { AiOutlineBarChart } from 'react-icons/ai';
+import { useTranslations } from 'next-intl';
 
-// Note: do not add href in the label object, it is rendering as label
-export const MenuItems = [
+export interface MenuItem {
+  name: string;
+  href?: string;
+  icon?: JSX.Element;
+  badge?: string;
+  dropdownItems?: MenuItem[];
+}
+
+export const MenuItems = () => {
+  const t = useTranslations('menu-items');
   // label start
-  {
-    name: 'Overview',
-  },
-  // label end
-  {
-    name: 'Analytics',
-    href: routes.admin.analytics,
-    icon: <PiChartBarDuotone />,
-    badge: '',
-  },
-  {
-    name: 'Job Board',
-    href: routes.admin.jobBoard,
-    icon: <PiShapesDuotone />,
-    badge: 'NEW',
-  },
-  {
-    name: 'Sell',
-  },
-  {
-    name: 'Order',
-    href: '#',
-    icon: <PiPackageDuotone />,
-    dropdownItems: [
-      {
-        name: 'Table & Rooms',
-        href: routes.admin.order.tableandrooms,
-      },
-      {
-        name: 'Invoices',
-        href: routes.admin.order.invoice,
-      },
-    ],
-  },
-  // label start
-  {
-    name: 'Apps Kit',
-  },
-  {
-    name: 'Report',
-    href: '#yhgtnu',
-    icon: <AiOutlineBarChart />,
-    dropdownItems: [
-      {
-        name: 'Statistical',
-        href: routes.admin.report.statistical,
-      },
-      {
-        name: 'Revenue and expenditure',
-        href: routes.admin.report.revenueEx,
-      },
-    ],
-  },
-  // label end
-  {
-    name: 'Services',
-    href: '#',
-    icon: <PiPackageDuotone />,
-    dropdownItems: [
-      {
-        name: 'Table & Rooms',
-        href: routes.admin.services.tableandrooms,
-      },
-      {
-        name: 'Service types',
-        href: routes.admin.services.service_types,
-      },
-      {
-        name: 'Prices setting',
-        href: routes.admin.services.prices,
-      },
-    ],
-  },
-  {
-    name: 'Devices',
-    href: routes.admin.devices,
-    icon: <MdOutlineDevicesOther />,
-  },
-  {
-    name: 'Users',
-    href: routes.admin.users,
-    icon: <HiOutlineUsers />,
-    permission: [
-      {
-        functional: 'user',
-        action: 'View',
-      },
-    ],
-  },
-  {
-    name: 'Roles & Permissions',
-    href: routes.admin.rolesPermissions,
-    icon: <PiFolderLockDuotone />,
-  },
-  {
-    name: 'Staffs',
-    href: routes.admin.staffs,
-    icon: <FaUserTie />,
-  },
-  {
-    name: 'Salary',
-    href: routes.admin.salary,
-    icon: <GiReceiveMoney />,
-  },
-  {
-    name: 'Positions',
-    href: routes.admin.positions,
-    icon: <MdOutlineBadge />,
-  },
-  {
-    name: 'Shifts',
-    href: routes.admin.shifts,
-    icon: <LuClock />,
-  },
-  {
-    name: 'Attendance',
-    href: routes.admin.attendance,
-    icon: <BsPersonCheckFill />,
-  },
-  {
-    name: 'Dayoff',
-    href: routes.admin.dayoff,
-    icon: <BsReceiptCutoff />,
-  },
-  {
-    name: 'Schedule',
-    href: routes.admin.schedule,
-    icon: <AiOutlineSchedule />,
-  },
-  {
-    name: 'Shift Details For Staff',
-    href: routes.admin.shift_detail_staff,
-    icon: <FaUserClock />,
-  },
-  {
-    name: 'Customers',
-    href: routes.admin.customers,
-    icon: <PiUserList />,
-  },
-  {
-    name: 'Suppliers',
-    href: routes.admin.suppliers,
-    icon: <TbPackages />,
-  },
-  {
-    name: 'Kitchen orders',
-    href: routes.admin.kitchen_orders,
-    icon: <TbToolsKitchen3 />,
-  },
-  {
-    name: 'Products',
-    href: routes.admin.products,
-    icon: <FaProductHunt />,
-  },
-  {
-    name: 'Import',
-    href: routes.admin.product_import,
-    icon: <FaProductHunt />,
-  },
-  {
-    name: 'Loggers',
-    href: routes.admin.loggers,
-    icon: <FaUniversalAccess />,
-  },
-];
+  return [
+    {
+      name: t('overview'),
+    },
+    {
+      name: t('analytics'),
+      href: routes.admin.analytics,
+      icon: <PiChartBarDuotone />,
+      badge: '',
+    },
+    {
+      name: t('job-board'),
+      href: routes.admin.jobBoard,
+      icon: <PiShapesDuotone />,
+      badge: 'NEW',
+    },
+    {
+      name: t('sell'),
+    },
+    {
+      name: t('order'),
+      href: '#',
+      icon: <PiPackageDuotone />,
+      dropdownItems: [
+        {
+          name: t('table-rooms'),
+          href: routes.admin.order.tableandrooms,
+        },
+        {
+          name: t('invoices'),
+          href: routes.admin.order.invoice,
+        },
+      ],
+    },
+    {
+      name: t('apps-kit'),
+    },
+    {
+      name: t('report'),
+      href: '#yhgtnu',
+      icon: <AiOutlineBarChart />,
+      dropdownItems: [
+        {
+          name: t('statistical'),
+          href: routes.admin.report.statistical,
+        },
+        {
+          name: t('revenue-and-expenditure'),
+          href: routes.admin.report.revenueEx,
+        },
+      ],
+    },
+    {
+      name: t('services'),
+      href: '#',
+      icon: <PiPackageDuotone />,
+      dropdownItems: [
+        {
+          name: t('table-rooms'),
+          href: routes.admin.services.tableandrooms,
+        },
+        {
+          name: t('service-types'),
+          href: routes.admin.services.service_types,
+        },
+        {
+          name: t('prices-setting'),
+          href: routes.admin.services.prices,
+        },
+      ],
+    },
+    {
+      name: t('devices'),
+      href: routes.admin.devices,
+      icon: <MdOutlineDevicesOther />,
+    },
+    {
+      name: t('users'),
+      href: routes.admin.users,
+      icon: <HiOutlineUsers />,
+      permission: [
+        {
+          functional: 'user',
+          action: 'View',
+        },
+      ],
+    },
+    {
+      name: t('roles-permissions'),
+      href: routes.admin.rolesPermissions,
+      icon: <PiFolderLockDuotone />,
+    },
+    {
+      name: t('staffs'),
+      href: routes.admin.staffs,
+      icon: <FaUserTie />,
+    },
+    {
+      name: t('salary'),
+      href: routes.admin.salary,
+      icon: <GiReceiveMoney />,
+    },
+    {
+      name: t('positions'),
+      href: routes.admin.positions,
+      icon: <MdOutlineBadge />,
+    },
+    {
+      name: t('shifts'),
+      href: routes.admin.shifts,
+      icon: <LuClock />,
+    },
+    {
+      name: t('attendance'),
+      href: routes.admin.attendance,
+      icon: <BsPersonCheckFill />,
+    },
+    {
+      name: t('dayoff'),
+      href: routes.admin.dayoff,
+      icon: <BsReceiptCutoff />,
+    },
+    {
+      name: t('schedule'),
+      href: routes.admin.schedule,
+      icon: <AiOutlineSchedule />,
+    },
+    {
+      name: t('shift-details-for-staff'),
+      href: routes.admin.shift_detail_staff,
+      icon: <FaUserClock />,
+    },
+    {
+      name: t('customers'),
+      href: routes.admin.customers,
+      icon: <PiUserList />,
+    },
+    {
+      name: t('suppliers'),
+      href: routes.admin.suppliers,
+      icon: <TbPackages />,
+    },
+    {
+      name: t('kitchen-orders'),
+      href: routes.admin.kitchen_orders,
+      icon: <TbToolsKitchen3 />,
+    },
+    {
+      name: t('products'),
+      href: routes.admin.products,
+      icon: <FaProductHunt />,
+    },
+    {
+      name: t('import'),
+      href: routes.admin.product_import,
+      icon: <FaProductHunt />,
+    },
+    {
+      name: t('loggers'),
+      href: routes.admin.loggers,
+      icon: <FaUniversalAccess />,
+    },
+  ];
+};

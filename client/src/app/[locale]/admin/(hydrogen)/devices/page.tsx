@@ -19,10 +19,8 @@ const pageHeader = {
 };
 
 export default function BlankPage() {
-  const t = useTranslations('Index');
   return (
     <>
-      <h1>{t('title')}</h1>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb}>
         <ModalButton label="Add New Device" view={<CreateDevice />} customSize="600px" className="mt-0" />
       </PageHeader>

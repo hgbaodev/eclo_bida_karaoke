@@ -67,21 +67,21 @@ export default function KitchenOrdersTable() {
       <div className="mb-4 flex items-center space-x-4">
         <p className="text-sm text-yellow-600 flex items-center">
           <span className="inline-block w-3 h-3 bg-yellow-600 mr-2 rounded-full"></span>
-          Đã tiếp nhận yêu cầu
+          Received
         </p>
         <p className="text-sm text-blue-600 flex items-center">
           <span className="inline-block w-3 h-3 bg-blue-600 mr-2 rounded-full"></span>
-          Đang chế biến
+          Processing
         </p>
         <p className="text-sm text-green-600 flex items-center">
           <span className="inline-block w-3 h-3 bg-green-600 mr-2 rounded-full"></span>
-          Đã xong/chờ giao
+          Done/Waiting
         </p>
       </div>
 
       <div className="grid grid-cols-2 gap-4 mt-4">
         <div>
-          <h2 className="text-lg font-bold mb-2">Đã nhận/Đang chế biến</h2>
+          <h2 className="text-lg font-bold mb-2">Received/Processing</h2>
           <ControlledTable
             variant="modern"
             data={dataR}
@@ -94,7 +94,7 @@ export default function KitchenOrdersTable() {
           />
         </div>
         <div>
-          <h2 className="text-lg font-bold mb-2">Chế biến xong/Chờ giao</h2>
+          <h2 className="text-lg font-bold mb-2">Done/Waiting</h2>
           <ControlledTable
             variant="modern"
             data={dataW}
