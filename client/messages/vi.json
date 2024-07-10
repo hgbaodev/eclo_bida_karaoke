@@ -31,5 +31,27 @@
     "report": "Báo cáo",
     "statistical": "Thống kê",
     "revenue-and-expenditure": "Doanh thu và Chi phí"
+  },
+  "kitchen-orders": {
+    "order_requests": "Yêu cầu đặt hàng",
+    "analytics": "Phân tích",
+    "requests": "Yêu cầu",
+    "received": "Đã nhận",
+    "processing": "Đang xử lý...",
+    "done-waiting": "Đã xong/Chờ giao",
+    "a_customer_just_ordered_a_product": "Một khách hàng vừa đặt một sản phẩm",
+    "received-processing": "Đã nhận/Đang chế biến",
+    "confirm_processing": "Xác nhận đang chế biến",
+    "notify_staff_to_pick_up": "Thông báo cho nhân viên đến lấy",
+    "confirm_staff_picked_up": "Xác nhận nhân viên đã lấy",
+    "not_available": "Không khả dụng",
+    "process": "Chế biến",
+    "notify": "Thông báo",
+    "complete": "Hoàn thành",
+    "no": "STT",
+    "name": "Tên",
+    "quantity": "Số lượng",
+    "status": "Trạng thái",
+    "action": "Hành động"
   }
 }

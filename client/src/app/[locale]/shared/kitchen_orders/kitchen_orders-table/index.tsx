@@ -10,8 +10,11 @@ import { dispatch } from '@/store';
 import usePusher from '@/hooks/use-pusher';
 import { getKitchenOrders, appendOrders } from '@/store/slices/kitchen_orderSlice';
 import toast from 'react-hot-toast';
+import { useTranslations } from 'next-intl';
 
 export default function KitchenOrdersTable() {
+  const t = useTranslations('kitchen-orders');
+
   const { data, isLoading, status } = useSelector((state: RootState) => state.kitchen_order);
 
   const fetchData = useCallback(async () => {
@@ -26,7 +29,7 @@ export default function KitchenOrdersTable() {
     if (Array.isArray(data)) {
       data.forEach((order: any) => {
         dispatch(appendOrders({ data: order }));
-        toast.success(`A customer just ordered a product: ${order.product_name}`);
+        toast.success(`${t('a_customer_just_ordered_a_product')}: ${order.product_name}`);
       });
     } else {
       console.error('Expected an array of orders.');
@@ -67,21 +70,21 @@ export default function KitchenOrdersTable() {
       <div className="mb-4 flex items-center space-x-4">
         <p className="text-sm text-yellow-600 flex items-center">
           <span className="inline-block w-3 h-3 bg-yellow-600 mr-2 rounded-full"></span>
-          Received
+          {t('received')}
         </p>
         <p className="text-sm text-blue-600 flex items-center">
           <span className="inline-block w-3 h-3 bg-blue-600 mr-2 rounded-full"></span>
-          Processing
+          {t('processing')}
         </p>
         <p className="text-sm text-green-600 flex items-center">
           <span className="inline-block w-3 h-3 bg-green-600 mr-2 rounded-full"></span>
-          Done/Waiting
+          {t('done-waiting')}
         </p>
       </div>
 
       <div className="grid grid-cols-2 gap-4 mt-4">
         <div>
-          <h2 className="text-lg font-bold mb-2">Received/Processing</h2>
+          <h2 className="text-lg font-bold mb-2">{t('received-processing')}</h2>
           <ControlledTable
             variant="modern"
             data={dataR}
@@ -94,7 +97,7 @@ export default function KitchenOrdersTable() {
           />
         </div>
         <div>
-          <h2 className="text-lg font-bold mb-2">Done/Waiting</h2>
+          <h2 className="text-lg font-bold mb-2">{t('done-waiting')}</h2>
           <ControlledTable
             variant="modern"
             data={dataW}
