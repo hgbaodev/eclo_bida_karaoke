@@ -47,6 +47,10 @@ class SalaryController extends Controller
                 return $this->sentErrorResponse("Staff is not found", 'error', 404);
             }
             $validateData['staff_id'] = $staff->id;
+            $validateData['working_days'] = 0;
+            $validateData['working_hours'] = 0;
+            $validateData['off_days'] = 0;
+            $validateData['total'] = 0;
             unset($validateData['staff']);
             $result = $this->salaryRepo->createSalary($validateData);
         } else {
