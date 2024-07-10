@@ -7,20 +7,24 @@ use App\Http\Requests\Attendance\AttendanceByWSRequest;
 use App\Http\Requests\Attendance\AttendanceRequest;
 use App\Http\Requests\Attendance\UpdateAttendanceRequest;
 use App\Interface\AttendanceRepositoryInterface;
+use App\Interface\SalaryRepositoryInterface;
 use App\Interface\ShiftRepositoryInterface;
 use App\Interface\StaffRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class AttendanceController extends Controller
 {
     protected $attendanceRepository;
     protected $staffRepo;
     protected $shiftRepo;
-    public function __construct(AttendanceRepositoryInterface $attendanceRepository, StaffRepositoryInterface $staffRepositoryInterface, ShiftRepositoryInterface $shiftRepositoryInterface)
+    protected $salaryRepo;
+    public function __construct(AttendanceRepositoryInterface $attendanceRepository, StaffRepositoryInterface $staffRepositoryInterface, ShiftRepositoryInterface $shiftRepositoryInterface, SalaryRepositoryInterface $salaryRepositoryInterface)
     {
         $this->attendanceRepository = $attendanceRepository;
         $this->staffRepo = $staffRepositoryInterface;
         $this->shiftRepo = $shiftRepositoryInterface;
+        $this->salaryRepo = $salaryRepositoryInterface;
     }
     /**
      * Display a listing of the resource.
@@ -114,21 +118,23 @@ class AttendanceController extends Controller
         if (!$attendance) {
             return $this->sentErrorResponse("Staff don't have attendance today", 'error', 404);
         }
+        $month = date('m', strtotime($attendance->day));
+        $year = date('Y', strtotime($attendance->day));
+        $salary = $this->salaryRepo->getSalaryByStaffAndDate($staff->id, $month, $year);
         $time = $validatedData['time'];
-        $update = $validatedData['update'];
-        if (!$update) {
+        if (!isset($validatedData['update'])) {
             if (!$attendance->check_in) {
                 $validatedData['check_in'] = $time;
                 if ($time > $attendance->time_in) {
-                    $validatedData['type'] = "in late";
+                    $validatedData['type'] = "in-late";
                 }
             } else if (!$attendance->check_out) {
                 $validatedData['check_out'] = $time;
                 if ($time < $attendance->time_out) {
                     if ($attendance->type) {
-                        $validatedData['type'] = $attendance->type . " and out early";
+                        $validatedData['type'] = $attendance->type . " and out-early";
                     } else {
-                        $validatedData['type'] = "out early";
+                        $validatedData['type'] = "out-early";
                     }
                 }
             } else {
@@ -136,15 +142,15 @@ class AttendanceController extends Controller
             }
         } else {
             $validatedData['type'] = '';
-            $check_in = $attendance['check_in'];
-            $check_out = $attendance['check_out'];
+            $check_in = $validatedData['check_in'];
+            $check_out = $validatedData['check_out'];
             // Kiểm tra đi muộn
-            if ($check_in > $attendance->time_in) {
+            if ($check_in > $attendance->time_in && !is_null($check_in)) {
                 $validatedData['type'] = 'in late';
             }
 
             // Kiểm tra về sớm
-            if ($check_out < $attendance->time_out) {
+            if ($check_out < $attendance->time_out && !is_null($check_out)) {
                 // Nếu type đã được đặt thành 'in late' trước đó, thì thêm 'out early' vào type
                 if ($validatedData['type'] === 'in late') {
                     $validatedData['type'] .= ' and out early';
@@ -154,9 +160,52 @@ class AttendanceController extends Controller
                 }
             }
         }
+        if (isset($validatedData['day_off'])) {
+            if ($validatedData['day_off'])
+                $validatedData['type'] = 'Approved';
+            else {
+                $validatedData['type'] = 'Unapproved';
+            }
+        }
+        $validatedData['staff_id'] = $staff->id;
+        unset($validatedData['uuid']);
         unset($validatedData['time']);
         unset($validatedData['update']);
-        return $this->sentSuccessResponse($this->attendanceRepository->updateAttendanceByActive($attendance->active, $validatedData), "Attendance is updated successfully", 200);
+        $updateAtt = $this->attendanceRepository->updateAttendanceByActive($attendance->active, $validatedData);
+        $count = $this->attendanceRepository->countAttendanceComplete($staff->id, $month, $year);
+        if ($salary->staff->position->salary_structure === 'Day') {
+            $updateSal = [
+                'working_days' => $count,
+                'total' => $count * $salary->staff->position->base_salary,
+            ];
+        } else if ($salary->staff->position->salary_structure === 'Hour') {
+            $currentDate = Carbon::today();
+            $attendances = $this->attendanceRepository->getAttendanceComplete($staff->id, $month, $year);
+            $hours = 0;
+            foreach ($attendances as $item) {
+                $check_in = Carbon::parse($currentDate->toDateString() . ' ' . $item->check_in);
+                $check_out = Carbon::parse($currentDate->toDateString() . ' ' . $item->check_out);
+                $hours += $check_in->diffInHours($check_out);
+            }
+            $updateSal = [
+                'working_days' => $count,
+                'working_hours' => $hours,
+                'total' => $hours * $salary->staff->position->base_salary,
+            ];
+        } else {
+            if ($count >= 27) {
+                $updateSal = [
+                    'working_days' => $count,
+                    'total' => $salary->staff->position->base_salary,
+                ];
+            } else {
+                $updateSal = [
+                    'working_days' => $count,
+                ];
+            }
+        }
+        $this->salaryRepo->updateSalaryByActive($salary->active, $updateSal);
+        return $this->sentSuccessResponse($updateAtt, "Attendance is updated successfully", 200);
     }
 
     /**

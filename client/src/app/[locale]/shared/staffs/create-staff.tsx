@@ -14,6 +14,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { getStatusBadge } from './staffs-table/columns';
 import { createUser } from '@/store/slices/userSlice';
+import { createSalary } from '@/store/slices/salarySlice';
 
 export default function CreateStaff() {
   const { closeModal } = useModal();
@@ -21,6 +22,9 @@ export default function CreateStaff() {
   const [gender, setGender] = useState('M');
   const [errors, setErrors] = useState<any>({});
   const [addUser, setAddUser] = useState(false);
+  const now = new Date();
+  const Year = now.getFullYear();
+  const Month = String(now.getMonth() + 1).padStart(2, '0');
   const { listRoles } = useSelector((state: RootState) => state.role);
   const { pageSize, page, query, isCreateLoading, position, status } = useSelector((state: RootState) => state.staff);
   const { listPositions } = useSelector((state: RootState) => state.position);
@@ -59,7 +63,12 @@ export default function CreateStaff() {
         formData.append('position', data.position);
         formData.append('user', active);
         const result: any = await dispatch(createStaff(formData));
-
+        const staffSalary = {
+          staff: result.payload.data.active,
+          month: Month,
+          year: Year,
+        };
+        dispatch(createSalary(staffSalary));
         if (createStaff.fulfilled.match(result)) {
           setReset({
             name: '',

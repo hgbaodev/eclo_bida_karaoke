@@ -54,9 +54,8 @@ class SalaryController extends Controller
             }
             return $this->sentSuccessResponse($result);
         } catch (\Exception $e) {
-            $this->sentErrorResponse($e.getMe);
+            $this->sentErrorResponse($e . getMe);
         }
-
     }
     /**
      * Update the specified resource in storage.

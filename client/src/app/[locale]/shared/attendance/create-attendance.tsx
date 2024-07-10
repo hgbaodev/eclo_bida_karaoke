@@ -39,7 +39,6 @@ export default function CreateAttendance() {
       uuid: data.uuid,
       day: data.day,
       time: data.time,
-      update: false,
     };
     const result: any = await dispatch(Attendance(dataAttendance));
     console.log(result);
