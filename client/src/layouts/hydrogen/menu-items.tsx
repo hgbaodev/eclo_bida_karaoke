@@ -61,11 +61,11 @@ export const MenuItems = () => {
       ],
     },
     {
-      name: t('apps-kit'),
+      name: t('app-kits'),
     },
     {
       name: t('report'),
-      href: '#yhgtnu',
+      href: '#',
       icon: <AiOutlineBarChart />,
       dropdownItems: [
         {
