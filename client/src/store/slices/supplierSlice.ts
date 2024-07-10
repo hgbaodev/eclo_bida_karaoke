@@ -2,7 +2,7 @@
 import axiosInstance from '@/api/axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { supplierType } from '../types';
-import { EditSupplierInput } from '@/utils/validators/edit-supplier.schema';
+import { EditSupplierInput } from '@/utils/validators/supplier/edit-supplier.schema';
 import env from '@/env';
 
 const initialState: supplierType = {
@@ -17,7 +17,7 @@ const initialState: supplierType = {
   errors: null,
   isCreateLoading: false,
   isUpdateLoading: false,
-  listSupplier:[],
+  listSupplier: [],
 };
 
 export const getSuppliers = createAsyncThunk(

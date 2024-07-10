@@ -22,7 +22,7 @@ class DayOffRequest extends HelperRequest
     public function rules(): array
     {
         return [
-            'staff_id' => 'required',
+            'staff' => 'required',
             'day_off' => 'required',
             'reason' => 'nullable',
             'type' => 'required',

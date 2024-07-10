@@ -225,7 +225,6 @@ class OrderController extends Controller
             $productActive = $productData['active'];
             $newQuantity = $productData['quantity'];
 
-
             // Lấy tổng số lượng hiện có từ kitchen_order
             $totalQuantity = $this->kitchenOrderRepository->getTotalQuantityByProductAndOrderActive($productActive, $order->active);
 

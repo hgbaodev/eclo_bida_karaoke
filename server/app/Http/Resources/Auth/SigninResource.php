@@ -22,12 +22,7 @@ class SigninResource extends JsonResource
         foreach ($role->roleFunctionalPermissions as $rfp) {
             $functionName = $rfp->functional->name;
             $permissionName = $rfp->permission->name;
-
-            if (!isset($rolePermissions[$functionName])) {
-                $rolePermissions[$functionName] = [];
-            }
-
-            $rolePermissions[$functionName][] = $permissionName;
+            $rolePermissions[] = $functionName . '.' . $permissionName;
         }
 
         return [

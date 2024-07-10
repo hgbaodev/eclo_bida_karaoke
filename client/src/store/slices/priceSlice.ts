@@ -2,7 +2,7 @@
 import axiosInstance from '@/api/axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { priceType } from '../types';
-import { EditPriceInput } from '@/utils/validators/edit-price.schema';
+import { EditPriceInput } from '@/utils/validators/price/edit-price.schema';
 import env from '@/env';
 
 const initialState: priceType = {

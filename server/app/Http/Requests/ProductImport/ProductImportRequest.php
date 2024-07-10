@@ -22,6 +22,7 @@ class ProductImportRequest extends HelperRequest
     public function rules(): array
     {
         return [
+            'user_import' => 'nullable',
             'total_cost' => 'nullable',
             'create_time' => 'required',
             'receive_time' => 'required',

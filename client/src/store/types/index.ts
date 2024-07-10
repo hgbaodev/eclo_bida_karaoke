@@ -466,7 +466,7 @@ export interface dayoffType {
   errors: any;
   isCreateLoading: boolean;
   isUpdateLoading: boolean;
-  staff:any;
+  staff: any;
 }
 
 export interface statisticalType {
@@ -480,4 +480,16 @@ export interface statisticalType {
     value: number;
   }[];
   selectedStats: string;
+  revenueEx: null | {
+    beginTotal: number;
+    endTotal: number;
+    listRevenueEx: {
+      time: string;
+      customer: string;
+      revenue: number;
+      expenditure: number;
+      remaining: number;
+    }[];
+  };
+  isRevenueExLoading: boolean;
 }

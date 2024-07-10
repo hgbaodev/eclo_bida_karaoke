@@ -8,6 +8,8 @@ const initialState: statisticalType = {
   isLoadingOverView: false,
   dataStats: [],
   selectedStats: 'week',
+  revenueEx: null,
+  isRevenueExLoading: false,
 };
 
 export const getOverview = createAsyncThunk('statistical/getOverview', async () => {
@@ -27,6 +29,18 @@ export const getStatTime = createAsyncThunk('statistical/getStatTime', async (qu
     throw error;
   }
 });
+
+export const getRevenueEx = createAsyncThunk(
+  'statistical/getRevenueEx',
+  async (data: { start_day: string; end_day: string }) => {
+    try {
+      const response = await axiosInstance.post(`/statistical/revenue-ex`, data);
+      return response.data;
+    } catch (error: any) {
+      throw error;
+    }
+  },
+);
 
 const statisticalSlice = createSlice({
   name: 'statistical',
@@ -50,6 +64,16 @@ const statisticalSlice = createSlice({
       })
       .addCase(getStatTime.fulfilled, (state, action) => {
         state.dataStats = action.payload.data;
+      })
+      .addCase(getRevenueEx.pending, (state) => {
+        state.isRevenueExLoading = true;
+      })
+      .addCase(getRevenueEx.fulfilled, (state, action) => {
+        state.revenueEx = action.payload.data;
+        state.isRevenueExLoading = false;
+      })
+      .addCase(getRevenueEx.rejected, (state) => {
+        state.isRevenueExLoading = false;
       });
   },
 });

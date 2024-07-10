@@ -8,8 +8,22 @@ import { cn } from '@/utils/class-names';
 import { PiCaretDownBold } from 'react-icons/pi';
 import SimpleBar from '@/components/ui/simplebar';
 import { menuItems } from '@/layouts/hydrogen/menu-items';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store/types';
 
 export default function Sidebar({ className }: { className?: string }) {
+  const { role } = useSelector((state: RootState) => state.auth);
+
+  const checkRoleMenuItems = menuItems.filter((item) => {
+    if (item.permission) {
+      if (role.permissions.includes(item.permission as never)) {
+        return item;
+      }
+    } else {
+      return item;
+    }
+  });
+
   const pathname = usePathname();
   return (
     <aside
@@ -26,13 +40,12 @@ export default function Sidebar({ className }: { className?: string }) {
 
       <SimpleBar className="h-[calc(100%-80px)]">
         <div className="mt-4 pb-3 3xl:mt-6">
-          {menuItems.map((item, index) => {
+          {checkRoleMenuItems.map((item, index) => {
             const isActive = pathname === (item?.href as string);
             const pathnameExistInDropdowns: any = item?.dropdownItems?.filter(
               (dropdownItem) => dropdownItem.href === pathname,
             );
             const isDropdownOpen = Boolean(pathnameExistInDropdowns?.length);
-
             return (
               <Fragment key={item.name + '-' + index}>
                 {item?.href ? (

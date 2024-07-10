@@ -3,7 +3,7 @@ import axiosInstance from '@/api/axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { shiftType } from '../types';
 import env from '@/env';
-import { EditShiftInput } from '@/utils/validators/edit-shift.schema';
+import { EditShiftInput } from '@/utils/validators/shift/edit-shift.schema';
 const initialState: shiftType = {
   data: [],
   isLoading: false,

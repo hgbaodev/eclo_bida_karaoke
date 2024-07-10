@@ -212,4 +212,9 @@ class Order extends Model
 
         return $result;
     }
+
+    public static function getRevenueEx($startDay, $endDay)
+    {
+        return self::with(['user'])->whereBetween('checkout_time', [$startDay, $endDay])->get();
+    }
 }

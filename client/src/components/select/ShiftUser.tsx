@@ -1,6 +1,6 @@
 // Tạo một component riêng để xử lý hiển thị dữ liệu của một ngày cụ thể
-import { Shift, ShiftUserDetail, WorkShift } from '@/app/shared/shift_detail_staff/colunm';
-import CreateShiftDetailStaff from '@/app/shared/shift_detail_staff/create-shift_detail_staff';
+import { Shift, ShiftUserDetail, WorkShift } from '@/app/[locale]/shared/shift_detail_staff/colunm';
+import CreateShiftDetailStaff from '@/app/[locale]/shared/shift_detail_staff/create-shift_detail_staff';
 import React from 'react';
 import Create from './Create';
 import toast from 'react-hot-toast';
