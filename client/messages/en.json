@@ -1,5 +1,29 @@
 {
-  "Index": {
-    "title": "Device"
+  "menu-items": {
+    "overview": "Overview",
+    "analytics": "Analytics",
+    "job-board": "Job Board",
+    "order": "Order",
+    "services": "Services",
+    "devices": "Devices",
+    "users": "Users",
+    "roles-permissions": "Roles & Permissions",
+    "staffs": "Staffs",
+    "salary": "Salary",
+    "positions": "Positions",
+    "shifts": "Shifts",
+    "attendance": "Attendance",
+    "dayoff": "Dayoff",
+    "schedule": "Schedule",
+    "shift-details-for-staff": "Shift Details For Staff",
+    "customers": "Customers",
+    "suppliers": "Suppliers",
+    "kitchen-orders": "Kitchen Orders",
+    "products": "Products",
+    "import": "Import",
+    "loggers": "Loggers",
+    "report": "Report",
+    "statistical": "Statistical",
+    "revenue-and-expenditure": "Revenue and Expenditure"
   }
 }

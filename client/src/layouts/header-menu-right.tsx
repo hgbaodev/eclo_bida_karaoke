@@ -4,10 +4,12 @@ import NotificationDropdown from '@/layouts/notification-dropdown';
 import ProfileMenu from '@/layouts/profile-menu';
 import RingBellSolidIcon from '@/components/icons/ring-bell-solid';
 import ChatSolidIcon from '@/components/icons/chat-solid';
+import LanguagePicker from '@/layouts/hydrogen/language-switcher';
 
 export default function HeaderMenuRight() {
   return (
-    <div className="ms-auto grid shrink-0 grid-cols-3 items-center gap-2 text-gray-700 xs:gap-3 xl:gap-4">
+    <div className="ms-auto flex items-center gap-2 text-gray-700 xs:gap-3 xl:gap-4">
+      <LanguagePicker />
       <MessagesDropdown>
         <ActionIcon
           aria-label="Messages"
@@ -38,7 +40,6 @@ export default function HeaderMenuRight() {
           />
         </ActionIcon>
       </NotificationDropdown>
-
       <ProfileMenu />
     </div>
   );

@@ -1,5 +1,4 @@
 'use client';
-
 import Link from 'next/link';
 import { Fragment } from 'react';
 import { usePathname } from 'next/navigation';
@@ -7,9 +6,7 @@ import { Title, Collapse } from 'rizzui';
 import { cn } from '@/utils/class-names';
 import { PiCaretDownBold } from 'react-icons/pi';
 import SimpleBar from '@/components/ui/simplebar';
-import { menuItems } from '@/layouts/hydrogen/menu-items';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store/types';
+import { MenuItems, MenuItem } from '@/layouts/hydrogen/menu-items';
 
 export default function Sidebar({ className }: { className?: string }) {
   const { role } = useSelector((state: RootState) => state.auth);
@@ -40,10 +37,11 @@ export default function Sidebar({ className }: { className?: string }) {
 
       <SimpleBar className="h-[calc(100%-80px)]">
         <div className="mt-4 pb-3 3xl:mt-6">
-          {checkRoleMenuItems.map((item, index) => {
+          {MenuItems().map((item: MenuItem, index: number) => {
+            // Adjusted type for item and index
             const isActive = pathname === (item?.href as string);
-            const pathnameExistInDropdowns: any = item?.dropdownItems?.filter(
-              (dropdownItem) => dropdownItem.href === pathname,
+            const pathnameExistInDropdowns: MenuItem[] | undefined = item?.dropdownItems?.filter(
+              (dropdownItem: MenuItem) => dropdownItem.href === pathname,
             );
             const isDropdownOpen = Boolean(pathnameExistInDropdowns?.length);
             return (
@@ -89,13 +87,15 @@ export default function Sidebar({ className }: { className?: string }) {
                           </div>
                         )}
                       >
-                        {item?.dropdownItems?.map((dropdownItem, index) => {
+                        {item?.dropdownItems?.map((dropdownItem: MenuItem, dropdownIndex: number) => {
+                          // Adjusted type for dropdownItem and dropdownIndex
                           const isChildActive = pathname === (dropdownItem?.href as string);
 
                           return (
                             <Link
+                              //@ts-ignore
                               href={dropdownItem?.href}
-                              key={dropdownItem?.name + index}
+                              key={dropdownItem?.name + dropdownIndex}
                               className={cn(
                                 'mx-3.5 mb-0.5 flex items-center justify-between rounded-md px-3.5 py-2 font-medium capitalize last-of-type:mb-1 lg:last-of-type:mb-2 2xl:mx-5',
                                 isChildActive
