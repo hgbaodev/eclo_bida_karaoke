@@ -13,25 +13,6 @@ type JobStatsType = {
   className?: string;
 };
 
-const statData: StatType[] = [
-  {
-    label: 'Active Jobs',
-    value: 15786,
-  },
-  {
-    label: 'Published Jobs',
-    value: 20129,
-  },
-  {
-    label: 'Shortlisted',
-    value: 8503,
-  },
-  {
-    label: 'On Hold',
-    value: 2430,
-  },
-];
-
 export type StatType = {
   label: string;
   value: number;

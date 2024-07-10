@@ -59,4 +59,8 @@ class Staff extends Model
     {
         $this->hasMany(DayOffs::class);
     }
+    public function salary()
+    {
+        $this->hasMany(Salary::class);
+    }
 }

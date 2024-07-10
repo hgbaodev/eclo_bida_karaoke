@@ -15,6 +15,7 @@ class Salary extends Model
         "year",
         "working_days",
         "off_days",
+        "working_hours",
         "active",
         "total"
     ];

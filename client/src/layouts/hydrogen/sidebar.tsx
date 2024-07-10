@@ -9,6 +9,18 @@ import SimpleBar from '@/components/ui/simplebar';
 import { MenuItems, MenuItem } from '@/layouts/hydrogen/menu-items';
 
 export default function Sidebar({ className }: { className?: string }) {
+  const { role } = useSelector((state: RootState) => state.auth);
+
+  const checkRoleMenuItems = menuItems.filter((item) => {
+    if (item.permission) {
+      if (role.permissions.includes(item.permission as never)) {
+        return item;
+      }
+    } else {
+      return item;
+    }
+  });
+
   const pathname = usePathname();
   return (
     <aside

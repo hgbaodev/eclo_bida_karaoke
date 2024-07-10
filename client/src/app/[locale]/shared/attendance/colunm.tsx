@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { HeaderCell } from '@/components/ui/table';
-import {  Text, Badge,ActionIcon, Tooltip } from 'rizzui';
+import { Text, Badge, ActionIcon, Tooltip } from 'rizzui';
 import PencilIcon from '@/components/icons/pencil';
 import EditAttendance from './edit-attendance';
 interface MonthYear {
@@ -38,7 +38,7 @@ const Month = String(now.getMonth() + 1).padStart(2, '0');
 const day = String(now.getDate()).padStart(2, '0');
 const currentDate = `${Year}-${Month}-${day}`;
 // Ví dụ lấy ngày đầu tháng và ngày cuối tháng cho tháng 6 năm 2024
-export  function getStatusBadge(status: DayOff['status']) {
+export function getStatusBadge(status: DayOff['status']) {
   switch (status) {
     case STATUSES.Unapproved:
       return (
@@ -72,7 +72,7 @@ export const getColumns = (openModal: (args: any) => void, Data: Attendance[], m
       dataIndex: 'shift',
       key: 'shift',
       width: 50,
-      render: (_: string, staff: Staff) => staff.last_name + ' ' + staff.first_name,
+      render: (_: string, staff: Staff) => staff.last_name + ' ' + staff.first_name + ' ' + staff.uuid,
     },
     ...dates.map((date) => ({
       title: (
@@ -93,7 +93,8 @@ export const getColumns = (openModal: (args: any) => void, Data: Attendance[], m
           return (
             <div>
               {dataForDate.map((item) => (
-                <div key={item.active}>
+                <div key={item.active} className="mb-4">
+                  {(item.type === 'Approved' || item.type === 'Unapproved') && <p>{item.type}</p>}
                   <p>{item.check_in}</p>
                   <p>{item.check_out}</p>
                   {item.check_in && (
@@ -138,10 +139,12 @@ export interface Attendance {
   day: string;
   staff: {
     name: string;
+    uuid: string;
     active: string;
   };
   check_in: string;
   check_out: string;
+  type: string;
   active: string;
 }
 export interface Staff {
@@ -166,19 +169,14 @@ export interface Staff {
     role: string;
   } | null;
   created_at: string;
-
-  
 }
-export interface DayOff{
-  active:string;
-  day_off:string;
-  staff_id:string;
+export interface DayOff {
+  active: string;
+  day_off: string;
+  staff_id: string;
   status: string;
 }
 export const STATUSES = {
   Approved: 'A',
   Unapproved: 'D',
-} as const; 
-
-
-
+} as const;

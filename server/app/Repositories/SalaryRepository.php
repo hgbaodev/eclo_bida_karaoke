@@ -56,11 +56,10 @@ class SalaryRepository implements SalaryRepositoryInterface
     }
     public function getSalaryByStaffAndDate($staff, $month, $year)
     {
-        $salary = Salary::where('staff_id', $staff)
+        $salary = Salary::with(['staff', 'staff.position']);
+        $salary->where('staff_id', $staff)
             ->where('month', $month)
-            ->where('year', $year)
-            ->first();
-
-        return $salary;
+            ->where('year', $year);
+        return $salary->first();
     }
 }
