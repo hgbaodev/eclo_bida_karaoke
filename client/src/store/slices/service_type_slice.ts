@@ -36,6 +36,18 @@ export const getServiceTypes = createAsyncThunk(
   },
 );
 
+export const getAllServiceTypes = createAsyncThunk('all_service_types', async () => {
+  const url = new URL('/api/v1/service_types', env.NEXT_API_URL);
+  url.searchParams.set('all', 'true');
+
+  try {
+    const response = await axiosInstance.get(url.href);
+    return response.data;
+  } catch (error: any) {
+    throw error;
+  }
+});
+
 export const createServiceType = createAsyncThunk(
   'service_types/createService_type',
   async (data: any, { rejectWithValue }) => {
@@ -141,6 +153,17 @@ const serviceTypeSlice = createSlice({
       })
       .addCase(updateServiceType.rejected, (state) => {
         state.isUpdateLoading = false;
+      })
+      .addCase(getAllServiceTypes.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAllServiceTypes.fulfilled, (state, action) => {
+        const result = action.payload.data;
+        state.isLoading = false;
+        state.data = result.result;
+      })
+      .addCase(getAllServiceTypes.rejected, (state) => {
+        state.isLoading = false;
       });
   },
 });

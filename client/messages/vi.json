@@ -247,6 +247,7 @@
     "delete": "Xóa",
     "delete_confirm_description": "Bạn có chắc muốn xóa bảng ghi này không?",
     "successful": "Thành công.",
-    "failed": "Thất bại."
+    "failed": "Thất bại.",
+    "service_type": "Loại dịch vụ"
   }
 }

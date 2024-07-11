@@ -59,7 +59,7 @@ export default function CreateServiceDeviceDetail({ serviceActive }: { serviceAc
         await dispatch(getServiceDevicesDetail({ page, pageSize, query, status, serviceActive }));
         toast.success('Device updated successfully');
       } else {
-        closeModal(); // Close the modal on failure
+        closeModal();
         const errorMessage = result.payload?.errors || 'Failed to create service device detail.';
         toast.error(errorMessage);
       }
