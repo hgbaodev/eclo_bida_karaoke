@@ -144,6 +144,28 @@
     "weekly": "Theo tuần",
     "yesterday_revenue": "Doanh thu hôm qua"
   },
+  "service_type": {
+    "action": "Thao tác",
+    "active": "Khả dụng",
+    "add": "Thêm",
+    "are_you_sure_to_delete": "Bạn có chắc chắn muốn xóa bản ghi này không",
+    "breadcrumb_analytics": "Phân tích",
+    "cancel": "Hủy",
+    "create": "Tạo",
+    "created_at": "Ngày tạo",
+    "deactive": "Không Khả dụng",
+    "delete": "Xoá",
+    "edit": "Chỉnh sửa",
+    "enter_name": "Nhập tên",
+    "failed": "Thất bại",
+    "full_name": "Họ và tên",
+    "name": "Tên",
+    "no": "STT",
+    "status": "Trạng thái",
+    "successful": "Thành công",
+    "title": "Loại dịch vụ",
+    "update": "Cập nhật"
+  },
   "table": {
     "rows_per_page": "Số dòng mỗi trang"
   },
@@ -197,5 +219,33 @@
     "under_maintenance_quantity": "Số lượng đang bảo trì",
     "update": "Cập nhật",
     "value": "Giá trị"
+  },
+  "price": {
+    "title": "Cấu hình giá",
+    "active": "Khả dụng",
+    "action": "Thao tác",
+    "deactive": "Không Khả dụng ",
+    "breadcrumb_analytics": "Phân tích",
+    "add": "Thêm",
+    "add_new_price": "Thêm giá mới",
+    "created_at": "Thời gian tạo",
+    "cancel": "Hủy",
+    "created_success": "Tạo giá thành công",
+    "create_price": "Tạo giá",
+    "enter_price_name": "Nhập tên giá",
+    "enter_price_per_hour": "Nhập giá mỗi giờ",
+    "name": "Tên",
+    "select_status": "Chọn trạng thái",
+    "update_price": "Cập nhật giá",
+    "updated_success": "Cập nhật giá thành công",
+    "no": "STT",
+    "price_per_hour": "Giá mỗi giờ",
+    "created": "Ngày tạo",
+    "status": "Trạng thái",
+    "edit_price": "Chỉnh sửa giá",
+    "delete": "Xóa",
+    "delete_confirm_description": "Bạn có chắc muốn xóa bảng ghi này không?",
+    "successful": "Thành công.",
+    "failed": "Thất bại."
   }
 }

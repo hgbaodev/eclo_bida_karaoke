@@ -145,6 +145,28 @@
     "weekly": "Weekly",
     "yesterday_revenue": "Yesterday Revenue"
   },
+  "service_type": {
+    "action": "Action",
+    "active": "Active",
+    "add": "Add",
+    "are_you_sure_to_delete": "Are you sure you want to delete this record?",
+    "breadcrumb_analytics": "Analytics",
+    "cancel": "Cancel",
+    "create": "Create",
+    "created_at": "Created At",
+    "deactive": "Deactive",
+    "delete": "Delete",
+    "edit": "Edit",
+    "enter_name": "Enter name",
+    "failed": "Failed",
+    "full_name": "Full Name",
+    "name": "Name",
+    "no": "No.",
+    "status": "Status",
+    "successful": "Successful",
+    "title": "Service type",
+    "update": "Update"
+  },
   "table": {
     "rows_per_page": "Rows per page"
   },
@@ -199,5 +221,22 @@
     "under_maintenance_quantity": "Under maintenance quantity",
     "update": "Update",
     "value": "Value"
+  },
+  "price": {
+    "title": "Price Configuration",
+    "breadcrumb_analytics": "Analytics",
+    "add": "Add",
+    "add_new_price": "Add New Price",
+    "cancel": "Cancel",
+    "created_success": "Price created successfully",
+    "create_price": "Create price",
+    "enter_price_name": "Enter price name",
+    "enter_price_per_hour": "Enter price per hour",
+    "name": "Name",
+    "price_per_hour": "Price (VND/h)",
+    "select_status": "Select status",
+    "status": "Status",
+    "update_price": "Update price",
+    "updated_success": "Price updated successfully"
   }
 }
