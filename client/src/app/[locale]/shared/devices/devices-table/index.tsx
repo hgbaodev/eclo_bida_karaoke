@@ -10,11 +10,14 @@ import { dispatch } from '@/store';
 import { useModal } from '../../modal-views/use-modal';
 import { getColumns } from './columns';
 import { getDevices, setPage, setPageSize } from '@/store/slices/device_slice';
+import { useTranslations } from 'next-intl';
+
 const FilterElement = dynamic(() => import('@/app/[locale]/shared/devices/devices-table/filter-element'), {
   ssr: false,
 });
 
 export default function DevicesTable() {
+  const t = useTranslations('devices'); // Đổi 'devices' thành tên file translation chứa các key tương ứng
   const { openModal } = useModal();
   const { data, isLoading, pageSize, page, totalRow, query, status } = useSelector((state: RootState) => state.device);
 
@@ -30,7 +33,7 @@ export default function DevicesTable() {
   }, [page, pageSize, query, status]);
 
   const columns = useMemo(
-    () => getColumns(openModal),
+    () => getColumns(openModal, t),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );

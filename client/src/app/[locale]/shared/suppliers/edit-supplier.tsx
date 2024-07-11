@@ -12,10 +12,12 @@ import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { EditSupplierInput, EditSupplierSchema } from '@/utils/validators/supplier/edit-supplier.schema';
-import { getStatusBadge } from './suppliers-table/columns';
+import { StatusBadge } from './suppliers-table/columns';
 import { statusOptions } from './type';
+import { useTranslations } from 'next-intl';
 
 export default function EditSupplier({ supplier, active }: { supplier: EditSupplierInput; active: string }) {
+  const t = useTranslations('suppliers');
   const { closeModal } = useModal();
   const [reset, setReset] = useState<any>(supplier);
   const [errors, setErrors] = useState<any>({});
@@ -32,7 +34,7 @@ export default function EditSupplier({ supplier, active }: { supplier: EditSuppl
       setErrors({});
       closeModal();
       await dispatch(getSuppliers({ page, pageSize, query, status }));
-      toast.success('Supplier update successfully');
+      toast.success(t('supplier_updated_successfully'));
     } else {
       setErrors(result?.payload?.errors);
     }
@@ -52,29 +54,29 @@ export default function EditSupplier({ supplier, active }: { supplier: EditSuppl
           <>
             <div className="col-span-full flex items-center justify-between">
               <Title as="h4" className="font-semibold">
-                Update supplier
+                {t('update_supplier')}
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
             <Input
-              label="Name"
-              placeholder="Enter supplier's name"
+              label={t('name')}
+              placeholder={t('enter_supplier_name')}
               {...register('name')}
               className="col-span-[1/2]"
               error={errors.name?.message}
             />
             <Input
-              label="Phone"
-              placeholder="Enter supplier's phone"
+              label={t('phone')}
+              placeholder={t('enter_supplier_phone')}
               className="col-span-full"
               {...register('phone')}
               error={errors.phone?.message}
             />
             <Input
-              label="Address"
-              placeholder="Enter supplier's address"
+              label={t('address')}
+              placeholder={t('enter_supplier_address')}
               className="col-span-full"
               {...register('address')}
               error={errors.address?.message}
@@ -88,13 +90,13 @@ export default function EditSupplier({ supplier, active }: { supplier: EditSuppl
                   value={value}
                   onChange={onChange}
                   name={name}
-                  label="Status"
-                  placeholder="Select a status"
+                  label={t('status')}
+                  placeholder={t('select_status')}
                   className="col-span-full"
                   error={errors?.status?.message}
                   getOptionValue={(option: { value: any }) => option.value}
-                  getOptionDisplayValue={(option: { value: any }) => getStatusBadge(option.value as any)}
-                  displayValue={(selected: any) => getStatusBadge(selected)}
+                  getOptionDisplayValue={(option: { value: any }) => StatusBadge(option.value as any, t)}
+                  displayValue={(selected: any) => StatusBadge(selected, t)}
                   dropdownClassName="!z-[1]"
                   inPortal={false}
                 />
@@ -103,10 +105,10 @@ export default function EditSupplier({ supplier, active }: { supplier: EditSuppl
 
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
-                Cancel
+                {t('cancel')}
               </Button>
               <Button type="submit" isLoading={isUpdateLoading} className="w-full @xl:w-auto">
-                Update User
+                {t('update_supplier_button')}
               </Button>
             </div>
           </>

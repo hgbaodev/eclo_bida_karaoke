@@ -11,21 +11,21 @@ import { getSuppliers, deleteSupplier } from '@/store/slices/supplier_slice';
 import toast from 'react-hot-toast';
 import EditSupplier from '../edit-supplier';
 
-export function getStatusBadge(status: Supplier['status']) {
+export function StatusBadge(status: Supplier['status'], t: any) {
   switch (status) {
     case STATUSES.InActive:
       return (
         <div className="flex items-center">
           <Badge color="danger" renderAsDot />
 
-          <Text className="ms-2 font-medium text-red-dark">InActive</Text>
+          <Text className="ms-2 font-medium text-red-dark">{t('inactive')}</Text>
         </div>
       );
     case STATUSES.Active:
       return (
         <div className="flex items-center">
           <Badge color="success" renderAsDot />
-          <Text className="ms-2 font-medium text-green-dark">Active</Text>
+          <Text className="ms-2 font-medium text-green-dark">{t('active')}</Text>
         </div>
       );
     default:
@@ -38,16 +38,16 @@ export function getStatusBadge(status: Supplier['status']) {
   }
 }
 
-export const getColumns = (openModal: (args: any) => void) => [
+export const getColumns = (openModal: (args: any) => void, t: any) => [
   {
-    title: <HeaderCell title="No." />,
+    title: <HeaderCell title={t('table_columns.no')} />,
     dataIndex: 'no.',
     key: 'no.',
     width: 50,
     render: (_: any, supplier: Supplier, index: number) => <div className="inline-flex ps-3">{index + 1}</div>,
   },
   {
-    title: <HeaderCell title="Name" />,
+    title: <HeaderCell title={t('table_columns.name')} />,
     dataIndex: 'fullName',
     key: 'fullName',
     width: 50,
@@ -56,25 +56,25 @@ export const getColumns = (openModal: (args: any) => void) => [
     ),
   },
   {
-    title: <HeaderCell title="Phone" />,
+    title: <HeaderCell title={t('table_columns.phone')} />,
     dataIndex: 'phone',
     key: 'phone',
     width: 50,
     render: (_: string, supplier: Supplier) => supplier.phone,
   },
   {
-    title: <HeaderCell title="Created" />,
+    title: <HeaderCell title={t('table_columns.created_at')} />,
     dataIndex: 'created_at',
     key: 'created_at',
     width: 50,
     render: (value: Date) => <DateCell date={value} />,
   },
   {
-    title: <HeaderCell title="Status" />,
+    title: <HeaderCell title={t('table_columns.status')} />,
     dataIndex: 'status',
     key: 'status',
     width: 10,
-    render: (status: Supplier['status']) => getStatusBadge(status),
+    render: (status: Supplier['status']) => StatusBadge(status, t),
   },
   {
     title: <></>,
@@ -83,7 +83,7 @@ export const getColumns = (openModal: (args: any) => void) => [
     width: 10,
     render: (_: string, supplier: Supplier) => (
       <div className="flex items-center justify-end gap-3 pe-3">
-        <Tooltip size="sm" content={'Edit Customer'} placement="top" color="invert">
+        <Tooltip size="sm" content={t('edit_supplier_tooltip')} placement="top" color="invert">
           <ActionIcon
             onClick={() => {
               const data = {
@@ -105,15 +105,15 @@ export const getColumns = (openModal: (args: any) => void) => [
           </ActionIcon>
         </Tooltip>
         <DeletePopover
-          title={`Delete this supplier`}
-          description={`Are you sure you want to delete this #${supplier.name} supplier?`}
+          title={t('delete_supplier_title')}
+          description={t('delete_supplier_description', { supplier_name: supplier.name })}
           onDelete={async () => {
-            const result = await dispatch(deleteSupplier(supplier.active)); // Remove the .then() block
+            const result = await dispatch(deleteSupplier(supplier.active));
             if (deleteSupplier.fulfilled.match(result)) {
               await dispatch(getSuppliers({ page: 1, pageSize: 5, query: '', status: '' }));
-              toast.success(`Supplier #${supplier.name} has been deleted successfully.`);
+              toast.success(t('supplier_deleted_success', { supplier_name: supplier.name }));
             } else {
-              toast.error(`Failed to delete supplier #${supplier.active}.`);
+              toast.error(t('supplier_delete_failed', { supplier_active: supplier.active }));
             }
           }}
         />

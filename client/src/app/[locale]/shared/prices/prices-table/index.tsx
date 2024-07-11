@@ -33,7 +33,7 @@ export default function PricesTable() {
     fetch();
   }, [page, pageSize, query, status]);
 
-  const columns = useMemo(() => getColumns(openModal, t), [t]);
+  const columns = useMemo(() => getColumns(openModal, t), [openModal, t]);
 
   const handleChangePageSize = (size: any) => {
     dispatch(setPageSize(size));

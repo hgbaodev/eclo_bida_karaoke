@@ -10,17 +10,18 @@ import DeletePopover from '@/app/[locale]/shared/delete-popover';
 import EditDevice from '../edit-device';
 import { getDevices, deleteDevice } from '@/store/slices/device_slice';
 import toast from 'react-hot-toast';
+import { useTranslations } from 'next-intl';
 
-export const getColumns = (openModal: (args: any) => void) => [
+export const getColumns = (openModal: (args: any) => void, t: any) => [
   {
-    title: <HeaderCell title="Id" />,
+    title: <HeaderCell title={t('id')} />,
     dataIndex: 'id',
     key: 'id',
     width: 50,
     render: (_: any, device: Device, index: number) => <div className="inline-flex ps-3">{index + 1}</div>,
   },
   {
-    title: <HeaderCell title="Image" />,
+    title: <HeaderCell title={t('image')} />,
     dataIndex: 'image',
     key: 'image',
     width: 100,
@@ -37,7 +38,7 @@ export const getColumns = (openModal: (args: any) => void) => [
     ),
   },
   {
-    title: <HeaderCell title="Name" />,
+    title: <HeaderCell title={t('name')} />,
     dataIndex: 'name',
     key: 'name',
     width: 10,
@@ -46,34 +47,34 @@ export const getColumns = (openModal: (args: any) => void) => [
     ),
   },
   {
-    title: <HeaderCell title="Description" />,
+    title: <HeaderCell title={t('description')} />,
     dataIndex: 'description',
     key: 'description',
     width: 10,
     render: (_: string, device: Device) => <Text className="text-[13px] text-gray-500">{device.description}</Text>,
   },
   {
-    title: <HeaderCell title="Value" />,
+    title: <HeaderCell title={t('value')} />,
     dataIndex: 'value',
     key: 'value',
     width: 10,
     render: (_: string, device: Device) => <Text className="text-[13px] text-gray-500">{device.value}</Text>,
   },
   {
-    title: <HeaderCell title="Status" />,
+    title: <HeaderCell title={t('status')} />,
     dataIndex: 'status',
     key: 'status',
     width: 10,
-    render: (status: Device['status']) => StatusBadge(status),
+    render: (status: Device['status']) => StatusBadge(status, t),
   },
   {
-    title: <HeaderCell title="Action" />,
+    title: <HeaderCell title={t('action')} />,
     dataIndex: 'action',
     key: 'action',
     width: 10,
     render: (_: string, device: Device) => (
       <div className="flex items-center justify-end gap-3 pe-3">
-        <Tooltip size="sm" content={'Edit this device'} placement="top" color="invert">
+        <Tooltip size="sm" content={t('edit_device')} placement="top" color="invert">
           <ActionIcon
             onClick={() => {
               const data = {
@@ -96,15 +97,15 @@ export const getColumns = (openModal: (args: any) => void) => [
           </ActionIcon>
         </Tooltip>
         <DeletePopover
-          title={`Delete this device`}
-          description={`Are you sure you want to delete this #${device.name} user?`}
+          title={t('delete_device', { deviceName: device.name })}
+          description={t('delete_device_confirm', { deviceName: device.name })}
           onDelete={async () => {
-            const result = await dispatch(deleteDevice(device.active)); // Remove the .then() block
+            const result = await dispatch(deleteDevice(device.active));
             if (deleteDevice.fulfilled.match(result)) {
               await dispatch(getDevices({ page: 1, pageSize: 5, query: '', status: '' }));
-              toast.success(`Device #${device.name} has been deleted successfully.`);
+              toast.success(t('delete_device_success', { deviceName: device.name }));
             } else {
-              toast.error(`Failed to delete the device #${device.active}.`);
+              toast.error(t('delete_device_failed', { deviceName: device.name }));
             }
           }}
         />
@@ -122,21 +123,20 @@ export interface Device {
   value: string;
 }
 
-export function StatusBadge(status: Device['status']) {
+export function StatusBadge(status: Device['status'], t: any) {
   switch (status) {
     case 'D':
       return (
         <div className="flex items-center">
           <Badge color="danger" renderAsDot />
-
-          <Text className="ms-2 font-medium text-red-dark">Off</Text>
+          <Text className="ms-2 font-medium text-red-dark">{t('status_off')}</Text>
         </div>
       );
     case 'A':
       return (
         <div className="flex items-center">
           <Badge color="success" renderAsDot />
-          <Text className="ms-2 font-medium text-green-dark">On</Text>
+          <Text className="ms-2 font-medium text-green-dark">{t('status_on')}</Text>
         </div>
       );
     default:
