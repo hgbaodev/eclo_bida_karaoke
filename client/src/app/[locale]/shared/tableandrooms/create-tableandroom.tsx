@@ -214,7 +214,7 @@ function getStatusBadge(status: string, t: any) {
         <div className="flex items-center">
           <Badge color="danger" renderAsDot />
 
-          <Text className="ms-2 font-medium text-red-dark">{t('inactive')} </Text>
+          <Text className="ms-2 font-medium text-red-dark">{t('deactive')} </Text>
         </div>
       );
     case 'A':

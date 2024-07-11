@@ -94,7 +94,8 @@
     "create_service_success": "Create service successfully",
     "create_service_error": "Create service errors",
     "active": "Active",
-    "inactive": "Inactive",
+    "deactive": "Deactive",
+    "action": "Action",
     "edit_service": "Edit service",
     "add_a_new_area": "Add a new area"
   },
@@ -152,5 +153,9 @@
     "cancel": "Cancel",
     "confirm": "Confirm",
     "payment_success": "Payment successful"
+  },
+  "revenue-expenditure": {
+    "title": "Revenue & Expenditure",
+    "breadcrumb_report": "Report"
   }
 }

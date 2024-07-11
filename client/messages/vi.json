@@ -88,10 +88,11 @@
     "price": "Giá",
     "select_price": "Chọn giá",
     "cancel": "Hủy",
+    "action": "Thao tác",
     "create_service": "Tạo dịch vụ",
     "create": "Tạo",
-    "active": "Không khả dụng",
-    "inactive": "Khả dụng ",
+    "active": "Khả dụng",
+    "deactive": "Không Khả dụng ",
     "edit_service": "Chỉnh sửa dịch vụ",
     "add_a_new_area": "Thêm một khu vực mới"
   },
@@ -148,5 +149,9 @@
     "cancel": "Hủy",
     "confirm": "Xác nhận",
     "payment_success": "Thanh toán thành công"
+  },
+  "revenue-expenditure": {
+    "title": "Thu & Chi",
+    "breadcrumb_report": "Báo cáo"
   }
 }

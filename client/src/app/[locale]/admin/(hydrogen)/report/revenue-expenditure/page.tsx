@@ -9,21 +9,22 @@ import { DatePicker } from '@/components/ui/datepicker';
 import dayjs from 'dayjs';
 import { dispatch } from '@/store';
 import { getRevenueEx } from '@/store/slices/statisticalSlice';
-
-const pageHeader = {
-  title: 'Revenue Expenditure',
-  breadcrumb: [
-    {
-      href: '#',
-      name: 'Report',
-    },
-    {
-      name: 'Revenue Expenditure',
-    },
-  ],
-};
+import { useTranslations } from 'next-intl';
 
 export default function BlankPage() {
+  const t = useTranslations('revenue-expenditure');
+  const pageHeader = {
+    title: t('title'),
+    breadcrumb: [
+      {
+        href: '#',
+        name: t('breadcrumb_report'),
+      },
+      {
+        name: t('title'),
+      },
+    ],
+  };
   const [drawerState, setDrawerState] = React.useState(false);
   const [starRangeDate, setStartRangeDate] = React.useState<Date | null>(null);
   const [endRangeDate, setEndRangeDate] = React.useState<Date | null>(null);
