@@ -21,14 +21,14 @@ export default function BlankPage() {
   const t = useTranslations('tables_rooms');
 
   const pageHeader = {
-    title: t('tables_rooms'),
+    title: t('title'),
     breadcrumb: [
       {
         href: '/admin',
-        name: t('analytics'),
+        name: t('breadcrumb_analytics'),
       },
       {
-        name: t('tables_rooms'),
+        name: t('title'),
       },
     ],
   };

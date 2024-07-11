@@ -7,37 +7,37 @@ import { FaEye } from 'react-icons/fa6';
 import { ActionIcon, Text, Tooltip } from 'rizzui';
 import PayOrder from '../../modal/pay_order';
 
-export const getColumns = (openModal: any) => [
+export const getColumns = (openModal: any, t: any) => [
   {
-    title: <HeaderCell title="Id" />,
+    title: <HeaderCell title={t('no')} />,
     dataIndex: 'id',
     key: 'id',
     width: 50,
     render: (_: any, invoice: Invoice, index: number) => <div className="inline-flex ps-3">{index + 1}</div>,
   },
   {
-    title: <HeaderCell title="Check In" />,
+    title: <HeaderCell title={t('check_in')} />,
     dataIndex: 'checkin_time',
     key: 'checkin_time',
     width: 50,
     render: (checkin_time: string) => <Text className="text-sm">{checkin_time}</Text>,
   },
   {
-    title: <HeaderCell title="Check Out" />,
+    title: <HeaderCell title={t('check_out')} />,
     dataIndex: 'checkout_time',
     key: 'checkout_time',
     width: 50,
     render: (checkout_time: string) => <Text className="text-sm">{checkout_time}</Text>,
   },
   {
-    title: <HeaderCell title="Service Name" />,
+    title: <HeaderCell title={t('service_name')} />,
     dataIndex: 'service_name',
     key: 'service_name',
     width: 50,
     render: (_: any, invoice: Invoice) => <div className="inline-flex ps-3">{invoice.service.name}</div>,
   },
   {
-    title: <HeaderCell title="Total Price" />,
+    title: <HeaderCell title={t('total_price')} />,
     dataIndex: 'total_price',
     key: 'total_price',
     width: 50,
@@ -48,7 +48,7 @@ export const getColumns = (openModal: any) => [
     ),
   },
   {
-    title: <HeaderCell title="Action" />,
+    title: <HeaderCell title={t('action')} />,
     dataIndex: 'action',
     key: 'action',
     width: 10,

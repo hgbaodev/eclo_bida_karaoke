@@ -17,127 +17,129 @@ import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
 import { getStatTime, setSelectedStats } from '@/store/slices/statisticalSlice';
 import { set } from 'lodash';
-
-const dailyData = [
-  {
-    label: 'Sat',
-    value: 9800,
-  },
-  {
-    label: 'Sun',
-    value: 8700,
-  },
-  {
-    label: 'Mon',
-    value: 5000,
-  },
-  {
-    label: 'Tue',
-    value: 4500,
-  },
-  {
-    label: 'Wed',
-    value: 2500,
-  },
-  {
-    label: 'Thu',
-    value: 8000,
-  },
-  {
-    label: 'Fri',
-    value: 8700,
-  },
-];
-
-const monthlyData = [
-  {
-    label: 'Jan',
-    value: 100,
-  },
-  {
-    label: 'Feb',
-    value: 1890,
-  },
-  {
-    label: 'Mar',
-    value: 4300,
-  },
-  {
-    label: 'Apr',
-    value: 5710,
-  },
-  {
-    label: 'May',
-    value: 5710,
-  },
-  {
-    label: 'Jun',
-    value: 5710,
-  },
-  {
-    label: 'Jan',
-    value: 5650,
-  },
-  {
-    label: 'Feb',
-    value: 1890,
-  },
-  {
-    label: 'Mar',
-    value: 4300,
-  },
-  {
-    label: 'Apr',
-    value: 5710,
-  },
-  {
-    label: 'May',
-    value: 5710,
-  },
-  {
-    label: 'Jun',
-    value: 5710,
-  },
-  {
-    label: 'Jan',
-    value: 5650,
-  },
-  {
-    label: 'Feb',
-    value: 1890,
-  },
-  {
-    label: 'Mar',
-    value: 4300,
-  },
-  {
-    label: 'Apr',
-    value: 5710,
-  },
-  {
-    label: 'May',
-    value: 5710,
-  },
-  {
-    label: 'Jun',
-    value: 10000,
-  },
-];
-
-const COLORS = ['#3962F7'];
-
-const viewOptions = [
-  {
-    label: 'Weekly',
-    value: 'week',
-  },
-  {
-    label: 'Monthly',
-    value: 'month',
-  },
-];
+import { useTranslations } from 'next-intl';
 
 export default function JobOverview({ className }: { className?: string }) {
+  const t = useTranslations('statistical');
+  const dailyData = [
+    {
+      label: t('month.sat'),
+      value: 9800,
+    },
+    {
+      label: t('month.sun'),
+      value: 8700,
+    },
+    {
+      label: t('month.mon'),
+      value: 5000,
+    },
+    {
+      label: t('month.tue'),
+      value: 4500,
+    },
+    {
+      label: t('month.wed'),
+      value: 2500,
+    },
+    {
+      label: t('month.thu'),
+      value: 8000,
+    },
+    {
+      label: t('month.fri'),
+      value: 8700,
+    },
+  ];
+
+  const monthlyData = [
+    {
+      label: 'Jan',
+      value: 100,
+    },
+    {
+      label: 'Feb',
+      value: 1890,
+    },
+    {
+      label: 'Mar',
+      value: 4300,
+    },
+    {
+      label: 'Apr',
+      value: 5710,
+    },
+    {
+      label: 'May',
+      value: 5710,
+    },
+    {
+      label: 'Jun',
+      value: 5710,
+    },
+    {
+      label: 'Jan',
+      value: 5650,
+    },
+    {
+      label: 'Feb',
+      value: 1890,
+    },
+    {
+      label: 'Mar',
+      value: 4300,
+    },
+    {
+      label: 'Apr',
+      value: 5710,
+    },
+    {
+      label: 'May',
+      value: 5710,
+    },
+    {
+      label: 'Jun',
+      value: 5710,
+    },
+    {
+      label: 'Jan',
+      value: 5650,
+    },
+    {
+      label: 'Feb',
+      value: 1890,
+    },
+    {
+      label: 'Mar',
+      value: 4300,
+    },
+    {
+      label: 'Apr',
+      value: 5710,
+    },
+    {
+      label: 'May',
+      value: 5710,
+    },
+    {
+      label: 'Jun',
+      value: 10000,
+    },
+  ];
+
+  const COLORS = ['#3962F7'];
+
+  const viewOptions = [
+    {
+      label: t('weekly'),
+      value: 'week',
+    },
+    {
+      label: t('monthly'),
+      value: 'month',
+    },
+  ];
+
   const { dataStats, selectedStats } = useSelector((state: RootState) => state.statistical);
   const [data, setData] = useState(dailyData);
   const isTab = useMedia('(max-width: 768px)', false);
@@ -152,7 +154,7 @@ export default function JobOverview({ className }: { className?: string }) {
 
   return (
     <WidgetCard
-      title="Order Overview"
+      title={t('overview')}
       className={cn('min-h-[28rem]', className)}
       titleClassName="font-normal text-sm sm:text-sm text-gray-500 mb-2.5 font-inter"
       action={

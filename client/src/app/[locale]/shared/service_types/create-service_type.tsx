@@ -16,9 +16,11 @@ import { createServiceType, getServiceTypes } from '@/store/slices/serviceTypeSl
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
-import { getStatusBadge } from './service_types-table/columns';
+import { StatusBadge } from './service_types-table/columns';
+import { useTranslations } from 'next-intl';
 
 export default function CreateSupplier() {
+  const t = useTranslations('service_type');
   const { closeModal } = useModal();
   const [reset, setReset] = useState({});
   const [errors, setErrors] = useState<any>({});
@@ -34,7 +36,7 @@ export default function CreateSupplier() {
       setErrors({});
       closeModal();
       await dispatch(getServiceTypes({ page, pageSize, query, status }));
-      toast.success('Service type created successfully');
+      toast.success(t('successful'));
     } else {
       setErrors(result?.payload?.errors);
     }
@@ -54,15 +56,15 @@ export default function CreateSupplier() {
           <>
             <div className="col-span-full flex items-center justify-between">
               <Title as="h4" className="font-semibold">
-                Add a new service type
+                {t('create')}
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
             <Input
-              label="Name"
-              placeholder="Enter service type name"
+              label={t('name')}
+              placeholder={t('enter_name')}
               {...register('name')}
               className="col-span-full"
               error={errors.name?.message}
@@ -77,13 +79,13 @@ export default function CreateSupplier() {
                   value={value}
                   onChange={onChange}
                   name={name}
-                  label="Status"
+                  label={t('status')}
                   placeholder="Select a status"
                   className="col-span-full"
                   error={errors?.status?.message}
                   getOptionValue={(option: { value: any }) => option.value}
-                  getOptionDisplayValue={(option: { value: any }) => getStatusBadge(option.value as any)}
-                  displayValue={(selected: any) => getStatusBadge(selected)}
+                  getOptionDisplayValue={(option: { value: any }) => StatusBadge(option.value as any, t)}
+                  displayValue={(selected: any) => StatusBadge(selected, t)}
                   dropdownClassName="!z-[1]"
                   inPortal={false}
                 />
@@ -91,10 +93,10 @@ export default function CreateSupplier() {
             />
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
-                Cancel
+                {t('cancel')}
               </Button>
               <Button type="submit" isLoading={isCreateLoading} className="w-full @xl:w-auto">
-                Create service type
+                {t('create')}
               </Button>
             </div>
           </>

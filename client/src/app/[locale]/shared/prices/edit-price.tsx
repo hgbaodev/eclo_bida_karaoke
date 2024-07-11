@@ -12,10 +12,12 @@ import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { EditPriceInput, EditPriceSchema } from '@/utils/validators/price/edit-price.schema';
-import { getStatusBadge } from './prices-table/columns';
+import { StatusBadge } from './prices-table/columns';
 import { statusOptions } from './type';
+import { useTranslations } from 'next-intl';
 
 export default function EditPrice({ price, active }: { price: EditPriceInput; active: string }) {
+  const t = useTranslations('price');
   const { closeModal } = useModal();
   const [reset, setReset] = useState<any>(price);
   const [errors, setErrors] = useState<any>({});
@@ -31,7 +33,7 @@ export default function EditPrice({ price, active }: { price: EditPriceInput; ac
       setErrors({});
       closeModal();
       await dispatch(getPrices({ page, pageSize, query, status }));
-      toast.success('Price update successfully');
+      toast.success(t('updated_success'));
     } else {
       setErrors(result?.payload?.errors);
     }
@@ -52,23 +54,23 @@ export default function EditPrice({ price, active }: { price: EditPriceInput; ac
           <>
             <div className="col-span-full flex items-center justify-between">
               <Title as="h4" className="font-semibold">
-                Update price
+                {t('update_price')}
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
             <Input
-              label="Name"
-              placeholder="Enter price name"
+              label={t('name')}
+              placeholder={t('enter_price_name')}
               {...register('name')}
               className="col-span-full"
               error={errors.name?.message}
             />
             <Input
-              label="Price (VND/h)"
+              label={t('price_per_hour')}
               type="number"
-              placeholder="Enter price per hour"
+              placeholder={t('enter_price_per_hour')}
               className="col-span-full"
               {...register('pricePerHour')}
               error={errors.pricePerHour?.message}
@@ -82,13 +84,13 @@ export default function EditPrice({ price, active }: { price: EditPriceInput; ac
                   value={value}
                   onChange={onChange}
                   name={name}
-                  label="Status"
-                  placeholder="Select a status"
+                  label={t('status')}
+                  placeholder={t('select_status')}
                   className="col-span-full"
                   error={errors?.status?.message}
                   getOptionValue={(option: { value: any }) => option.value}
-                  getOptionDisplayValue={(option: { value: any }) => getStatusBadge(option.value as any)}
-                  displayValue={(selected: any) => getStatusBadge(selected)}
+                  getOptionDisplayValue={(option: { value: any }) => StatusBadge(option.value as any, t)}
+                  displayValue={(selected: any) => StatusBadge(selected, t)}
                   dropdownClassName="!z-[1]"
                   inPortal={false}
                 />
@@ -97,10 +99,10 @@ export default function EditPrice({ price, active }: { price: EditPriceInput; ac
 
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
-                Cancel
+                {t('cancel')}
               </Button>
               <Button type="submit" isLoading={isUpdateLoading} className="w-full @xl:w-auto">
-                Update price
+                {t('update_price')}
               </Button>
             </div>
           </>
