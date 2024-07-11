@@ -10,12 +10,15 @@ import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
 import { getUsers, setPage, setPageSize } from '@/store/slices/userSlice';
 import { useModal } from '../../modal-views/use-modal';
+import { useTranslations } from 'next-intl'; // Import useTranslations hook
+
 const FilterElement = dynamic(() => import('@/app/[locale]/shared/users/users-table/filter-element'), {
   ssr: false,
 });
 
 export default function UsersTable() {
   const { openModal } = useModal();
+  const t = useTranslations('users'); // Tên domain translation là 'users' hoặc tên phù hợp
   const { data, isLoading, pageSize, page, totalRow, query, status, role } = useSelector(
     (state: RootState) => state.user,
   );
@@ -28,7 +31,7 @@ export default function UsersTable() {
   }, [page, pageSize, query, role, status]);
 
   const columns = useMemo(
-    () => getColumns(openModal),
+    () => getColumns(openModal, t),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );

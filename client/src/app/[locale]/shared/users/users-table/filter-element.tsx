@@ -12,12 +12,14 @@ import useDebounce from '@/hooks/use-debounce';
 import { statusOptions } from '../type';
 import { getStatusBadge } from './columns';
 import { getAllRoles } from '@/store/slices/roleSlice';
+import { useTranslations } from 'next-intl'; // Import useTranslations hook
 
 export default function FilterElement() {
   const { status, role, isFiltered, query } = useSelector((state: RootState) => state.user);
   const { listRoles } = useSelector((state: RootState) => state.role);
   const [searchTerm, setSearchTerm] = useState(query);
   const debounceSearchTerm = useDebounce(searchTerm, 1000);
+  const t = useTranslations('users'); // Initialize useTranslations hook
 
   useEffect(() => {
     dispatch(setQuery(debounceSearchTerm));
@@ -38,16 +40,16 @@ export default function FilterElement() {
           onChange={(value: any) => {
             dispatch(setStatus(value));
           }}
-          placeholder="Filter by Status"
+          placeholder={t('filter_by_status')}
           getOptionValue={(option: { value: any }) => option.value}
-          getOptionDisplayValue={(option: { value: any }) => getStatusBadge(option.value as any)}
-          displayValue={(selected: any) => getStatusBadge(selected)}
+          getOptionDisplayValue={(option: { value: any }) => getStatusBadge(option.value as any, t)}
+          displayValue={(selected: any) => getStatusBadge(selected, t)}
         />
         <StatusField
           options={listRoles}
           dropdownClassName="!z-10 w-48"
           value={role}
-          placeholder="Filter by Role"
+          placeholder={t('filter_by_role')}
           className=" @4xl:-auto -order-3 w-full min-w-[160px] @[25rem]:w-[calc(calc(100%_-_10px)_/_2)] @4xl:-order-4 @4xl:w-auto"
           getOptionValue={(option) => option.active}
           getOptionDisplayValue={(option) => option.name}
@@ -64,13 +66,13 @@ export default function FilterElement() {
             className="-order-1 h-8 w-full bg-gray-200/70 @4xl:-order-4 @4xl:w-auto"
             variant="flat"
           >
-            <PiTrashDuotone className="me-1.5 h-[17px] w-[17px]" /> Clear
+            <PiTrashDuotone className="me-1.5 h-[17px] w-[17px]" /> {t('clear')}
           </Button>
         )}
 
         <Input
           type="search"
-          placeholder="Search for users..."
+          placeholder={t('search_for_users')}
           value={searchTerm}
           onClear={() => setSearchTerm('')}
           onChange={(event) => setSearchTerm(event.target.value)}
