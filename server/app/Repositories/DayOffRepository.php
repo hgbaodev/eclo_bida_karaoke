@@ -63,4 +63,10 @@ class DayOffRepository implements DayOffRepositoryInterface
             ->whereYear("day_off", $year);
         return $day_off->count();
     }
+    public function getDayOffByStaffAndDay($staff_id, $day)
+    {
+        $day_off = DayOffs::where("staff_id", $staff_id);
+        $day_off->where("day_off", $day);
+        return $day_off->first();
+    }
 }

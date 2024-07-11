@@ -118,6 +118,9 @@ class AttendanceController extends Controller
         if (!$attendance) {
             return $this->sentErrorResponse("Staff don't have attendance today", 'error', 404);
         }
+        if ($attendance->type === "Approved" || $attendance->type === "Unapproved") {
+            return $this->sentErrorResponse("Staff already request day off", 'error', 404);
+        }
         $month = date('m', strtotime($attendance->day));
         $year = date('Y', strtotime($attendance->day));
         $salary = $this->salaryRepo->getSalaryByStaffAndDate($staff->id, $month, $year);
@@ -193,16 +196,10 @@ class AttendanceController extends Controller
                 'total' => $hours * $salary->staff->position->base_salary,
             ];
         } else {
-            if ($count >= 27) {
-                $updateSal = [
-                    'working_days' => $count,
-                    'total' => $salary->staff->position->base_salary,
-                ];
-            } else {
-                $updateSal = [
-                    'working_days' => $count,
-                ];
-            }
+            $updateSal = [
+                'working_days' => $count,
+                'total' => $salary->staff->position->base_salary,
+            ];
         }
         $this->salaryRepo->updateSalaryByActive($salary->active, $updateSal);
         return $this->sentSuccessResponse($updateAtt, "Attendance is updated successfully", 200);
