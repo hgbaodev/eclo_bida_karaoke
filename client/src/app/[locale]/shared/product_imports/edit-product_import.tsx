@@ -32,7 +32,7 @@ export default function EditProduct({
   const { closeModal } = useModal();
   const [reset, setReset] = useState<any>(product_import);
   const [errors, setErrors] = useState<any>({});
-  const { pageSize, page, query, isUpdateLoading } = useSelector((state: RootState) => state.product_import);
+  const { pageSize, page, query, isUpdateLoading,status } = useSelector((state: RootState) => state.product_import);
   //   const { listPositions } = useSelector((state: RootState) => state.position);
   const onSubmit: SubmitHandler<EditProduc_ImporttInput> = async (data) => {
     const result: any = await dispatch(updateProduct({ product_import: data, active }));
@@ -45,7 +45,7 @@ export default function EditProduct({
       });
       setErrors({});
       closeModal();
-      await dispatch(getProductImports({ page, pageSize, query }));
+      await dispatch(getProductImports({ page, pageSize, query,status }));
       toast.success('Import updated successfully');
     } else {
       setErrors(result?.payload?.errors);

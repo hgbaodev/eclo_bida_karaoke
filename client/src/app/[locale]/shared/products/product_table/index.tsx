@@ -18,13 +18,13 @@ const FilterElement = dynamic(() => import('@/app/[locale]/shared/products/produ
 
 export default function ProductsTable() {
   const { openModal } = useModal();
-  const { data, isLoading, pageSize, page, totalRow, query } = useSelector((state: RootState) => state.product);
+  const { data, isLoading, pageSize, page, totalRow, query ,type} = useSelector((state: RootState) => state.product);
   useEffect(() => {
     const fetch = async () => {
-      await dispatch(getProducts({ page, pageSize, query }));
+      await dispatch(getProducts({ page, pageSize, query ,type}));
     };
     fetch();
-  }, [page, pageSize, query]);
+  }, [page, pageSize, query,type]);
   useEffect(() => {
     dispatch(getProductType());
   }, []);

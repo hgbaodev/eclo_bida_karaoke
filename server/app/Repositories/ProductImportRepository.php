@@ -14,12 +14,16 @@ class ProductImportRepository implements ProductImportInterface
         $all = $request->input('all');
         $perPage = $request->input('perPage');
         $query = $request->input('query');
+        $status = $request->input('status');
         $id = $request->input('id');
         $product_import = ProductImport::query()->with("user_import");
         if ($query) {
-            $product_import->whereRaw("create_time LIKE '%$query%'")
-                ->whereRaw("recieve_time LIKE '%$query%'")
-                ->whereRaw("status LIKE '%$query%'");
+            $product_import->whereHas('user_import', function ($queryBuilder) use ($query) {
+                $queryBuilder->whereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", ["%$query%"]);
+            });
+        }
+        if ($status) {
+            $product_import->where('status', $status);
         }
         if ($id) {
             $product_import->where('id', $id);

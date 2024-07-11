@@ -17,6 +17,7 @@ class DayOffRepository implements DayOffRepositoryInterface
         $perPage = $request->input('perPage');
         $query = $request->input('query');
         $id = $request->input('id');
+        $type = $request->input('type');
         $offday = DayOffs::query()->with(['staff_dayoff']);
         if ($query) {
             $offday->whereRaw("name LIKE '%$query%'");
@@ -24,7 +25,9 @@ class DayOffRepository implements DayOffRepositoryInterface
         if ($id) {
             $offday->where('id', $id);
         }
-
+        if ($type) {
+            $offday->where('type', $type);
+        }
         if ($all && $all == true) {
             $offdays = $offday->get();
         } else {

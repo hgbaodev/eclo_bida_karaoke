@@ -21,7 +21,7 @@ export default function CreateStaff() {
   const { closeModal } = useModal();
   const [reset, setReset] = useState({});
   const [errors, setErrors] = useState<any>({});
-  const { pageSize, page, query, isCreateLoading } = useSelector((state: RootState) => state.product_import);
+  const { pageSize, page, query, isCreateLoading,status } = useSelector((state: RootState) => state.product_import);
   // const { listPositions } = useSelector((state: RootState) => state.position);
   const onSubmit: SubmitHandler<CreateProduc_ImporttInput> = async (data) => {
     const result: any = await dispatch(createProduct(data));
@@ -35,7 +35,7 @@ export default function CreateStaff() {
       });
       setErrors({});
       closeModal();
-      await dispatch(getProductImports({ page, pageSize, query }));
+      await dispatch(getProductImports({ page, pageSize, query,status }));
       toast.success('Import created successfully');
     } else {
       setErrors(result?.payload?.errors);

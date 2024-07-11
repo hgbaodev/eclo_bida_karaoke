@@ -21,11 +21,12 @@ const initialState: productType = {
 
 export const getProducts = createAsyncThunk(
   'products',
-  async ({ page, pageSize, query }: { page: number; pageSize: number; query: string }) => {
+  async ({ page, pageSize, query, type }: { page: number; pageSize: number; query: string ; type:string}) => {
     const url = new URL('/api/v1/products', env.NEXT_API_URL);
     url.searchParams.set('page', `${page}`);
     url.searchParams.set('perPage', `${pageSize}`);
     url.searchParams.set('query', query);
+    url.searchParams.set('product_type', `${type}`);
 
     try {
       const response = await axiosInstance.get(url.href);
@@ -104,10 +105,16 @@ const productSlices = createSlice({
       state.query = action.payload;
     },
     setReset: (state) => {
+      state.page = 1;
+      state.type = '';
       state.isFiltered = false;
     },
     setErrors: (state, action) => {
       state.errors = action.payload;
+    },
+    setType: (state, action) => {
+      state.type = action.payload;
+      state.isFiltered = true;
     },
   },
   extraReducers: (builder) => {
@@ -137,19 +144,6 @@ const productSlices = createSlice({
       .addCase(getSinghle_Product.rejected, (state) => {
         state.isLoading = false;
       })
-      // .addCase(getProductType.pending, (state) => {
-      //   state.isLoading = true;
-      // })
-      // .addCase(getProductType.fulfilled, (state, action) => {
-      //   state.isLoading = false;
-      //   const result = action.payload.data;
-      //   state.listProduct = result.result;
-      //   state.data = result.result;
-      //   state.totalRow = result.meta.total;
-      // })
-      // .addCase(getProductType.rejected, (state) => {
-      //   state.isLoading = false;
-      // })
       .addCase(createProduct.pending, (state: productType) => {
         state.isCreateLoading = true;
       })
@@ -171,6 +165,6 @@ const productSlices = createSlice({
   },
 });
 
-export const { setPage, setPageSize, setReset, setQuery, setErrors } = productSlices.actions;
+export const { setPage, setPageSize, setReset, setQuery, setErrors,setType } = productSlices.actions;
 
 export default productSlices.reducer;

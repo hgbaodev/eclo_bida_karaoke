@@ -100,7 +100,7 @@ export const getColumns = (openModal: (args: any) => void) => [
           onDelete={async () => {
             const result = await dispatch(deleteProduct(product.active)); // Remove the .then() block
             if (deleteProduct.fulfilled.match(result)) {
-              await dispatch(getProducts({ page: 1, pageSize: 5, query: '' }));
+              await dispatch(getProducts({ page: 1, pageSize: 5, query: '',type:'' }));
               toast.success(`Product #${product.name} has been deleted successfully.`);
             } else {
               toast.error(`Failed to delete staff #${product.active}.`);

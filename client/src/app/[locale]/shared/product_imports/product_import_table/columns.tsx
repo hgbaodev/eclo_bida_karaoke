@@ -195,7 +195,7 @@ export const getColumns = (openModal: (args: any) => void) => [
           onDelete={async () => {
             const result = await dispatch(deleteProduct(product_import.active)); // Remove the .then() block
             if (deleteProduct.fulfilled.match(result)) {
-              await dispatch(getProductImports({ page: 1, pageSize: 5, query: '' }));
+              await dispatch(getProductImports({ page: 1, pageSize: 5, query: '',status:'' }));
               toast.success(`Import  has been deleted successfully.`);
             } else {
               toast.error(`Failed to delete import #${product_import.active}.`);

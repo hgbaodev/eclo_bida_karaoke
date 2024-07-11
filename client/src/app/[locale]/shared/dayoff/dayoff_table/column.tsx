@@ -103,7 +103,7 @@ export const getColumns = (openModal: (args: any) => void) => [
           onDelete={async () => {
             const result = await dispatch(deleteDayoff(dayoff.active)); // Remove the .then() block
             if (deleteDayoff.fulfilled.match(result)) {
-              await dispatch(getDayoffs({ page: 1, pageSize: 5, query: '' }));
+              await dispatch(getDayoffs({ page: 1, pageSize: 5, query: '' ,type:'' }));
               toast.success(`Day off  has been deleted successfully.`);
             } else {
               toast.error(`Failed to delete import #${dayoff.active}.`);
