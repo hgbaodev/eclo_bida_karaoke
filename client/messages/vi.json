@@ -248,6 +248,8 @@
     "delete_confirm_description": "Bạn có chắc muốn xóa bảng ghi này không?",
     "successful": "Thành công.",
     "failed": "Thất bại.",
-    "service_type": "Loại dịch vụ"
+    "service_type": "Loại dịch vụ",
+    "filter_by_status": "Lọc theo tình trạng",
+    "search": "Tìm kiếm"
   }
 }

@@ -33,7 +33,7 @@ export default function FilterElement() {
           onChange={(value: any) => {
             dispatch(setStatus(value));
           }}
-          placeholder="Filter by Status"
+          placeholder={t('filter_by_status')}
           getOptionValue={(option: { value: any }) => option.value}
           getOptionDisplayValue={(option: { value: any }) => StatusBadge(option.value as any, t)}
           displayValue={(selected: any) => StatusBadge(selected, t)}
@@ -52,7 +52,7 @@ export default function FilterElement() {
 
         <Input
           type="search"
-          placeholder="Search for prices..."
+          placeholder={t('search')}
           value={searchTerm}
           onClear={() => setSearchTerm('')}
           onChange={(event) => setSearchTerm(event.target.value)}
