@@ -95,7 +95,7 @@ export const getColumns = (openModal: any, t: any) => [
                 service_type_active: service.service_type.active,
               };
               openModal({
-                view: <EditTableAndRoom service={data} active={service.active} />,
+                view: <EditTableAndRoom t={t} service={data} active={service.active} />,
               });
             }}
           >

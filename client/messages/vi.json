@@ -89,8 +89,11 @@
     "select_price": "Chọn giá",
     "cancel": "Hủy",
     "create_service": "Tạo dịch vụ",
+    "create": "Tạo",
     "active": "Không khả dụng",
-    "inactive": "Khả dụng "
+    "inactive": "Khả dụng ",
+    "edit_service": "Chỉnh sửa dịch vụ",
+    "add_a_new_area": "Thêm một khu vực mới"
   },
   "kitchen_notifications": {
     "title": "Thông báo từ bếp",

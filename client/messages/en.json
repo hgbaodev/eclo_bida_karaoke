@@ -90,10 +90,13 @@
     "select_price": "Select a price",
     "cancel": "Cancel",
     "create_service": "Create Service",
+    "create": "Create",
     "create_service_success": "Create service successfully",
     "create_service_error": "Create service errors",
     "active": "Active",
-    "inactive": "Inactive"
+    "inactive": "Inactive",
+    "edit_service": "Edit service",
+    "add_a_new_area": "Add a new area"
   },
   "kitchen_notifications": {
     "title": "Kitchen notifications",

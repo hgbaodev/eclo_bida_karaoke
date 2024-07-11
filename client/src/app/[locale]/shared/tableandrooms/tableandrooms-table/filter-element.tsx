@@ -15,8 +15,11 @@ import EditArea from '../edit-area';
 import { setQuery, setSelectedArea } from '@/store/slices/serviceSlice';
 import { PiMagnifyingGlassBold } from 'react-icons/pi';
 import useDebounce from '@/hooks/use-debounce';
+import { useTranslations } from 'next-intl';
 
 export default function FilterElement() {
+  const t = useTranslations('tables_rooms');
+
   const { openModal } = useModal();
   const { data } = useSelector((state: RootState) => state.area);
   const { selectedArea, query } = useSelector((state: RootState) => state.service);
@@ -39,7 +42,7 @@ export default function FilterElement() {
           options={[
             {
               active: '',
-              name: 'All',
+              name: t('all'),
             },
             ...data,
           ]}
@@ -48,14 +51,14 @@ export default function FilterElement() {
           onChange={(active: any) => {
             dispatch(setSelectedArea(active));
           }}
-          placeholder="All areas"
+          placeholder={t('all_areas')}
           getOptionValue={(option) => option.active}
           getOptionDisplayValue={(option) => option.name}
           displayValue={(selected: string) =>
             [
               {
                 active: '',
-                name: 'All',
+                name: t('all'),
               },
               ...data,
             ].find((area) => area.active === selected)?.name || selected
@@ -86,12 +89,12 @@ export default function FilterElement() {
             className="-order-9 @[25rem]:w-[calc(calc(100%_-_10px)_/_2)] w-full bg-gray-200/70 @4xl:-order-5 @4xl:w-auto"
             variant="flat"
           >
-            <IoAddCircleOutline className="me-1.5 h-[17px] w-[17px]" /> Add
+            <IoAddCircleOutline className="me-1.5 h-[17px] w-[17px]" /> {t('add')}
           </Button>
         )}
         <Input
           type="search"
-          placeholder="Search for table/rooms..."
+          placeholder={t('search')}
           value={searchTerm}
           onClear={() => setSearchTerm('')}
           onChange={(event) => setSearchTerm(event.target.value)}
