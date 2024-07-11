@@ -152,6 +152,19 @@
   },
   "revenue-expenditure": {
     "title": "Thu & Chi",
-    "breadcrumb_report": "Báo cáo"
+    "breadcrumb_report": "Báo cáo",
+    "add_condition": "Thêm điều kiện",
+    "choose_date": "Chọn ngày",
+    "filter": "Bộ lọc",
+    "date_time": "Ngày giờ",
+    "staff": "Nhân viên",
+    "revenue_and_expenditure": "Doanh thu & Chi phí",
+    "revenue": "Doanh thu",
+    "expenditure": "Chi phí",
+    "remaining": "Số dư còn lại",
+    "beginning_balance": "Số dư đầu kỳ",
+    "total_balance": "Tổng số dư",
+    "ending_balance": "Số dư cuối kỳ",
+    "apply": "Lọc"
   }
 }

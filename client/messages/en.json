@@ -156,6 +156,19 @@
   },
   "revenue-expenditure": {
     "title": "Revenue & Expenditure",
-    "breadcrumb_report": "Report"
+    "breadcrumb_report": "Report",
+    "add_condition": "Add condition",
+    "choose_date": "Choose date",
+    "filter": "Filter",
+    "date_time": "Date time",
+    "staff": "Staff",
+    "revenue_and_expenditure": "Revenue & Expenditure",
+    "revenue": "Revenue",
+    "expenditure": "Expenditure",
+    "remaining": "Remaining",
+    "beginning_balance": "Beginning balance",
+    "total_balance": "Total balance",
+    "ending_balance": "Ending balance",
+    "apply": "Apply"
   }
 }

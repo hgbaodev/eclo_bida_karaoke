@@ -1,8 +1,10 @@
 import { RootState } from '@/store/types';
 import { useSelector } from 'react-redux';
 import { Loader } from 'rizzui';
+import { useTranslations } from 'next-intl';
 
 const TableRevenueEx = () => {
+  const t = useTranslations('revenue-expenditure');
   const { revenueEx, isRevenueExLoading } = useSelector((state: RootState) => state.statistical);
   return (
     <div className="relative overflow-x-auto">
@@ -18,24 +20,24 @@ const TableRevenueEx = () => {
                 #
               </th>
               <th rowSpan={2} scope="col" className="px-6 py-3 text-center text-nowrap">
-                Date time
+                {t('date_time')}
               </th>
               <th rowSpan={2} scope="col" className="px-6 py-3 text-center text-nowrap">
-                Staff
+                {t('staff')}
               </th>
               <th colSpan={3} scope="col" className="px-6 py-3 text-center text-nowrap">
-                Revenue and expenditure
+                {t('revenue_and_expenditure')}
               </th>
             </tr>
             <tr>
               <th rowSpan={2} scope="col" className="px-6 py-3 text-center text-nowrap text-red-400">
-                Revenue
+                {t('revenue')}
               </th>
               <th rowSpan={2} scope="col" className="px-6 py-3 text-center text-nowrap text-green-400">
-                Expenditure
+                {t('expenditure')}
               </th>
               <th rowSpan={2} scope="col" className="px-6 py-3 text-center text-nowrap text-slate-500">
-                Remaining
+                {t('remaining')}
               </th>
             </tr>
           </thead>
@@ -43,7 +45,7 @@ const TableRevenueEx = () => {
             <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
               <td className="px-6 py-4 text-center"></td>
               <td className="px-6 py-4 text-center"></td>
-              <td className="px-6 py-4 text-center text-red-400">Beginning balance</td>
+              <td className="px-6 py-4 text-center text-red-400">{t('beginning_balance')}</td>
               <td className="px-6 py-4 text-center"></td>
               <td className="px-6 py-4 text-center"></td>
               <td className="px-6 py-4 text-center text-red-400">{revenueEx?.beginTotal}</td>
@@ -63,7 +65,7 @@ const TableRevenueEx = () => {
             <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
               <td className="px-6 py-4 text-center"></td>
               <td className="px-6 py-4 text-center"></td>
-              <td className="px-6 py-4 text-center text-green-400 text-bold">Total balance</td>
+              <td className="px-6 py-4 text-center text-green-400 text-bold">{t('total_balance')}</td>
               <td className="px-6 py-4 text-center">
                 {revenueEx?.listRevenueEx.reduce((acc, item) => acc + item.revenue, 0)}
               </td>
@@ -77,7 +79,7 @@ const TableRevenueEx = () => {
             <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
               <td className="px-6 py-4 text-center"></td>
               <td className="px-6 py-4 text-center"></td>
-              <td className="px-6 py-4 text-center text-green-400 text-bold">Endding balance</td>
+              <td className="px-6 py-4 text-center text-green-400 text-bold">{t('ending_balance')}</td>
               <td className="px-6 py-4 text-center"></td>
               <td className="px-6 py-4 text-center"></td>
               <td className="px-6 py-4 text-center text-green-400">
