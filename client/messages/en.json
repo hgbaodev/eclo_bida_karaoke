@@ -32,6 +32,9 @@
     "statistical": "Statistical",
     "revenue_and_expenditure": "Revenue and Expenditure"
   },
+  "table": {
+    "rows_per_page": "Rows per page"
+  },
   "kitchen_orders": {
     "title": "Order Requests",
     "analytics": "Analytics",
@@ -84,5 +87,34 @@
     "device_list": "Device list",
     "update": "Update",
     "pay": "Pay"
+  },
+  "invoices": {
+    "title": "Invoices",
+    "breadcrumb_analytics": "Analytics",
+    "no": "No.",
+    "check_in": "Check in",
+    "check_out": "Check out",
+    "service_name": "Service name",
+    "total_price": "Total price",
+    "action": "Action",
+    "order_info": "Order information",
+    "company_name": "BILLIARDS CUP NEW ECLO",
+    "country": "Vietnam",
+    "order_table": "ORDER",
+    "time_start": "Start time",
+    "time_end": "End time",
+    "time_used": "Time used",
+    "image": "Image",
+    "quantity": "Quantity",
+    "hour": "Hour",
+    "name": "Name",
+    "price": "Price",
+    "total_devices": "Total devices",
+    "total_products": "Total products",
+    "total_service": "Total services",
+    "total": "Total",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "payment_success": "Payment successful"
   }
 }

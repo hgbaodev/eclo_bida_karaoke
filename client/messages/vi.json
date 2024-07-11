@@ -32,6 +32,9 @@
     "statistical": "Thống kê",
     "revenue_and_expenditure": "Doanh thu và Chi phí"
   },
+  "table": {
+    "rows_per_page": "Số dòng mỗi trang"
+  },
   "kitchen_orders": {
     "title": "Yêu cầu đặt hàng",
     "analytics": "Phân tích",
@@ -53,7 +56,7 @@
     "name": "Tên",
     "quantity": "Số lượng",
     "status": "Trạng thái",
-    "action": "Hành động"
+    "action": "Thao tác"
   },
   "tables_rooms": {
     "analytics": "Phân tích",
@@ -83,5 +86,34 @@
     "device_list": "Danh sách thiết bị",
     "update": "Cập nhật",
     "pay": "Thanh toán"
+  },
+  "invoices": {
+    "title": "Hóa đơn",
+    "breadcrumb_analytics": "Phân tích",
+    "no": "STT",
+    "check_in": "Giờ vào",
+    "check_out": "Giờ ra",
+    "service_name": "Tên dịch vụ",
+    "total_price": "Tổng cộng",
+    "action": "Thao tác",
+    "order_info": "Thông tin đơn hàng",
+    "company_name": "BILLIARDS CUP NEW ECLO",
+    "country": "Việt Nam",
+    "order_table": "ĐƠN HÀNG",
+    "time_start": "Giờ bắt đầu",
+    "time_end": "Giờ kết thúc",
+    "time_used": "Thời gian sử dụng",
+    "image": "Ảnh",
+    "quantity": "Số lượng",
+    "hour": "Giờ",
+    "name": "Tên",
+    "price": "Giá",
+    "total_devices": "Tổng thiết bị",
+    "total_products": "Tổng sản phẩm",
+    "total_service": "Tổng dịch vụ",
+    "total": "Tổng",
+    "cancel": "Hủy",
+    "confirm": "Xác nhận",
+    "payment_success": "Thanh toán thành công"
   }
 }
