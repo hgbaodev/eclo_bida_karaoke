@@ -9,7 +9,7 @@ import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
 import { useModal } from '../../modal-views/use-modal';
 import { getColumns } from './columns';
-import { getDevices, setPage, setPageSize } from '@/store/slices/deviceSlice';
+import { getDevices, setPage, setPageSize } from '@/store/slices/device_slice';
 const FilterElement = dynamic(() => import('@/app/[locale]/shared/devices/devices-table/filter-element'), {
   ssr: false,
 });

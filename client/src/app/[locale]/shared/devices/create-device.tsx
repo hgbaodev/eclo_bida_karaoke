@@ -2,16 +2,18 @@
 
 import { useState } from 'react';
 import { PiXBold } from 'react-icons/pi';
-import { SubmitHandler } from 'react-hook-form';
+import { SubmitHandler, Controller } from 'react-hook-form';
 import { Form } from '@/components/ui/form';
-import { Input, Button, ActionIcon, Title, Textarea, FileInput } from 'rizzui';
+import { Input, Button, ActionIcon, Title, Select, Textarea, FileInput } from 'rizzui';
 import { useModal } from '@/app/[locale]/shared/modal-views/use-modal';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { CreateDeviceInput, createDeviceSchema } from '@/utils/validators/device/create-device.schema';
 import { dispatch } from '@/store';
-import { createDevice, getDevices } from '@/store/slices/deviceSlice';
+import { createDevice, getDevices } from '@/store/slices/device_slice';
 import toast from 'react-hot-toast';
+import { StatusBadge } from './devices-table/columns';
+import { statusOptions } from './type';
 
 export default function CreateDevice() {
   const [reset, setReset] = useState({});
@@ -28,7 +30,6 @@ export default function CreateDevice() {
       formData.append('name', data.name.toString());
       formData.append('status', data.status.toString());
       formData.append('value', data.value.toString());
-      formData.append('_method', 'PUT');
       formData.append('description', data.description.toString());
 
       try {
@@ -105,6 +106,27 @@ export default function CreateDevice() {
               {...register('description')}
               className="col-span-full"
               error={errors.description?.message}
+            />
+            <Controller
+              name="status"
+              control={control}
+              render={({ field: { name, onChange, value } }) => (
+                <Select
+                  options={statusOptions}
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                  label="Status"
+                  placeholder="Select a status"
+                  className="col-span-full"
+                  error={errors?.status?.message}
+                  getOptionValue={(option: { value: any }) => option.value}
+                  getOptionDisplayValue={(option: { value: any }) => StatusBadge(option.value as any)}
+                  displayValue={(selected: any) => StatusBadge(selected)}
+                  dropdownClassName="!z-[1]"
+                  inPortal={false}
+                />
+              )}
             />
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">

@@ -107,7 +107,8 @@
     "product_list": "Danh sách sản phẩm",
     "service": "Dịch vụ",
     "title": "Đặt hàng",
-    "update": "Cập nhật"
+    "update": "Cập nhật",
+    "an_order_has_to_be_delivered": "Có đơn hàng cần giao"
   },
   "revenue-expenditure": {
     "add_condition": "Thêm điều kiện",

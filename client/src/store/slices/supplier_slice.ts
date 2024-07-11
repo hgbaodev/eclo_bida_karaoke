@@ -1,11 +1,11 @@
 // userSlice.js
 import axiosInstance from '@/api/axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { supplierType } from '../types';
+import { supplier_type } from '../types';
 import { EditSupplierInput } from '@/utils/validators/supplier/edit-supplier.schema';
 import env from '@/env';
 
-const initialState: supplierType = {
+const initialState: supplier_type = {
   data: [],
   isLoading: false,
   isFiltered: false,
@@ -118,7 +118,7 @@ const supplierSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getSuppliers.pending, (state: supplierType) => {
+      .addCase(getSuppliers.pending, (state: supplier_type) => {
         state.isLoading = true;
       })
       .addCase(getSuppliers.fulfilled, (state, action) => {
@@ -143,7 +143,7 @@ const supplierSlice = createSlice({
       .addCase(getSinghle_Supplier.rejected, (state) => {
         state.isLoading = false;
       })
-      .addCase(createSupplier.pending, (state: supplierType) => {
+      .addCase(createSupplier.pending, (state: supplier_type) => {
         state.isCreateLoading = true;
       })
       .addCase(createSupplier.fulfilled, (state, action) => {
@@ -152,7 +152,7 @@ const supplierSlice = createSlice({
       .addCase(createSupplier.rejected, (state) => {
         state.isCreateLoading = false;
       })
-      .addCase(updateSupplier.pending, (state: supplierType) => {
+      .addCase(updateSupplier.pending, (state: supplier_type) => {
         state.isUpdateLoading = true;
       })
       .addCase(updateSupplier.fulfilled, (state, action) => {

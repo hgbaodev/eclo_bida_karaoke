@@ -7,7 +7,7 @@ import ControlledTable from '@/components/controlled-table';
 import { getColumns } from '@/app/[locale]/shared/tableandrooms/service-devices-table/columns';
 import { RootState } from '@/store/types';
 import { dispatch, useSelector } from '@/store';
-import { getServiceDevicesDetail, setPage, setPageSize } from '@/store/slices/service_device_detailSlice';
+import { getServiceDevicesDetail, setPage, setPageSize } from '@/store/slices/service_device_detail_slice';
 import { useModal } from '../../modal-views/use-modal';
 import ModalButton from '@/app/[locale]/shared/modal-button';
 import CreateServiceDeviceDetail from '@/app/[locale]/shared/tableandrooms/create-service-device-detail';

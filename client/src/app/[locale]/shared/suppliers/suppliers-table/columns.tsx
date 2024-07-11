@@ -7,7 +7,7 @@ import AvatarCard from '@/components/ui/avatar-card';
 import DateCell from '@/components/ui/date-cell';
 import DeletePopover from '@/app/[locale]/shared/delete-popover';
 import { dispatch } from '@/store';
-import { getSuppliers, deleteSupplier } from '@/store/slices/supplierSlice';
+import { getSuppliers, deleteSupplier } from '@/store/slices/supplier_slice';
 import toast from 'react-hot-toast';
 import EditSupplier from '../edit-supplier';
 

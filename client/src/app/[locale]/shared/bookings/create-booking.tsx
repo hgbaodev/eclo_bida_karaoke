@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { CreateDeviceInput, createDeviceSchema } from '@/utils/validators/device/create-device.schema';
 import { dispatch } from '@/store';
-import { createDevice, getDevices } from '@/store/slices/deviceSlice';
+import { createDevice, getDevices } from '@/store/slices/device_slice';
 import toast from 'react-hot-toast';
 
 export default function CreateBooking() {

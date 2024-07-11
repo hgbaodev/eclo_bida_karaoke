@@ -1,12 +1,12 @@
 import axiosInstance from '@/api/axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { service_device_detailType } from '../types';
+import { service_device_detail_type } from '../types';
 import { EditServiceDeviceDetailInput } from '@/utils/validators/service-device-detail/edit-service-device-detail.schema';
 import { CreateServiceDeviceDetailInput } from '@/utils/validators/service-device-detail/create-service-device-detail.schema';
 
 import env from '@/env';
 
-const initialState: service_device_detailType = {
+const initialState: service_device_detail_type = {
   data: [],
   isLoading: false,
   isFiltered: false,
@@ -127,7 +127,7 @@ const serviceDeviceSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getServiceDevicesDetail.pending, (state: service_device_detailType) => {
+      .addCase(getServiceDevicesDetail.pending, (state: service_device_detail_type) => {
         state.isLoading = true;
       })
       .addCase(getServiceDevicesDetail.fulfilled, (state, action) => {
@@ -139,7 +139,7 @@ const serviceDeviceSlice = createSlice({
       .addCase(getServiceDevicesDetail.rejected, (state) => {
         state.isLoading = false;
       })
-      .addCase(updateServiceDeviceDetail.pending, (state: service_device_detailType) => {
+      .addCase(updateServiceDeviceDetail.pending, (state: service_device_detail_type) => {
         state.isLoading = true;
       })
       .addCase(updateServiceDeviceDetail.fulfilled, (state, action) => {
@@ -148,7 +148,7 @@ const serviceDeviceSlice = createSlice({
       .addCase(updateServiceDeviceDetail.rejected, (state) => {
         state.isLoading = false;
       })
-      .addCase(createServiceDeviceDetail.pending, (state: service_device_detailType) => {
+      .addCase(createServiceDeviceDetail.pending, (state: service_device_detail_type) => {
         state.isLoading = true;
       })
       .addCase(createServiceDeviceDetail.fulfilled, (state, action) => {
@@ -157,7 +157,7 @@ const serviceDeviceSlice = createSlice({
       .addCase(createServiceDeviceDetail.rejected, (state) => {
         state.isLoading = false;
       })
-      .addCase(deleteServiceDeviceDetail.pending, (state: service_device_detailType) => {
+      .addCase(deleteServiceDeviceDetail.pending, (state: service_device_detail_type) => {
         state.isLoading = true;
       })
       .addCase(deleteServiceDeviceDetail.fulfilled, (state, action) => {

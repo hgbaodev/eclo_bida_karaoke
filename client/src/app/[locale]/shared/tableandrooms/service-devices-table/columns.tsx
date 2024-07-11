@@ -5,7 +5,7 @@ import { Tooltip, ActionIcon } from 'rizzui';
 import EditServiceDeviceDetail from '../edit-service-device-detail';
 import DeletePopover from '@/app/[locale]/shared/delete-popover';
 import PencilIcon from '@/components/icons/pencil';
-import { getServiceDevicesDetail, deleteServiceDeviceDetail } from '@/store/slices/service_device_detailSlice';
+import { getServiceDevicesDetail, deleteServiceDeviceDetail } from '@/store/slices/service_device_detail_slice';
 import toast from 'react-hot-toast';
 import { dispatch } from '@/store';
 import StatusBadge from './status-badge';

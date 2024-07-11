@@ -13,7 +13,7 @@ import {
   markKitchenOrderAsWaiting,
   markKitchenOrderAsDone,
   markOrderStatus,
-} from '@/store/slices/kitchen_orderSlice';
+} from '@/store/slices/kitchen_order_slice';
 
 export const STATUSES = {
   Received: 'R',

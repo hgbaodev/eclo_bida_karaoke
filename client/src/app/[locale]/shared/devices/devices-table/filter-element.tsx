@@ -4,13 +4,13 @@ import { PiTrashDuotone, PiMagnifyingGlassBold } from 'react-icons/pi';
 import StatusField from '@/components/controlled-table/status-field';
 import { Button, Input } from 'rizzui';
 import { dispatch } from '@/store';
-import { setQuery, setReset, setStatus } from '@/store/slices/deviceSlice';
+import { setQuery, setReset, setStatus } from '@/store/slices/device_slice';
 import { RootState } from '@/store/types';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import useDebounce from '@/hooks/use-debounce';
 import { statusOptions } from '../type';
-import { getStatusBadge } from './columns';
+import { StatusBadge } from './columns';
 
 export default function FilterElement() {
   const { status, isFiltered, query } = useSelector((state: RootState) => state.device);
@@ -33,8 +33,8 @@ export default function FilterElement() {
           }}
           placeholder="Filter by Status"
           getOptionValue={(option: { value: any }) => option.value}
-          getOptionDisplayValue={(option: { value: any }) => getStatusBadge(option.value as any)}
-          displayValue={(selected: any) => getStatusBadge(selected)}
+          getOptionDisplayValue={(option: { value: any }) => StatusBadge(option.value as any)}
+          displayValue={(selected: any) => StatusBadge(selected)}
         />
 
         {isFiltered && (

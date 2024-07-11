@@ -8,7 +8,7 @@ import DateCell from '@/components/ui/date-cell';
 
 import DeletePopover from '@/app/[locale]/shared/delete-popover';
 import { dispatch } from '@/store';
-import { deleteServiceType, getServiceTypes } from '@/store/slices/serviceTypeSlice';
+import { deleteServiceType, getServiceTypes } from '@/store/slices/service_type_slice';
 import toast from 'react-hot-toast';
 import EditServiceType from '../edit-service_type';
 // import EditSupplier from '../edit-supplier';
@@ -20,14 +20,14 @@ export function StatusBadge(status: ServiceType['status'], t: any) {
         <div className="flex items-center">
           <Badge color="danger" renderAsDot />
 
-          <Text className="ms-2 font-medium text-red-dark">{t('active')}</Text>
+          <Text className="ms-2 font-medium text-red-dark">{t('deactive')}</Text>
         </div>
       );
     case STATUSES.Active:
       return (
         <div className="flex items-center">
           <Badge color="success" renderAsDot />
-          <Text className="ms-2 font-medium text-green-dark">{t('deactive')}</Text>
+          <Text className="ms-2 font-medium text-green-dark">{t('active')}</Text>
         </div>
       );
     default:

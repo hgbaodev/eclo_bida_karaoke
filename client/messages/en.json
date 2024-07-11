@@ -108,7 +108,8 @@
     "product_list": "Product list",
     "service": "Service",
     "title": "Order",
-    "update": "Update"
+    "update": "Update",
+    "an_order_has_to_be_delivered": "An order has to be delivered"
   },
   "revenue-expenditure": {
     "add_condition": "Add condition",

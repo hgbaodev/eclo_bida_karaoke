@@ -9,7 +9,7 @@ import { CreateSupplierInput, CreateSupplierSchema } from '@/utils/validators/su
 import { useModal } from '@/app/[locale]/shared/modal-views/use-modal';
 import { statusOptions } from './type';
 import { dispatch } from '@/store';
-import { createSupplier, getSuppliers } from '@/store/slices/supplierSlice';
+import { createSupplier, getSuppliers } from '@/store/slices/supplier_slice';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';

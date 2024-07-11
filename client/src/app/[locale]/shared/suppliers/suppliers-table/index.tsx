@@ -8,7 +8,7 @@ import { getColumns } from '@/app/[locale]/shared/suppliers/suppliers-table/colu
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
-import { getSuppliers, setPage, setPageSize } from '@/store/slices/supplierSlice';
+import { getSuppliers, setPage, setPageSize } from '@/store/slices/supplier_slice';
 import { useModal } from '../../modal-views/use-modal';
 const FilterElement = dynamic(() => import('@/app/[locale]/shared/suppliers/suppliers-table/filter-element'), {
   ssr: false,

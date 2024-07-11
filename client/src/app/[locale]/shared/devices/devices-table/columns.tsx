@@ -8,7 +8,7 @@ import { ActionIcon, Badge, Text, Tooltip } from 'rizzui';
 import { dispatch } from '@/store';
 import DeletePopover from '@/app/[locale]/shared/delete-popover';
 import EditDevice from '../edit-device';
-import { getDevices, deleteDevice } from '@/store/slices/deviceSlice';
+import { getDevices, deleteDevice } from '@/store/slices/device_slice';
 import toast from 'react-hot-toast';
 
 export const getColumns = (openModal: (args: any) => void) => [
@@ -64,7 +64,7 @@ export const getColumns = (openModal: (args: any) => void) => [
     dataIndex: 'status',
     key: 'status',
     width: 10,
-    render: (status: Device['status']) => getStatusBadge(status),
+    render: (status: Device['status']) => StatusBadge(status),
   },
   {
     title: <HeaderCell title="Action" />,
@@ -122,7 +122,7 @@ export interface Device {
   value: string;
 }
 
-export function getStatusBadge(status: Device['status']) {
+export function StatusBadge(status: Device['status']) {
   switch (status) {
     case 'D':
       return (
