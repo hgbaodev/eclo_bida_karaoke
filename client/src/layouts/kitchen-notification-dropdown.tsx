@@ -8,6 +8,7 @@ import { useMedia } from '@/hooks/use-media';
 import SimpleBar from '@/components/ui/simplebar';
 import { removeNoti, setIsLoading } from '@/store/slices/kitchen_order_notificationSlice';
 import { dispatch } from '@/store';
+import { useTranslations } from 'next-intl';
 
 dayjs.extend(relativeTime);
 
@@ -15,15 +16,17 @@ function NotificationsList({
   setIsOpen,
   notifications,
   handleRemoveNoti,
+  t,
 }: {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   notifications: any[];
   handleRemoveNoti: (active: string) => void;
+  t: any;
 }) {
   return (
     <div className="w-[400px] text-left sm:w-[440px] 2xl:w-[500px] rtl:text-right">
       <div className="mb-3 flex items-center justify-between ps-6">
-        <Title as="h5">Kitchen notifications</Title>
+        <Title as="h5">{t('title')}</Title>
       </div>
       <SimpleBar className="max-h-[420px]">
         <div className="grid cursor-pointer grid-cols-1 gap-1 ps-4">
@@ -35,17 +38,17 @@ function NotificationsList({
               >
                 <div className="flex flex-col flex-grow">
                   <Title as="h6" className="mb-0.5 truncate text-sm font-semibold">
-                    {`Name: ${item.product_name}`}
+                    {`${t('name')}: ${item.product_name}`}
                   </Title>
                   <Title as="h6" className="mb-0.5 truncate text-sm font-light">
-                    {`Quantity: ${item.product_quantity}`}
+                    {`${t('quantity')}: ${item.product_quantity}`}
                   </Title>
                   <Title as="h6" className="mb-0.5 truncate text-sm font-light">
-                    {`Service: ${item.service_name}`}
+                    {`${t('location')}: ${item.service_name}`}
                   </Title>
                 </div>
                 <button className="text-red-500 hover:text-red-700 ml-3" onClick={() => handleRemoveNoti(item.active)}>
-                  Delete
+                  {t('delete')}
                 </button>
               </div>
             ))
@@ -65,6 +68,7 @@ export default function NotificationDropdown({
   children: JSX.Element & { ref?: RefObject<any> };
   notifications?: any[];
 }) {
+  const t = useTranslations('kitchen_notifications');
   const isMobile = useMedia('(max-width: 480px)', false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -83,7 +87,12 @@ export default function NotificationDropdown({
     <Popover isOpen={isOpen} setIsOpen={setIsOpen} shadow="sm" placement={isMobile ? 'bottom' : 'bottom-end'}>
       <Popover.Trigger>{children}</Popover.Trigger>
       <Popover.Content className="z-[9999] px-0 pb-4 pe-6 pt-5 dark:bg-gray-100 [&>svg]:hidden sm:[&>svg]:inline-flex [&>svg]:dark:fill-gray-100">
-        <NotificationsList setIsOpen={setIsOpen} notifications={notifications} handleRemoveNoti={handleRemoveNoti} />
+        <NotificationsList
+          t={t}
+          setIsOpen={setIsOpen}
+          notifications={notifications}
+          handleRemoveNoti={handleRemoveNoti}
+        />
       </Popover.Content>
     </Popover>
   );

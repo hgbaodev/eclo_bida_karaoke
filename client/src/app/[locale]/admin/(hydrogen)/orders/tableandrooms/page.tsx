@@ -17,21 +17,21 @@ import { Badge, ActionIcon } from 'rizzui';
 import { appendNoti, setIsLoading } from '@/store/slices/kitchen_order_notificationSlice';
 import { useTranslations } from 'next-intl';
 
-const pageHeader = {
-  title: 'Table & Rooms',
-  breadcrumb: [
-    {
-      href: '/admin',
-      name: 'Analytics',
-    },
-    {
-      name: 'Table & rooms',
-    },
-  ],
-};
-
 export default function BlankPage() {
-  const t = useTranslations('overview');
+  const t = useTranslations('tables_rooms');
+
+  const pageHeader = {
+    title: t('tables_rooms'),
+    breadcrumb: [
+      {
+        href: '/admin',
+        name: t('analytics'),
+      },
+      {
+        name: t('tables_rooms'),
+      },
+    ],
+  };
 
   const { areas } = useSelector((state: RootState) => state.order);
   const { data: notifications } = useSelector((state: RootState) => state.kitchen_order_notification);
