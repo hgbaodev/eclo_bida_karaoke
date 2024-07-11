@@ -12,8 +12,10 @@ import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
 import { createService, getAllAreas, getAllPrices, getAllServiceTypes, getServices } from '@/store/slices/serviceSlice';
 import toast from 'react-hot-toast';
+import { useTranslations } from 'next-intl';
 
 export default function CreateTableAndRoom() {
+  const t = useTranslations('tables_rooms');
   const { closeModal } = useModal();
   const [reset, setReset] = useState({});
   const [errors, setErrors] = useState<any>({});
@@ -40,9 +42,9 @@ export default function CreateTableAndRoom() {
       });
       closeModal();
       dispatch(getServices({ page, pageSize, query, area: selectedArea }));
-      toast.success('Create service successfully');
+      toast.success(t('successful'));
     } else if (createService.rejected.match(result)) {
-      toast.error('Create service errors');
+      toast.error(t('failed'));
     }
   };
 
@@ -60,22 +62,22 @@ export default function CreateTableAndRoom() {
           <>
             <div className="col-span-full flex items-center justify-between">
               <Title as="h4" className="font-semibold">
-                Add a new Service
+                {t('add_new_service')}
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
             <Input
-              label="Name"
-              placeholder="Enter name"
+              label={t('name')}
+              placeholder={t('enter_name')}
               {...register('name')}
               className="col-span-full"
               error={errors.name?.message}
             />
             <Textarea
-              label="Description"
-              placeholder="Enter description"
+              label={t('description')}
+              placeholder={t('enter_description')}
               {...register('description')}
               className="col-span-full"
               error={errors.description?.message}
@@ -89,23 +91,23 @@ export default function CreateTableAndRoom() {
                   options={[
                     {
                       value: 'A',
-                      label: 'Active',
+                      label: t('active'),
                     },
                     {
                       value: 'D',
-                      label: 'Deactive',
+                      label: t('deactive'),
                     },
                   ]}
                   value={value || ''}
                   onChange={onChange}
                   name={name}
-                  label="Status"
+                  label={t('status')}
                   placeholder="Select a status"
                   className="col-span-full"
                   error={errors?.status?.message}
                   getOptionValue={(option) => option.value}
-                  getOptionDisplayValue={(option) => getStatusBadge(option.value)}
-                  displayValue={(selected: string) => getStatusBadge(selected)}
+                  getOptionDisplayValue={(option) => getStatusBadge(option.value, t)}
+                  displayValue={(selected: string) => getStatusBadge(selected, t)}
                   dropdownClassName="!z-[1]"
                   inPortal={false}
                 />
@@ -124,8 +126,8 @@ export default function CreateTableAndRoom() {
                   value={value || ''}
                   onChange={onChange}
                   name={name}
-                  label="Area"
-                  placeholder="Select a area"
+                  label={t('area')}
+                  placeholder={t('select_area')}
                   className="col-span-full"
                   getOptionValue={(option) => option.value}
                   getOptionDisplayValue={(option) => option.label}
@@ -149,8 +151,8 @@ export default function CreateTableAndRoom() {
                   value={value || ''}
                   onChange={onChange}
                   name={name}
-                  label="Service Type"
-                  placeholder="Select a service type"
+                  label={t('service_type')}
+                  placeholder={t('select_service_type')}
                   className="col-span-full"
                   getOptionValue={(option) => option.value}
                   getOptionDisplayValue={(option) => option.label}
@@ -176,8 +178,8 @@ export default function CreateTableAndRoom() {
                   value={value || ''}
                   onChange={onChange}
                   name={name}
-                  label="Price"
-                  placeholder="Select a price"
+                  label={t('price')}
+                  placeholder={t('select_price')}
                   className="col-span-full"
                   getOptionValue={(option) => option.value}
                   getOptionDisplayValue={(option) => option.label}
@@ -192,10 +194,10 @@ export default function CreateTableAndRoom() {
             />
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
-                Cancel
+                {t('cancel')}
               </Button>
               <Button type="submit" isLoading={isCreateLoading} className="w-full @xl:w-auto">
-                Create Service
+                {t('create_service')}
               </Button>
             </div>
           </>
@@ -205,21 +207,21 @@ export default function CreateTableAndRoom() {
   );
 }
 
-function getStatusBadge(status: string) {
+function getStatusBadge(status: string, t: any) {
   switch (status) {
     case 'D':
       return (
         <div className="flex items-center">
           <Badge color="danger" renderAsDot />
 
-          <Text className="ms-2 font-medium text-red-dark">InActive</Text>
+          <Text className="ms-2 font-medium text-red-dark">{t('inactive')} </Text>
         </div>
       );
     case 'A':
       return (
         <div className="flex items-center">
           <Badge color="success" renderAsDot />
-          <Text className="ms-2 font-medium text-green-dark">Active</Text>
+          <Text className="ms-2 font-medium text-green-dark">{t('active')}</Text>
         </div>
       );
     default:

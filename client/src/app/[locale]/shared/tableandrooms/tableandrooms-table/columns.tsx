@@ -19,35 +19,35 @@ const statusOptions = [
   { label: 'Closed', value: 'Closed' },
 ];
 
-export const getColumns = (openModal: any) => [
+export const getColumns = (openModal: any, t: any) => [
   {
-    title: <HeaderCell title="Id" />,
+    title: <HeaderCell title={t('no')} />,
     dataIndex: 'id',
     key: 'id',
     width: 50,
     render: (_: any, service: Service, index: number) => <div className="inline-flex ps-3">{index + 1}</div>,
   },
   {
-    title: <HeaderCell title="Service Name" />,
+    title: <HeaderCell title={t('name')} />,
     dataIndex: 'name',
     key: 'name',
     width: 250,
     render: (name: string) => <Text className="text-sm font-semibold text-gray-900 dark:text-gray-700">{name}</Text>,
   },
   {
-    title: <HeaderCell title="Price/Hours" />,
+    title: <HeaderCell title={t('price_per_hour')} />,
     dataIndex: 'price',
     width: 50,
     render: (_: any, service: Service) => <Text>{service?.price?.pricePerHour}$</Text>,
   },
   {
-    title: <HeaderCell title="Area" />,
+    title: <HeaderCell title={t('area')} />,
     dataIndex: 'area',
     width: 50,
     render: (_: any, service: Service) => <Text>{service?.area?.name}</Text>,
   },
   {
-    title: <HeaderCell title="Status" />,
+    title: <HeaderCell title={t('status')} />,
     dataIndex: 'status',
     width: 50,
     render: (_: any, service: Service) => (
@@ -64,68 +64,15 @@ export const getColumns = (openModal: any) => [
     ),
   },
   {
-    title: <HeaderCell title="Created" />,
+    title: <HeaderCell title={t('created_at')} />,
     dataIndex: 'created_at',
     key: 'created_at',
     width: 50,
     render: (value: Date) => <DateCell date={value} />,
   },
-  // {
-  //   title: <HeaderCell title="Candidates" />,
-  //   dataIndex: 'candidates',
-  //   key: 'candidates',
-  //   width: 120,
-  //   render: (candidates: number) => <Text>{candidates}</Text>,
-  // },
-  // {
-  //   title: <HeaderCell title="In Process" />,
-  //   dataIndex: 'inProcess',
-  //   key: 'inProcess',
-  //   width: 120,
-  //   render: (inProcess: number) => <Text>{inProcess}</Text>,
-  // },
-  // {
-  //   title: <HeaderCell title="Hired" />,
-  //   dataIndex: 'hired',
-  //   key: 'hired',
-  //   width: 80,
-  //   render: (hired: number) => <Text>{hired}</Text>,
-  // },
-  // {
-  //   title: <HeaderCell title="Category" />,
-  //   dataIndex: 'category',
-  //   key: 'category',
-  //   width: 260,
-  //   render: (category: string[]) => {
-  //     let print = category?.slice(0, 2);
-  //     let more = category.length - category.slice(0, 2).length;
-  //     return (
-  //       <div className="flex h-auto flex-wrap gap-2">
-  //         {print.map((item: string, index: number) => (
-  //           <span key={index} className="rounded-full bg-gray-100 px-2 py-1 text-xs">
-  //             {item}
-  //           </span>
-  //         ))}
-  //         <span className="rounded-full bg-gray-100 px-2 py-1 text-xs">+{more}</span>
-  //       </div>
-  //     );
-  //   },
-  // },
-  // {
-  //   title: (
-  //     <HeaderCell title="Status" sortable ascending={sortConfig?.direction === 'asc' && sortConfig?.key === 'status'} />
-  //   ),
-  //   onHeaderCell: () => onHeaderCellClick('status'),
-  //   dataIndex: 'status',
-  //   key: 'status',
-  //   width: 180,
-  //   render: (status: string) => {
-  //     return <StatusSelect selectItem={status} />;
-  //   },
-  // },
   {
     // Need to avoid this issue -> <td> elements in a large <table> do not have table headers.
-    title: <HeaderCell title="Actions" className="opacity-0" />,
+    title: <HeaderCell title={t('action')} className="opacity-0" />,
     dataIndex: 'action',
     key: 'action',
     width: 180,
@@ -136,7 +83,7 @@ export const getColumns = (openModal: any) => [
             as="span"
             size="sm"
             variant="outline"
-            aria-label={'Edit Appointment'}
+            aria-label={t('action')}
             className="hover:!border-gray-900 hover:text-gray-700 cursor-pointer"
             onClick={() => {
               const data = {
@@ -155,7 +102,7 @@ export const getColumns = (openModal: any) => [
             <PencilIcon className="h-4 w-4" />
           </ActionIcon>
         </Tooltip>
-        <Tooltip size="sm" content={'See more detail'} placement="top" color="invert">
+        <Tooltip size="sm" content={t('show_more_detail')} placement="top" color="invert">
           <Link
             href={{
               pathname: `/admin/services/tableandrooms/${service.active}`,
@@ -168,15 +115,15 @@ export const getColumns = (openModal: any) => [
         </Tooltip>
 
         <DeletePopover
-          title={`Delete the job post`}
-          description={`Are you sure you want to delete this job post?`}
+          title={t('delete')}
+          description={t('are_you_sure_to_delete')}
           onDelete={async () => {
             const result = await dispatch(deleteService(service.active));
             if (deleteService.fulfilled.match(result)) {
               await dispatch(getServices({ page: 1, pageSize: 5, query: '', area: '' }));
-              toast.success(`Service deleted successfully.`);
+              toast.success(t('successful'));
             } else {
-              toast.error(`Failed to delete service`);
+              toast.error(t('failed'));
             }
           }}
         />
