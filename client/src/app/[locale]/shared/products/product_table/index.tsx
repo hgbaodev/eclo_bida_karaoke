@@ -11,12 +11,13 @@ import { dispatch } from '@/store';
 import { getProducts, setPage, setPageSize } from '@/store/slices/productSlices';
 import { getProductType } from '@/store/slices/product_typeSlices';
 import { useModal } from '../../modal-views/use-modal';
-
+import { useTranslations } from 'next-intl';
 const FilterElement = dynamic(() => import('@/app/[locale]/shared/products/product_table/filter-elements'), {
   ssr: false,
 });
 
 export default function ProductsTable() {
+  const t = useTranslations('product');
   const { openModal } = useModal();
   const { data, isLoading, pageSize, page, totalRow, query ,type} = useSelector((state: RootState) => state.product);
   useEffect(() => {
@@ -29,9 +30,9 @@ export default function ProductsTable() {
     dispatch(getProductType());
   }, []);
   const columns = useMemo(
-    () => getColumns(openModal),
+    () => getColumns(openModal,t),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
+    [t],
   );
 
   const handleChangePageSize = (size: any) => {

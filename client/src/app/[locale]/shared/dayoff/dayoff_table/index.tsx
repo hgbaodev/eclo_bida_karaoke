@@ -27,7 +27,7 @@ export default function DayOff_table() {
       await dispatch(getDayoffs({ page, pageSize, query,type }));
     };
     fetch();
-  }, [page, pageSize, query,type]);
+  }, [page, pageSize, query,type  ]);
   useEffect(() => {
     const fetch = async () => {
       await dispatch(getAllStaffs(''));
