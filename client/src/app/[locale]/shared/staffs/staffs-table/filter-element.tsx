@@ -13,8 +13,10 @@ import { getStatusBadge } from './columns';
 import { getPositions } from '@/store/slices/positionSlice';
 import { setPosition, setQuery, setReset, setStatus } from '@/store/slices/staffSlice';
 import { getAllRoles } from '@/store/slices/roleSlice';
+import { useTranslations } from 'next-intl';
 
 export default function FilterElement() {
+  const t = useTranslations('staffs');
   const { isFiltered, query, position, status } = useSelector((state: RootState) => state.staff);
   const { listPositions } = useSelector((state: RootState) => state.position);
   const [searchTerm, setSearchTerm] = useState(query);
@@ -43,16 +45,16 @@ export default function FilterElement() {
           onChange={(value: any) => {
             dispatch(setStatus(value));
           }}
-          placeholder="Filter by Status"
+          placeholder={t('filter_status')}
           getOptionValue={(option: { value: any }) => option.value}
-          getOptionDisplayValue={(option: { value: any }) => getStatusBadge(option.value as any)}
-          displayValue={(selected: any) => getStatusBadge(selected)}
+          getOptionDisplayValue={(option: { value: any }) => getStatusBadge(option.value as any, t)}
+          displayValue={(selected: any) => getStatusBadge(selected, t)}
         />
         <StatusField
           options={listPositions}
           dropdownClassName="!z-10 w-48"
           value={position}
-          placeholder="Filter by Position"
+          placeholder={t('filter_position')}
           className=" @4xl:-auto -order-3 w-full min-w-[160px] @[25rem]:w-[calc(calc(100%_-_10px)_/_2)] @4xl:-order-4 @4xl:w-auto"
           getOptionValue={(option) => option.active}
           getOptionDisplayValue={(option) => option.name}
@@ -77,7 +79,7 @@ export default function FilterElement() {
 
         <Input
           type="search"
-          placeholder="Search for staffs..."
+          placeholder={t('search')}
           value={searchTerm}
           onClear={() => setSearchTerm('')}
           onChange={(event) => setSearchTerm(event.target.value)}
