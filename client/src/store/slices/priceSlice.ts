@@ -1,11 +1,11 @@
 // userSlice.js
 import axiosInstance from '@/api/axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { priceType } from '../types';
+import { price_type } from '../types';
 import { EditPriceInput } from '@/utils/validators/price/edit-price.schema';
 import env from '@/env';
 
-const initialState: priceType = {
+const initialState: price_type = {
   data: [],
   isLoading: false,
   isFiltered: false,
@@ -106,7 +106,7 @@ const priceSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getPrices.pending, (state: priceType) => {
+      .addCase(getPrices.pending, (state: price_type) => {
         state.isLoading = true;
       })
       .addCase(getPrices.fulfilled, (state, action) => {
@@ -118,7 +118,7 @@ const priceSlice = createSlice({
       .addCase(getPrices.rejected, (state) => {
         state.isLoading = false;
       })
-      .addCase(createPrice.pending, (state: priceType) => {
+      .addCase(createPrice.pending, (state: price_type) => {
         state.isCreateLoading = true;
       })
       .addCase(createPrice.fulfilled, (state, action) => {
@@ -127,7 +127,7 @@ const priceSlice = createSlice({
       .addCase(createPrice.rejected, (state) => {
         state.isCreateLoading = false;
       })
-      .addCase(updatePrice.pending, (state: priceType) => {
+      .addCase(updatePrice.pending, (state: price_type) => {
         state.isUpdateLoading = true;
       })
       .addCase(updatePrice.fulfilled, (state, action) => {

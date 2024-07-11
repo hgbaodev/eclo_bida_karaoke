@@ -9,13 +9,15 @@ import { CreateSupplierInput, CreateSupplierSchema } from '@/utils/validators/su
 import { useModal } from '@/app/[locale]/shared/modal-views/use-modal';
 import { statusOptions } from './type';
 import { dispatch } from '@/store';
-import { createSupplier, getSuppliers } from '@/store/slices/supplierSlice';
+import { createSupplier, getSuppliers } from '@/store/slices/supplier_slice';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
-import { getStatusBadge } from './suppliers-table/columns';
+import { StatusBadge } from './suppliers-table/columns';
+import { useTranslations } from 'next-intl';
 
 export default function CreateSupplier() {
+  const t = useTranslations('suppliers');
   const { closeModal } = useModal();
   const [reset, setReset] = useState({});
   const [errors, setErrors] = useState<any>({});
@@ -33,7 +35,7 @@ export default function CreateSupplier() {
       setErrors({});
       closeModal();
       await dispatch(getSuppliers({ page, pageSize, query, status }));
-      toast.success('Supplier created successfully');
+      toast.success(t('supplier_created_successfully'));
     } else {
       setErrors(result?.payload?.errors);
     }
@@ -53,31 +55,31 @@ export default function CreateSupplier() {
           <>
             <div className="col-span-full flex items-center justify-between">
               <Title as="h4" className="font-semibold">
-                Add a new customer
+                {t('add_new_supplier')}
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
             <Input
-              label="Name"
-              placeholder="Enter supplier's name"
+              label={t('name')}
+              placeholder={t('enter_supplier_name')}
               {...register('name')}
               className="col-span-[1/2]"
               error={errors.name?.message}
             />
 
             <Input
-              label="Address"
-              placeholder="Enter supplier's address"
+              label={t('address')}
+              placeholder={t('enter_supplier_address')}
               className="col-span-full"
               {...register('address')}
               error={errors.address?.message}
             />
 
             <Input
-              label="Phone"
-              placeholder="Enter supplier's phone"
+              label={t('phone')}
+              placeholder={t('enter_supplier_phone')}
               className="col-span-full"
               {...register('phone')}
               error={errors.phone?.message}
@@ -92,13 +94,13 @@ export default function CreateSupplier() {
                   value={value}
                   onChange={onChange}
                   name={name}
-                  label="Status"
-                  placeholder="Select a status"
+                  label={t('status')}
+                  placeholder={t('select_status')}
                   className="col-span-full"
                   error={errors?.status?.message}
                   getOptionValue={(option: { value: any }) => option.value}
-                  getOptionDisplayValue={(option: { value: any }) => getStatusBadge(option.value as any)}
-                  displayValue={(selected: any) => getStatusBadge(selected)}
+                  getOptionDisplayValue={(option: { value: any }) => StatusBadge(option.value as any, t)}
+                  displayValue={(selected: any) => StatusBadge(selected, t)}
                   dropdownClassName="!z-[1]"
                   inPortal={false}
                 />
@@ -106,10 +108,10 @@ export default function CreateSupplier() {
             />
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
-                Cancel
+                {t('cancel')}
               </Button>
               <Button type="submit" isLoading={isCreateLoading} className="w-full @xl:w-auto">
-                Create User
+                {t('create_supplier')}
               </Button>
             </div>
           </>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { PiXBold } from 'react-icons/pi';
 import { Controller, SubmitHandler } from 'react-hook-form';
 import { Form } from '@/components/ui/form';
@@ -15,6 +15,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { StatusBadge } from './prices-table/columns';
 import { useTranslations } from 'next-intl';
+import { getAllServiceTypes } from '@/store/slices/service_type_slice';
 
 export default function CreatePrice() {
   const t = useTranslations('price');
@@ -22,21 +23,40 @@ export default function CreatePrice() {
   const [reset, setReset] = useState({});
   const [errors, setErrors] = useState<any>({});
   const { pageSize, page, query, status, isCreateLoading } = useSelector((state: RootState) => state.price);
-  const onSubmit: SubmitHandler<CreatePriceInput> = async (data) => {
-    const result: any = await dispatch(createPrice(data));
+  const { data: service_type } = useSelector((state: RootState) => state.service_type);
 
-    if (createPrice.fulfilled.match(result)) {
-      setReset({
-        name: '',
-        pricePerHour: '',
-        status: '',
-      });
-      setErrors({});
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        await dispatch(getAllServiceTypes());
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+    fetch();
+  }, []);
+
+  const onSubmit: SubmitHandler<CreatePriceInput> = async (data) => {
+    try {
+      const result: any = await dispatch(createPrice(data));
+      if (createPrice.fulfilled.match(result)) {
+        setReset({
+          name: '',
+          pricePerHour: '',
+          status: '',
+        });
+        setErrors({});
+        closeModal();
+        await dispatch(getPrices({ page, pageSize, query, status }));
+        toast.success(t('created_success'));
+      } else {
+        closeModal();
+        toast.error(t('failed'));
+      }
+    } catch (error) {
       closeModal();
-      await dispatch(getPrices({ page, pageSize, query, status }));
-      toast.success(t('created_success'));
-    } else {
-      setErrors(result?.payload?.errors);
+      console.error('Error submitting form:', error);
+      toast.error(t('failed'));
     }
   };
 
@@ -76,6 +96,33 @@ export default function CreatePrice() {
               className="col-span-full"
               {...register('pricePerHour')}
               error={errors.pricePerHour?.message}
+            />
+
+            <Controller
+              name="service_type"
+              control={control}
+              render={({ field: { name, onChange, value } }) => (
+                <Select
+                  options={service_type}
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                  label={t('service_type')}
+                  className="col-span-full"
+                  placeholder="Select a service type"
+                  error={errors?.service_type?.message}
+                  //@ts-ignore
+                  getOptionValue={(option) => option.active}
+                  //@ts-ignore
+                  getOptionDisplayValue={(option) => option.name}
+                  displayValue={(selected: string) =>
+                    //@ts-ignore
+                    service_type.find((option) => option.active === selected)?.name ?? selected
+                  }
+                  dropdownClassName="!z-[1]"
+                  inPortal={false}
+                />
+              )}
             />
 
             <Controller

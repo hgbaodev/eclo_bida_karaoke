@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { kitchen_order_notificationType } from '../types';
+import { kitchen_order_notification_type } from '../types';
 
-const initialState: kitchen_order_notificationType = {
+const initialState: kitchen_order_notification_type = {
   data: [],
   isLoading: false,
   errors: null,

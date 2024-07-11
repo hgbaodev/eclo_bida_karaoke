@@ -8,11 +8,11 @@ import { Input, Button, ActionIcon, Title, Select } from 'rizzui';
 import {
   CreateServiceTypeInput,
   CreateServiceTypeSchema,
-} from '@/utils/validators/service-type/create-service_type.schema';
+} from '@/utils/validators/service-type/create-service-type.schema';
 import { useModal } from '@/app/[locale]/shared/modal-views/use-modal';
 import { statusOptions } from './type';
 import { dispatch } from '@/store';
-import { createServiceType, getServiceTypes } from '@/store/slices/serviceTypeSlice';
+import { createServiceType, getServiceTypes } from '@/store/slices/service_type_slice';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
@@ -32,6 +32,7 @@ export default function CreateSupplier() {
       setReset({
         name: '',
         status: '',
+        service_active: '',
       });
       setErrors({});
       closeModal();

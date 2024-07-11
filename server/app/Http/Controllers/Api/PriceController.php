@@ -6,16 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Price\StorePriceRequest;
 use App\Http\Requests\Price\UpdatePriceRequest;
 use App\Interface\PriceRepositoryInterface;
+use App\Interface\ServiceTypeRepositoryInterface;
 use Illuminate\Http\Request;
 use Mockery\Exception;
 
 class PriceController extends Controller
 {
     protected $priceRepository;
+    protected $serviceTypeRepository;
 
-    public function __construct(PriceRepositoryInterface $priceRepository)
+    public function __construct(PriceRepositoryInterface $priceRepository, ServiceTypeRepositoryInterface $serviceTypeRepository)
     {
         $this->priceRepository = $priceRepository;
+        $this->serviceTypeRepository = $serviceTypeRepository;
     }
 
     public function index(Request $request)
@@ -36,6 +39,9 @@ class PriceController extends Controller
     {
         try {
             $validated_data = $request->validated();
+            $serviceType = $this->serviceTypeRepository->getServiceTypeByActive($validated_data['service_type']);
+            $validated_data['service_type_id'] = $serviceType->id;
+            unset($validated_data['service_type']);
             $this->priceRepository->createPrice($validated_data);
             return $this->sentSuccessResponse($validated_data);
         } catch (Exception) {

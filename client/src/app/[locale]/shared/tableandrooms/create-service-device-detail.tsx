@@ -7,8 +7,8 @@ import { Form } from '@/components/ui/form';
 import { Input, Button, ActionIcon, Title, Select } from 'rizzui';
 import { useModal } from '@/app/[locale]/shared/modal-views/use-modal';
 import { dispatch } from '@/store';
-import { getServiceDevicesDetail, createServiceDeviceDetail } from '@/store/slices/service_device_detailSlice';
-import { getAllDevices } from '@/store/slices/deviceSlice';
+import { getServiceDevicesDetail, createServiceDeviceDetail } from '@/store/slices/service_device_detail_slice';
+import { getAllDevices } from '@/store/slices/device_slice';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
@@ -59,7 +59,7 @@ export default function CreateServiceDeviceDetail({ serviceActive }: { serviceAc
         await dispatch(getServiceDevicesDetail({ page, pageSize, query, status, serviceActive }));
         toast.success('Device updated successfully');
       } else {
-        closeModal(); // Close the modal on failure
+        closeModal();
         const errorMessage = result.payload?.errors || 'Failed to create service device detail.';
         toast.error(errorMessage);
       }

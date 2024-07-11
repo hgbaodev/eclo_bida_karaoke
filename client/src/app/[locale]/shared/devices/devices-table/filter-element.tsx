@@ -4,22 +4,25 @@ import { PiTrashDuotone, PiMagnifyingGlassBold } from 'react-icons/pi';
 import StatusField from '@/components/controlled-table/status-field';
 import { Button, Input } from 'rizzui';
 import { dispatch } from '@/store';
-import { setQuery, setReset, setStatus } from '@/store/slices/deviceSlice';
+import { setQuery, setReset, setStatus } from '@/store/slices/device_slice';
 import { RootState } from '@/store/types';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import useDebounce from '@/hooks/use-debounce';
 import { statusOptions } from '../type';
-import { getStatusBadge } from './columns';
+import { StatusBadge } from './columns';
+import { useTranslations } from 'next-intl';
 
 export default function FilterElement() {
   const { status, isFiltered, query } = useSelector((state: RootState) => state.device);
   const [searchTerm, setSearchTerm] = useState(query);
   const debounceSearchTerm = useDebounce(searchTerm, 1000);
+  const t = useTranslations('devices');
 
   useEffect(() => {
     dispatch(setQuery(debounceSearchTerm));
   }, [debounceSearchTerm]);
+
   return (
     <>
       <div className="relative z-50 mb-4 flex flex-wrap items-center justify-between gap-2.5 @container ">
@@ -31,10 +34,10 @@ export default function FilterElement() {
           onChange={(value: any) => {
             dispatch(setStatus(value));
           }}
-          placeholder="Filter by Status"
+          placeholder={t('filter_by_status')}
           getOptionValue={(option: { value: any }) => option.value}
-          getOptionDisplayValue={(option: { value: any }) => getStatusBadge(option.value as any)}
-          displayValue={(selected: any) => getStatusBadge(selected)}
+          getOptionDisplayValue={(option: { value: any }) => StatusBadge(option.value as any, t)}
+          displayValue={(selected: any) => StatusBadge(selected, t)}
         />
 
         {isFiltered && (
@@ -44,13 +47,13 @@ export default function FilterElement() {
             className="-order-1 h-8 w-full bg-gray-200/70 @4xl:-order-4 @4xl:w-auto"
             variant="flat"
           >
-            <PiTrashDuotone className="me-1.5 h-[17px] w-[17px]" /> Clear
+            <PiTrashDuotone className="me-1.5 h-[17px] w-[17px]" /> {t('clear')}
           </Button>
         )}
 
         <Input
           type="search"
-          placeholder="Search for devices..."
+          placeholder={t('search_devices')}
           value={searchTerm}
           onClear={() => setSearchTerm('')}
           onChange={(event) => setSearchTerm(event.target.value)}

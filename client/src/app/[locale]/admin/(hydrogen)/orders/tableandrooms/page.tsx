@@ -14,7 +14,7 @@ import toast from 'react-hot-toast';
 import NotificationDropdown from '@/layouts/kitchen-notification-dropdown';
 import RingBellSolidIcon from '@/components/icons/ring-bell-solid';
 import { Badge, ActionIcon } from 'rizzui';
-import { appendNoti, setIsLoading } from '@/store/slices/kitchen_order_notificationSlice';
+import { appendNoti, setIsLoading } from '@/store/slices/kitchen_order_notification_slice';
 import { useTranslations } from 'next-intl';
 
 export default function BlankPage() {

@@ -88,6 +88,7 @@ export const getColumns = (openModal: (args: any) => void, t: any) => [
                 name: price.name,
                 pricePerHour: price.pricePerHour,
                 status: price.status,
+                service_type: price.service_type,
               };
               openModal({
                 view: <EditPrice price={data} active={price.active} />,
@@ -126,6 +127,7 @@ export interface Price {
   status: any;
   image: string;
   created_at: string;
+  service_type: string;
 }
 
 export const STATUSES = {

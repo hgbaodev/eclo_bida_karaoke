@@ -3,17 +3,17 @@ export interface RootState {
   role: roleType;
   user: userType;
   logger: loggerType;
-  service_type: service_typeType;
+  service_type: service_type_type;
   product: productType;
   product_type: product_typeType;
   product_import: product_ImportType;
   product_import_detail: product_Import_DetailType;
-  customer: customerType;
+  customer: customer_type;
   area: areaType;
-  device: deviceType;
+  device: device_type;
   position: positionType;
-  price: priceType;
-  supplier: supplierType;
+  price: price_type;
+  supplier: supplier_type;
   staff: staffType;
   shift: shiftType;
   service: serviceType;
@@ -21,23 +21,23 @@ export interface RootState {
   shift_user_detail: shift_user_detailType;
   work_shift: work_shiftType;
   order: orderType;
-  kitchen_order: kitchen_orderType;
+  kitchen_order: kitchen_order_type;
   attendance: attendance;
-  service_device_detail: service_device_detailType;
+  service_device_detail: service_device_detail_type;
   salary: salary;
   dayoff: dayoffType;
-  kitchen_order_notification: kitchen_order_notificationType;
+  kitchen_order_notification: kitchen_order_notification_type;
   invoice: invoiceType;
   statistical: statisticalType;
 }
 
-export interface kitchen_order_notificationType {
+export interface kitchen_order_notification_type {
   data: [];
   isLoading: boolean;
   errors: string | null;
 }
 
-export interface kitchen_orderType {
+export interface kitchen_order_type {
   data: kitchenOrder[];
   isLoading: boolean;
   page: number;
@@ -97,7 +97,7 @@ export interface userType {
   isUpdateLoading: boolean;
 }
 
-export interface priceType {
+export interface price_type {
   data: [];
   isLoading: boolean;
   isFiltered: boolean;
@@ -111,7 +111,7 @@ export interface priceType {
   isUpdateLoading: boolean;
 }
 
-export interface customerType {
+export interface customer_type {
   data: [];
   isLoading: boolean;
   isFiltered: boolean;
@@ -125,7 +125,7 @@ export interface customerType {
   isUpdateLoading: boolean;
 }
 
-export interface service_device_detailType {
+export interface service_device_detail_type {
   data: [];
   isLoading: boolean;
   isFiltered: boolean;
@@ -139,7 +139,7 @@ export interface service_device_detailType {
   isUpdateLoading: boolean;
 }
 
-export interface service_typeType {
+export interface service_type_type {
   data: [];
   isLoading: boolean;
   isFiltered: boolean;
@@ -153,7 +153,7 @@ export interface service_typeType {
   isUpdateLoading: boolean;
 }
 
-export interface supplierType {
+export interface supplier_type {
   data: [];
   isLoading: boolean;
   isFiltered: boolean;
@@ -236,7 +236,7 @@ export interface areaType {
   isEditLoading: boolean;
 }
 
-export interface deviceType {
+export interface device_type {
   data: any[];
   isFiltered: boolean;
   page: number;

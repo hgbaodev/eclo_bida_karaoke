@@ -8,7 +8,7 @@ import { getColumns } from '@/app/[locale]/shared/service_types/service_types-ta
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
-import { getServiceTypes, setPage, setPageSize } from '@/store/slices/serviceTypeSlice';
+import { getServiceTypes, setPage, setPageSize } from '@/store/slices/service_type_slice';
 import { useModal } from '../../modal-views/use-modal';
 import { useTranslations } from 'next-intl';
 
