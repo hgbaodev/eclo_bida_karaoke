@@ -2,12 +2,35 @@
 import React, { useState, useEffect } from 'react';
 import { HeaderCell } from '@/components/ui/table';
 import DayColumn from '@/components/select/ShiftUser';
-
-export const getColumns = (openModal: (args: any) => void, Data: ShiftUserDetail[], workshift: any) => {
-  const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+type Language = 'en' | 'vi';
+export const getColumns = (openModal: (args: any) => void, Data: ShiftUserDetail[], workshift: any, t: any) => {
+  const daysOfWeek = {
+    en: [
+      { key: 'Monday', value: 'Monday' },
+      { key: 'Tuesday', value: 'Tuesday' },
+      { key: 'Wednesday', value: 'Wednesday' },
+      { key: 'Thursday', value: 'Thursday' },
+      { key: 'Friday', value: 'Friday' },
+      { key: 'Saturday', value: 'Saturday' },
+      { key: 'Sunday', value: 'Sunday' },
+    ],
+    vi: [
+      { key: 'T2', value: 'Monday' },
+      { key: 'T3', value: 'Tuesday' },
+      { key: 'T4', value: 'Wednesday' },
+      { key: 'T5', value: 'Thursday' },
+      { key: 'T6', value: 'Friday' },
+      { key: 'T7', value: 'Saturday' },
+      { key: 'CN', value: 'Sunday' },
+    ],
+  };
+  let lang: Language = 'en';
+  if (t('table_day') == 'vi') {
+    lang = 'vi';
+  }
   const columns = [
     {
-      title: <HeaderCell title="Shift/Day" />,
+      title: <HeaderCell title={t('table_day_shift')} />,
       dataIndex: 'shift',
       key: 'shift',
       width: 30,
@@ -19,13 +42,13 @@ export const getColumns = (openModal: (args: any) => void, Data: ShiftUserDetail
         }
       },
     },
-    ...daysOfWeek.map((day) => ({
-      title: <HeaderCell title={day.substring(0, 3)} />,
-      dataIndex: day.toLowerCase(),
-      key: day.toLowerCase(),
+    ...daysOfWeek[lang].map((day) => ({
+      title: <HeaderCell title={day.key.substring(0, 3)} />,
+      dataIndex: day.key.toLowerCase(),
+      key: day.key.toLowerCase(),
       width: 200,
       render: (_: string, shift: Shift) => (
-        <DayColumn data={Data} dayOfWeek={day} shift={shift} workshift={workshift} />
+        <DayColumn data={Data} dayOfWeek={day.value} shift={shift} workshift={workshift} t={t} />
       ),
     })),
   ];

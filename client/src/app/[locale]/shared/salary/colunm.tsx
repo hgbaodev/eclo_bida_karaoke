@@ -1,66 +1,66 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { HeaderCell } from '@/components/ui/table';
-export const getColumns = (openModal: (args: any) => void) => {
+export const getColumns = (openModal: (args: any) => void, t: any) => {
   const columns = [
     {
-      title: <HeaderCell title="ID" />,
+      title: <HeaderCell title={t('table_id')} />,
       dataIndex: 'id',
       key: 'id',
       width: 50,
       render: (_: any, salary: Salary, index: number) => <div className="inline-flex ps-3">{index + 1}</div>,
     },
     {
-      title: <HeaderCell title="Name" />,
+      title: <HeaderCell title={t('table_name')} />,
       dataIndex: 'name',
       key: 'name',
       width: 50,
       render: (_: string, salary: Salary) => salary.staff.last_name + ' ' + salary.staff.first_name,
     },
     {
-      title: <HeaderCell title="Position" />,
+      title: <HeaderCell title={t('table_position')} />,
       dataIndex: 'position',
       key: 'position',
       width: 50,
       render: (_: string, salary: Salary) => salary.staff.position.name,
     },
     {
-      title: <HeaderCell title="Base Salary" />,
+      title: <HeaderCell title={t('table_basesalary')} />,
       dataIndex: 'sop',
       key: 'sop',
       width: 50,
       render: (_: string, salary: Salary) => salary.staff.position.base_salary,
     },
     {
-      title: <HeaderCell title="Structure of Salary" />,
+      title: <HeaderCell title={t('table_structure')} />,
       dataIndex: 'sos',
       key: 'sos',
       width: 50,
       render: (_: string, salary: Salary) => salary.staff.position.salary_structure,
     },
     {
-      title: <HeaderCell title="Working Days" />,
+      title: <HeaderCell title={t('table_workingdays')} />,
       dataIndex: 'wd',
       key: 'wd',
       width: 50,
       render: (_: string, salary: Salary) => salary.working_days,
     },
     {
-      title: <HeaderCell title="Off Days" />,
+      title: <HeaderCell title={t('table_offdays')} />,
       dataIndex: 'od',
       key: 'od',
       width: 50,
       render: (_: string, salary: Salary) => salary.off_days,
     },
     {
-      title: <HeaderCell title="Working Hours" />,
+      title: <HeaderCell title={t('table_workinghours')} />,
       dataIndex: 'wh',
       key: 'wh',
       width: 50,
       render: (_: string, salary: Salary) => salary.working_hours.toLocaleString('de-DE', { minimumFractionDigits: 2 }),
     },
     {
-      title: <HeaderCell title="Total" />,
+      title: <HeaderCell title={t('table_total')} />,
       dataIndex: 'total',
       key: 'total',
       width: 50,

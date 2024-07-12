@@ -14,7 +14,7 @@ import { RootState } from '@/store/types';
 import { EditStaffInput, editStaffSchema } from '@/utils/validators/staff/edit-staff.schema';
 import { getStatusBadge } from '../users/users-table/columns';
 import { updateUser } from '@/store/slices/userSlice';
-
+import { useTranslations } from 'next-intl';
 export default function EditStaff({
   staff,
   active,
@@ -24,6 +24,7 @@ export default function EditStaff({
   active: string;
   activeUser: string;
 }) {
+  const t = useTranslations('staffs');
   const { closeModal } = useModal();
   const [reset, setReset] = useState<any>(staff);
   const [errors, setErrors] = useState<any>({});
@@ -74,7 +75,7 @@ export default function EditStaff({
         setErrors({});
         closeModal();
         await dispatch(getStaffs({ page, pageSize, query, position, status }));
-        toast.success('Staff edited successfully');
+        toast.success(t('edit_success'));
       } else {
         setErrors(result?.payload?.errors);
       }
@@ -96,14 +97,14 @@ export default function EditStaff({
           <>
             <div className="col-span-full flex items-center justify-between">
               <Title as="h4" className="font-semibold">
-                Edit a Staff
+                {t('title_edit')}
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
             <FileInput
-              label="Image"
+              label={t('image')}
               placeholder="Select an image"
               {...register('image')}
               className="col-span-full"
@@ -111,51 +112,51 @@ export default function EditStaff({
               error={errors.image?.message?.toString() || ''}
             />
             <Input
-              label="IDCard"
-              placeholder="Enter staff idcard"
+              label={t('idcard')}
+              placeholder={t('input_idcard')}
               className="col-span-[1/2]"
               {...register('idcard')}
               error={errors.idcard?.message}
             />
             <Input
-              label="First Name"
-              placeholder="Enter staff first name"
+              label={t('first_name')}
+              placeholder={t('input_firstname')}
               {...register('first_name')}
               className="col-span-[1/2]"
               error={errors.first_name?.message}
             />
             <Input
-              label="Last Name"
-              placeholder="Enter staff last name"
+              label={t('last_name')}
+              placeholder={t('input_lastname')}
               {...register('last_name')}
               className="col-span-[1/2]"
               error={errors.last_name?.message}
             />
             <div className="col-span-[1/2]">
-              <label className="block mb-3 text-sm font-medium text-gray-700">Gender</label>
+              <label className="block mb-3 text-sm font-medium text-gray-700">{t('gender')}</label>
               <Controller
                 name="gender"
                 control={control}
                 defaultValue="M"
                 render={({ field: { name, onChange, value } }) => (
                   <RadioGroup value={value} setValue={onChange} className="flex gap-4">
-                    <Radio label="Male" value="M" />
-                    <Radio label="Female" value="F" />
+                    <Radio label={t('male')} value="M" />
+                    <Radio label={t('female')} value="F" />
                   </RadioGroup>
                 )}
               />
             </div>
             <Input
               type="date"
-              label="Birthday"
-              placeholder="Enter staff birthday"
+              label={t('birthday')}
+              placeholder={t('input_birthday')}
               {...register('birthday')}
               className="col-span-[1/2]"
               error={errors.birthday?.message}
             />
             <Input
-              label="Phone"
-              placeholder="Enter staff phone number"
+              label={t('phone')}
+              placeholder={t('input_phone')}
               className="col-span-[1/2]"
               {...register('phone')}
               error={errors.phone?.message}
@@ -163,8 +164,8 @@ export default function EditStaff({
 
             <Textarea
               rows={2}
-              label="Address"
-              placeholder="Enter staff address"
+              label={t('address')}
+              placeholder={t('input_address')}
               className="col-span-full"
               {...register('address')}
               error={errors.address?.message}
@@ -179,9 +180,9 @@ export default function EditStaff({
                   value={value}
                   onChange={onChange}
                   name={name}
-                  label="Position"
+                  label={t('position')}
                   className="col-span-[1/2]"
-                  placeholder="Select a position"
+                  placeholder={t('input_position')}
                   error={errors?.position?.message}
                   getOptionValue={(option) => option.active}
                   getOptionDisplayValue={(option) => option.name}
@@ -202,8 +203,8 @@ export default function EditStaff({
                   value={value}
                   onChange={onChange}
                   name={name}
-                  label="Status"
-                  placeholder="Select a status"
+                  label={t('status')}
+                  placeholder={t('input_status')}
                   className="col-span-[1/2]"
                   error={errors?.status?.message}
                   getOptionValue={(option: { value: any }) => option.value}
@@ -219,14 +220,14 @@ export default function EditStaff({
             </Title>
             <Input
               label="Email"
-              placeholder="Enter user's Email Address"
+              placeholder={t('input_email')}
               className="col-span-full"
               {...register('email')}
               error={errors.email?.message}
             />
             <Password
-              label="Password"
-              placeholder="Enter your password"
+              label={t('password')}
+              placeholder={t('input_password')}
               className="col-span-[1/2]"
               {...register('password')}
               error={errors.password?.message}
@@ -240,9 +241,9 @@ export default function EditStaff({
                   value={value}
                   onChange={onChange}
                   name={name}
-                  label="Role"
+                  label={t('role')}
                   className="col-span-[1/2]"
-                  placeholder="Select a role"
+                  placeholder={t('input_role')}
                   error={errors?.role?.message}
                   getOptionValue={(option) => option.active}
                   getOptionDisplayValue={(option) => option.name}
@@ -256,10 +257,10 @@ export default function EditStaff({
             />
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
-                Cancel
+                {t('cancel')}
               </Button>
               <Button type="submit" isLoading={isUpdateLoading} className="w-full @xl:w-auto">
-                Edit Staff
+                {t('edit_staff')}
               </Button>
             </div>
           </>

@@ -10,11 +10,13 @@ import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
 import { getStaffs, setPage, setPageSize } from '@/store/slices/staffSlice';
 import { useModal } from '../../modal-views/use-modal';
+import { useTranslations } from 'next-intl';
 const FilterElement = dynamic(() => import('@/app/[locale]/shared/staffs/staffs-table/filter-element'), {
   ssr: false,
 });
 
 export default function StaffsTable() {
+  const t = useTranslations('staffs');
   const { openModal } = useModal();
   const { data, isLoading, pageSize, page, totalRow, query, position, status } = useSelector(
     (state: RootState) => state.staff,
@@ -28,9 +30,9 @@ export default function StaffsTable() {
   }, [page, pageSize, query, position, status]);
 
   const columns = useMemo(
-    () => getColumns(openModal),
+    () => getColumns(openModal, t),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
+    [t],
   );
   const handleChangePageSize = (size: any) => {
     dispatch(setPageSize(size));

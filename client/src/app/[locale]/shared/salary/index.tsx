@@ -10,16 +10,18 @@ import { dispatch } from '@/store';
 import { useModal } from '../modal-views/use-modal';
 import dynamic from 'next/dynamic';
 import { getSalaries } from '@/store/slices/salarySlice';
+import { useTranslations } from 'next-intl';
 const FilterElement = dynamic(() => import('@/app/[locale]/shared/salary/filter-element'), {
   ssr: false,
 });
 export default function SalaryTable() {
+  const t = useTranslations('salary');
   const { openModal } = useModal();
   const { dataSalary, isLoading, query, month, year } = useSelector((state: RootState) => state.salary);
   useEffect(() => {
     dispatch(getSalaries({ month, year, query }));
   }, [query, month, year]);
-  const columns = useMemo(() => getColumns(openModal), [openModal]);
+  const columns = useMemo(() => getColumns(openModal, t), [openModal, t]);
   return (
     <div className="mt-0">
       <FilterElement />
