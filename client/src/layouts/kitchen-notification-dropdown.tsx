@@ -6,7 +6,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import { Popover, Title } from 'rizzui';
 import { useMedia } from '@/hooks/use-media';
 import SimpleBar from '@/components/ui/simplebar';
-import { removeNoti, setIsLoading } from '@/store/slices/kitchen_order_notificationSlice';
+import { removeNoti, setIsLoading } from '@/store/slices/kitchen_order_notification_slice';
 import { dispatch } from '@/store';
 import { useTranslations } from 'next-intl';
 

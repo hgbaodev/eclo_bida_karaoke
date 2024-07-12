@@ -1,3 +1,4 @@
 {
+  "ignorePatterns": ["sw.js"],
   "extends": "next/core-web-vitals"
 }

@@ -7,8 +7,8 @@ import { Form } from '@/components/ui/form';
 import { Input, Button, ActionIcon, Title, Select } from 'rizzui';
 import { useModal } from '@/app/[locale]/shared/modal-views/use-modal';
 import { dispatch } from '@/store';
-import { getServiceDevicesDetail, createServiceDeviceDetail } from '@/store/slices/service_device_detailSlice';
-import { getAllDevices } from '@/store/slices/deviceSlice';
+import { getServiceDevicesDetail, createServiceDeviceDetail } from '@/store/slices/service_device_detail_slice';
+import { getAllDevices } from '@/store/slices/device_slice';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
@@ -16,10 +16,12 @@ import {
   CreateServiceDeviceDetailInput,
   CreateServiceDeviceDetailSchema,
 } from '@/utils/validators/service-device-detail/create-service-device-detail.schema';
-import { getStatusBadge } from './service-devices-table/columns';
+import StatusBadge from './service-devices-table/status-badge';
 import { statusOptions } from './service-devices-table/type';
+import { useTranslations } from 'next-intl';
 
 export default function CreateServiceDeviceDetail({ serviceActive }: { serviceActive: string }) {
+  const t = useTranslations('tables_rooms');
   const { closeModal } = useModal();
   const [reset, setReset] = useState<any>();
   const [errors, setErrors] = useState<any>({});
@@ -57,7 +59,7 @@ export default function CreateServiceDeviceDetail({ serviceActive }: { serviceAc
         await dispatch(getServiceDevicesDetail({ page, pageSize, query, status, serviceActive }));
         toast.success('Device updated successfully');
       } else {
-        closeModal(); // Close the modal on failure
+        closeModal();
         const errorMessage = result.payload?.errors || 'Failed to create service device detail.';
         toast.error(errorMessage);
       }
@@ -82,7 +84,7 @@ export default function CreateServiceDeviceDetail({ serviceActive }: { serviceAc
           <>
             <div className="col-span-full flex items-center justify-between">
               <Title as="h4" className="font-semibold">
-                Create service device
+                {t('create')}
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
@@ -98,7 +100,7 @@ export default function CreateServiceDeviceDetail({ serviceActive }: { serviceAc
                   value={value}
                   onChange={onChange}
                   name={name}
-                  label="Device"
+                  label={t('device')}
                   className="col-span-full"
                   placeholder="Select a device"
                   error={errors?.device?.message}
@@ -114,8 +116,8 @@ export default function CreateServiceDeviceDetail({ serviceActive }: { serviceAc
             />
 
             <Input
-              label="Quantity"
-              placeholder="quantity"
+              label={t('quantity')}
+              placeholder={t('quantity')}
               {...register('quantity')}
               className="col-span-[1/2]"
               error={errors.quantity?.message}
@@ -130,21 +132,21 @@ export default function CreateServiceDeviceDetail({ serviceActive }: { serviceAc
                   value={value}
                   onChange={onChange}
                   name={name}
-                  label="Status"
+                  label={t('status')}
                   placeholder="Select a status"
                   className="col-span-full"
                   error={errors?.status?.message}
                   getOptionValue={(option: { value: any }) => option.value}
-                  getOptionDisplayValue={(option: { value: any }) => getStatusBadge(option.value as any)}
-                  displayValue={(selected: any) => getStatusBadge(selected)}
+                  getOptionDisplayValue={(option: { value: any }) => StatusBadge(option.value as any, t)}
+                  displayValue={(selected: any) => StatusBadge(selected, t)}
                   dropdownClassName="!z-[1]"
                   inPortal={false}
                 />
               )}
             />
             <Input
-              label="Under maintenace"
-              placeholder="Under maintenace quantity"
+              label={t('under_maintenance')}
+              placeholder={t('under_maintenance_quantity')}
               {...register('maintenance_quantity')}
               className="col-span-[1/2]"
               error={errors.maintenance_quantity?.message}
@@ -152,10 +154,10 @@ export default function CreateServiceDeviceDetail({ serviceActive }: { serviceAc
 
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
-                Cancel
+                {t('cancel')}
               </Button>
               <Button type="submit" isLoading={isUpdateLoading} className="w-full @xl:w-auto">
-                Create
+                {t('create')}
               </Button>
             </div>
           </>

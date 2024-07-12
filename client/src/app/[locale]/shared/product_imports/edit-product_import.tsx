@@ -21,7 +21,7 @@ import {
 import { number } from 'zod';
 import { getStatusBadge } from './product_import_table/columns';
 import { statusOptions } from './type';
-
+import { useTranslations } from 'next-intl';
 export default function EditProduct({
   product_import,
   active,
@@ -32,8 +32,8 @@ export default function EditProduct({
   const { closeModal } = useModal();
   const [reset, setReset] = useState<any>(product_import);
   const [errors, setErrors] = useState<any>({});
-  const { pageSize, page, query, isUpdateLoading } = useSelector((state: RootState) => state.product_import);
-  //   const { listPositions } = useSelector((state: RootState) => state.position);
+  const { pageSize, page, query, isUpdateLoading,status } = useSelector((state: RootState) => state.product_import);
+  const t = useTranslations('product_import');
   const onSubmit: SubmitHandler<EditProduc_ImporttInput> = async (data) => {
     const result: any = await dispatch(updateProduct({ product_import: data, active }));
 
@@ -45,7 +45,7 @@ export default function EditProduct({
       });
       setErrors({});
       closeModal();
-      await dispatch(getProductImports({ page, pageSize, query }));
+      await dispatch(getProductImports({ page, pageSize, query,status }));
       toast.success('Import updated successfully');
     } else {
       setErrors(result?.payload?.errors);
@@ -65,23 +65,22 @@ export default function EditProduct({
           <>
             <div className="col-span-full flex items-center justify-between">
               <Title as="h4" className="font-semibold">
-                Edit a Product
+              {t('edit_import')}
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
             <Input
-              label="Create time"
+              label={t('create_time')}
               type="date"
               className="col-span-full"
               {...register('create_time')}
               error={errors.create_time?.message}
             />
             <Input
-              label="Receive Time"
+              label={t('receive_time')}
               type="date"
-              placeholder="Enter cost price"
               {...register('receive_time')}
               className="col-span-full"
               error={errors.receive_time?.message}
@@ -105,8 +104,8 @@ export default function EditProduct({
                   value={value}
                   onChange={onChange}
                   name={name}
-                  label="Status"
-                  placeholder="Select a status"
+                  label={t('status')}
+                  placeholder={t('select_status')}
                   className="col-span-[1/2]"
                   error={errors?.status?.message}
                   getOptionValue={(option: { value: any }) => option.value}
@@ -119,10 +118,10 @@ export default function EditProduct({
             />
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
-                Cancel
+              {t('cancel')}
               </Button>
               <Button type="submit" isLoading={isUpdateLoading} className="w-full @xl:w-auto">
-                Edit Product
+              {t('btn_edit')}
               </Button>
             </div>
           </>

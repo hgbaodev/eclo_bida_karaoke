@@ -13,15 +13,15 @@ import { RootState } from '@/store/types';
 export default function Sidebar({ className }: { className?: string }) {
   const { role } = useSelector((state: RootState) => state.auth);
 
-  // const checkRoleMenuItems = MenuItems.filter((item) => {
-  //   if (item.permission) {
-  //     if (role.permissions.includes(item.permission as never)) {
-  //       return item;
-  //     }
-  //   } else {
-  //     return item;
-  //   }
-  // });
+  const checkRoleMenuItems = MenuItems().filter((item) => {
+    if (item.permission) {
+      if (role.permissions.includes(item.permission as never)) {
+        return item;
+      }
+    } else {
+      return item;
+    }
+  });
 
   const pathname = usePathname();
   return (
@@ -39,12 +39,13 @@ export default function Sidebar({ className }: { className?: string }) {
 
       <SimpleBar className="h-[calc(100%-80px)]">
         <div className="mt-4 pb-3 3xl:mt-6">
-          {MenuItems().map((item: MenuItem, index: number) => {
+          {checkRoleMenuItems.map((item: MenuItem, index: number) => {
             // Adjusted type for item and index
             const isActive = pathname === (item?.href as string);
             const pathnameExistInDropdowns: MenuItem[] | undefined = item?.dropdownItems?.filter(
               (dropdownItem: MenuItem) => dropdownItem.href === pathname,
             );
+
             const isDropdownOpen = Boolean(pathnameExistInDropdowns?.length);
             return (
               <Fragment key={item.name + '-' + index}>

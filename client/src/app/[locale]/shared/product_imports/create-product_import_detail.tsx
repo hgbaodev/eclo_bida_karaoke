@@ -19,6 +19,7 @@ import { statusOptions } from './type';
 import { useSearchParams } from 'next/navigation';
 import { values } from 'lodash';
 import { updateProduct } from '@/store/slices/productSlices';
+import { useTranslations } from 'next-intl';
 
 export default function CreateProductImportDetail() {
   const { closeModal } = useModal();
@@ -30,6 +31,7 @@ export default function CreateProductImportDetail() {
   const { listProduct } = useSelector((state: RootState) => state.product);
   const { listSupplier } = useSelector((state: RootState) => state.supplier);
   const { data1 } = useSelector((state: RootState) => state.product_import);
+  const t = useTranslations('product_import_detail');
   const onSubmit: SubmitHandler<CreateProduct_Import_DetailtInput> = async (data) => {
     const result: any = await dispatch(createProductImportDetail(data));
     console.log(result);
@@ -69,21 +71,21 @@ export default function CreateProductImportDetail() {
           <>
             <div className="col-span-full flex items-center justify-between">
               <Title as="h4" className="font-semibold">
-                Import Product
+                {t('add_detail')}
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
             <Input
-              label="Import day"
+              label= {t('import_day')}
               className="col-span-full"
               error={errors.import?.message}
               value={data1.create_time}
               readOnly
             />
             <Controller
-              name="product"
+              name= "product"
               control={control}
               render={({ field: { name, onChange, value } }) => (
                 <Select
@@ -91,9 +93,9 @@ export default function CreateProductImportDetail() {
                   value={value}
                   onChange={onChange}
                   name={name}
-                  label="Product"
+                  label={t('product_name')}
                   className="col-span-full"
-                  placeholder="Select a product"
+                  placeholder={t('select_product')}
                   error={errors?.product?.message}
                   getOptionValue={(option) => option.active}
                   getOptionDisplayValue={(option) => option.name}
@@ -106,7 +108,7 @@ export default function CreateProductImportDetail() {
               )}
             />
             <Controller
-              name="supplier"
+              name= "supplier"
               control={control}
               render={({ field: { name, onChange, value } }) => (
                 <Select
@@ -114,9 +116,9 @@ export default function CreateProductImportDetail() {
                   value={value}
                   onChange={onChange}
                   name={name}
-                  label="Supplier"
+                  label={t('supplier')}
                   className="col-span-full"
-                  placeholder="Select a supplier"
+                  placeholder={t('select_supplier')}
                   error={errors?.supplier?.message}
                   getOptionValue={(option) => option.active}
                   getOptionDisplayValue={(option) => option.name}
@@ -131,24 +133,24 @@ export default function CreateProductImportDetail() {
 
             <Input
               type="number"
-              label="Cost price"
-              placeholder="Enter cost price of product "
+              label= {t('cost_price')}
+              placeholder= {t('input_cost_price')}
               {...register('cost_price')}
               className="col-span-full"
               error={errors.cost_price?.message}
             />
             <Input
               type="number"
-              label="Selling price"
-              placeholder="Enter Selling price of product "
+              label= {t('selling_price')}
+              placeholder= {t('input_selling_price')}
               {...register('selling_price')}
               className="col-span-full"
               error={errors.selling_price?.message}
             />
             <Input
               type="number"
-              label="Quantity"
-              placeholder="Enter quantity of product"
+              label= {t('quantity')}
+              placeholder= {t('input_quantity')}
               {...register('quantity')}
               className="col-span-full"
               error={errors.quantity?.message}
@@ -156,10 +158,10 @@ export default function CreateProductImportDetail() {
 
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
-                Cancel
+              {t('cancel')}
               </Button>
               <Button type="submit" isLoading={isCreateLoading} className="w-full @xl:w-auto">
-                Add product
+                {t('btn_add')}
               </Button>
             </div>
           </>

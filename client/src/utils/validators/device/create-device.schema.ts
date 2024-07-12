@@ -10,6 +10,7 @@ export const createDeviceSchema = z.object({
     .string()
     .min(1, { message: 'Please enter description' })
     .max(100, { message: 'Description must not exceed 100 characters' }),
+  status: z.string().min(1, { message: messages.statusIsRequired }),
   image: z
     .any()
     .refine((files) => {

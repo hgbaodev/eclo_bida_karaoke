@@ -4,17 +4,17 @@ import { PiTrashDuotone, PiMagnifyingGlassBold } from 'react-icons/pi';
 import StatusField from '@/components/controlled-table/status-field';
 import { Button, Input } from 'rizzui';
 import { dispatch } from '@/store';
-import { setQuery, setReset } from '@/store/slices/productSlices';
+import { setQuery, setReset, setType } from '@/store/slices/productSlices';
 import { RootState } from '@/store/types';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import useDebounce from '@/hooks/use-debounce';
+import { getProductType } from '@/store/slices/product_typeSlices';
 
 // import { getPositions } from '@/store/slices/positionSlice';
 
 export default function FilterElement() {
-  const { isFiltered, query} = useSelector((state: RootState) => state.product);
-//   const { listPositions } = useSelector((state: RootState) => state.position);
+  const { isFiltered, query,type} = useSelector((state: RootState) => state.product);
   const [searchTerm, setSearchTerm] = useState(query);
   const debounceSearchTerm = useDebounce(searchTerm, 1000);
   const { listType } = useSelector((state: RootState) => state.product_type);
@@ -23,25 +23,25 @@ export default function FilterElement() {
   }, [debounceSearchTerm]);
  
   useEffect(() => {
-    // dispatch(getPositions());
+    dispatch(getProductType());
   }, []);
-
+  console.log(listType);
   return (
     <>
       <div className="relative z-50 mb-4 flex flex-wrap items-center justify-between gap-2.5 @container ">
-        {/* <StatusField
-        //   options={listPositions}
+        <StatusField
+          options={listType}
           dropdownClassName="!z-10 w-48"
-        //   value={position}
-          placeholder="Filter by Position"
+          value={type}
+          placeholder="Filter by Product Type"
           className=" @4xl:-auto -order-3 w-full min-w-[160px] @[25rem]:w-[calc(calc(100%_-_10px)_/_2)] @4xl:-order-4 @4xl:w-auto"
           getOptionValue={(option) => option.active}
-          getOptionDisplayValue={(option) => option.name}
+          getOptionDisplayValue={(option) => option.type_name}
           onChange={(value: any) => {
-            dispatch(setRole(value));
+            dispatch(setType(value));
           }}
-        //   displayValue={(selected: string) => listPositions.find((role) => role.active === selected)?.name || selected}
-        /> */}
+          displayValue={(selected: string) => listType.find((type) => type.active === selected)?.type_name || selected}
+        />
 
         {isFiltered && (
           <Button

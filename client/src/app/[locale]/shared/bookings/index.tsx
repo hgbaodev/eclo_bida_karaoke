@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
 import { getColumns } from './columns';
-import { getDevices, setPage, setPageSize } from '@/store/slices/deviceSlice';
+import { getDevices, setPage, setPageSize } from '@/store/slices/device_slice';
 
 export default function DevicesTable() {
   const { data, isLoading, pageSize, page, totalRow, query } = useSelector((state: RootState) => state.device);

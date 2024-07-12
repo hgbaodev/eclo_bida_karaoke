@@ -1,6 +1,5 @@
 'use client';
 
-// import { STATUSES, type User } from '@/data/users-data';
 import { Text, Badge, Tooltip, ActionIcon } from 'rizzui';
 import { HeaderCell } from '@/components/ui/table';
 import PencilIcon from '@/components/icons/pencil';
@@ -13,21 +12,21 @@ import toast from 'react-hot-toast';
 import EditUser from '../edit-user';
 import WithPermission from '@/guards/with-permisson';
 
-export function getStatusBadge(status: User['status']) {
+export function getStatusBadge(status: User['status'], t: any) {
   switch (status) {
     case STATUSES.InActive:
       return (
         <div className="flex items-center">
           <Badge color="danger" renderAsDot />
 
-          <Text className="ms-2 font-medium text-red-dark">InActive</Text>
+          <Text className="ms-2 font-medium text-red-dark">{t('inactive')}</Text>
         </div>
       );
     case STATUSES.Active:
       return (
         <div className="flex items-center">
           <Badge color="success" renderAsDot />
-          <Text className="ms-2 font-medium text-green-dark">Active</Text>
+          <Text className="ms-2 font-medium text-green-dark">{t('active')}</Text>
         </div>
       );
     default:
@@ -40,16 +39,16 @@ export function getStatusBadge(status: User['status']) {
   }
 }
 
-export const getColumns = (openModal: (args: any) => void) => [
+export const getColumns = (openModal: (args: any) => void, t: any) => [
   {
-    title: <HeaderCell title="Id" />,
+    title: <HeaderCell title={t('id')} />,
     dataIndex: 'id',
     key: 'id',
     width: 50,
     render: (_: any, user: User, index: number) => <div className="inline-flex ps-3">{index + 1}</div>,
   },
   {
-    title: <HeaderCell title="Name" />,
+    title: <HeaderCell title={t('name')} />,
     dataIndex: 'fullName',
     key: 'fullName',
     width: 50,
@@ -58,25 +57,25 @@ export const getColumns = (openModal: (args: any) => void) => [
     ),
   },
   {
-    title: <HeaderCell title="Role" />,
+    title: <HeaderCell title={t('role')} />,
     dataIndex: 'role',
     key: 'role',
     width: 50,
     render: (_: string, user: User) => user.role.name,
   },
   {
-    title: <HeaderCell title="Created" />,
+    title: <HeaderCell title={t('created')} />,
     dataIndex: 'created_at',
     key: 'created_at',
     width: 50,
     render: (value: Date) => <DateCell date={value} />,
   },
   {
-    title: <HeaderCell title="Status" />,
+    title: <HeaderCell title={t('status')} />,
     dataIndex: 'status',
     key: 'status',
     width: 10,
-    render: (status: User['status']) => getStatusBadge(status),
+    render: (status: User['status']) => getStatusBadge(status, t),
   },
   {
     title: <></>,
@@ -86,7 +85,7 @@ export const getColumns = (openModal: (args: any) => void) => [
     render: (_: string, user: User) => (
       <div className="flex items-center justify-end gap-3 pe-3">
         <WithPermission permission="user.Update">
-          <Tooltip size="sm" content={'Edit User'} placement="top" color="invert">
+          <Tooltip size="sm" content={t('editUser')} placement="top" color="invert">
             <ActionIcon
               onClick={() => {
                 const data = {
@@ -111,15 +110,15 @@ export const getColumns = (openModal: (args: any) => void) => [
         </WithPermission>
         <WithPermission permission="user.Delete">
           <DeletePopover
-            title={`Delete this user`}
-            description={`Are you sure you want to delete this #${user.last_name} user?`}
+            title={t('deleteUserTitle')}
+            description={`${t('deleteUserDescription')} #${user.last_name} ${t('user')}`}
             onDelete={async () => {
               const result = await dispatch(deleteUser(user.active)); // Remove the .then() block
               if (deleteUser.fulfilled.match(result)) {
                 await dispatch(getUsers({ page: 1, pageSize: 5, query: '', role: '', status: '' }));
-                toast.success(`User #${user.first_name} ${user.last_name} has been deleted successfully.`);
+                toast.success(`${t('user')} #${user.first_name} ${user.last_name} ${t('deletedSuccessfully')}.`);
               } else {
-                toast.error(`Failed to delete user #${user.active}.`);
+                toast.error(`${t('failedToDeleteUser')} #${user.active}.`);
               }
             }}
           />

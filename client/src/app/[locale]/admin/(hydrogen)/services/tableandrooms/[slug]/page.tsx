@@ -4,21 +4,21 @@ import ServiceDevicesTable from '@/app/[locale]/shared/tableandrooms/service-dev
 import { useEffect, useState } from 'react';
 import { dispatch } from '@/store';
 import { getServiceByActive } from '@/store/slices/serviceSlice';
-
-const pageHeader = {
-  title: 'Service detail',
-  breadcrumb: [
-    {
-      href: '/admin',
-      name: 'Analytics',
-    },
-    {
-      name: 'Service Detail',
-    },
-  ],
-};
+import { useTranslations } from 'next-intl';
 
 export default function BlankPage({ params }: { params: { slug: string } }) {
+  const t = useTranslations('tables_rooms');
+  const pageHeader = {
+    breadcrumb: [
+      {
+        href: '/admin',
+        name: t('breadcrumb_analytics'),
+      },
+      {
+        name: t('service_detailed_title'),
+      },
+    ],
+  };
   const [serviceName, setServiceName] = useState('');
   useEffect(() => {
     const fetch = async () => {

@@ -33,10 +33,8 @@ export interface DatePickerProps<selectsRange extends boolean | undefined>
   extends Omit<ReactDatePickerProps, 'selectsRange' | 'onChange'> {
   /** Pass function in onChange prop to handle selecting value */
   onChange(
-    date: selectsRange extends false | undefined
-      ? Date | null
-      : [Date | null, Date | null],
-    event: React.SyntheticEvent<any> | undefined
+    date: selectsRange extends false | undefined ? Date | null : [Date | null, Date | null],
+    event: React.SyntheticEvent<any> | undefined,
   ): void;
   /** Whether range selecting is enabled */
   selectsRange?: selectsRange;
@@ -60,10 +58,7 @@ export const DatePicker = ({
   const handleCalenderClose = () => setIsCalenderOpen(false);
   return (
     <div
-      className={cn(
-        'flex [&_.react-datepicker-wrapper]:flex [&_.react-datepicker-wrapper]:w-full',
-        props?.className
-      )}
+      className={cn('flex [&_.react-datepicker-wrapper]:flex [&_.react-datepicker-wrapper]:w-full', props?.className)}
     >
       <ReactDatePicker
         customInput={
@@ -71,12 +66,7 @@ export const DatePicker = ({
             <Input
               prefix={<PiCalendarBlank className="h-5 w-5 text-gray-500" />}
               suffix={
-                <PiCaretDownBold
-                  className={cn(
-                    'h-4 w-4 text-gray-500 transition',
-                    isCalenderOpen && 'rotate-180'
-                  )}
-                />
+                <PiCaretDownBold className={cn('h-4 w-4 text-gray-500 transition', isCalenderOpen && 'rotate-180')} />
               }
               {...inputProps}
             />
@@ -97,7 +87,7 @@ export const DatePicker = ({
           prevNextButtonClasses.children.border,
           prevNextButtonClasses.children.size,
           timeOnlyClasses.base,
-          calendarClassName
+          calendarClassName,
         )}
         {...props}
       />

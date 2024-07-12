@@ -14,21 +14,21 @@ import toast from 'react-hot-toast';
 import NotificationDropdown from '@/layouts/kitchen-notification-dropdown';
 import RingBellSolidIcon from '@/components/icons/ring-bell-solid';
 import { Badge, ActionIcon } from 'rizzui';
-import { appendNoti, setIsLoading } from '@/store/slices/kitchen_order_notificationSlice';
+import { appendNoti, setIsLoading } from '@/store/slices/kitchen_order_notification_slice';
 import { useTranslations } from 'next-intl';
 
 export default function BlankPage() {
   const t = useTranslations('tables_rooms');
 
   const pageHeader = {
-    title: t('tables_rooms'),
+    title: t('title'),
     breadcrumb: [
       {
         href: '/admin',
-        name: t('analytics'),
+        name: t('breadcrumb_analytics'),
       },
       {
-        name: t('tables_rooms'),
+        name: t('title'),
       },
     ],
   };

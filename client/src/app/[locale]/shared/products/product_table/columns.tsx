@@ -13,7 +13,7 @@ import { deleteProduct, getProducts } from '@/store/slices/productSlices';
 import toast from 'react-hot-toast';
 import EditProduct from '../edit-product';
 
-export const getColumns = (openModal: (args: any) => void) => [
+export const getColumns = (openModal: (args: any) => void, t:any) => [
   {
     title: <HeaderCell title="Id" />,
     dataIndex: 'id',
@@ -22,7 +22,7 @@ export const getColumns = (openModal: (args: any) => void) => [
     render: (_: any, product: Product, index: number) => <div className="inline-flex ps-3">{index + 1}</div>,
   },
   {
-    title: <HeaderCell title="Image" />,
+    title: <HeaderCell title={t('image')} />,
     dataIndex: 'image',
     key: 'image',
     width: 50,
@@ -39,28 +39,28 @@ export const getColumns = (openModal: (args: any) => void) => [
     ),
   },
   {
-    title: <HeaderCell title="Product name" />,
+    title: <HeaderCell title={t('product_name')} />,
     dataIndex: 'name',
     key: 'name',
     width: 50,
     render: (_: string, product: Product) => product.name,
   },
   {
-    title: <HeaderCell title="Type" />,
+    title: <HeaderCell title={t('product_type')} />,
     dataIndex: 'type',
     key: 'type',
     width: 100,
     render: (_: string, product: Product) => product.product_type.type_name,
   },
   {
-    title: <HeaderCell title="Selling Price" />,
+    title: <HeaderCell title={t('selling_price')} />,
     dataIndex: 'selling_price',
     key: 'selling_price',
     width: 50,
     render: (_: number, product: Product) => product.selling_price,
   },
   {
-    title: <HeaderCell title="Quantity" />,
+    title: <HeaderCell title={t('quantity')} />,
     dataIndex: 'quantity',
     key: 'quantity',
     width: 50,
@@ -73,7 +73,7 @@ export const getColumns = (openModal: (args: any) => void) => [
     width: 10,
     render: (_: string, product: Product) => (
       <div className="flex items-center justify-end gap-3 pe-3">
-        <Tooltip size="sm" content={'Edit Product'} placement="top" color="invert">
+        <Tooltip size="sm" content={t('edit_product')} placement="top" color="invert">
           <ActionIcon
             onClick={() => {
               const data = {
@@ -95,15 +95,15 @@ export const getColumns = (openModal: (args: any) => void) => [
           </ActionIcon>
         </Tooltip>
         <DeletePopover
-          title={`Delete this user`}
-          description={`Are you sure you want to delete this ${product.name} ?`}
+          title={t('delete')}
+          description={t('delete_product')}
           onDelete={async () => {
             const result = await dispatch(deleteProduct(product.active)); // Remove the .then() block
             if (deleteProduct.fulfilled.match(result)) {
-              await dispatch(getProducts({ page: 1, pageSize: 5, query: '' }));
-              toast.success(`Product #${product.name} has been deleted successfully.`);
+              await dispatch(getProducts({ page: 1, pageSize: 5, query: '',type:'' }));
+              toast.success(t('success'));
             } else {
-              toast.error(`Failed to delete staff #${product.active}.`);
+              toast.error(t('failed'));
             }
           }}
         />

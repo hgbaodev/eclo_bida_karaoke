@@ -10,12 +10,14 @@ import { getPrices, setPage, setPageSize } from '@/store/slices/priceSlice';
 import { getColumns } from './columns';
 import { useColumn } from '@/hooks/use-column';
 import dynamic from 'next/dynamic';
+import { useTranslations } from 'next-intl';
 
 const FilterElement = dynamic(() => import('@/app/[locale]/shared/prices/prices-table/filter-element'), {
   ssr: false,
 });
 
 export default function PricesTable() {
+  const t = useTranslations('price');
   const { openModal } = useModal();
   const { data, isLoading, pageSize, page, totalRow, status, query } = useSelector((state: RootState) => state.price);
 
@@ -31,7 +33,7 @@ export default function PricesTable() {
     fetch();
   }, [page, pageSize, query, status]);
 
-  const columns = useMemo(() => getColumns(openModal), []);
+  const columns = useMemo(() => getColumns(openModal, t), [openModal, t]);
 
   const handleChangePageSize = (size: any) => {
     dispatch(setPageSize(size));

@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
 import usePusher from '@/hooks/use-pusher';
-import { getKitchenOrders, appendOrders } from '@/store/slices/kitchen_orderSlice';
+import { getKitchenOrders, appendOrders } from '@/store/slices/kitchen_order_slice';
 import toast from 'react-hot-toast';
 import { useTranslations } from 'next-intl';
 

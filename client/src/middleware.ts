@@ -1,4 +1,6 @@
 import createMiddleware from 'next-intl/middleware';
+import { useSelector } from 'react-redux';
+import { RootState } from './store/types';
 
 const defaultLocale = typeof navigator !== 'undefined' ? navigator.language.split('-')[0] : 'en';
 
@@ -9,11 +11,11 @@ export default createMiddleware({
 });
 
 export const config = {
-  // Match only internationalized pathnames and specific paths
   matcher: ['/', '/admin/:path*', '/auth/:path*', '/(vi|en)/:path*'],
 };
-// Custom middleware function to handle specific routes
-export function customMiddleware(req: any, res: any, next: any) {
+
+export function CustomMiddleware(req: any, res: any, next: any) {
+  const { role } = useSelector((state: RootState) => state.auth);
   const { url } = req;
 
   // List of specific paths to redirect
@@ -25,13 +27,23 @@ export function customMiddleware(req: any, res: any, next: any) {
   });
 
   if (shouldRedirect) {
-    // Determine the correct locale prefix based on the current URL
     const currentPath = pathsToRedirect.find((path) => url.startsWith(path));
     const redirectedUrl = `/en${url.replace(currentPath, `${currentPath}`)}`;
 
     res.writeHead(301, { Location: redirectedUrl });
     res.end();
     return;
+  }
+
+  // Permission check for /admin/users route
+  if (url.startsWith('/[locale]/admin/users') || url.startsWith('/admin/users')) {
+    // Check if the user has 'user.View' permission
+    if (!role.permissions.includes('user.View' as never)) {
+      // Redirect to unauthorized page or show error message
+      res.writeHead(403, { 'Content-Type': 'text/plain' });
+      res.end('Unauthorized: You do not have permission to view this page.');
+      return;
+    }
   }
 
   // Continue to the next middleware or handler

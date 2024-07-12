@@ -14,6 +14,7 @@ import { TbToolsKitchen3 } from 'react-icons/tb';
 import { GiReceiveMoney } from 'react-icons/gi';
 import { AiOutlineBarChart } from 'react-icons/ai';
 import { useTranslations } from 'next-intl';
+import { permission } from 'process';
 
 export interface MenuItem {
   name: string;
@@ -106,12 +107,7 @@ export const MenuItems = () => {
       name: t('users'),
       href: routes.admin.users,
       icon: <HiOutlineUsers />,
-      permission: [
-        {
-          functional: 'user',
-          action: 'View',
-        },
-      ],
+      permission: 'user.View',
     },
     {
       name: t('roles_permissions'),

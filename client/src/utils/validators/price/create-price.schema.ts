@@ -4,6 +4,7 @@ import { messages } from '@/config/messages';
 // form zod validation schema
 export const CreatePriceSchema = z.object({
   name: z.string().min(1, { message: messages.nameIsRequired }),
+  service_type: z.string().min(1, { message: 'Service type is required' }),
   pricePerHour: z.preprocess((val) => {
     if (typeof val === 'string' || typeof val === 'number') {
       return parseFloat(val as string);
