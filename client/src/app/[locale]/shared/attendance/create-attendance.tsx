@@ -1,13 +1,15 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { PiXBold } from 'react-icons/pi';
-import { SubmitHandler } from 'react-hook-form';
+import { Controller, SubmitHandler } from 'react-hook-form';
 import { Form } from '@/components/ui/form';
 import { Input, Button, ActionIcon, Title } from 'rizzui';
 import { useModal } from '@/app/[locale]/shared/modal-views/use-modal';
 import { dispatch } from '@/store';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
+import Select1, { StylesConfig } from 'react-select';
+import { OptionType } from 'dayjs';
 import toast from 'react-hot-toast';
 import { Attendance, getAttendances } from '@/store/slices/attendanceSlice';
 import { AttendanceInput, AttendanceSchema } from '@/utils/validators/attendance/attendance-schema';
@@ -18,6 +20,7 @@ export default function CreateAttendance() {
   const [errors, setErrors] = useState<any>({});
   const { isCreateLoading } = useSelector((state: RootState) => state.staff);
   const { month, year } = useSelector((state: RootState) => state.attendance);
+  const { listStaffs } = useSelector((state: RootState) => state.staff);
   const now = new Date();
   const Year = now.getFullYear();
   const Month = String(now.getMonth() + 1).padStart(2, '0');
@@ -32,11 +35,11 @@ export default function CreateAttendance() {
       setCurrentTime(`${hours}:${minutes}`);
     }, []);
 
-    return <Input type="time" label="Time" className="col-span-[1/2]" value={currentTime} readOnly />;
+    return <Input type="time" label="Time" className="col-span-full" value={currentTime} readOnly />;
   };
   const onSubmit: SubmitHandler<AttendanceInput> = async (data) => {
     const dataAttendance = {
-      uuid: data.uuid,
+      staff: data.staff,
       day: data.day,
       time: data.time,
     };
@@ -72,9 +75,31 @@ export default function CreateAttendance() {
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
-            <Input label="Staff UUID" placeholder="Enter staff uuid" className="col-span-full" {...register('uuid')} />
+            <label style={{ fontWeight: 'bold' }}>Staff:</label>
+            <Controller
+              name="staff"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <Select1
+                    options={listStaffs}
+                    value={listStaffs.find((option) => option.active === field.value)}
+                    onChange={(option) => field.onChange(option.active)}
+                    name={field.name}
+                    className="col-span-full"
+                    placeholder="Select a staff"
+                    isSearchable
+                    styles={customStyles}
+                    getOptionValue={(option) => option.active}
+                    getOptionLabel={(option) => `${option.last_name} ${option.first_name} - ${option.uuid}`}
+                    aria-invalid={errors.staff ? 'true' : 'false'}
+                  />
+                  {errors.staff && <span className="error-message">{errors.staff.message}</span>}
+                </>
+              )}
+            />
             <Time />
-            <Input label="Date" className="col-span-[1/2]" value={currentDate} {...register('day')} />
+            <Input label="Date" className="col-span-full" value={currentDate} {...register('day')} />
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto" style={{ zIndex: 10 }}>
                 Cancel
@@ -89,3 +114,13 @@ export default function CreateAttendance() {
     </Form>
   );
 }
+const customStyles: StylesConfig<OptionType, boolean> = {
+  menu: (provided, state) => ({
+    ...provided,
+    zIndex: 9999,
+    position: 'absolute',
+    maxHeight: '300px',
+    marginTop: '-1px',
+    background: 'white',
+  }),
+};

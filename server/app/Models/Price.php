@@ -18,6 +18,7 @@ class Price extends Model
         'status',
         'pricePerHour',
         'active',
+        'service_type_id',
     ];
 
     protected $hidden = [
@@ -25,7 +26,6 @@ class Price extends Model
         'created_at',
         'updated_at',
         'deleted_at',
-        'service_type_id'
     ];
     protected static function boot()
     {

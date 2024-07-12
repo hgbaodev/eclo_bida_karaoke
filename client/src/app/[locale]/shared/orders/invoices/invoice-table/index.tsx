@@ -10,8 +10,10 @@ import { setPage, setPageSize } from '@/store/slices/invoiceSlice';
 import { dispatch } from '@/store';
 import { useModal } from '@/app/[locale]/shared/modal-views/use-modal';
 import { getInvoices } from '@/store/slices/invoiceSlice';
+import { useTranslations } from 'next-intl';
 
 export default function InvoicesTable() {
+  const t = useTranslations('invoices');
   const { data, pageSize, isLoading, page, totalRow, query } = useSelector((state: RootState) => state.invoice);
 
   const { openModal } = useModal();
@@ -29,9 +31,9 @@ export default function InvoicesTable() {
   };
 
   const columns = useMemo(
-    () => getColumns(openModal),
+    () => getColumns(openModal, t),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [openModal],
+    [openModal, t],
   );
 
   const { visibleColumns } = useColumn(columns);

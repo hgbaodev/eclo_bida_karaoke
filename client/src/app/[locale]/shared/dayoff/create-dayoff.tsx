@@ -17,16 +17,27 @@ import { createDayOffSchema, CreateDayOffInput } from '@/utils/validators/dayoff
 import { createDayoff, getDayoffs } from '@/store/slices/dayoffSlice';
 import toast from 'react-hot-toast';
 import { OptionType } from 'dayjs';
+import { getAttendances, updateAttendance } from '@/store/slices/attendanceSlice';
 
 export default function CreateDayOff() {
   const { closeModal } = useModal();
   const [reset, setReset] = useState({});
   const [errors, setErrors] = useState<any>({});
+  const { month, year } = useSelector((state: RootState) => state.attendance);
   const { pageSize, page, query, isCreateLoading } = useSelector((state: RootState) => state.dayoff);
   const { listStaffs } = useSelector((state: RootState) => state.staff);
   const onSubmit: SubmitHandler<CreateDayOffInput> = async (data) => {
     const result: any = await dispatch(createDayoff(data));
+    const dataAttendance = {
+      staff: data.staff,
+      day: data.day_off,
+      time: '',
+      check_in: '',
+      check_out: '',
+      day_off: data.type === 'A' ? true : false,
+    };
     if (createDayoff.fulfilled.match(result)) {
+      dispatch(updateAttendance(dataAttendance));
       setReset({
         staff: '',
         type: '',
@@ -35,6 +46,7 @@ export default function CreateDayOff() {
       });
       setErrors({});
       closeModal();
+      dispatch(getAttendances({ month, year }));
       await dispatch(getDayoffs({ page, pageSize, query }));
       toast.success('Created successfully');
     } else {

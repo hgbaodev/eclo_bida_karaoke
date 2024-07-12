@@ -15,7 +15,7 @@ class SalaryRepository implements SalaryRepositoryInterface
         $year = $request->input('year');
         $salary = Salary::query()->with(['staff', 'staff.position']);
         if ($query) {
-            $salary->whereRaw("CONCAT(first_name,' ',last_name,' ',uuid) LIKE '%$query%'");
+            $salary->whereRaw("CONCAT(staff.first_name, ' ',staff.last_name) LIKE ?", ["%$query%"]);
         }
         if ($position) {
             $salary->whereHas('position', function ($query) use ($position) {

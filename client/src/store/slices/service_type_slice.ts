@@ -1,11 +1,11 @@
 // userSlice.js
 import axiosInstance from '@/api/axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { service_typeType } from '../types';
+import { service_type_type } from '../types';
 import env from '@/env';
-import { EditServiceTypeInput } from '@/utils/validators/service-type/edit-service_type.schema';
+import { EditServiceTypeInput } from '@/utils/validators/service-type/edit-service-type.schema';
 
-const initialState: service_typeType = {
+const initialState: service_type_type = {
   data: [],
   isLoading: false,
   isFiltered: false,
@@ -35,6 +35,18 @@ export const getServiceTypes = createAsyncThunk(
     }
   },
 );
+
+export const getAllServiceTypes = createAsyncThunk('all_service_types', async () => {
+  const url = new URL('/api/v1/service_types', env.NEXT_API_URL);
+  url.searchParams.set('all', 'true');
+
+  try {
+    const response = await axiosInstance.get(url.href);
+    return response.data;
+  } catch (error: any) {
+    throw error;
+  }
+});
 
 export const createServiceType = createAsyncThunk(
   'service_types/createService_type',
@@ -112,7 +124,7 @@ const serviceTypeSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getServiceTypes.pending, (state: service_typeType) => {
+      .addCase(getServiceTypes.pending, (state: service_type_type) => {
         state.isLoading = true;
       })
       .addCase(getServiceTypes.fulfilled, (state, action) => {
@@ -124,7 +136,7 @@ const serviceTypeSlice = createSlice({
       .addCase(getServiceTypes.rejected, (state) => {
         state.isLoading = false;
       })
-      .addCase(createServiceType.pending, (state: service_typeType) => {
+      .addCase(createServiceType.pending, (state: service_type_type) => {
         state.isCreateLoading = true;
       })
       .addCase(createServiceType.fulfilled, (state, action) => {
@@ -133,7 +145,7 @@ const serviceTypeSlice = createSlice({
       .addCase(createServiceType.rejected, (state) => {
         state.isCreateLoading = false;
       })
-      .addCase(updateServiceType.pending, (state: service_typeType) => {
+      .addCase(updateServiceType.pending, (state: service_type_type) => {
         state.isUpdateLoading = true;
       })
       .addCase(updateServiceType.fulfilled, (state, action) => {
@@ -141,6 +153,17 @@ const serviceTypeSlice = createSlice({
       })
       .addCase(updateServiceType.rejected, (state) => {
         state.isUpdateLoading = false;
+      })
+      .addCase(getAllServiceTypes.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAllServiceTypes.fulfilled, (state, action) => {
+        const result = action.payload.data;
+        state.isLoading = false;
+        state.data = result.result;
+      })
+      .addCase(getAllServiceTypes.rejected, (state) => {
+        state.isLoading = false;
       });
   },
 });

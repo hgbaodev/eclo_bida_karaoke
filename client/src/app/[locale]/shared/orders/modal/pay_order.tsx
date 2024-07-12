@@ -13,8 +13,10 @@ import { dispatch } from '@/store';
 import { payOrder } from '@/store/slices/orderSlice';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
+import { useTranslations } from 'next-intl';
 
 export default function PayOrder() {
+  const t = useTranslations('invoices');
   const router = useRouter();
   const { closeModal } = useModal();
   const { order, isLoadingPayOrder, isView } = useSelector((state: RootState) => state.order);
@@ -61,7 +63,7 @@ export default function PayOrder() {
           <>
             <div className="col-span-full flex items-center justify-between">
               <Title as="h4" className="font-semibold text-center">
-                Infomation Order
+                {t('order_info')}
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
@@ -70,20 +72,20 @@ export default function PayOrder() {
             <div className="col-span-full">
               <div className="flex">
                 <div className="flex flex-col w-[50%] justify-center items-center space-y-2">
-                  <Text as="b">BILLIARDS CUP NEW ECLO</Text>
-                  <Text as="em">VietNamese</Text>
+                  <Text as="b">{t('company_name')}</Text>
+                  <Text as="em">{t('country')}</Text>
                   <Text as="em">0355374322</Text>
                 </div>
                 <div className="flex flex-col w-[50%]">
                   <div className="flex w-full text-center justify-normal">
-                    <Text as="b">ORDER TABLE 10</Text>
+                    <Text as="b">{t('order_table')}:</Text>
                   </div>
                   <div className="flex">
-                    <Text className="w-[100px]">Time start:</Text>
+                    <Text className="w-[100px]">{t('time_start')}:</Text>
                     <Text>{dayjs(order?.checkin_time).format('HH:mm DD/MM/YYYY')}</Text>
                   </div>
                   <div className="flex">
-                    <Text className="w-[100px]">Time end:</Text>
+                    <Text className="w-[100px]">{t('time_end')}:</Text>
                     <Text>
                       {dayjs(order?.checkout_time == null ? new Date() : order.checkout_time).format(
                         'HH:mm DD/MM/YYYY',
@@ -91,8 +93,10 @@ export default function PayOrder() {
                     </Text>
                   </div>
                   <div className="flex">
-                    <Text className="w-[100px]">Time used:</Text>
-                    <Text>{hoursDiff} Hour</Text>
+                    <Text className="w-[100px]">{t('time_used')}:</Text>
+                    <Text>
+                      {hoursDiff} {t('hour')}
+                    </Text>
                   </div>
                 </div>
               </div>
@@ -104,42 +108,44 @@ export default function PayOrder() {
               {/* <div className="w-[250px]"> */}
               <div className="flex">
                 <Text as="b" className="w-[150px]">
-                  Price:
+                  {t('price')}:
                 </Text>
-                <Text>{order?.service.price.pricePerHour}$ / 1 Hour</Text>
+                <Text>
+                  {order?.service.price.pricePerHour}$ / {t('hour')}
+                </Text>
               </div>
               <div className="flex mt-3 text-red-500">
                 <Text as="b" className="w-[150px]">
-                  Total dervices:
+                  {t('total_devices')}:
                 </Text>
                 <Text>{totalDevices} $</Text>
               </div>
               <div className="flex mt-3">
                 <Text as="b" className="w-[150px]">
-                  Total Product:
+                  {t('total_products')}:
                 </Text>
                 <Text>{totalPriceProduct} $</Text>
               </div>
               <div className="flex mt-3">
                 <Text as="b" className="w-[150px]">
-                  Total Service:
+                  {t('total_service')}:
                 </Text>
                 <Text>{totalPriceService} $</Text>
               </div>
               <div className="flex mt-3">
                 <Text as="b" className="w-[150px]">
-                  Total Price:
+                  {t('total_price')}:
                 </Text>
                 <Text>{totalEnd} $</Text>
               </div>
             </div>
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
-                Cancel
+                {t('cancel')}
               </Button>
               {!isView && (
                 <Button type="submit" isLoading={isLoadingPayOrder} className="w-full @xl:w-auto">
-                  Confirm
+                  {t('confirm')}
                 </Button>
               )}
             </div>

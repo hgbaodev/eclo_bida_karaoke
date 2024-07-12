@@ -2,9 +2,9 @@
 import axiosInstance from '@/api/axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import env from '@/env';
-import { deviceType } from '../types';
+import { device_type } from '../types';
 
-const initialState: deviceType = {
+const initialState: device_type = {
   data: [],
   isLoading: false,
   isFiltered: false,

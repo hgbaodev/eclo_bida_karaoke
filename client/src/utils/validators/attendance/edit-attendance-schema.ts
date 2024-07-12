@@ -5,6 +5,7 @@ import { messages } from '@/config/messages';
 export const editAttendanceSchema = z.object({
   uuid: z.string().min(1, { message: messages.isRequired }),
   day: z.string().min(1, { message: messages.isRequired }),
+  staff: z.string().min(1, { message: messages.isRequired }),
   check_in: z.string().nullable(),
   check_out: z.string().nullable(),
 });

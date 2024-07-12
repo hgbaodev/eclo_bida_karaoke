@@ -2,22 +2,26 @@
 
 import { useState } from 'react';
 import { PiXBold } from 'react-icons/pi';
-import { SubmitHandler } from 'react-hook-form';
+import { SubmitHandler, Controller } from 'react-hook-form';
 import { Form } from '@/components/ui/form';
-import { Input, Button, ActionIcon, Title, Textarea, FileInput } from 'rizzui';
+import { Input, Button, ActionIcon, Title, Select, Textarea, FileInput } from 'rizzui';
 import { useModal } from '@/app/[locale]/shared/modal-views/use-modal';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { CreateDeviceInput, createDeviceSchema } from '@/utils/validators/device/create-device.schema';
 import { dispatch } from '@/store';
-import { createDevice, getDevices } from '@/store/slices/deviceSlice';
+import { createDevice, getDevices } from '@/store/slices/device_slice';
 import toast from 'react-hot-toast';
+import { StatusBadge } from './devices-table/columns';
+import { statusOptions } from './type';
+import { useTranslations } from 'next-intl';
 
 export default function CreateDevice() {
   const [reset, setReset] = useState({});
   const { closeModal } = useModal();
   const [errors, setErrors] = useState<any>({});
   const { page, pageSize, query, isCreateLoading, status } = useSelector((state: RootState) => state.device);
+  const t = useTranslations('devices');
 
   const onSubmit: SubmitHandler<CreateDeviceInput> = async (data: any) => {
     if (data['image'] && data['image'].length > 0) {
@@ -28,7 +32,6 @@ export default function CreateDevice() {
       formData.append('name', data.name.toString());
       formData.append('status', data.status.toString());
       formData.append('value', data.value.toString());
-      formData.append('_method', 'PUT');
       formData.append('description', data.description.toString());
 
       try {
@@ -43,24 +46,24 @@ export default function CreateDevice() {
           setErrors({});
           closeModal();
           await dispatch(getDevices({ page, pageSize, query, status }));
-          toast.success('Device created successfully');
+          toast.success(t('device_created_success'));
         } else {
           setErrors(result?.payload?.errors);
         }
       } catch (error) {
         console.error('Failed to create device', error);
-        toast.error('Failed to create device');
+        toast.error(t('device_create_failed'));
       }
     } else {
       console.error('Image is not valid', data['image']);
-      toast.error('Image is not valid');
+      toast.error(t('image_invalid'));
     }
   };
 
   return (
     <Form<CreateDeviceInput>
       onSubmit={onSubmit}
-      // @ts-ignore
+      //@ts-ignore
       validationSchema={createDeviceSchema}
       serverError={errors}
       className="grid grid-cols-1 gap-6 p-6 @container md:grid-cols-2 [&_.rizzui-input-label]:font-medium [&_.rizzui-input-label]:text-gray-900"
@@ -70,48 +73,69 @@ export default function CreateDevice() {
           <>
             <div className="col-span-full flex items-center justify-between">
               <Title as="h4" className="font-semibold">
-                Add a new Device
+                {t('add_new_device')}
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
             <FileInput
-              label="Image"
-              placeholder="Select an image"
+              label={t('image')}
+              placeholder={t('select_image')}
               {...register('image')}
               className="col-span-full"
               accept="image/jpeg, image/jpg, image/png, image/webp"
               error={errors.image?.message?.toString() || ''}
             />
             <Input
-              label="Value (VND)"
+              label={t('value_label')}
               type="number"
-              placeholder="Enter device value"
+              placeholder={t('enter_device_value')}
               className="col-span-full"
               {...register('value')}
               error={errors.value?.message}
             />
             <Input
-              label="Name"
-              placeholder="Enter device name"
+              label={t('name_label')}
+              placeholder={t('enter_device_name')}
               {...register('name')}
               className="col-span-full"
               error={errors.name?.message}
             />
             <Textarea
-              label="Description"
-              placeholder="Enter description"
+              label={t('description_label')}
+              placeholder={t('enter_description')}
               {...register('description')}
               className="col-span-full"
               error={errors.description?.message}
             />
+            <Controller
+              name="status"
+              control={control}
+              render={({ field: { name, onChange, value } }) => (
+                <Select
+                  options={statusOptions}
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                  label={t('status_label')}
+                  placeholder={t('select_status')}
+                  className="col-span-full"
+                  error={errors?.status?.message}
+                  getOptionValue={(option: { value: any }) => option.value}
+                  getOptionDisplayValue={(option: { value: any }) => StatusBadge(option.value as any, t)}
+                  displayValue={(selected: any) => StatusBadge(selected, t)}
+                  dropdownClassName="!z-[1]"
+                  inPortal={false}
+                />
+              )}
+            />
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
-                Cancel
+                {t('cancel')}
               </Button>
               <Button type="submit" isLoading={isCreateLoading} className="w-full @xl:w-auto">
-                Create Device
+                {t('create_device')}
               </Button>
             </div>
           </>

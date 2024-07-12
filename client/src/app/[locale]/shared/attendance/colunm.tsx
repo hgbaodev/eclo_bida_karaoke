@@ -103,8 +103,9 @@ export const getColumns = (openModal: (args: any) => void, Data: Attendance[], m
                         onClick={() => {
                           const data = {
                             time: '',
+                            staff: staff.active,
                             uuid: staff.uuid,
-                            day: '',
+                            day: item.day,
                             check_in: item.check_in,
                             check_out: item.check_out,
                           };

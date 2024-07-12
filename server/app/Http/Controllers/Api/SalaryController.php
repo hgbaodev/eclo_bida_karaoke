@@ -9,8 +9,6 @@ use App\Interface\SalaryRepositoryInterface;
 use App\Interface\StaffRepositoryInterface;
 use Illuminate\Http\Request;
 
-use function PHPUnit\Framework\isEmpty;
-
 class SalaryController extends Controller
 {
     protected $salaryRepo;
@@ -39,6 +37,10 @@ class SalaryController extends Controller
                     return $this->sentErrorResponse("Staff is not found", 'error', 404);
                 }
                 $validateData['staff_id'] = $staff->id;
+                $validateData['working_days'] = 0;
+                $validateData['working_hours'] = 0;
+                $validateData['off_days'] = 0;
+                $validateData['total'] = 0;
                 unset($validateData['staff']);
                 $result = $this->salaryRepo->createSalary($validateData);
             } else {
@@ -47,14 +49,18 @@ class SalaryController extends Controller
                     $salary = [
                         'staff_id' => $staff->id,
                         'month' => $month,
-                        'year' => $year
+                        'year' => $year,
+                        'working_days' => 0,
+                        'working_hours' => 0,
+                        'off_days' => 0,
+                        'total' => 0
                     ];
                     $result = $this->salaryRepo->createSalary($salary);
                 }
             }
             return $this->sentSuccessResponse($result);
         } catch (\Exception $e) {
-            $this->sentErrorResponse($e . getMe);
+            $this->sentErrorResponse($e);
         }
     }
     /**

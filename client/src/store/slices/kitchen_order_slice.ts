@@ -1,10 +1,10 @@
 'use client';
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axiosInstance from '@/api/axios';
-import { kitchen_orderType, kitchenOrder } from '../types';
+import { kitchen_order_type, kitchenOrder } from '../types';
 import env from '@/env';
 
-const initialState: kitchen_orderType = {
+const initialState: kitchen_order_type = {
   data: [] as kitchenOrder[],
   isLoading: false,
   totalRow: 0,

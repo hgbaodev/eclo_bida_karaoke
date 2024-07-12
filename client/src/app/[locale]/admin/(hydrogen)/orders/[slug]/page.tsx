@@ -16,7 +16,7 @@ import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { Button, Loader, Text, Title, Badge, ActionIcon } from 'rizzui';
-import { appendNoti, setIsLoading } from '@/store/slices/kitchen_order_notificationSlice';
+import { appendNoti, setIsLoading } from '@/store/slices/kitchen_order_notification_slice';
 import RingBellSolidIcon from '@/components/icons/ring-bell-solid';
 import NotificationDropdown from '@/layouts/kitchen-notification-dropdown';
 import usePusher from '@/hooks/use-pusher';
@@ -61,7 +61,7 @@ export default function BlankPage({ params }: { params: { slug: string } }) {
 
     // Append the notification
     dispatch(appendNoti(data));
-    toast.success(`An order has to be delivered: ${productName} - ${productQuantity} - ${serviceName}`);
+    toast.success(`${t('an_order_has_to_be_delivered')}: ${productName} - ${productQuantity} - ${serviceName}`);
   });
 
   const handleUpdate = async () => {

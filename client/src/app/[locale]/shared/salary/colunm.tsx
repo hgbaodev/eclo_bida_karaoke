@@ -57,14 +57,14 @@ export const getColumns = (openModal: (args: any) => void) => {
       dataIndex: 'wh',
       key: 'wh',
       width: 50,
-      render: (_: string, salary: Salary) => salary.working_hours,
+      render: (_: string, salary: Salary) => salary.working_hours.toLocaleString('de-DE', { minimumFractionDigits: 2 }),
     },
     {
       title: <HeaderCell title="Total" />,
       dataIndex: 'total',
       key: 'total',
       width: 50,
-      render: (_: string, salary: Salary) => salary.total,
+      render: (_: string, salary: Salary) => salary.total.toLocaleString('de-DE', { minimumFractionDigits: 2 }),
     },
   ];
 

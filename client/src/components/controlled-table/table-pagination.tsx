@@ -2,6 +2,7 @@ import { PiCaretDownBold } from 'react-icons/pi';
 import Pagination, { type PaginationProps } from '@/components/ui/pagination';
 import { Select } from 'rizzui';
 import cn from '@/utils/class-names';
+import { useTranslations } from 'next-intl';
 
 const paginationLimitOptions = [5, 10, 15, 20, 25].map((v, idx) => ({
   id: idx,
@@ -22,13 +23,9 @@ export default function TablePagination({
   paginatorClassName = 'mt-5 xs:mt-6 sm:mt-7',
   ...props
 }: TablePaginationProps) {
+  const t = useTranslations('table');
   return (
-    <div
-      className={cn(
-        'table-pagination flex items-center justify-center sm:justify-between',
-        paginatorClassName
-      )}
-    >
+    <div className={cn('table-pagination flex items-center justify-center sm:justify-between', paginatorClassName)}>
       {!setPageSize ? (
         total && (
           <div className="hidden text-gray-500 sm:inline-flex">
@@ -37,7 +34,7 @@ export default function TablePagination({
         )
       ) : (
         <div className="hidden items-center sm:flex">
-          Rows per page:{' '}
+          {t('rows_per_page')}:{' '}
           <Select
             options={paginationLimitOptions}
             onChange={setPageSize}

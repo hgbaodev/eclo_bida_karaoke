@@ -56,4 +56,17 @@ class DayOffRepository implements DayOffRepositoryInterface
         $offday->delete();
         return $offday;
     }
+    public function countDayOffByStaff($staff_id, $month, $year)
+    {
+        $day_off = DayOffs::where("staff_id", $staff_id);
+        $day_off->whereMonth("day_off", $month)
+            ->whereYear("day_off", $year);
+        return $day_off->count();
+    }
+    public function getDayOffByStaffAndDay($staff_id, $day)
+    {
+        $day_off = DayOffs::where("staff_id", $staff_id);
+        $day_off->where("day_off", $day);
+        return $day_off->first();
+    }
 }
