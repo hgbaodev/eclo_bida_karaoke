@@ -4,10 +4,15 @@ import ModalButton from '@/app/[locale]/shared/modal-button';
 import UsersTable from '@/app/[locale]/shared/users/users-table';
 import CreateUser from '@/app/[locale]/shared/users/create-user';
 import WithPermission from '@/guards/with-permisson';
-import { useTranslations } from 'next-intl'; // Import useTranslations hook;
+import { useTranslations } from 'next-intl';
+import useCheckPermissions from '@/hooks/use-check-permission';
 
 export default function BlankPage() {
-  const t = useTranslations('users'); // Đặt tên domain translation là 'common' hoặc tên phù hợp
+  const t = useTranslations('users');
+  const check = useCheckPermissions('user.View');
+  if (!check) {
+    window.location.href = '/error/403';
+  }
 
   return (
     <>

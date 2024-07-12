@@ -4,6 +4,7 @@ import ModalButton from '@/app/[locale]/shared/modal-button';
 import CreateStaff from '@/app/[locale]/shared/staffs/create-staff';
 import StaffsTable from '@/app/[locale]/shared/staffs/staffs-table';
 import { useTranslations } from 'next-intl';
+import useCheckPermissions from '@/hooks/use-check-permission';
 
 export default function BlankPage() {
   const t = useTranslations('staffs');
@@ -19,6 +20,11 @@ export default function BlankPage() {
       },
     ],
   };
+
+  const check = useCheckPermissions('staff.View');
+  if (!check) {
+    window.location.href = '/error/403';
+  }
   return (
     <>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb}>

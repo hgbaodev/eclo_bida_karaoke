@@ -4,6 +4,7 @@ import ModalButton from '@/app/[locale]/shared/modal-button';
 import CreateShift from '@/app/[locale]/shared/shift/create-shift';
 import ShiftsTable from '@/app/[locale]/shared/shift/shifts-table';
 import { useTranslations } from 'next-intl';
+import useCheckPermissions from '@/hooks/use-check-permission';
 
 export default function BlankPage() {
   const t = useTranslations('shift');
@@ -19,6 +20,11 @@ export default function BlankPage() {
       },
     ],
   };
+
+  const check = useCheckPermissions('shifts.View');
+  if (!check) {
+    window.location.href = '/error/403';
+  }
   return (
     <>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb}>

@@ -5,8 +5,13 @@ import { useTranslations } from 'next-intl';
 
 import SuppliersTable from '@/app/[locale]/shared/suppliers/suppliers-table';
 import CreateSupplier from '@/app/[locale]/shared/suppliers/create-supplier';
+import useCheckPermissions from '@/hooks/use-check-permission';
 export default function BlankPage() {
   const t = useTranslations('suppliers');
+  const check = useCheckPermissions('supplier.View');
+  if (!check) {
+    window.location.href = '/error/403';
+  }
 
   return (
     <>
