@@ -2,24 +2,30 @@
 
 import LoggersTable from '@/app/[locale]/shared/loggers';
 import PageHeader from '@/app/[locale]/shared/page-header';
+import { useTranslations } from 'next-intl';
 
 const pageHeader = {
-  title: 'Loggers',
+  title: 'title',
   breadcrumb: [
     {
       href: '/admin',
-      name: 'Analytics',
+      name: 'breadcrumb_analytics',
     },
     {
-      name: 'Loggers',
+      name: 'title',
     },
   ],
 };
 
 export default function BlankPage() {
+  const t = useTranslations('loggers');
+
   return (
     <>
-      <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb}></PageHeader>
+      <PageHeader
+        title={t(pageHeader.title)}
+        breadcrumb={pageHeader.breadcrumb.map((item) => ({ ...item, name: t(item.name) }))}
+      ></PageHeader>
       <LoggersTable />
     </>
   );

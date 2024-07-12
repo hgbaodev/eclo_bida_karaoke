@@ -336,7 +336,8 @@
     "failed": "Failed.",
     "service_type": "Service type",
     "filter_by_status": "Filter by status",
-    "search": "Search"
+    "search": "Search",
+    "enter_service_type": "Select service type"
   },
   "devices": {
     "title": "Devices",
@@ -490,5 +491,19 @@
     "successful": "Succeeded",
     "users": "Users",
     "total": "Total"
+  },
+  "loggers": {
+    "title": "Logger",
+    "breadcrumb_analytics": "Analytics",
+    "columns": {
+      "id": "Id",
+      "name": "Name",
+      "functional": "Functional",
+      "action": "Action",
+      "role": "Role",
+      "url": "URL",
+      "ip": "IP",
+      "created_at": "Created"
+    }
   }
 }

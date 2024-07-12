@@ -109,7 +109,7 @@ export default function CreatePrice() {
                   name={name}
                   label={t('service_type')}
                   className="col-span-full"
-                  placeholder="Select a service type"
+                  placeholder={t('enter_service_type')}
                   error={errors?.service_type?.message}
                   //@ts-ignore
                   getOptionValue={(option) => option.active}
