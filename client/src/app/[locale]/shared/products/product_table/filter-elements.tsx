@@ -25,7 +25,6 @@ export default function FilterElement() {
   useEffect(() => {
     dispatch(getProductType());
   }, []);
-  console.log(listType);
   return (
     <>
       <div className="relative z-50 mb-4 flex flex-wrap items-center justify-between gap-2.5 @container ">

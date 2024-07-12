@@ -45,7 +45,6 @@ export default function EditShift({ shift, active }: { shift: EditShiftInput; ac
       className="grid grid-cols-1 gap-6 p-6 @container md:grid-cols-2 [&_.rizzui-input-label]:font-medium [&_.rizzui-input-label]:text-gray-900"
     >
       {({ setError, register, control, watch, formState: { errors } }) => {
-        console.log('errors', errors);
         return (
           <>
             <div className="col-span-full flex items-center justify-between">

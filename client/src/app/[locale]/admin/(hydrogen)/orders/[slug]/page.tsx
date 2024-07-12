@@ -21,9 +21,14 @@ import RingBellSolidIcon from '@/components/icons/ring-bell-solid';
 import NotificationDropdown from '@/layouts/kitchen-notification-dropdown';
 import usePusher from '@/hooks/use-pusher';
 import { useTranslations } from 'next-intl';
+import useCheckPermissions from '@/hooks/use-check-permission';
 
 export default function BlankPage({ params }: { params: { slug: string } }) {
   const t = useTranslations('order');
+  const check = useCheckPermissions('order.View');
+  if (!check) {
+    window.location.href = '/error/403';
+  }
   const pageHeader = {
     breadcrumb: [
       {

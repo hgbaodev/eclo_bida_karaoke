@@ -34,7 +34,6 @@ export default function CreateProductImportDetail() {
   const t = useTranslations('product_import_detail');
   const onSubmit: SubmitHandler<CreateProduct_Import_DetailtInput> = async (data) => {
     const result: any = await dispatch(createProductImportDetail(data));
-    console.log(result);
     if (createProductImportDetail.fulfilled.match(result)) {
       setReset({
         product: '',
@@ -55,7 +54,6 @@ export default function CreateProductImportDetail() {
       closeModal();
       toast.error(result.payload.errors);
     }
-    console.log(data);
   };
   return (
     <Form<CreateProduct_Import_DetailtInput>
@@ -66,7 +64,6 @@ export default function CreateProductImportDetail() {
       className="grid grid-cols-1 gap-6 p-6 @container md:grid-cols-2 [&_.rizzui-input-label]:font-medium [&_.rizzui-input-label]:text-gray-900"
     >
       {({ setError, register, control, watch, formState: { errors } }) => {
-        console.log('errors', errors);
         return (
           <>
             <div className="col-span-full flex items-center justify-between">

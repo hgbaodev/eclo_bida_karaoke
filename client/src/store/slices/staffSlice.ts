@@ -98,7 +98,6 @@ export const updateStaff = createAsyncThunk(
   'staffs/updateStaff',
   async ({ staff, active }: { staff: any; active: string }, { rejectWithValue }) => {
     try {
-      console.log(staff);
       const response = await axiosInstance.post(`staffs/${active}`, staff);
       return response.data;
     } catch (error: any) {

@@ -143,7 +143,6 @@ const product_importSlices = createSlice({
         const result = action.payload.data;
         state.isLoading = false;
         state.data1 = result;
-        console.log(state.data1);
       })
       .addCase(getSinghle_ProductImport.rejected, (state) => {
         state.isLoading = false;

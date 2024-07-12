@@ -40,7 +40,6 @@ export const getProductImportDetails = createAsyncThunk(
 
     try {
       const response = await axiosInstance.get(url.href);
-      console.log(response.data);
       return response.data;
     } catch (error: any) {
       throw error;
@@ -125,42 +124,10 @@ const product_import_detailSlices = createSlice({
         state.isLoading = false;
         state.data = result.result;
         state.totalRow = result.meta.total;
-        // console.log(state.data)
       })
       .addCase(getProductImportDetails.rejected, (state) => {
         state.isLoading = false;
       });
-
-    // .addCase(getProductImportsByActive.pending, (state: product_ImportType) => {
-    //   state.isLoading = true;
-    // })
-    // .addCase(getProductImportsByActive.fulfilled, (state, action) => {
-    //   const result = action.payload.data;
-    //   state.isLoading = false;
-    //   state.data = result;
-    //   console.log(state.data)
-    // })
-    // .addCase(getProductImportsByActive.rejected, (state) => {
-    //   state.isLoading = false;
-    // })
-    // .addCase(createProduct.pending, (state: product_Import_DetailType) => {
-    //   state.isCreateLoading = true;
-    // })
-    // .addCase(createProduct.fulfilled, (state,action) => {
-    //   state.isCreateLoading = false;
-    // })
-    // .addCase(createProduct.rejected, (state) => {
-    //   state.isCreateLoading = false;
-    // })
-    // .addCase(updateProduct.pending, (state: product_Import_DetailType) => {
-    //   state.isUpdateLoading = true;
-    // })
-    // .addCase(updateProduct.fulfilled, (state, action) => {
-    //   state.isUpdateLoading = false;
-    // })
-    // .addCase(updateProduct.rejected, (state) => {
-    //   state.isUpdateLoading = false;
-    // });
   },
 });
 

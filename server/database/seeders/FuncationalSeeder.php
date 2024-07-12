@@ -81,5 +81,11 @@ class FuncationalSeeder extends Seeder
         Functional::create([
             'name' => 'revenue',
         ]);
+        Functional::create([
+            'name' => 'order',
+        ]);
+        Functional::create([
+            'name' => 'dayoff',
+        ]);
     }
 }

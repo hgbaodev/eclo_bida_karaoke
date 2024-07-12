@@ -16,10 +16,15 @@ import RingBellSolidIcon from '@/components/icons/ring-bell-solid';
 import { Badge, ActionIcon } from 'rizzui';
 import { appendNoti, setIsLoading } from '@/store/slices/kitchen_order_notification_slice';
 import { useTranslations } from 'next-intl';
+import useCheckPermissions from '@/hooks/use-check-permission';
+import WithPermission from '@/guards/with-permisson';
 
 export default function BlankPage() {
   const t = useTranslations('tables_rooms');
-
+  const check = useCheckPermissions('order.View');
+  if (!check) {
+    window.location.href = '/error/403';
+  }
   const pageHeader = {
     title: t('title'),
     breadcrumb: [
@@ -103,32 +108,34 @@ export default function BlankPage() {
                           onClick={() => console.log('service ' + service.active + ' clicked')}
                         />
                       </Dropdown.Trigger>
-                      <Dropdown.Menu className="!z-0">
-                        {service.is_booked ? (
-                          <>
+                      <WithPermission permission="order.Create">
+                        <Dropdown.Menu className="!z-0">
+                          {service.is_booked ? (
+                            <>
+                              <Dropdown.Item
+                                onClick={() => navigate.push(`/admin/orders/${service?.order_active}`)}
+                                className="gap-2 text-xs sm:text-sm"
+                              >
+                                Pay
+                              </Dropdown.Item>
+                            </>
+                          ) : (
                             <Dropdown.Item
-                              onClick={() => navigate.push(`/admin/orders/${service?.order_active}`)}
+                              onClick={async () => {
+                                const result = await dispatch(createOrder(service?.active));
+                                if (createOrder.fulfilled.match(result)) {
+                                  navigate.push(`/admin/orders/${result.payload.data.active}`);
+                                } else {
+                                  toast.error('Failed to create order');
+                                }
+                              }}
                               className="gap-2 text-xs sm:text-sm"
                             >
-                              Pay
+                              Order
                             </Dropdown.Item>
-                          </>
-                        ) : (
-                          <Dropdown.Item
-                            onClick={async () => {
-                              const result = await dispatch(createOrder(service?.active));
-                              if (createOrder.fulfilled.match(result)) {
-                                navigate.push(`/admin/orders/${result.payload.data.active}`);
-                              } else {
-                                toast.error('Failed to create order');
-                              }
-                            }}
-                            className="gap-2 text-xs sm:text-sm"
-                          >
-                            Order
-                          </Dropdown.Item>
-                        )}
-                      </Dropdown.Menu>
+                          )}
+                        </Dropdown.Menu>
+                      </WithPermission>
                     </Dropdown>
                     <Text className="font-bold">{service.name}</Text>
                   </div>

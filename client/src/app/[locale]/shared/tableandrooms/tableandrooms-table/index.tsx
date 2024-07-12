@@ -24,8 +24,6 @@ export default function RoomAndTablesTable({ className }: { className?: string }
 
   const { openModal } = useModal();
 
-  console.log({ selectedArea });
-
   useEffect(() => {
     dispatch(getServices({ page, pageSize, query, area: selectedArea }));
   }, [page, pageSize, query, selectedArea]);

@@ -26,7 +26,6 @@ export default function EditAttendance({
   const {} = useSelector((state: RootState) => state.staff);
   const { month, year, isUpdateLoading } = useSelector((state: RootState) => state.attendance);
   const onSubmit: SubmitHandler<EditAttendanceInput> = async (data) => {
-    console.log(data);
     const dataAttendance = {
       staff: data.staff,
       day: data.day,

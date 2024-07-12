@@ -4,9 +4,15 @@ import ModalButton from '@/app/[locale]/shared/modal-button';
 import CreateCustomer from '@/app/[locale]/shared/customers/create-customer';
 import CustomersTable from '@/app/[locale]/shared/customers/customers-table';
 import { useTranslations } from 'next-intl';
+import useCheckPermissions from '@/hooks/use-check-permission';
+import WithPermission from '@/guards/with-permisson';
 
 export default function BlankPage() {
   const t = useTranslations('customers'); // Thay 'common' bằng file translation chứa các key tương ứng
+  const check = useCheckPermissions('customer.View');
+  if (!check) {
+    window.location.href = '/error/403';
+  }
   const pageHeader = {
     title: t('title'),
     breadcrumb: [
@@ -22,7 +28,9 @@ export default function BlankPage() {
   return (
     <>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb}>
-        <ModalButton label={t('add_a_new_customer')} view={<CreateCustomer />} customSize="600px" className="mt-0" />
+        <WithPermission permission="customer.Create">
+          <ModalButton label={t('add_a_new_customer')} view={<CreateCustomer />} customSize="600px" className="mt-0" />
+        </WithPermission>
       </PageHeader>
       <CustomersTable />
     </>

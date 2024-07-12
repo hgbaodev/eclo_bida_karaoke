@@ -2,6 +2,7 @@
 
 import LoggersTable from '@/app/[locale]/shared/loggers';
 import PageHeader from '@/app/[locale]/shared/page-header';
+import useCheckPermissions from '@/hooks/use-check-permission';
 import { useTranslations } from 'next-intl';
 
 const pageHeader = {
@@ -19,6 +20,10 @@ const pageHeader = {
 
 export default function BlankPage() {
   const t = useTranslations('loggers');
+  const check = useCheckPermissions('logger.View');
+  if (!check) {
+    window.location.href = '/error/403';
+  }
 
   return (
     <>
