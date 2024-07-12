@@ -458,15 +458,34 @@
     "create_role": "Tạo vai trò",
     "edit_role": "Chỉnh sửa vai trò",
     "view": "Xem",
-    "create": "Tạo",
+    "create": "Tạo mới",
     "update": "Cập nhật",
     "delete": "Xóa",
     "save": "Lưu",
     "add_a_user": "Thêm người dùng",
-    "rename": "Đổi tên",
     "remove_role": "Xóa vai trò",
     "role_created_successfully": "Vai trò được tạo thành công",
     "copied_to_clipboard": "Đã sao chép vào Clipboard",
-    "click_to_copy": "Nhấp để sao chép"
+    "click_to_copy": "Nhấp để sao chép",
+    "role": {
+      "edit_role": "Chỉnh sửa vai trò",
+      "role_access": "Quyền truy cập vai trò",
+      "admin": "Quản trị viên",
+      "user": "Người dùng",
+      "cancel": "Hủy",
+      "save": "Lưu",
+      "update_success": "Vai trò cập nhật thành công"
+    },
+    "permissions": {
+      "create": "Tạo mới",
+      "view": "Xem",
+      "update": "Cập nhật",
+      "delete": "Xóa"
+    },
+    "remove": "Xoá",
+    "rename": "Đổi tên",
+    "successful": "Thành công",
+    "users": "Người dùng",
+    "total": "Tổng"
   }
 }
