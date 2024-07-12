@@ -545,6 +545,7 @@
     "update_customer": "Update customer",
     "enter_customers_email": "Enter customer's email",
     "customer_updated_successfully": "Customer updated successfully"
+  },
   "staffs": {
     "title": "Staff",
     "analytics": "Analytics",

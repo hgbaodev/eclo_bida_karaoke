@@ -542,6 +542,7 @@
     "customer_created_successfully": "Đã tạo khách hàng thành công",
     "update_customer": "Cập nhật khách hàng",
     "customer_updated_successfully": "Đã cập nhật khách hàng thành công"
+  },
   "staffs": {
     "title": "Nhân viên",
     "analytics": "Phân tích",
