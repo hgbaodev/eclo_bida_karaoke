@@ -133,7 +133,6 @@ const userSlice = createSlice({
         state.isLoading = false;
         state.data = result.result;
         state.totalRow = result.meta.total;
-        console.log(result);
       })
       .addCase(getUsers.rejected, (state) => {
         state.isLoading = false;

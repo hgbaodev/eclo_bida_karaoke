@@ -9,6 +9,7 @@ const initialState: roleType = {
   createLoading: false,
   updateLoading: false,
   listRoles: [],
+  listFunctionals: [],
 };
 
 export const getRoles = createAsyncThunk('roles', async () => {
@@ -68,6 +69,15 @@ export const updateRole = createAsyncThunk(
   },
 );
 
+export const getFunctionals = createAsyncThunk('roles/getFunctionals', async () => {
+  try {
+    const response = await axiosInstance.get(`functionals`);
+    return response.data;
+  } catch (error: any) {
+    throw error;
+  }
+});
+
 const roleSlice = createSlice({
   name: 'role',
   initialState,
@@ -115,6 +125,9 @@ const roleSlice = createSlice({
       })
       .addCase(getAllRoles.fulfilled, (state, action) => {
         state.listRoles = action.payload.data;
+      })
+      .addCase(getFunctionals.fulfilled, (state, action) => {
+        state.listFunctionals = action.payload.data;
       });
   },
 });

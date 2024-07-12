@@ -80,6 +80,10 @@ export interface roleType {
   createLoading: boolean;
   updateLoading: boolean;
   listRoles: any[];
+  listFunctionals: {
+    label: string;
+    value: string;
+  }[];
 }
 
 export interface userType {

@@ -1,9 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PiCheckBold, PiXBold } from 'react-icons/pi';
 import { Controller, SubmitHandler } from 'react-hook-form';
-import { permissions, roles } from '@/app/[locale]/shared/roles-permissions/utils';
+import { permissions } from '@/app/[locale]/shared/roles-permissions/utils';
 import { useModal } from '@/app/[locale]/shared/modal-views/use-modal';
 import { ActionIcon, AdvancedCheckbox, Title, Button, CheckboxGroup } from 'rizzui';
 import { Form } from '@/components/ui/form';
@@ -11,7 +11,7 @@ import { RolePermissionInput, rolePermissionSchema } from '@/utils/validators/ro
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
-import { updateRole } from '@/store/slices/roleSlice';
+import { getFunctionals, updateRole } from '@/store/slices/roleSlice';
 import toast from 'react-hot-toast';
 import { useTranslations } from 'next-intl';
 
@@ -26,10 +26,16 @@ export default function EditRole({
 }) {
   const { closeModal } = useModal();
   const t = useTranslations('roles_permissions');
-  const { updateLoading } = useSelector((state: RootState) => state.role);
+  const { updateLoading, listFunctionals } = useSelector((state: RootState) => state.role);
+
+  useEffect(() => {
+    dispatch(getFunctionals());
+  }, []);
+
   const [errors, setErrors] = useState({} as any);
 
-  const onSubmit: SubmitHandler<RolePermissionInput> = (data) => {
+  const onSubmit: SubmitHandler<any> = (data) => {
+    console.log(data);
     const values = {
       id: id,
       functionals: data,
@@ -47,7 +53,6 @@ export default function EditRole({
   return (
     <Form<RolePermissionInput>
       onSubmit={onSubmit}
-      validationSchema={rolePermissionSchema}
       useFormProps={{
         defaultValues: functionals,
       }}
@@ -70,7 +75,7 @@ export default function EditRole({
               <Title as="h5" className="mb-2 text-base font-semibold">
                 {t('role.role_access')}
               </Title>
-              {roles.map(({ label, value }) => {
+              {listFunctionals.map(({ label, value }) => {
                 const parent = value.toLowerCase();
                 return (
                   <div key={value} className="flex flex-col gap-3 pb-4 md:flex-row md:items-center md:justify-between">
