@@ -26,6 +26,11 @@ class UpdatePriceRequest extends HelperRequest
             'name'=>['required'],
             'status'=>['required','in:A,D'],
             'pricePerHour'=>['required', 'numeric', 'min:1'],
+            'service_type' => [
+                'required',
+                'string',
+                'regex:/^[a-zA-Z0-9_-]{43}$/' // Chỉ cho phép các ký tự chữ cái, số, gạch ngang và gạch dưới, với độ dài cố định là 43
+            ],
         ];
     }
 }

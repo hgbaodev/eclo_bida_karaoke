@@ -11,21 +11,21 @@ import { getPrices, deletePrice } from '@/store/slices/priceSlice';
 import toast from 'react-hot-toast';
 import EditPrice from '../edit-price';
 
-export function getStatusBadge(status: Price['status']) {
+export function StatusBadge(status: Price['status'], t: any) {
   switch (status) {
     case STATUSES.InActive:
       return (
         <div className="flex items-center">
           <Badge color="danger" renderAsDot />
 
-          <Text className="ms-2 font-medium text-red-dark">InActive</Text>
+          <Text className="ms-2 font-medium text-red-dark">{t('deactive')}</Text>
         </div>
       );
     case STATUSES.Active:
       return (
         <div className="flex items-center">
           <Badge color="success" renderAsDot />
-          <Text className="ms-2 font-medium text-green-dark">Active</Text>
+          <Text className="ms-2 font-medium text-green-dark">{t('active')}</Text>
         </div>
       );
     default:
@@ -38,44 +38,44 @@ export function getStatusBadge(status: Price['status']) {
   }
 }
 
-export const getColumns = (openModal: (args: any) => void) => [
+export const getColumns = (openModal: (args: any) => void, t: any) => [
   {
-    title: <HeaderCell title="No." />,
+    title: <HeaderCell title={t('no')} />,
     dataIndex: 'no.',
     key: 'no.',
     width: 50,
     render: (_: any, price: Price, index: number) => <div className="inline-flex ps-3">{index + 1}</div>,
   },
   {
-    title: <HeaderCell title="Name" />,
-    dataIndex: 'fullName',
-    key: 'fullName',
+    title: <HeaderCell title={t('name')} />,
+    dataIndex: 'name',
+    key: 'name',
     width: 50,
     render: (_: string, price: Price) => <AvatarCard src={price.image} name={price.name} />,
   },
   {
-    title: <HeaderCell title="Price per hour" />,
+    title: <HeaderCell title={t('price_per_hour')} />,
     dataIndex: 'price',
     key: 'price',
     width: 50,
     render: (_: string, price: Price) => price.pricePerHour,
   },
   {
-    title: <HeaderCell title="Created" />,
+    title: <HeaderCell title={t('created_at')} />,
     dataIndex: 'created_at',
     key: 'created_at',
     width: 50,
     render: (value: Date) => <DateCell date={value} />,
   },
   {
-    title: <HeaderCell title="Status" />,
+    title: <HeaderCell title={t('status')} />,
     dataIndex: 'status',
     key: 'status',
     width: 10,
-    render: (status: Price['status']) => getStatusBadge(status),
+    render: (status: Price['status']) => StatusBadge(status, t),
   },
   {
-    title: <></>,
+    title: <HeaderCell title={t('action')} />,
     dataIndex: 'action',
     key: 'action',
     width: 10,
@@ -88,6 +88,7 @@ export const getColumns = (openModal: (args: any) => void) => [
                 name: price.name,
                 pricePerHour: price.pricePerHour,
                 status: price.status,
+                service_type: price.service_type,
               };
               openModal({
                 view: <EditPrice price={data} active={price.active} />,
@@ -102,15 +103,15 @@ export const getColumns = (openModal: (args: any) => void) => [
           </ActionIcon>
         </Tooltip>
         <DeletePopover
-          title={`Delete this price`}
-          description={`Are you sure you want to delete this #${price.name} price?`}
+          title={t('delete')}
+          description={t('delete_confirm_description')}
           onDelete={async () => {
             const result = await dispatch(deletePrice(price.active)); // Remove the .then() block
             if (deletePrice.fulfilled.match(result)) {
               await dispatch(getPrices({ page: 1, pageSize: 5, query: '', status: '' }));
-              toast.success(`Price #${price.name} has been deleted successfully.`);
+              toast.success(t('successful'));
             } else {
-              toast.error(`Failed to delete price #${price.active}.`);
+              toast.error(t('failed'));
             }
           }}
         />
@@ -126,6 +127,7 @@ export interface Price {
   status: any;
   image: string;
   created_at: string;
+  service_type: string;
 }
 
 export const STATUSES = {

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "clean": "rimraf -g \"{node_modules,.next,.cache}\"",
-    "dev": "next dev -p 3010",
+    "dev": "next dev -p 3010 --experimental-https",
     "build": "next build",
     "start": "next start -p 3010",
     "lint": "next lint"
@@ -27,12 +27,13 @@
     "cookies-next": "^4.2.1",
     "dayjs": "^1.11.11",
     "dotenv": "^16.4.5",
+    "firebase": "^10.12.3",
     "jotai": "^2.9.0",
     "js-cookie": "^3.0.5",
     "laravel-echo": "^1.16.1",
     "lodash": "^4.17.21",
     "lucide-react": "^0.407.0",
-    "next": "^14.2.4",
+    "next": "^14.2.5",
     "next-auth": "^4.24.7",
     "next-intl": "^3.15.5",
     "next-redux-wrapper": "^8.1.0",

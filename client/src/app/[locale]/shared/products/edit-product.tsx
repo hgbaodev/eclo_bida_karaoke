@@ -33,7 +33,6 @@ export default function EditProduct({ product, active }: { product: EditProductI
 
       try {
         const result: any = await dispatch(updateProduct({ formData, active }));
-        console.log(result);
         if (updateProduct.fulfilled.match(result)) {
           setReset({
             name: '',

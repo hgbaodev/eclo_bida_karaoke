@@ -7,10 +7,11 @@ import ControlledTable from '@/components/controlled-table';
 import { getColumns } from '@/app/[locale]/shared/tableandrooms/service-devices-table/columns';
 import { RootState } from '@/store/types';
 import { dispatch, useSelector } from '@/store';
-import { getServiceDevicesDetail, setPage, setPageSize } from '@/store/slices/service_device_detailSlice';
+import { getServiceDevicesDetail, setPage, setPageSize } from '@/store/slices/service_device_detail_slice';
 import { useModal } from '../../modal-views/use-modal';
 import ModalButton from '@/app/[locale]/shared/modal-button';
 import CreateServiceDeviceDetail from '@/app/[locale]/shared/tableandrooms/create-service-device-detail';
+import { useTranslations } from 'next-intl';
 
 const FilterElement = dynamic(
   () => import('@/app/[locale]/shared/tableandrooms/service-devices-table/filter-elements'),
@@ -20,6 +21,7 @@ const FilterElement = dynamic(
 );
 
 export default function ServiceDevicesTable({ serviceActive }: { serviceActive: string }) {
+  const t = useTranslations('tables_rooms');
   const { openModal } = useModal();
   const { data, isLoading, pageSize, page, totalRow, status, query } = useSelector(
     (state: RootState) => state.service_device_detail,
@@ -37,9 +39,9 @@ export default function ServiceDevicesTable({ serviceActive }: { serviceActive: 
   }, [page, pageSize, query, status, serviceActive]);
 
   const columns = useMemo(
-    () => getColumns(openModal),
+    () => getColumns(openModal, t),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
+    [t],
   );
 
   const handleChangePageSize = (size: any) => {
@@ -55,19 +57,19 @@ export default function ServiceDevicesTable({ serviceActive }: { serviceActive: 
       <div className="mb-4 flex items-center space-x-4">
         <p className="text-sm text-blue-600 flex items-center">
           <span className="inline-block w-3 h-3 bg-blue-600 mr-2 rounded-full"></span>
-          Đang sử dụng
+          {t('in_use')}
         </p>
         <p className="text-sm text-green-600 flex items-center">
           <span className="inline-block w-3 h-3 bg-green-600 mr-2 rounded-full"></span>
-          Khả dụng
+          {t('available')}
         </p>
         <p className="text-sm text-yellow-600 flex items-center">
           <span className="inline-block w-3 h-3 bg-yellow-600 mr-2 rounded-full"></span>
-          Bảo trì
+          {t('maintenance')}
         </p>
         <p className="text-sm text-gray-600 flex items-center">
           <span className="inline-block w-3 h-3 bg-gray-400 mr-2 rounded-full"></span>
-          Không hoạt động
+          {t('out_of_order')}
         </p>
       </div>
     );
@@ -80,7 +82,7 @@ export default function ServiceDevicesTable({ serviceActive }: { serviceActive: 
       <div className="flex justify-between items-center mb-4">
         <StatusLegend />
         <ModalButton
-          label="Add a new device"
+          label={t('add')}
           view={<CreateServiceDeviceDetail serviceActive={serviceActive} />}
           customSize="600px"
           className="mt-0 px-4 py-2 text-sm w-auto min-w-max"

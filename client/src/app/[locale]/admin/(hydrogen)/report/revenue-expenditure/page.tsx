@@ -9,21 +9,22 @@ import { DatePicker } from '@/components/ui/datepicker';
 import dayjs from 'dayjs';
 import { dispatch } from '@/store';
 import { getRevenueEx } from '@/store/slices/statisticalSlice';
-
-const pageHeader = {
-  title: 'Revenue Expenditure',
-  breadcrumb: [
-    {
-      href: '#',
-      name: 'Report',
-    },
-    {
-      name: 'Revenue Expenditure',
-    },
-  ],
-};
+import { useTranslations } from 'next-intl';
 
 export default function BlankPage() {
+  const t = useTranslations('revenue-expenditure');
+  const pageHeader = {
+    title: t('title'),
+    breadcrumb: [
+      {
+        href: '#',
+        name: t('breadcrumb_report'),
+      },
+      {
+        name: t('title'),
+      },
+    ],
+  };
   const [drawerState, setDrawerState] = React.useState(false);
   const [starRangeDate, setStartRangeDate] = React.useState<Date | null>(null);
   const [endRangeDate, setEndRangeDate] = React.useState<Date | null>(null);
@@ -57,12 +58,12 @@ export default function BlankPage() {
     <>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb}>
         <Button color="primary" onClick={() => setDrawerState(true)}>
-          <FaFilter strokeWidth="1" className="h-4 w-4 mr-2" /> <span> Add Condition</span>{' '}
+          <FaFilter strokeWidth="1" className="h-4 w-4 mr-2" /> <span> {t('add_condition')}</span>{' '}
         </Button>
         <Drawer isOpen={drawerState} onClose={() => setDrawerState(false)}>
           <div className="card">
             <div className="card-header flex justify-between px-8 py-4 bg-primary">
-              <h3 className="card-title text-white">Filter</h3>
+              <h3 className="card-title text-white">{t('filter')}</h3>
               <div className="card-options">
                 <ActionIcon onClick={() => setDrawerState(false)} rounded="full">
                   <IoIosClose className="w-5 h-5" />
@@ -71,7 +72,7 @@ export default function BlankPage() {
             </div>
             <div className="card-body px-8 py-4">
               <div className="flex flex-col space-y-3">
-                <Text>Choose Date</Text>
+                <Text>{t('choose_date')}</Text>
                 <DatePicker
                   selected={starRangeDate}
                   onChange={handleRangeChange}
@@ -93,7 +94,7 @@ export default function BlankPage() {
                     }
                   }}
                 >
-                  Apply
+                  {t('apply')}
                 </Button>
               </div>
             </div>

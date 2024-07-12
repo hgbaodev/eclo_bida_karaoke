@@ -13,22 +13,51 @@ class RoleFunctionalPermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('role_functional_permissions')->insert([
-            ['role_id' => 1,'functional_id' => 1,'permission_id' => PermissionEnum::VIEW],
-            ['role_id' => 1,'functional_id' => 1,'permission_id' => PermissionEnum::CREATE],
-            ['role_id' => 1,'functional_id' => 1,'permission_id' => PermissionEnum::UPDATE],
-            ['role_id' => 1,'functional_id' => 1,'permission_id' => PermissionEnum::DELETE],
-        ]);
+        $functionalNames = [
+            'user',
+            'customer',
+            'logger',
+            'import',
+            'product',
+            'kitchenorder',
+            'supplier',
+            'shiftdetail',
+            'schedule',
+            'dayoff',
+            'attendance',
+            'shifts',
+            'position',
+            'salary',
+            'staff',
+            'role',
+            'device',
+            'table&room',
+            'servicetype',
+            'price',
+            'statistical',
+            'revenue'
+        ];
 
-        DB::table('role_functional_permissions')->insert([
-            ['role_id' => 1,'functional_id' => 2,'permission_id' => PermissionEnum::CREATE],
-            ['role_id' => 1,'functional_id' => 2,'permission_id' => PermissionEnum::UPDATE],
-            ['role_id' => 1,'functional_id' => 2,'permission_id' => PermissionEnum::DELETE],
-            ['role_id' => 1,'functional_id' => 2,'permission_id' => PermissionEnum::VIEW],
-        ]);
+        $permissions = [
+            PermissionEnum::VIEW,
+            PermissionEnum::CREATE,
+            PermissionEnum::UPDATE,
+            PermissionEnum::DELETE
+        ];
 
-        DB::table('role_functional_permissions')->insert([
-            ['role_id' => 2,'functional_id' => 1,'permission_id' => PermissionEnum::CREATE],
-        ]);
+        $functionalIds = DB::table('functionals')->whereIn('name', $functionalNames)->pluck('id', 'name');
+
+        $data = [];
+        foreach ($functionalNames as $functionalName) {
+            foreach ($permissions as $permission) {
+                $data[] = [
+                    'role_id' => 1,
+                    'functional_id' => $functionalIds[$functionalName],
+                    'permission_id' => $permission
+                ];
+            }
+        }
+
+        DB::table('role_functional_permissions')->insert($data);
     }
 }

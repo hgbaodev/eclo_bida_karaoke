@@ -27,7 +27,7 @@ export default function EditAttendance({
   const onSubmit: SubmitHandler<EditAttendanceInput> = async (data) => {
     console.log(data);
     const dataAttendance = {
-      uuid: data.uuid,
+      staff: data.staff,
       day: data.day,
       time: '',
       check_in: data.check_in,
@@ -58,7 +58,7 @@ export default function EditAttendance({
   };
   return (
     <Form<EditAttendanceInput>
-      resetValues={{ time: '', ...reset, day: currentDate }}
+      resetValues={{ time: '', ...reset }}
       onSubmit={onSubmit}
       validationSchema={editAttendanceSchema}
       serverError={errors}
@@ -83,7 +83,7 @@ export default function EditAttendance({
               {...register('uuid')}
               readOnly
             />
-            <Input type="date" label="Date" className="col-span-full" value={currentDate} readOnly />
+            <Input type="date" label="Date" className="col-span-full" {...register('day')} readOnly />
             <Input
               type="time"
               label="Check in"

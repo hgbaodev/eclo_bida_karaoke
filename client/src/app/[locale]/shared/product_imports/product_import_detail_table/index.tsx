@@ -12,7 +12,7 @@ import { useSearchParams } from 'next/navigation';
 import { getProductImportDetails, setPage, setPageSize } from '@/store/slices/product_import_detailSlice';
 import { getSinghle_ProductImport } from '@/store/slices/product_importSlice';
 import { getSinghle_Product } from '@/store/slices/productSlices';
-import { getSinghle_Supplier } from '@/store/slices/supplierSlice';
+import { getSinghle_Supplier } from '@/store/slices/supplier_slice';
 import { useModal } from '../../modal-views/use-modal';
 import { useRouter } from 'next/router';
 import { useTranslations } from 'next-intl';

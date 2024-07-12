@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { PiChecksBold, PiFilesBold, PiXBold } from 'react-icons/pi';
 import { RgbaColorPicker } from 'react-colorful';
 import { Controller, SubmitHandler } from 'react-hook-form';
@@ -16,11 +17,13 @@ import { createRole } from '@/store/slices/roleSlice';
 import toast from 'react-hot-toast';
 
 export default function CreateRole() {
+  const t = useTranslations('roles_permissions');
   const { closeModal } = useModal();
   const { createLoading } = useSelector((state: RootState) => state.role);
   const [isCopied, setIsCopied] = useState(false);
   const [state, copyToClipboard] = useCopyToClipboard();
   const [errors, setErrors] = useState({} as any);
+
   const onSubmit: SubmitHandler<CreateRoleInput> = (data) => {
     const rgbaString = `rgba(${data?.color?.r}, ${data?.color?.g}, ${data?.color?.b}, ${data?.color?.a})`;
     const values = {
@@ -29,7 +32,7 @@ export default function CreateRole() {
     };
     dispatch(createRole(values)).then((action: any) => {
       if (createRole.fulfilled.match(action)) {
-        toast.success('Role created successfully');
+        toast.success(t('role_created_successfully'));
         closeModal();
       } else {
         setErrors(action.payload.errors);
@@ -39,9 +42,9 @@ export default function CreateRole() {
 
   const handleCopyToClipboard = (rgba: string) => {
     copyToClipboard(rgba);
-    setIsCopied(() => true);
+    setIsCopied(true);
     setTimeout(() => {
-      setIsCopied(() => false);
+      setIsCopied(false);
     }, 3000);
   };
 
@@ -59,28 +62,33 @@ export default function CreateRole() {
           <>
             <div className="flex items-center justify-between">
               <Title as="h4" className="font-semibold">
-                Add a new Role
+                {t('add_a_new_role')}
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
-            <Input label="Role Name" placeholder="Role name" {...register('name')} error={errors.name?.message} />
             <Input
-              label="Role Color"
-              placeholder="Role Color"
+              label={t('role_name')}
+              placeholder={t('role_name')}
+              {...register('name')}
+              error={errors.name?.message}
+            />
+            <Input
+              label={t('role_color')}
+              placeholder={t('role_color')}
               readOnly
               inputClassName="hover:border-muted"
               suffix={
                 <Tooltip
                   size="sm"
-                  content={isCopied ? 'Copied to Clipboard' : 'Click to Copy'}
+                  content={isCopied ? t('copied_to_clipboard') : t('click_to_copy')}
                   placement="top"
                   className="z-[1000]"
                 >
                   <ActionIcon
                     variant="text"
-                    title="Click to Copy"
+                    title={t('click_to_copy')}
                     onClick={() => handleCopyToClipboard(colorCode)}
                     className="-mr-3"
                   >
@@ -95,13 +103,12 @@ export default function CreateRole() {
               name="color"
               render={({ field: { onChange, value } }) => <RgbaColorPicker color={value} onChange={onChange} />}
             />
-
             <div className="flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
-                Cancel
+                {t('cancel')}
               </Button>
               <Button type="submit" isLoading={createLoading} className="w-full @xl:w-auto">
-                Create Role
+                {t('create_role')}
               </Button>
             </div>
           </>

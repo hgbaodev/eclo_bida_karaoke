@@ -8,13 +8,16 @@ import { getColumns } from '@/app/[locale]/shared/service_types/service_types-ta
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
-import { getServiceTypes, setPage, setPageSize } from '@/store/slices/serviceTypeSlice';
+import { getServiceTypes, setPage, setPageSize } from '@/store/slices/service_type_slice';
 import { useModal } from '../../modal-views/use-modal';
+import { useTranslations } from 'next-intl';
+
 // const FilterElement = dynamic(() => import('@/app/shared/suppliers/suppliers-table/filter-element'), {
 //   ssr: false,
 // });
 
 export default function ServiceTypesTable() {
+  const t = useTranslations('service_type');
   const { openModal } = useModal();
   const { data, isLoading, pageSize, page, totalRow, status, query } = useSelector(
     (state: RootState) => state.service_type,
@@ -32,9 +35,9 @@ export default function ServiceTypesTable() {
   }, [page, pageSize, query, status]);
 
   const columns = useMemo(
-    () => getColumns(openModal),
+    () => getColumns(openModal, t),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
+    [t],
   );
 
   const handleChangePageSize = (size: any) => {

@@ -6,14 +6,17 @@ import { useColumn } from '@/hooks/use-column';
 import { RootState } from '@/store/types';
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import { useTranslations } from 'next-intl';
 import { Loader } from 'rizzui';
 
 const TableOrder = () => {
+  const t = useTranslations('invoices');
+
   const { order, isLoadingGetOrder } = useSelector((state: RootState) => state.order);
   const columns = useMemo(
     () => [
       {
-        title: <HeaderCell title="Image" />,
+        title: <HeaderCell title={t('image')} />,
         dataIndex: 'image',
         key: 'image',
         width: 20,
@@ -30,28 +33,28 @@ const TableOrder = () => {
         ),
       },
       {
-        title: 'Name',
+        title: t('name'),
         dataIndex: 'name',
         key: 'name',
         width: 50,
         render: (_: any, orderdetail: OrderDetail) => orderdetail.name,
       },
       {
-        title: 'Price',
+        title: t('price'),
         dataIndex: 'price',
         key: 'selling_price',
         width: 10,
         render: (_: any, orderdetail: OrderDetail) => orderdetail.selling_price,
       },
       {
-        title: 'Quantity',
+        title: t('quantity'),
         dataIndex: 'quantity',
         key: 'quantity',
         width: 10,
         render: (_: any, orderdetail: OrderDetail) => orderdetail.quantity,
       },
       {
-        title: 'Total Price',
+        title: t('total'),
         dataIndex: 'total',
         key: 'total',
         width: 10,

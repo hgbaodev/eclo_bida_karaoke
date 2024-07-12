@@ -10,12 +10,14 @@ import { RootState } from '@/store/types';
 import { getServices, setPage, setPageSize } from '@/store/slices/serviceSlice';
 import { dispatch } from '@/store';
 import { useModal } from '../../modal-views/use-modal';
+import { useTranslations } from 'next-intl';
 
 const filterState = {
   date: [null, null],
   status: '',
 };
 export default function RoomAndTablesTable({ className }: { className?: string }) {
+  const t = useTranslations('tables_rooms');
   const { data, pageSize, isLoading, page, totalRow, query, selectedArea } = useSelector(
     (state: RootState) => state.service,
   );
@@ -37,9 +39,9 @@ export default function RoomAndTablesTable({ className }: { className?: string }
   };
 
   const columns = useMemo(
-    () => getColumns(openModal),
+    () => getColumns(openModal, t),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [openModal],
+    [openModal, t],
   );
 
   const { visibleColumns } = useColumn(columns);

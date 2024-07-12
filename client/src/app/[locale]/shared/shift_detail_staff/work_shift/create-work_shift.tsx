@@ -27,7 +27,6 @@ export default function CreateWorkShift() {
 
   const onSubmit: SubmitHandler<CreateWorkShiftInput> = async (data) => {
     const result: any = await dispatch(createWorkShift(data));
-    console.log(result);
     if (createWorkShift.fulfilled.match(result)) {
       const workshift = result.payload.data;
       const updatedList = listShiftUserDetail.map((item) => {

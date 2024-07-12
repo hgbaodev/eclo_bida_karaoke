@@ -12,8 +12,10 @@ import { createArea } from '@/store/slices/areaSlice';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
+import { useTranslations } from 'next-intl';
 
 export default function CreateArea() {
+  const t = useTranslations('tables_rooms');
   const { isCreateLoading } = useSelector((state: RootState) => state.area);
   const { closeModal } = useModal();
   const [reset, setReset] = useState({});
@@ -27,7 +29,7 @@ export default function CreateArea() {
       });
       setErrors({});
       closeModal();
-      toast.success('Area created successfully');
+      toast.success(t('successful'));
     } else {
       setErrors(result?.payload?.errors);
     }
@@ -46,32 +48,32 @@ export default function CreateArea() {
           <>
             <div className="col-span-full flex items-center justify-between">
               <Title as="h4" className="font-semibold">
-                Add a new Area
+                {t('add_a_new_area')}
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
             <Input
-              label="Name"
-              placeholder="Enter area name"
+              label={t('name')}
+              placeholder={t('enter_name')}
               {...register('name')}
               className="col-span-full"
               error={errors.name?.message}
             />
             <Textarea
-              label="Description"
-              placeholder="Enter area description"
+              label={t('description')}
+              placeholder={t('enter_description')}
               {...register('description')}
               className="col-span-full"
               error={errors.description?.message}
             />
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
-                Cancel
+                {t('cancel')}
               </Button>
               <Button type="submit" isLoading={isCreateLoading} className="w-full @xl:w-auto">
-                Create Area
+                {t('create')}
               </Button>
             </div>
           </>

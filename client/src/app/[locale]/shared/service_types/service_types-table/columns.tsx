@@ -8,26 +8,26 @@ import DateCell from '@/components/ui/date-cell';
 
 import DeletePopover from '@/app/[locale]/shared/delete-popover';
 import { dispatch } from '@/store';
-import { deleteServiceType, getServiceTypes } from '@/store/slices/serviceTypeSlice';
+import { deleteServiceType, getServiceTypes } from '@/store/slices/service_type_slice';
 import toast from 'react-hot-toast';
 import EditServiceType from '../edit-service_type';
 // import EditSupplier from '../edit-supplier';
 
-export function getStatusBadge(status: ServiceType['status']) {
+export function StatusBadge(status: ServiceType['status'], t: any) {
   switch (status) {
     case STATUSES.InActive:
       return (
         <div className="flex items-center">
           <Badge color="danger" renderAsDot />
 
-          <Text className="ms-2 font-medium text-red-dark">InActive</Text>
+          <Text className="ms-2 font-medium text-red-dark">{t('deactive')}</Text>
         </div>
       );
     case STATUSES.Active:
       return (
         <div className="flex items-center">
           <Badge color="success" renderAsDot />
-          <Text className="ms-2 font-medium text-green-dark">Active</Text>
+          <Text className="ms-2 font-medium text-green-dark">{t('active')}</Text>
         </div>
       );
     default:
@@ -40,43 +40,43 @@ export function getStatusBadge(status: ServiceType['status']) {
   }
 }
 
-export const getColumns = (openModal: (args: any) => void) => [
+export const getColumns = (openModal: (args: any) => void, t: any) => [
   {
-    title: <HeaderCell title="No." />,
+    title: <HeaderCell title={t('no')} />,
     dataIndex: 'no.',
     key: 'no.',
     width: 50,
     render: (_: any, serviceType: ServiceType, index: number) => <div className="inline-flex ps-3">{index + 1}</div>,
   },
   {
-    title: <HeaderCell title="Name" />,
+    title: <HeaderCell title={t('full_name')} />,
     dataIndex: 'fullName',
     key: 'fullName',
     width: 50,
     render: (_: string, serviceType: ServiceType) => serviceType.name,
   },
   {
-    title: <HeaderCell title="Created" />,
+    title: <HeaderCell title={t('created_at')} />,
     dataIndex: 'created_at',
     key: 'created_at',
     width: 50,
     render: (value: Date) => <DateCell date={value} />,
   },
   {
-    title: <HeaderCell title="Status" />,
+    title: <HeaderCell title={t('status')} />,
     dataIndex: 'status',
     key: 'status',
     width: 10,
-    render: (status: ServiceType['status']) => getStatusBadge(status),
+    render: (status: ServiceType['status']) => StatusBadge(status, t),
   },
   {
-    title: <></>,
+    title: <HeaderCell title={t('action')} />,
     dataIndex: 'action',
     key: 'action',
     width: 10,
     render: (_: string, serviceType: ServiceType) => (
       <div className="flex items-center justify-end gap-3 pe-3">
-        <Tooltip size="sm" content={'Edit Customer'} placement="top" color="invert">
+        <Tooltip size="sm" content={t('edit')} placement="top" color="invert">
           <ActionIcon
             onClick={() => {
               const data = {
@@ -96,15 +96,15 @@ export const getColumns = (openModal: (args: any) => void) => [
           </ActionIcon>
         </Tooltip>
         <DeletePopover
-          title={`Delete this service type`}
-          description={`Are you sure you want to delete this #${serviceType.name} service type?`}
+          title={t('delete')}
+          description={t('are_you_sure_to_delete')}
           onDelete={async () => {
             const result = await dispatch(deleteServiceType(serviceType.active)); // Remove the .then() block
             if (deleteServiceType.fulfilled.match(result)) {
               await dispatch(getServiceTypes({ page: 1, pageSize: 5, query: '', status: '' }));
-              toast.success(`Service type #${serviceType.name} has been deleted successfully.`);
+              toast.success(t('successful'));
             } else {
-              toast.error(`Failed to delete service type #${serviceType.active}.`);
+              toast.error(t('failed'));
             }
           }}
         />

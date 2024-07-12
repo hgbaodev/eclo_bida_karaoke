@@ -34,4 +34,5 @@ Route::group([
     require __DIR__ . '/api/invoices.php';
     require __DIR__ . '/api/dayoff.php';
     require __DIR__ . '/api/statistical.php';
+    require __DIR__ . '/api/functional.php';
 });
