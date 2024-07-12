@@ -11,8 +11,10 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { CreateSalaryInput, createSalarySchema } from '@/utils/validators/salary/create-salary.schema';
 import { createSalary, getSalaries } from '@/store/slices/salarySlice';
+import { useTranslations } from 'next-intl';
 
 export default function CreateSalary() {
+  const t = useTranslations('salary');
   const monthOptions = [
     { value: 1, label: 'January' },
     { value: 2, label: 'February' },
@@ -41,7 +43,7 @@ export default function CreateSalary() {
     const result: any = await dispatch(createSalary(data));
 
     if (createSalary.fulfilled.match(result)) {
-      toast.success('Salary created successfully');
+      toast.success(t('create_success'));
       dispatch(getSalaries({ month, year, query: '' }));
       closeModal();
     } else {
@@ -62,7 +64,7 @@ export default function CreateSalary() {
           <>
             <div className="col-span-full flex items-center justify-between">
               <Title as="h4" className="font-semibold">
-                Create Salary For Staff
+                {t('title_create')}
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
@@ -77,8 +79,8 @@ export default function CreateSalary() {
                   value={value}
                   onChange={onChange}
                   name={name}
-                  label="Month"
-                  placeholder="Select a month"
+                  label={t('month')}
+                  placeholder={t('input_month')}
                   className="col-span-full"
                   error={errors?.month?.message}
                   getOptionValue={(option) => option.value}
@@ -100,8 +102,8 @@ export default function CreateSalary() {
                   value={value}
                   onChange={onChange}
                   name={name}
-                  label="Year"
-                  placeholder="Select a year"
+                  label={t('year')}
+                  placeholder={t('input_year')}
                   className="col-span-full"
                   error={errors?.month?.message}
                   getOptionValue={(option) => option.value}
@@ -116,10 +118,10 @@ export default function CreateSalary() {
             />
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
-                Cancel
+                {t('cancel')}
               </Button>
               <Button type="submit" isLoading={isCreateLoading} className="w-full @xl:w-auto">
-                Create Salaries
+                {t('create_salary')}
               </Button>
             </div>
           </>

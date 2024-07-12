@@ -9,8 +9,9 @@ import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import useDebounce from '@/hooks/use-debounce';
 import { setMonth, setYear, setQuery } from '@/store/slices/salarySlice';
-
+import { useTranslations } from 'next-intl';
 export default function FilterElement() {
+  const t = useTranslations('salary');
   const { month, year } = useSelector((state: RootState) => state.salary);
   const { query } = useSelector((state: RootState) => state.staff);
   const [searchTerm, setSearchTerm] = useState(query);
@@ -49,7 +50,7 @@ export default function FilterElement() {
           onChange={(value: any) => {
             dispatch(setMonth(value));
           }}
-          placeholder="Filter by Status"
+          placeholder="Filter by Month"
           getOptionValue={(option) => option.value}
           getOptionDisplayValue={(option) => option.label}
           displayValue={(selected: any) => monthOptions.find((option) => option.value === selected)?.label || selected}
@@ -70,7 +71,7 @@ export default function FilterElement() {
 
         <Input
           type="search"
-          placeholder="Search for staffs..."
+          placeholder={t('search')}
           value={searchTerm}
           onClear={() => setSearchTerm('')}
           onChange={(event) => setSearchTerm(event.target.value)}

@@ -9,12 +9,14 @@ import { RootState } from '@/store/types';
 import { getColumns } from '@/app/[locale]/shared/shift/shifts-table/colunms';
 import { dispatch } from '@/store';
 import { useModal } from '../../modal-views/use-modal';
+import { useTranslations } from 'next-intl';
 import { getAllShifts, setPage, setPageSize } from '@/store/slices/shiftSlice';
 const FilterElement = dynamic(() => import('@/app/[locale]/shared/shift/shifts-table/filter-element'), {
   ssr: false,
 });
 
 export default function ShiftsTable() {
+  const t = useTranslations('shift');
   const { openModal } = useModal();
   const { data, isLoading, pageSize, page, totalRow, query, status, shift_type } = useSelector(
     (state: RootState) => state.shift,
@@ -26,9 +28,9 @@ export default function ShiftsTable() {
     fetch();
   }, [page, pageSize, query, status, shift_type]);
   const columns = useMemo(
-    () => getColumns(openModal),
+    () => getColumns(openModal, t),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
+    [t],
   );
   const handleChangePageSize = (size: any) => {
     dispatch(setPageSize(size));

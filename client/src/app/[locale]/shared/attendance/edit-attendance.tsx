@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { EditAttendanceInput, editAttendanceSchema } from '@/utils/validators/attendance/edit-attendance-schema';
 import { getAttendances, updateAttendance } from '@/store/slices/attendanceSlice';
-
+import { useTranslations } from 'next-intl';
 export default function EditAttendance({
   attendance,
   currentDate,
@@ -19,6 +19,7 @@ export default function EditAttendance({
   attendance: EditAttendanceInput;
   currentDate: string;
 }) {
+  const t = useTranslations('attendance');
   const { closeModal } = useModal();
   const [reset, setReset] = useState<any>(attendance);
   const [errors, setErrors] = useState<any>({});
@@ -39,7 +40,7 @@ export default function EditAttendance({
       setReset({});
       setErrors({});
       closeModal();
-      toast.success('Updated successfully');
+      toast.success(t('edit_success'));
       dispatch(getAttendances({ month, year }));
     } else {
       setErrors(result?.payload?.errors);
@@ -70,23 +71,17 @@ export default function EditAttendance({
           <>
             <div className="col-span-full flex items-center justify-between">
               <Title as="h4" className="font-semibold">
-                Edit Attendance
+                {t('title_edit')}
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
-            <Input
-              label="Staff UUID"
-              placeholder="Enter staff uuid"
-              className="col-span-full"
-              {...register('uuid')}
-              readOnly
-            />
+            <Input label={t('staff_uuid')} className="col-span-full" {...register('uuid')} readOnly />
             <Input type="date" label="Date" className="col-span-full" {...register('day')} readOnly />
             <Input
               type="time"
-              label="Check in"
+              label={t('check_in')}
               className="col-span-[1/2]"
               {...register('check_in')}
               error={errors.check_in?.message}
@@ -94,14 +89,14 @@ export default function EditAttendance({
             <div className="col-span-[1/2] flex justify-center">
               {reset.check_in !== null && (
                 <Button variant="outline" type="button" onClick={handleClearCheckIn} className="w-full @xl:w-auto mt-6">
-                  Clear Check In
+                  {t('clear_checkin')}
                 </Button>
               )}
             </div>
 
             <Input
               type="time"
-              label="Check out"
+              label={t('check_out')}
               className="col-span-[1/2]"
               {...register('check_out')}
               error={errors.check_out?.message}
@@ -114,7 +109,7 @@ export default function EditAttendance({
                   onClick={handleClearCheckOut}
                   className="w-full @xl:w-auto mt-6"
                 >
-                  Clear Check Out
+                  {t('clear_checkout')}
                 </Button>
               )}
             </div>

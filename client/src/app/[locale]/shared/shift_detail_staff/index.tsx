@@ -15,10 +15,12 @@ import ModalButton from '../modal-button';
 import CreateWorkShift from './work_shift/create-work_shift';
 import dynamic from 'next/dynamic';
 import { getAllWorkShifts, getWorkShift } from '@/store/slices/workshiftSlice';
+import { useTranslations } from 'next-intl';
 const FilterElement = dynamic(() => import('@/app/[locale]/shared/shift_detail_staff/work_shift/filter-element'), {
   ssr: false,
 });
 export default function ShiftDetailStaffTable() {
+  const t = useTranslations('shift_for_staff');
   const { openModal } = useModal();
   const { data } = useSelector((state: RootState) => state.shift);
   const { listShiftUserDetail, isLoading, workshift } = useSelector((state: RootState) => state.shift_user_detail);
@@ -38,22 +40,22 @@ export default function ShiftDetailStaffTable() {
     dispatch(getAllWorkShifts());
   }, []);
   const columns = useMemo(
-    () => getColumns(openModal, listShiftUserDetail, oneWorkShift),
-    [openModal, listShiftUserDetail, oneWorkShift],
+    () => getColumns(openModal, listShiftUserDetail, oneWorkShift, t),
+    [openModal, listShiftUserDetail, oneWorkShift, t],
   );
   if (!workshift) {
     return (
       <div className="mt-0">
-        <label style={{ fontWeight: 'bold', fontSize: '15px' }}>Work Shift:</label>
+        <label style={{ fontWeight: 'bold', fontSize: '15px' }}>{t('workshift')}</label>
         <FilterElement />
       </div>
     );
   } else {
     return (
       <div className="mt-0">
-        <label style={{ fontWeight: 'bold', fontSize: '15px' }}>Work Shift:</label>
+        <label style={{ fontWeight: 'bold', fontSize: '15px' }}>{t('workshift')}</label>
         <FilterElement />
-        <ModalButton label="Copy" view={<CreateWorkShift />} customSize="600px" className="mt-10 w-30 h-15 mb-4" />
+        <ModalButton label={t('copy')} view={<CreateWorkShift />} customSize="600px" className="mt-10 w-30 h-15 mb-4" />
         <ControlledTable
           variant="modern"
           data={data}

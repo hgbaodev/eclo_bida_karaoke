@@ -11,21 +11,21 @@ import { deletePosition, getAllPositions } from '@/store/slices/positionSlice';
 import toast from 'react-hot-toast';
 import EditPosition from '../edit-position';
 
-export function getStatusBadge(status: Position['status']) {
+export function getStatusBadge(status: Position['status'], t: any) {
   switch (status) {
     case STATUSES.InActive:
       return (
         <div className="flex items-center">
           <Badge color="danger" renderAsDot />
 
-          <Text className="ms-2 font-medium text-red-dark">InActive</Text>
+          <Text className="ms-2 font-medium text-red-dark">{t('inactive')}</Text>
         </div>
       );
     case STATUSES.Active:
       return (
         <div className="flex items-center">
           <Badge color="success" renderAsDot />
-          <Text className="ms-2 font-medium text-green-dark">Active</Text>
+          <Text className="ms-2 font-medium text-green-dark">{t('active')}</Text>
         </div>
       );
     default:
@@ -37,44 +37,45 @@ export function getStatusBadge(status: Position['status']) {
       );
   }
 }
-export const getColumns = (openModal: (args: any) => void) => [
+export const getColumns = (openModal: (args: any) => void, t: any) => [
   {
-    title: <HeaderCell title="Id" />,
+    title: <HeaderCell title={t('table_id')} />,
     dataIndex: 'id',
     key: 'id',
     width: 50,
     render: (_: any, position: Position, index: number) => <div className="inline-flex ps-3">{index + 1}</div>,
   },
   {
-    title: <HeaderCell title="Name" />,
+    title: <HeaderCell title={t('table_name')} />,
     dataIndex: 'fullName',
     key: 'fullName',
     width: 50,
     render: (_: string, position: Position) => position.name,
   },
   {
-    title: <HeaderCell title="Base Salary" />,
+    title: <HeaderCell title={t('table_basesalary')} />,
     dataIndex: 'basesalary',
     key: 'basesalary',
     width: 100,
-    render: (_: string, position: Position) => position.base_salary,
+    render: (_: string, position: Position) =>
+      position.base_salary.toLocaleString('de-DE', { minimumFractionDigits: 2 }),
   },
   {
-    title: <HeaderCell title="Salary Structure" />,
+    title: <HeaderCell title={t('table_structure')} />,
     dataIndex: 'salarystructure',
     key: 'salarystructure',
     width: 100,
     render: (_: string, position: Position) => position.salary_structure,
   },
   {
-    title: <HeaderCell title="Status" />,
+    title: <HeaderCell title={t('table_status')} />,
     dataIndex: 'status',
     key: 'status',
     width: 10,
-    render: (status: Position['status']) => getStatusBadge(status),
+    render: (status: Position['status']) => getStatusBadge(status, t),
   },
   {
-    title: <HeaderCell title="Created" />,
+    title: <HeaderCell title={t('table_created')} />,
     dataIndex: 'created_at',
     key: 'created_at',
     width: 50,
@@ -87,7 +88,7 @@ export const getColumns = (openModal: (args: any) => void) => [
     width: 10,
     render: (_: string, position: Position) => (
       <div className="flex items-center justify-end gap-3 pe-3">
-        <Tooltip size="sm" content={'Edit Position'} placement="top" color="invert">
+        <Tooltip size="sm" content={t('edit_position')} placement="top" color="invert">
           <ActionIcon
             onClick={() => {
               const data = {
@@ -109,13 +110,13 @@ export const getColumns = (openModal: (args: any) => void) => [
           </ActionIcon>
         </Tooltip>
         <DeletePopover
-          title={`Delete this position`}
-          description={`Are you sure you want to delete this #${position.name} position?`}
+          title={t('delete_position')}
+          description={t('delete_description')}
           onDelete={async () => {
             const result = await dispatch(deletePosition(position.active)); // Remove the .then() block
             if (deletePosition.fulfilled.match(result)) {
               await dispatch(getAllPositions({ page: 1, pageSize: 5, query: '', status: '' }));
-              toast.success(`Staff #${position.name} has been deleted successfully.`);
+              toast.success(t('delete_success'));
             } else {
               toast.error(`Failed to delete staff #${position.active}.`);
             }
@@ -129,7 +130,7 @@ export const getColumns = (openModal: (args: any) => void) => [
 export interface Position {
   active: string;
   name: string;
-  base_salary: string;
+  base_salary: number;
   salary_structure: string;
   status: any;
   created_at: string;

@@ -22,9 +22,10 @@ import {
 import toast from 'react-hot-toast';
 import { OptionType } from 'dayjs';
 import { createAttendance } from '@/store/slices/attendanceSlice';
-
+import { useTranslations } from 'next-intl';
 export default function CreateShiftDetailStaff({ day_of_week, shift }: { day_of_week: string; shift: any }) {
   const { closeModal } = useModal();
+  const t = useTranslations('shift_for_staff');
   const [reset, setReset] = useState({});
   const [errors, setErrors] = useState<any>({});
   const { listStaffs, isCreateLoading } = useSelector((state: RootState) => state.staff);
@@ -49,7 +50,7 @@ export default function CreateShiftDetailStaff({ day_of_week, shift }: { day_of_
       setErrors({});
       closeModal();
       await dispatch(getShiftUserDetails(oneWorkShift.active));
-      toast.success('Created successfully');
+      toast.success(t('create_success'));
     } else {
       setErrors(result?.payload?.errors);
       toast.error(result.payload.errors);
@@ -69,13 +70,13 @@ export default function CreateShiftDetailStaff({ day_of_week, shift }: { day_of_
           <>
             <div className="col-span-full flex items-center justify-between">
               <Title as="h4" className="font-semibold">
-                Add A Staff Into Shift
+                {t('add_staff')}
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
-            <label style={{ fontWeight: 'bold' }}>Staff:</label>
+            <label style={{ fontWeight: 'bold' }}>{t('staff')}</label>
             <Controller
               name="staff"
               control={control}
@@ -87,7 +88,7 @@ export default function CreateShiftDetailStaff({ day_of_week, shift }: { day_of_
                     onChange={(option) => field.onChange(option.active)}
                     name={field.name}
                     className="col-span-full"
-                    placeholder="Select a staff"
+                    placeholder={t('input_staff')}
                     isSearchable
                     styles={customStyles}
                     getOptionValue={(option) => option.active}
@@ -99,7 +100,7 @@ export default function CreateShiftDetailStaff({ day_of_week, shift }: { day_of_
               )}
             />
             <Input
-              label="Day of week"
+              label={t('day_of_week')}
               {...register('day_of_week')}
               className="col-span-full"
               value={day_of_week}
@@ -107,17 +108,17 @@ export default function CreateShiftDetailStaff({ day_of_week, shift }: { day_of_
             />
             <Input label="Shift" className="col-span-full" value={shift.time_in + '-' + shift.time_out} readOnly />
             <Input
-              label="Work Shift"
+              label={t('work_shift')}
               className="col-span-full"
               value={oneWorkShift.date_start + '->' + oneWorkShift.date_end}
               readOnly
             />
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto" style={{ zIndex: 10 }}>
-                Cancel
+                {t('cancel')}
               </Button>
               <Button type="submit" isLoading={isCreateLoading} className="w-full @xl:w-auto" style={{ zIndex: 10 }}>
-                Create
+                {t('create')}
               </Button>
             </div>
           </>

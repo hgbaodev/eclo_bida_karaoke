@@ -11,8 +11,9 @@ import useDebounce from '@/hooks/use-debounce';
 import { statusOptions } from '../type';
 import { getStatusBadge } from './columns';
 import { setQuery, setReset, setStatus } from '@/store/slices/positionSlice';
-
+import { useTranslations } from 'next-intl';
 export default function FilterElement() {
+  const t = useTranslations('position');
   const { isFiltered, query, status } = useSelector((state: RootState) => state.position);
   const [searchTerm, setSearchTerm] = useState(query);
   const debounceSearchTerm = useDebounce(searchTerm, 1000);
@@ -32,10 +33,10 @@ export default function FilterElement() {
           onChange={(value: any) => {
             dispatch(setStatus(value));
           }}
-          placeholder="Filter by Status"
+          placeholder={t('filter_status')}
           getOptionValue={(option: { value: any }) => option.value}
-          getOptionDisplayValue={(option: { value: any }) => getStatusBadge(option.value as any)}
-          displayValue={(selected: any) => getStatusBadge(selected)}
+          getOptionDisplayValue={(option: { value: any }) => getStatusBadge(option.value as any, t)}
+          displayValue={(selected: any) => getStatusBadge(selected, t)}
         />
 
         {isFiltered && (
@@ -51,7 +52,7 @@ export default function FilterElement() {
 
         <Input
           type="search"
-          placeholder="Search for positions..."
+          placeholder={t('search')}
           value={searchTerm}
           onClear={() => setSearchTerm('')}
           onChange={(event) => setSearchTerm(event.target.value)}

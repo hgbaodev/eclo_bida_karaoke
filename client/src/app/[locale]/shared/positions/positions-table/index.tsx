@@ -10,11 +10,13 @@ import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
 import { getAllPositions, setPage, setPageSize } from '@/store/slices/positionSlice';
 import { useModal } from '../../modal-views/use-modal';
+import { useTranslations } from 'next-intl';
 const FilterElement = dynamic(() => import('@/app/[locale]/shared/positions/positions-table/filter-element'), {
   ssr: false,
 });
 
 export default function PositionsTable() {
+  const t = useTranslations('position');
   const { openModal } = useModal();
   const { data, fetchDataLoading, pageSize, page, totalRow, query, status } = useSelector(
     (state: RootState) => state.position,
@@ -26,9 +28,9 @@ export default function PositionsTable() {
     fetch();
   }, [page, pageSize, query, status]);
   const columns = useMemo(
-    () => getColumns(openModal),
+    () => getColumns(openModal, t),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
+    [t],
   );
   const handleChangePageSize = (size: any) => {
     dispatch(setPageSize(size));
