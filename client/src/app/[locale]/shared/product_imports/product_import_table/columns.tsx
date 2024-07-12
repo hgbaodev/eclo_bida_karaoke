@@ -42,7 +42,7 @@ export function getStatusBadge(status: Product_Import['status']) {
       );
   }
 }
-export const getColumns = (openModal: (args: any) => void) => [
+export const getColumns = (openModal: (args: any) => void,t:any) => [
   {
     title: <HeaderCell title="Id" />,
     dataIndex: 'id',
@@ -53,7 +53,7 @@ export const getColumns = (openModal: (args: any) => void) => [
     ),
   },
   {
-    title: <HeaderCell title="User Import" />,
+    title: <HeaderCell title={t('user_import')} />,
     dataIndex: 'user_import',
     key: 'user_import',
     width: 50,
@@ -61,21 +61,21 @@ export const getColumns = (openModal: (args: any) => void) => [
       product_import.user_import.first_name + ' ' + product_import.user_import.last_name,
   },
   {
-    title: <HeaderCell title="Create Time" />,
+    title: <HeaderCell title={t('create_time')} />,
     dataIndex: 'create_time',
     key: 'create_time',
     width: 50,
     render: (_: string, product_import: Product_Import) => product_import.create_time,
   },
   {
-    title: <HeaderCell title="Receive Time" />,
+    title: <HeaderCell title={t('receive_time')} />,
     dataIndex: 'receive_time',
     key: 'receive_time',
     width: 100,
     render: (_: number, product_import: Product_Import) => product_import.receive_time,
   },
   {
-    title: <HeaderCell title="Total Cost" />,
+    title: <HeaderCell title={t('total_cost')} />,
     dataIndex: 'total_cost',
     key: 'total_cost',
     width: 50,
@@ -83,14 +83,14 @@ export const getColumns = (openModal: (args: any) => void) => [
     render: (_: number, product_import: Product_Import) => product_import.total_cost,
   },
   {
-    title: <HeaderCell title="Status" />,
+    title: <HeaderCell title={t('status')} />,
     dataIndex: 'status',
     key: 'status',
     width: 50,
     render: (status: Product_Import['status']) => getStatusBadge(status),
   },
   {
-    title: <HeaderCell title="Product" />,
+    title: <HeaderCell title={t('product')} />,
     // dataIndex: 'status',
     // key: 'status',
     // width: 50,
@@ -100,7 +100,7 @@ export const getColumns = (openModal: (args: any) => void) => [
     width: 50,
     render: (_: string, product_import: Product_Import) => (
       <div className="flex">
-        <Tooltip size="sm" content={'See product'} placement="top" color="invert">
+        <Tooltip size="sm" content={t('see_product')} placement="top" color="invert">
           <Link
             href={{
               pathname: '/admin/product_import_details',
@@ -147,7 +147,7 @@ export const getColumns = (openModal: (args: any) => void) => [
     width: 10,
     render: (_: string, product_import: Product_Import) => (
       <div className="flex items-center justify-end gap-3 pe-3">
-        <Tooltip size="sm" content={'Edit Import'} placement="top" color="invert">
+        <Tooltip size="sm" content={t('edit_import')} placement="top" color="invert">
           <ActionIcon
             onClick={() => {
               const data = {
@@ -190,15 +190,15 @@ export const getColumns = (openModal: (args: any) => void) => [
           </ActionIcon>
         </Tooltip> */}
         <DeletePopover
-          title={`Delete this user`}
-          description={`Are you sure you want to delete this import `}
+          title={t('delete')}
+          description={t('delete_import')}
           onDelete={async () => {
             const result = await dispatch(deleteProduct(product_import.active)); // Remove the .then() block
             if (deleteProduct.fulfilled.match(result)) {
               await dispatch(getProductImports({ page: 1, pageSize: 5, query: '',status:'' }));
-              toast.success(`Import  has been deleted successfully.`);
+              toast.success(t('success'));
             } else {
-              toast.error(`Failed to delete import #${product_import.active}.`);
+              toast.error(t('failed'));
             }
           }}
         />

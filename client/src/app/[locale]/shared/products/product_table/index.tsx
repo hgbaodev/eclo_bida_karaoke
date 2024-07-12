@@ -30,7 +30,7 @@ export default function ProductsTable() {
     dispatch(getProductType());
   }, []);
   const columns = useMemo(
-    () => getColumns(openModal,t),
+    () => getColumns(openModal, t),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [t],
   );

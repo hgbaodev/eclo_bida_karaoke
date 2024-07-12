@@ -47,7 +47,7 @@ export function getStatusBadge(status: DayOff['type']) {
   }
 }
 
-export const getColumns = (openModal: (args: any) => void) => [
+export const getColumns = (openModal: (args: any) => void,t:any) => [
   {
     title: <HeaderCell title="Id" />,
     dataIndex: 'id',
@@ -56,35 +56,35 @@ export const getColumns = (openModal: (args: any) => void) => [
     render: (_: any, dayoff: DayOff, index: number) => <div className="inline-flex ps-3">{index + 1}</div>,
   },
   {
-    title: <HeaderCell title="UUID" />,
+    title: <HeaderCell title={t('uuid')} />,
     dataIndex: 'uuid',
     key: 'uuid',
     width: 50,
     render: (_: string, dayoff: DayOff) => dayoff.staff_dayoff.uuid,
   },
   {
-    title: <HeaderCell title="Staff name" />,
+    title: <HeaderCell title={t('staff_name')} />,
     dataIndex: 'staff_name',
     key: 'staff_name',
     width: 100,
     render: (_: string, dayoff: DayOff) => dayoff.staff_dayoff.last_name + ' ' + dayoff.staff_dayoff.first_name,
   },
   {
-    title: <HeaderCell title="Day off" />,
+    title: <HeaderCell title={t('day_off')} />,
     dataIndex: 'day_off',
     key: 'day_off',
     width: 100,
     render: (_: number, dayoff: DayOff) => dayoff.day_off,
   },
   {
-    title: <HeaderCell title="Reason" />,
+    title: <HeaderCell title={t('reason')} />,
     dataIndex: 'reason',
     key: 'reason',
     width: 50,
     render: (_: string, dayoff: DayOff) => dayoff.reason,
   },
   {
-    title: <HeaderCell title="Type" />,
+    title: <HeaderCell title={t('type')}/>,
     dataIndex: 'type',
     key: 'type',
     width: 50,
@@ -98,15 +98,15 @@ export const getColumns = (openModal: (args: any) => void) => [
     render: (_: string, dayoff: DayOff) => (
       <div className=" ">
         <DeletePopover
-          title={`Delete day off`}
-          description={`Are you sure you want to delete this  `}
+          title={t('delete')}
+          description={t('delete_dayoff')}
           onDelete={async () => {
             const result = await dispatch(deleteDayoff(dayoff.active)); // Remove the .then() block
             if (deleteDayoff.fulfilled.match(result)) {
               await dispatch(getDayoffs({ page: 1, pageSize: 5, query: '' ,type:'' }));
-              toast.success(`Day off  has been deleted successfully.`);
+              toast.success(t('success'));
             } else {
-              toast.error(`Failed to delete import #${dayoff.active}.`);
+              toast.error(t('failed'));
             }
           }}
         />
