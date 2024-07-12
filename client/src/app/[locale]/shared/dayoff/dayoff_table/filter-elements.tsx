@@ -4,45 +4,44 @@ import { PiTrashDuotone, PiMagnifyingGlassBold } from 'react-icons/pi';
 import StatusField from '@/components/controlled-table/status-field';
 import { Button, Input } from 'rizzui';
 import { dispatch } from '@/store';
-import { setQuery, setReset, setType } from '@/store/slices/productSlices';
+import { setQuery, setReset, setType } from '@/store/slices/dayoffSlice';
 import { RootState } from '@/store/types';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import useDebounce from '@/hooks/use-debounce';
-import { getProductType } from '@/store/slices/product_typeSlices';
-
+import { getStatusBadge } from './column';
+import { statusOptions } from '../type';
 // import { getPositions } from '@/store/slices/positionSlice';
 
 export default function FilterElement() {
-  const { isFiltered, query,type} = useSelector((state: RootState) => state.product);
+  const { isFiltered, query, type} = useSelector((state: RootState) => state.dayoff);
   const [searchTerm, setSearchTerm] = useState(query);
   const debounceSearchTerm = useDebounce(searchTerm, 1000);
-  const { listType } = useSelector((state: RootState) => state.product_type);
+
   useEffect(() => {
     dispatch(setQuery(debounceSearchTerm));
   }, [debounceSearchTerm]);
- 
+
   useEffect(() => {
-    dispatch(getProductType());
   }, []);
-  console.log(listType);
+
   return (
     <>
       <div className="relative z-50 mb-4 flex flex-wrap items-center justify-between gap-2.5 @container ">
-        <StatusField
-          options={listType}
-          dropdownClassName="!z-10 w-48"
+    
+      <StatusField
+          className=" -order-9 w-full @[25rem]:w-[calc(calc(100%_-_10px)_/_2)] @4xl:-order-5 @4xl:w-auto"
+          options={statusOptions}
+          dropdownClassName="!z-10"
           value={type}
-          placeholder="Filter by Product Type"
-          className=" @4xl:-auto -order-3 w-full min-w-[160px] @[25rem]:w-[calc(calc(100%_-_10px)_/_2)] @4xl:-order-4 @4xl:w-auto"
-          getOptionValue={(option) => option.active}
-          getOptionDisplayValue={(option) => option.type_name}
           onChange={(value: any) => {
             dispatch(setType(value));
           }}
-          displayValue={(selected: string) => listType.find((type) => type.active === selected)?.type_name || selected}
+          placeholder="Filter by Status"
+          getOptionValue={(option: { value: any }) => option.value}
+          getOptionDisplayValue={(option: { value: any }) => getStatusBadge(option.value as any)}
+          displayValue={(selected: any) => getStatusBadge(selected)}
         />
-
         {isFiltered && (
           <Button
             size="sm"
@@ -56,7 +55,7 @@ export default function FilterElement() {
 
         <Input
           type="search"
-          placeholder="Search for product..."
+          placeholder="Search for employee..."
           value={searchTerm}
           onClear={() => setSearchTerm('')}
           onChange={(event) => setSearchTerm(event.target.value)}

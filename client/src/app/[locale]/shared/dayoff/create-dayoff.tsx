@@ -16,15 +16,20 @@ import { getStatusBadge } from '../attendance/colunm';
 import { createDayOffSchema, CreateDayOffInput } from '@/utils/validators/dayoff/create-dayoff-schema';
 import { createDayoff, getDayoffs } from '@/store/slices/dayoffSlice';
 import toast from 'react-hot-toast';
+import { useTranslations } from 'next-intl';
 import { OptionType } from 'dayjs';
 import { getAttendances, updateAttendance } from '@/store/slices/attendanceSlice';
 
 export default function CreateDayOff() {
+  const t = useTranslations('dayoff');
   const { closeModal } = useModal();
   const [reset, setReset] = useState({});
   const [errors, setErrors] = useState<any>({});
+
+  const { pageSize, page, query, isCreateLoading,type } = useSelector((state: RootState) => state.dayoff);
+
   const { month, year } = useSelector((state: RootState) => state.attendance);
-  const { pageSize, page, query, isCreateLoading } = useSelector((state: RootState) => state.dayoff);
+
   const { listStaffs } = useSelector((state: RootState) => state.staff);
   const onSubmit: SubmitHandler<CreateDayOffInput> = async (data) => {
     const result: any = await dispatch(createDayoff(data));
@@ -46,8 +51,11 @@ export default function CreateDayOff() {
       });
       setErrors({});
       closeModal();
+
+      await dispatch(getDayoffs({ page, pageSize, query,type }));
+
       dispatch(getAttendances({ month, year }));
-      await dispatch(getDayoffs({ page, pageSize, query }));
+
       toast.success('Created successfully');
     } else {
       setErrors(result?.payload?.errors);
@@ -69,7 +77,7 @@ export default function CreateDayOff() {
           <>
             <div className="col-span-full flex items-center justify-between">
               <Title as="h4" className="font-semibold">
-                Day Off
+                {t('add_dayoff')}
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
@@ -91,7 +99,7 @@ export default function CreateDayOff() {
                     onChange={(option) => field.onChange(option.active)}
                     name={field.name}
                     className="col-span-full"
-                    placeholder="Select a staff"
+                    placeholder= {t('select_staff')}
                     isSearchable
                     styles={customStyles}
                     getOptionValue={(option) => option.active}
@@ -102,12 +110,12 @@ export default function CreateDayOff() {
                 </>
               )}
             />
-            <Input label="Reason" placeholder="Reason for day off" className="col-span-full" {...register('reason')} />
+            <Input label={t('reason')} placeholder={t('reason_input')}className="col-span-full" {...register('reason')} />
 
             <Input
               type="date"
-              label="Day off"
-              placeholder="Enter day off"
+              label= {t('day_off')}
+              placeholder= {t('day_off')}
               className="col-span-full"
               {...register('day_off')}
               error={errors.day_off?.message}
@@ -121,8 +129,8 @@ export default function CreateDayOff() {
                   options={statusOptions}
                   onChange={onChange}
                   name={name}
-                  label="Status"
-                  placeholder="Select a status"
+                  label={t('type')}
+                  placeholder={t('select_status')}
                   className="col-span-full"
                   error={errors?.type?.message}
                   getOptionValue={(option: { value: any }) => option.value}
@@ -136,10 +144,10 @@ export default function CreateDayOff() {
 
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
-                Cancel
+              {t('cancel')}
               </Button>
               <Button type="submit" isLoading={isCreateLoading} className="w-full @xl:w-auto">
-                Add
+              {t('btn_add')}
               </Button>
             </div>
           </>

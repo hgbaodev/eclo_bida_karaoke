@@ -9,16 +9,17 @@ import { createProduct, getProducts } from '@/store/slices/productSlices';
 import { CreateProductInput, createProductSchema } from '@/utils/validators/product/create-product.schema';
 import { dispatch } from '@/store';
 import toast from 'react-hot-toast';
-
+import { useTranslations } from 'next-intl';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { string } from 'zod';
 
 export default function CreateStaff() {
+  const t = useTranslations('product');
   const { closeModal } = useModal();
   const [reset, setReset] = useState({});
   const [errors, setErrors] = useState<any>({});
-  const { pageSize, page, query, isCreateLoading } = useSelector((state: RootState) => state.product);
+  const { pageSize, page, query, isCreateLoading,type } = useSelector((state: RootState) => state.product);
   const { listType } = useSelector((state: RootState) => state.product_type);
   // const { listPositions } = useSelector((state: RootState) => state.position);
   const onSubmit: SubmitHandler<CreateProductInput> = async (data) => {
@@ -40,7 +41,7 @@ export default function CreateStaff() {
           // });
           setErrors({});
           closeModal();
-          await dispatch(getProducts({ page, pageSize, query }));
+          await dispatch(getProducts({ page, pageSize, query ,type}));
           toast.success('Product created successfully');
         } else {
           setErrors(result?.payload?.errors);
@@ -70,15 +71,15 @@ export default function CreateStaff() {
           <>
             <div className="col-span-full flex items-center justify-between">
               <Title as="h4" className="font-semibold">
-                Add a new Product
+               {t('add_product')} 
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
             <Input
-              label="Product Name"
-              placeholder="Enter product name"
+              label={t('product_name')}
+              placeholder={t('input_product_name')}
               className="col-span-full"
               {...register('name')}
               error={errors.name?.message}
@@ -88,7 +89,7 @@ export default function CreateStaff() {
               control={control}
               render={({ field: { onChange, onBlur, value, name, ref } }) => (
                 <FileInput
-                  label="Image"
+                  label={t('image')}
                   placeholder="Select an image"
                   className="col-span-full"
                   accept="image/jpeg, image/jpg, image/png, image/webp"
@@ -106,9 +107,9 @@ export default function CreateStaff() {
                   value={value}
                   onChange={onChange}
                   name={name}
-                  label="Product Type"
-                  className="col-span-full"
-                  placeholder="Select type of product"
+                  label={t('product_type')}
+                  className={t('select_type')}
+                  placeholder={t('select_type')}
                   error={errors?.product_type?.message}
                   getOptionValue={(option) => option.active}
                   getOptionDisplayValue={(option) => option.type_name}
@@ -123,10 +124,10 @@ export default function CreateStaff() {
 
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
-                Cancel
+                {t('cancel')}
               </Button>
               <Button type="submit" isLoading={isCreateLoading} className="w-full @xl:w-auto">
-                Create Product
+                {t('btn_add')}
               </Button>
             </div>
           </>

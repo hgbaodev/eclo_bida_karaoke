@@ -47,7 +47,7 @@ import type { ColumnsType } from 'antd/es/table';
 //   }
 // }
 
-export const getColumns = (openModal: (args: any) => void) => [
+export const getColumns = (openModal: (args: any) => void,t:any) => [
   {
     title: <HeaderCell title="Id" />,
     dataIndex: 'id',
@@ -58,35 +58,35 @@ export const getColumns = (openModal: (args: any) => void) => [
     ),
   },
   {
-    title: <HeaderCell title="Product name" />,
+    title: <HeaderCell title={t('product_name')} />,
     dataIndex: 'product',
     key: 'product',
     width: 50,
     render: (_: string, product_detail: Product_Detail) => product_detail.product.name,
   },
   {
-    title: <HeaderCell title="Cost price" />,
+    title: <HeaderCell title={t('cost_price')} />,
     dataIndex: 'cost_price',
     key: 'cost_price',
     width: 100,
     render: (_: number, product_detail: Product_Detail) => product_detail.cost_price,
   },
   {
-    title: <HeaderCell title="Selling price" />,
+    title: <HeaderCell title={t('selling_price')}/>,
     dataIndex: 'selling_price',
     key: 'selling_price',
     width: 100,
     render: (_: number, product_detail: Product_Detail) => product_detail.selling_price,
   },
   {
-    title: <HeaderCell title="Quantity" />,
+    title: <HeaderCell title={t('quantity')} />,
     dataIndex: 'quantity',
     key: 'quantity',
     width: 50,
     render: (_: string, product_detail: Product_Detail) => product_detail.quantity,
   },
   {
-    title: <HeaderCell title="Supplier" />,
+    title: <HeaderCell title={t('supplier')} />,
     dataIndex: 'supplier',
     key: 'supplier',
     width: 50,

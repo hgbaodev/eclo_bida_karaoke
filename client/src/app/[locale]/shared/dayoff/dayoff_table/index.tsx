@@ -12,22 +12,24 @@ import { dispatch, useDispatch } from '@/store';
 import { useSearchParams } from 'next/navigation';
 import { useModal } from '../../modal-views/use-modal';
 import { useRouter } from 'next/router';
+import { useTranslations } from 'next-intl';
 import { getDayoffs, setPage, setPageSize } from '@/store/slices/dayoffSlice';
-const FilterElement = dynamic(() => import('@/app/[locale]/shared/products/product_table/filter-elements'), {
+const FilterElement = dynamic(() => import('@/app/[locale]/shared/dayoff/dayoff_table/filter-elements'), {
   ssr: false,
 });
 
 export default function DayOff_table() {
+  const t = useTranslations('dayoff');
   const { openModal } = useModal();
-  const { data, isLoading, pageSize, page, totalRow, query } = useSelector((state: RootState) => state.dayoff);
+  const { data, isLoading, pageSize, page, totalRow, query,type } = useSelector((state: RootState) => state.dayoff);
   useEffect(() => {
     const fetch = async () => {
       // @ts-ignore
 
-      await dispatch(getDayoffs({ page, pageSize, query }));
+      await dispatch(getDayoffs({ page, pageSize, query,type }));
     };
     fetch();
-  }, [page, pageSize, query]);
+  }, [page, pageSize, query,type  ]);
   useEffect(() => {
     const fetch = async () => {
       await dispatch(getAllStaffs(''));
@@ -36,9 +38,9 @@ export default function DayOff_table() {
   });
 
   const columns = useMemo(
-    () => getColumns(openModal),
+    () => getColumns(openModal,t),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
+    [t],
   );
 
   const handleChangePageSize = (size: any) => {

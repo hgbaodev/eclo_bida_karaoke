@@ -12,7 +12,7 @@ const initialState: dayoffType = {
   totalRow: 0,
   page: 1,
   pageSize: 5,
-  status: '',
+  type: '',
   query: '',
   errors: null,
   isCreateLoading: false,
@@ -22,11 +22,12 @@ const initialState: dayoffType = {
 
 export const getDayoffs = createAsyncThunk(
   'dayoff',
-  async ({ page, pageSize, query }: { page: number; pageSize: number; query: string }) => {
+  async ({ page, pageSize, query, type }: { page: number; pageSize: number; query: string; type:string }) => {
     const url = new URL('/api/v1/day_offs', env.NEXT_API_URL);
     url.searchParams.set('page', `${page}`);
     url.searchParams.set('perPage', `${pageSize}`);
     url.searchParams.set('query', query);
+    url.searchParams.set('type', `${type}`);
     try {
       const response = await axiosInstance.get(url.href);
       return response.data;
@@ -95,12 +96,12 @@ const dayoffSlice = createSlice({
     },
     setReset: (state) => {
       state.page = 1;
-      state.status = '';
+      state.type = '';
       state.isFiltered = false;
     },
-    setStatus: (state, action) => {
+    setType: (state, action) => {
       state.page = 1;
-      state.status = action.payload;
+      state.type = action.payload;
       state.isFiltered = true;
     },
   },
@@ -139,6 +140,6 @@ const dayoffSlice = createSlice({
   },
 });
 
-export const { setPage, setPageSize, setReset, setQuery, setStatus, setErrors } = dayoffSlice.actions;
+export const { setPage, setPageSize, setReset, setQuery, setType, setErrors } = dayoffSlice.actions;
 
 export default dayoffSlice.reducer;

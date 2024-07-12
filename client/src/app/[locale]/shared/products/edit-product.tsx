@@ -11,13 +11,15 @@ import { getProducts, updateProduct } from '@/store/slices/productSlices';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
+import { useTranslations } from 'next-intl';
 import { EditProductInput, editProductSchema } from '@/utils/validators/product/edit-product.schema';
 
 export default function EditProduct({ product, active }: { product: EditProductInput; active: string }) {
+  const t = useTranslations('product');
   const { closeModal } = useModal();
   const [reset, setReset] = useState<any>(product);
   const [errors, setErrors] = useState<any>({});
-  const { pageSize, page, query, isUpdateLoading } = useSelector((state: RootState) => state.product);
+  const { pageSize, page, query, isUpdateLoading ,type } = useSelector((state: RootState) => state.product);
   const { listType } = useSelector((state: RootState) => state.product_type);
   const onSubmit: SubmitHandler<EditProductInput> = async (data) => {
     if (data['image'] && data['image'].length > 0) {
@@ -38,7 +40,7 @@ export default function EditProduct({ product, active }: { product: EditProductI
           });
           setErrors({});
           closeModal();
-          await dispatch(getProducts({ page, pageSize, query }));
+          await dispatch(getProducts({ page, pageSize, query,type }));
           toast.success('product updated successfully');
         } else {
           setErrors(result?.payload?.errors);
@@ -63,14 +65,14 @@ export default function EditProduct({ product, active }: { product: EditProductI
           <>
             <div className="col-span-full flex items-center justify-between">
               <Title as="h4" className="font-semibold">
-                Update product
+                {t('edit_product')}
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
             <FileInput
-              label="Image"
+              label={t('image')}
               placeholder="Select an image"
               {...register('image')}
               className="col-span-full"
@@ -78,8 +80,8 @@ export default function EditProduct({ product, active }: { product: EditProductI
               error={errors.image?.message?.toString() || ''}
             />
             <Input
-              label="Name"
-              placeholder="Enter product name"
+              label={t('product_name')}
+              placeholder={t('input_product_name')}
               {...register('name')}
               className="col-span-[1/2]"
               error={errors.name?.message}
@@ -93,9 +95,9 @@ export default function EditProduct({ product, active }: { product: EditProductI
                   value={value}
                   onChange={onChange}
                   name={name}
-                  label="Product Type"
+                  label={t('product_type')}
                   className="col-span-full"
-                  placeholder="Select type of product"
+                  placeholder={t('select_type')}
                   error={errors?.product_type?.message}
                   getOptionValue={(option) => option.active}
                   getOptionDisplayValue={(option) => option.type_name}
@@ -110,10 +112,10 @@ export default function EditProduct({ product, active }: { product: EditProductI
 
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
-                Cancel
+              {t('cancel')}
               </Button>
               <Button type="submit" isLoading={isUpdateLoading} className="w-full @xl:w-auto">
-                Update device
+              {t('edit_product')}
               </Button>
             </div>
           </>

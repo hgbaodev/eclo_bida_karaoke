@@ -15,11 +15,14 @@ import { getSinghle_Product } from '@/store/slices/productSlices';
 import { getSinghle_Supplier } from '@/store/slices/supplier_slice';
 import { useModal } from '../../modal-views/use-modal';
 import { useRouter } from 'next/router';
-const FilterElement = dynamic(() => import('@/app/[locale]/shared/products/product_table/filter-elements'), {
-  ssr: false,
-});
+import { useTranslations } from 'next-intl';
+// const FilterElement = dynamic(() => import('@/app/[locale]/shared/products/product_table/filter-elements'), {
+//   ssr: false,
+// });
 
 export default function Product_import_detail_Table() {
+
+  const t = useTranslations('product_import_detail');
   const { listProduct } = useSelector((state: RootState) => state.product);
   const { listSupplier } = useSelector((state: RootState) => state.supplier);
   const searchParams = useSearchParams();
@@ -55,9 +58,9 @@ export default function Product_import_detail_Table() {
     dispatch(getSinghle_Supplier());
   }, []);
   const columns = useMemo(
-    () => getColumns(openModal),
+    () => getColumns(openModal,t),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
+    [t],
   );
 
   const handleChangePageSize = (size: any) => {
@@ -71,7 +74,7 @@ export default function Product_import_detail_Table() {
   const { visibleColumns } = useColumn(columns);
   return (
     <div className="mt-0">
-      <FilterElement />
+    
       <ControlledTable
         variant="modern"
         data={data}

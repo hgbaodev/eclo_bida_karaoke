@@ -13,6 +13,7 @@ class ProductRepository implements ProductRepositoryInterface
         $all = $request->input('all');
         $perPage = $request->input('perPage');
         $query = $request->input('query');
+        $type = $request->input('product_type');
         $id = $request->input('id');
         $product = Product::query()->with(['product_type']);
         if ($query) {
@@ -20,6 +21,11 @@ class ProductRepository implements ProductRepositoryInterface
         }
         if ($id) {
             $product->where('id', $id);
+        }
+        if ($type) {
+            $product->whereHas('product_type', function ($query) use ($type) {
+                $query->where("active", $type);
+            });
         }
         if ($all && $all == true) {
             $product = $product->get();
