@@ -41,7 +41,6 @@ export default function CreateAttendance() {
       time: data.time,
     };
     const result: any = await dispatch(Attendance(dataAttendance));
-    console.log(result);
     if (Attendance.fulfilled.match(result)) {
       setReset({});
       setErrors({});
