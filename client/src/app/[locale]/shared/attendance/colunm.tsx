@@ -63,12 +63,12 @@ export function getStatusBadge(status: DayOff['status']) {
       );
   }
 }
-export const getColumns = (openModal: (args: any) => void, Data: Attendance[], month: number, year: number) => {
+export const getColumns = (openModal: (args: any) => void, Data: Attendance[], month: number, year: number, t: any) => {
   const { startDate, endDate } = getFirstAndLastDayOfMonth(month, year);
   const dates = getDatesBetween(startDate, endDate);
   const columns = [
     {
-      title: <HeaderCell title="Staff/Day" />,
+      title: <HeaderCell title={t('staff_day')} />,
       dataIndex: 'shift',
       key: 'shift',
       width: 50,
@@ -77,10 +77,10 @@ export const getColumns = (openModal: (args: any) => void, Data: Attendance[], m
     ...dates.map((date) => ({
       title: (
         <HeaderCell
-          title={date.toLocaleDateString('en-US', {
+          title={date.toLocaleDateString(t('lang'), {
             weekday: 'short',
             day: 'numeric',
-            month: 'short',
+            month: 'numeric',
           })}
         />
       ),
@@ -98,7 +98,7 @@ export const getColumns = (openModal: (args: any) => void, Data: Attendance[], m
                   <p>{item.check_in}</p>
                   <p>{item.check_out}</p>
                   {item.check_in && (
-                    <Tooltip size="sm" content={'Edit Attendance'} placement="top" color="invert">
+                    <Tooltip size="sm" content={t('edit_attendance')} placement="top" color="invert">
                       <ActionIcon
                         onClick={() => {
                           const data = {

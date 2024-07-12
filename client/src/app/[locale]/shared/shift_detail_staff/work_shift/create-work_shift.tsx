@@ -17,8 +17,9 @@ import {
 } from '@/store/slices/shift_user_detailSlice';
 import { createWorkShift, getAllWorkShifts } from '@/store/slices/workshiftSlice';
 import { createAttendance, createAttendanceByWS } from '@/store/slices/attendanceSlice';
-
+import { useTranslations } from 'next-intl';
 export default function CreateWorkShift() {
+  const t = useTranslations('shift_for_staff');
   const { closeModal } = useModal();
   const [reset, setReset] = useState({});
   const [errors, setErrors] = useState<any>({});
@@ -78,28 +79,28 @@ export default function CreateWorkShift() {
           <>
             <div className="col-span-full flex items-center justify-between">
               <Title as="h4" className="font-semibold">
-                Copy Work Shift
+                {t('title_copy')}
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
             <Input
-              label="Work Shift"
+              label={t('work_shift')}
               className="col-span-full"
               readOnly
               value={oneWorkShift.date_start + '->' + oneWorkShift.date_end}
             />
             <Input
               type="date"
-              label="Date Start"
+              label={t('date_start')}
               className="col-span-full"
               {...register('date_start')}
               error={errors.date_start?.message}
             />
             <Input
               type="date"
-              label="Date End"
+              label={t('date_end')}
               className="col-span-full"
               {...register('date_end')}
               error={errors.date_end?.message}
@@ -107,10 +108,10 @@ export default function CreateWorkShift() {
 
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
-                Cancel
+                {t('cancel')}
               </Button>
               <Button type="submit" isLoading={isCreateLoading} className="w-full @xl:w-auto">
-                Copy Work Shift
+                {t('create')}
               </Button>
             </div>
           </>

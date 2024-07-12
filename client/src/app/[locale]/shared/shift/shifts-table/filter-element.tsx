@@ -11,8 +11,9 @@ import useDebounce from '@/hooks/use-debounce';
 import { shiftTypeOptions, statusOptions } from '../type';
 import { getShiftTypeBadge, getStatusBadge } from './colunms';
 import { setQuery, setReset, setShiftType, setStatus } from '@/store/slices/shiftSlice';
-
+import { useTranslations } from 'next-intl';
 export default function FilterElement() {
+  const t = useTranslations('shift');
   const { isFiltered, query, status, shift_type } = useSelector((state: RootState) => state.shift);
   const [searchTerm, setSearchTerm] = useState(query);
   const debounceSearchTerm = useDebounce(searchTerm, 1000);
@@ -32,10 +33,10 @@ export default function FilterElement() {
           onChange={(value: any) => {
             dispatch(setStatus(value));
           }}
-          placeholder="Filter by Status"
+          placeholder={t('filter_status')}
           getOptionValue={(option: { value: any }) => option.value}
-          getOptionDisplayValue={(option: { value: any }) => getStatusBadge(option.value as any)}
-          displayValue={(selected: any) => getStatusBadge(selected)}
+          getOptionDisplayValue={(option: { value: any }) => getStatusBadge(option.value as any, t)}
+          displayValue={(selected: any) => getStatusBadge(selected, t)}
         />
         <StatusField
           className=" -order-9 w-full @[25rem]:w-[calc(calc(100%_-_10px)_/_2)] @4xl:-order-5 @4xl:w-auto"
@@ -45,7 +46,7 @@ export default function FilterElement() {
           onChange={(value: any) => {
             dispatch(setShiftType(value));
           }}
-          placeholder="Filter by Shift Type"
+          placeholder={t('filter_shifttype')}
           getOptionValue={(option: { value: any }) => option.value}
           getOptionDisplayValue={(option: { value: any }) => getShiftTypeBadge(option.value as any)}
           displayValue={(selected: any) => getShiftTypeBadge(selected)}
@@ -58,13 +59,13 @@ export default function FilterElement() {
             className="-order-1 h-8 w-full bg-gray-200/70 @4xl:-order-4 @4xl:w-auto"
             variant="flat"
           >
-            <PiTrashDuotone className="me-1.5 h-[17px] w-[17px]" /> Clear
+            <PiTrashDuotone className="me-1.5 h-[17px] w-[17px]" /> {t('clear')}
           </Button>
         )}
 
         <Input
           type="search"
-          placeholder="Search for shifts..."
+          placeholder={t('search')}
           value={searchTerm}
           onClear={() => setSearchTerm('')}
           onChange={(event) => setSearchTerm(event.target.value)}

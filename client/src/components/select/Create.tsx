@@ -3,7 +3,7 @@ import React from 'react';
 import { ActionIcon, Tooltip } from 'rizzui';
 import { PiPlusBold } from 'react-icons/pi';
 
-const Create = ({ onClick }) => {
+const Create = ({ onClick, t }: { onClick: any; t: any }) => {
   const { openModal } = useModal();
 
   const handleClick = () => {
@@ -14,7 +14,7 @@ const Create = ({ onClick }) => {
 
   return (
     <div className="flex items-center justify-end gap-3 pe-3">
-      <Tooltip size="sm" content={'Create'} placement="top" color="invert">
+      <Tooltip size="sm" content={t('create')} placement="top" color="invert">
         <ActionIcon
           onClick={handleClick}
           as="span"

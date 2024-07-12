@@ -12,10 +12,12 @@ import { useModal } from '../modal-views/use-modal';
 import dynamic from 'next/dynamic';
 import { getAttendances } from '@/store/slices/attendanceSlice';
 import { setQuery } from '@/store/slices/product_importSlice';
+import { useTranslations } from 'next-intl';
 const FilterElement = dynamic(() => import('@/app/[locale]/shared/attendance/filter-element'), {
   ssr: false,
 });
 export default function ShiftDetailStaffTable() {
+  const t = useTranslations('attendance');
   const { openModal } = useModal();
   const { dataAttendance, isLoading, month, year } = useSelector((state: RootState) => state.attendance);
   const { data, query } = useSelector((state: RootState) => state.staff);
@@ -29,12 +31,12 @@ export default function ShiftDetailStaffTable() {
     fetch();
   }, [setQuery, month, year]);
   const columns = useMemo(
-    () => getColumns(openModal, dataAttendance, month, year),
-    [openModal, dataAttendance, month, year],
+    () => getColumns(openModal, dataAttendance, month, year, t),
+    [openModal, dataAttendance, month, year, t],
   );
   return (
     <div className="mt-0">
-      <label style={{ fontWeight: 'bold', fontSize: '15px' }}>Work Shift:</label>
+      <label style={{ fontWeight: 'bold', fontSize: '15px' }}>{t('workshift')}</label>
       <FilterElement />
       <ControlledTable
         variant="modern"

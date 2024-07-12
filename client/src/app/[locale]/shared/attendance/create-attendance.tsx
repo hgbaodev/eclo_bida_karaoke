@@ -13,8 +13,9 @@ import { OptionType } from 'dayjs';
 import toast from 'react-hot-toast';
 import { Attendance, getAttendances } from '@/store/slices/attendanceSlice';
 import { AttendanceInput, AttendanceSchema } from '@/utils/validators/attendance/attendance-schema';
-
+import { useTranslations } from 'next-intl';
 export default function CreateAttendance() {
+  const t = useTranslations('attendance');
   const { closeModal } = useModal();
   const [reset, setReset] = useState({});
   const [errors, setErrors] = useState<any>({});
@@ -35,7 +36,7 @@ export default function CreateAttendance() {
       setCurrentTime(`${hours}:${minutes}`);
     }, []);
 
-    return <Input type="time" label="Time" className="col-span-full" value={currentTime} readOnly />;
+    return <Input type="time" label={t('time')} className="col-span-full" value={currentTime} readOnly />;
   };
   const onSubmit: SubmitHandler<AttendanceInput> = async (data) => {
     const dataAttendance = {
@@ -48,7 +49,7 @@ export default function CreateAttendance() {
       setReset({});
       setErrors({});
       closeModal();
-      toast.success('Created successfully');
+      toast.success(t('create_success'));
       dispatch(getAttendances({ month, year }));
     } else {
       setErrors(result?.payload?.errors);
@@ -69,13 +70,13 @@ export default function CreateAttendance() {
           <>
             <div className="col-span-full flex items-center justify-between">
               <Title as="h4" className="font-semibold">
-                Add Attendance
+                {t('add')}
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
-            <label style={{ fontWeight: 'bold' }}>Staff:</label>
+            <label style={{ fontWeight: 'bold' }}>{t('staff')}</label>
             <Controller
               name="staff"
               control={control}
@@ -87,7 +88,7 @@ export default function CreateAttendance() {
                     onChange={(option) => field.onChange(option.active)}
                     name={field.name}
                     className="col-span-full"
-                    placeholder="Select a staff"
+                    placeholder={t('input_staff')}
                     isSearchable
                     styles={customStyles}
                     getOptionValue={(option) => option.active}
@@ -99,13 +100,13 @@ export default function CreateAttendance() {
               )}
             />
             <Time />
-            <Input label="Date" className="col-span-full" value={currentDate} {...register('day')} />
+            <Input label={t('date')} className="col-span-full" value={currentDate} {...register('day')} />
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto" style={{ zIndex: 10 }}>
-                Cancel
+                {t('cancel')}
               </Button>
               <Button type="submit" isLoading={isCreateLoading} className="w-full @xl:w-auto" style={{ zIndex: 10 }}>
-                Create
+                {t('create')}
               </Button>
             </div>
           </>

@@ -13,8 +13,9 @@ import { statusOptions, SalaryStructureOptions } from './type';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { getStatusBadge } from './positions-table/columns';
-
+import { useTranslations } from 'next-intl';
 export default function CreatePosition() {
+  const t = useTranslations('position');
   const { closeModal } = useModal();
   const [reset, setReset] = useState({});
   const [errors, setErrors] = useState<any>({});
@@ -30,7 +31,7 @@ export default function CreatePosition() {
       setErrors({});
       closeModal();
       await dispatch(getAllPositions({ page, pageSize, query, status }));
-      toast.success('Staff created successfully');
+      toast.success(t('create_success'));
     } else {
       setErrors(result?.payload?.errors);
     }
@@ -49,15 +50,15 @@ export default function CreatePosition() {
           <>
             <div className="col-span-full flex items-center justify-between">
               <Title as="h4" className="font-semibold">
-                Add a new Position
+                {t('title_create')}
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
             <Input
-              label="Name"
-              placeholder="Enter position name"
+              label={t('name')}
+              placeholder={t('input_name')}
               {...register('name')}
               className="col-span-full"
               error={errors.name?.message}
@@ -65,8 +66,8 @@ export default function CreatePosition() {
 
             <Input
               type="number"
-              label="Base salary"
-              placeholder="Enter position base salary"
+              label={t('base_salary')}
+              placeholder={t('input_basesalary')}
               {...register('base_salary')}
               className="col-span-full"
               error={errors.base_salary?.message}
@@ -81,8 +82,8 @@ export default function CreatePosition() {
                   value={value}
                   onChange={onChange}
                   name={name}
-                  label="Salary Structure"
-                  placeholder="Select a salary structure"
+                  label={t('salary_structure')}
+                  placeholder={t('input_structuresalary')}
                   className="col-span-full"
                   error={errors?.status?.message}
                   getOptionValue={(option) => option.value}
@@ -102,13 +103,13 @@ export default function CreatePosition() {
                   value={value}
                   onChange={onChange}
                   name={name}
-                  label="Status"
-                  placeholder="Select a status"
+                  label={t('status')}
+                  placeholder={t('input_status')}
                   className="col-span-full"
                   error={errors?.status?.message}
                   getOptionValue={(option: { value: any }) => option.value}
-                  getOptionDisplayValue={(option: { value: any }) => getStatusBadge(option.value as any)}
-                  displayValue={(selected: any) => getStatusBadge(selected)}
+                  getOptionDisplayValue={(option: { value: any }) => getStatusBadge(option.value as any, t)}
+                  displayValue={(selected: any) => getStatusBadge(selected, t)}
                   dropdownClassName="!z-[1]"
                   inPortal={false}
                 />
@@ -116,10 +117,10 @@ export default function CreatePosition() {
             />
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
-                Cancel
+                {t('cancel')}
               </Button>
               <Button type="submit" isLoading={createLoading} className="w-full @xl:w-auto">
-                Create Position
+                {t('create_position')}
               </Button>
             </div>
           </>

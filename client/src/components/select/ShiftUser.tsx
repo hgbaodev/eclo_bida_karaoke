@@ -14,9 +14,10 @@ interface DayColumnProps {
   dayOfWeek: string;
   shift: Shift;
   workshift: any;
+  t: any;
 }
 
-const DayColumn: React.FC<DayColumnProps> = ({ data, dayOfWeek, shift, workshift }) => {
+const DayColumn: React.FC<DayColumnProps> = ({ data, dayOfWeek, shift, workshift, t }) => {
   if (!data) {
     return null; // hoặc return hoặc hiển thị một thông báo lỗi
   }
@@ -38,7 +39,7 @@ const DayColumn: React.FC<DayColumnProps> = ({ data, dayOfWeek, shift, workshift
             className="flex items-center border border-gray-300 rounded-md mr-2"
             style={{ width: '150px' }}
           >
-            <Tooltip size="sm" content={'Delete'} placement="top" color="invert">
+            <Tooltip size="sm" content={t('delete')} placement="top" color="invert">
               <ActionIcon
                 as="span"
                 size="sm"
@@ -58,7 +59,7 @@ const DayColumn: React.FC<DayColumnProps> = ({ data, dayOfWeek, shift, workshift
                         dispatch(deleteAttendance({ uuid: dayData.staff.uuid, day: formattedDate }));
                       });
                       await dispatch(getShiftUserDetails(workshift.active));
-                      toast.success(`Staff #${dayData.staff.first_name} has been deleted successfully.`);
+                      toast.success(t('delete_success'));
                     } else {
                       toast.error(`Failed to delete staff #${dayData.staff.first_name}.`);
                     }
@@ -69,13 +70,13 @@ const DayColumn: React.FC<DayColumnProps> = ({ data, dayOfWeek, shift, workshift
             {dayData.staff.last_name + ' ' + dayData.staff.first_name} <br />
           </div>
         ))}
-        <Create onClick={<CreateShiftDetailStaff day_of_week={dayOfWeek} shift={shift} />} />
+        <Create onClick={<CreateShiftDetailStaff day_of_week={dayOfWeek} shift={shift} />} t={t} />
       </div>
     );
   } else {
     return (
       <div>
-        <Create onClick={<CreateShiftDetailStaff day_of_week={dayOfWeek} shift={shift} />} />
+        <Create onClick={<CreateShiftDetailStaff day_of_week={dayOfWeek} shift={shift} />} t={t} />
       </div>
     );
   }

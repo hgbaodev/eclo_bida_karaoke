@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { HeaderCell } from '@/components/ui/table';
 import { render } from 'node_modules/@headlessui/react/dist/utils/render';
-export const getColumns = (openModal: (args: any) => void, Data: ShiftUserDetail[], work_shift: any) => {
+export const getColumns = (openModal: (args: any) => void, Data: ShiftUserDetail[], work_shift: any, t: any) => {
   if (!work_shift || !work_shift.date_start || !work_shift.date_end) {
     return [];
   }
@@ -11,7 +11,7 @@ export const getColumns = (openModal: (args: any) => void, Data: ShiftUserDetail
   const dates = getDatesBetween(startDate, endDate);
   const columns = [
     {
-      title: <HeaderCell title="Shift/Day" />,
+      title: <HeaderCell title={t('table_day')} />,
       dataIndex: 'shift',
       key: 'shift',
       width: 30,
@@ -22,10 +22,10 @@ export const getColumns = (openModal: (args: any) => void, Data: ShiftUserDetail
     ...dates.map((date) => ({
       title: (
         <HeaderCell
-          title={date.toLocaleDateString('en-US', {
+          title={date.toLocaleDateString(t('table_date'), {
             weekday: 'short',
             day: 'numeric',
-            month: 'short',
+            month: 'numeric',
           })}
         />
       ),

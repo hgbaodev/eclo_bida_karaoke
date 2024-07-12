@@ -11,20 +11,20 @@ import toast from 'react-hot-toast';
 import EditShift from '../edit-shift';
 import { deleteShift, getAllShifts } from '@/store/slices/shiftSlice';
 
-export function getStatusBadge(status: Shift['status']) {
+export function getStatusBadge(status: Shift['status'], t: any) {
   switch (status) {
     case STATUSES.InActive:
       return (
         <div className="flex items-center">
           <Badge color="danger" renderAsDot />
-          <Text className="ms-2 font-medium text-red-dark">InActive</Text>
+          <Text className="ms-2 font-medium text-red-dark">{t('inactive')}</Text>
         </div>
       );
     case STATUSES.Active:
       return (
         <div className="flex items-center">
           <Badge color="success" renderAsDot />
-          <Text className="ms-2 font-medium text-green-dark">Active</Text>
+          <Text className="ms-2 font-medium text-green-dark">{t('active')}</Text>
         </div>
       );
     default:
@@ -59,44 +59,44 @@ export function getShiftTypeBadge(shift_type: Shift['shift_type']) {
       );
   }
 }
-export const getColumns = (openModal: (args: any) => void) => [
+export const getColumns = (openModal: (args: any) => void, t: any) => [
   {
-    title: <HeaderCell title="Id" />,
+    title: <HeaderCell title={t('table_id')} />,
     dataIndex: 'id',
     key: 'id',
     width: 50,
     render: (_: any, shift: Shift, index: number) => <div className="inline-flex ps-3">{index + 1}</div>,
   },
   {
-    title: <HeaderCell title="Time in" />,
+    title: <HeaderCell title={t('table_time_in')} />,
     dataIndex: 'time in',
     key: 'time in',
     width: 50,
     render: (_: string, shift: Shift) => shift.time_in,
   },
   {
-    title: <HeaderCell title="Time out" />,
+    title: <HeaderCell title={t('table_time_out')} />,
     dataIndex: 'time out',
     key: 'time out',
     width: 50,
     render: (_: string, shift: Shift) => shift.time_out,
   },
   {
-    title: <HeaderCell title="Shift Type" />,
+    title: <HeaderCell title={t('table_shifttype')} />,
     dataIndex: 'shifttype',
     key: 'shifttype',
     width: 10,
     render: (_: string, shift: Shift) => getShiftTypeBadge(shift.shift_type),
   },
   {
-    title: <HeaderCell title="Status" />,
+    title: <HeaderCell title={t('table_status')} />,
     dataIndex: 'status',
     key: 'status',
     width: 10,
-    render: (status: Shift['status']) => getStatusBadge(status),
+    render: (status: Shift['status']) => getStatusBadge(status, t),
   },
   {
-    title: <HeaderCell title="Created" />,
+    title: <HeaderCell title={t('table_created')} />,
     dataIndex: 'created_at',
     key: 'created_at',
     width: 50,
@@ -131,13 +131,13 @@ export const getColumns = (openModal: (args: any) => void) => [
           </ActionIcon>
         </Tooltip>
         <DeletePopover
-          title={`Delete this shift`}
-          description={`Are you sure you want to delete this #(${shift.time_in} - ${shift.time_out}) Shift?`}
+          title={t('delete_shift')}
+          description={t('delete_description')}
           onDelete={async () => {
             const result = await dispatch(deleteShift(shift.active)); // Remove the .then() block
             if (deleteShift.fulfilled.match(result)) {
               await dispatch(getAllShifts({ page: 1, pageSize: 5, query: '', status: '', shift_type: '' }));
-              toast.success(`Shift #(${shift.time_in} - ${shift.time_out}) has been deleted successfully.`);
+              toast.success(t('delete_success'));
             } else {
               toast.error(`Failed to delete Shift #${shift.active}.`);
             }

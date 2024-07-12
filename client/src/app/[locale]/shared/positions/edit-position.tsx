@@ -12,9 +12,10 @@ import { statusOptions, SalaryStructureOptions } from './type';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { EditPositionInput, editPositionSchema } from '@/utils/validators/position/edit-position.schema';
-import { getStatusBadge } from '../users/users-table/columns';
-
+import { getStatusBadge } from '../positions/positions-table/columns';
+import { useTranslations } from 'next-intl';
 export default function EditPosition({ position, active }: { position: EditPositionInput; active: string }) {
+  const t = useTranslations('position');
   const { closeModal } = useModal();
   const [reset, setReset] = useState<any>(position);
   const [errors, setErrors] = useState<any>({});
@@ -30,7 +31,7 @@ export default function EditPosition({ position, active }: { position: EditPosit
       setErrors({});
       closeModal();
       await dispatch(getAllPositions({ page, pageSize, query, status }));
-      toast.success('Position created successfully');
+      toast.success(t('create_success'));
     } else {
       setErrors(result?.payload?.errors);
     }
@@ -49,7 +50,7 @@ export default function EditPosition({ position, active }: { position: EditPosit
           <>
             <div className="col-span-full flex items-center justify-between">
               <Title as="h4" className="font-semibold">
-                Edit a Position
+                {t('title_edit')}
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
@@ -57,8 +58,8 @@ export default function EditPosition({ position, active }: { position: EditPosit
             </div>
 
             <Input
-              label="Name"
-              placeholder="Enter postion name"
+              label={t('name')}
+              placeholder={t('input_name')}
               {...register('name')}
               className="col-span-full"
               error={errors.name?.message}
@@ -66,8 +67,8 @@ export default function EditPosition({ position, active }: { position: EditPosit
 
             <Input
               type="number"
-              label="Salary"
-              placeholder="Enter position salary"
+              label={t('base_salary')}
+              placeholder={t('input_basesalary')}
               className="col-span-full"
               {...register('base_salary')}
               error={errors.base_salary?.message}
@@ -81,8 +82,8 @@ export default function EditPosition({ position, active }: { position: EditPosit
                   value={value}
                   onChange={onChange}
                   name={name}
-                  label="Salary Structure"
-                  placeholder="Select a salary structure"
+                  label={t('salary_structure')}
+                  placeholder={t('input_structure')}
                   className="col-span-full"
                   error={errors?.status?.message}
                   getOptionValue={(option) => option.value}
@@ -102,13 +103,13 @@ export default function EditPosition({ position, active }: { position: EditPosit
                   value={value}
                   onChange={onChange}
                   name={name}
-                  label="Status"
-                  placeholder="Select a status"
+                  label={t('status')}
+                  placeholder={t('input_status')}
                   className="col-span-full"
                   error={errors?.status?.message}
                   getOptionValue={(option: { value: any }) => option.value}
-                  getOptionDisplayValue={(option: { value: any }) => getStatusBadge(option.value as any)}
-                  displayValue={(selected: any) => getStatusBadge(selected)}
+                  getOptionDisplayValue={(option: { value: any }) => getStatusBadge(option.value as any, t)}
+                  displayValue={(selected: any) => getStatusBadge(selected, t)}
                   dropdownClassName="!z-[1]"
                   inPortal={false}
                 />

@@ -14,20 +14,20 @@ import EditStaff from '../edit-staff';
 import { deleteUser } from '@/store/slices/userSlice';
 import env from '@/env';
 
-export function getStatusBadge(status: Staff['status']) {
+export function getStatusBadge(status: Staff['status'], t: any) {
   switch (status) {
     case STATUSES.InActive:
       return (
         <div className="flex items-center">
           <Badge color="danger" renderAsDot />
-          <Text className="ms-2 font-medium text-red-dark">InActive</Text>
+          <Text className="ms-2 font-medium text-red-dark">{t('inactive')}</Text>
         </div>
       );
     case STATUSES.Active:
       return (
         <div className="flex items-center">
           <Badge color="success" renderAsDot />
-          <Text className="ms-2 font-medium text-green-dark">Active</Text>
+          <Text className="ms-2 font-medium text-green-dark">{t('active')}</Text>
         </div>
       );
     default:
@@ -39,19 +39,19 @@ export function getStatusBadge(status: Staff['status']) {
       );
   }
 }
-export const getColumns = (openModal: (args: any) => void) => [
+export const getColumns = (openModal: (args: any) => void, t: any) => [
   {
-    title: <HeaderCell title="Id" />,
+    title: <HeaderCell title={t('table_id')} />,
     dataIndex: 'id',
     key: 'id',
     width: 50,
     render: (_: any, staff: Staff, index: number) => <div className="inline-flex ps-3">{index + 1}</div>,
   },
   {
-    title: <HeaderCell title="Name" />,
+    title: <HeaderCell title={t('table_name')} />,
     dataIndex: 'fullName',
     key: 'fullName',
-    width: 50,
+    width: 100,
     render: (_: string, staff: Staff) => (
       <AvatarCard
         src={env.API_STORAGE + staff.image}
@@ -66,42 +66,42 @@ export const getColumns = (openModal: (args: any) => void) => [
     ),
   },
   {
-    title: <HeaderCell title="Position" />,
+    title: <HeaderCell title={t('table_position')} />,
     dataIndex: 'position',
     key: 'position',
     width: 100,
     render: (_: string, staff: Staff) => staff.position.name,
   },
   {
-    title: <HeaderCell title="Birthday" />,
+    title: <HeaderCell title={t('table_birthday')} />,
     dataIndex: 'birthday',
     key: 'birthday',
     width: 50,
     render: (_: string, staff: Staff) => staff.birthday,
   },
   {
-    title: <HeaderCell title="Phone" />,
+    title: <HeaderCell title={t('table_phone')} />,
     dataIndex: 'phone',
     key: 'phone',
     width: 50,
     render: (_: string, staff: Staff) => staff.phone,
   },
   {
-    title: <HeaderCell title="UUID" />,
+    title: <HeaderCell title={t('table_uuid')} />,
     dataIndex: 'uuid',
     key: 'uuid',
-    width: 50,
+    width: 100,
     render: (_: string, staff: Staff) => staff.uuid,
   },
   {
-    title: <HeaderCell title="Status" />,
+    title: <HeaderCell title={t('table_status')} />,
     dataIndex: 'status',
     key: 'status',
-    width: 10,
-    render: (status: Staff['status']) => getStatusBadge(status),
+    width: 100,
+    render: (status: Staff['status']) => getStatusBadge(status, t),
   },
   {
-    title: <HeaderCell title="Created" />,
+    title: <HeaderCell title={t('table_created')} />,
     dataIndex: 'created_at',
     key: 'created_at',
     width: 50,
@@ -114,7 +114,7 @@ export const getColumns = (openModal: (args: any) => void) => [
     width: 10,
     render: (_: string, staff: Staff) => (
       <div className="flex items-center justify-end gap-3 pe-3">
-        <Tooltip size="sm" content={'Edit Staff'} placement="top" color="invert">
+        <Tooltip size="sm" content={t('edit_staff')} placement="top" color="invert">
           <ActionIcon
             onClick={() => {
               const data = {
@@ -145,14 +145,14 @@ export const getColumns = (openModal: (args: any) => void) => [
           </ActionIcon>
         </Tooltip>
         <DeletePopover
-          title={`Delete this staff`}
-          description={`Are you sure you want to delete this #${staff.first_name} staff?`}
+          title={t('title_delete')}
+          description={t('delete_description')}
           onDelete={async () => {
             const result = await dispatch(deleteStaff(staff.active)); // Remove the .then() block
             if (deleteStaff.fulfilled.match(result)) {
               await dispatch(deleteUser(staff.user ? staff.user.active : ''));
               await dispatch(getStaffs({ page: 1, pageSize: 5, query: '', position: '', status: '' }));
-              toast.success(`Staff #${staff.first_name} has been deleted successfully.`);
+              toast.success(t('delete_success'));
             } else {
               toast.error(`Failed to delete staff #${staff.active}.`);
             }
