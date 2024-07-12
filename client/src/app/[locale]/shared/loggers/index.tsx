@@ -11,11 +11,13 @@ import { channel } from '@/helpers/pusherConfig';
 import { getLoggers, setPage, setPageSize } from '@/store/slices/loggerSlice';
 import { getColumns } from './columns';
 import usePusher from '@/hooks/use-pusher';
+import { useTranslations } from 'next-intl';
 const FilterElement = dynamic(() => import('@/app/[locale]/shared/users/users-table/filter-element'), {
   ssr: false,
 });
 
 export default function LoggersTable() {
+  const t = useTranslations('loggers');
   const { data, isLoading, pageSize, page, totalRow, query } = useSelector((state: RootState) => state.logger);
 
   usePusher('loggerEvent', (data: any) => {
@@ -31,9 +33,9 @@ export default function LoggersTable() {
   console.log('data', data);
 
   const columns = useMemo(
-    () => getColumns(),
+    () => getColumns(t),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
+    [t],
   );
 
   const handleChangePageSize = (size: any) => {

@@ -99,7 +99,7 @@ export default function EditPrice({ price, active }: { price: EditPriceInput; ac
                   name={name}
                   label={t('service_type')}
                   className="col-span-full"
-                  placeholder={t('service_type')}
+                  placeholder={t('enter_service_type')}
                   error={errors?.service_type?.message}
                   //@ts-ignore
                   getOptionValue={(option) => option.active}

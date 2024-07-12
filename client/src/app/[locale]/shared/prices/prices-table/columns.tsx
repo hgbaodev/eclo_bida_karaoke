@@ -81,7 +81,7 @@ export const getColumns = (openModal: (args: any) => void, t: any) => [
     width: 10,
     render: (_: string, price: Price) => (
       <div className="flex items-center justify-end gap-3 pe-3">
-        <Tooltip size="sm" content={'Edit price'} placement="top" color="invert">
+        <Tooltip size="sm" content={t('edit_price')} placement="top" color="invert">
           <ActionIcon
             onClick={() => {
               const data = {

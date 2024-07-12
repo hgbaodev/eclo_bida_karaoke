@@ -9,12 +9,14 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
 import { getCustomers, setPage, setPageSize } from '@/store/slices/customerSlice';
+import { useTranslations } from 'next-intl';
 import { useModal } from '../../modal-views/use-modal';
 const FilterElement = dynamic(() => import('@/app/[locale]/shared/customers/customers-table/filter-element'), {
   ssr: false,
 });
 
 export default function CustomersTable() {
+  const t = useTranslations('customers'); // Thay 'common' bằng file translation chứa các key tương ứng
   const { openModal } = useModal();
   const { data, isLoading, pageSize, page, totalRow, status, query } = useSelector(
     (state: RootState) => state.customer,
@@ -31,11 +33,7 @@ export default function CustomersTable() {
     fetch();
   }, [page, pageSize, query, status]);
 
-  const columns = useMemo(
-    () => getColumns(openModal),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
+  const columns = useMemo(() => getColumns(openModal, t), [openModal, t]);
 
   const handleChangePageSize = (size: any) => {
     dispatch(setPageSize(size));
