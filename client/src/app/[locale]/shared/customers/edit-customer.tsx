@@ -12,10 +12,12 @@ import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { EditCustomerInput, editCustomerSchema } from '@/utils/validators/customer/edit-customer.schema';
-import { getStatusBadge } from './customers-table/columns';
+import { StatusBadge } from './customers-table/columns';
 import { statusOptions } from './type';
+import { useTranslations } from 'next-intl';
 
 export default function EditCustomer({ customer, active }: { customer: EditCustomerInput; active: string }) {
+  const t = useTranslations('customers');
   const { closeModal } = useModal();
   const [reset, setReset] = useState<any>(customer);
   const [errors, setErrors] = useState<any>({});
@@ -32,7 +34,7 @@ export default function EditCustomer({ customer, active }: { customer: EditCusto
       setErrors({});
       closeModal();
       await dispatch(getCustomers({ page, pageSize, query, status }));
-      toast.success('Customer update successfully');
+      toast.success(t('customer_updated_successfully'));
     } else {
       setErrors(result?.payload?.errors);
     }
@@ -52,36 +54,36 @@ export default function EditCustomer({ customer, active }: { customer: EditCusto
           <>
             <div className="col-span-full flex items-center justify-between">
               <Title as="h4" className="font-semibold">
-                Update customer
+                {t('update_customer')}
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
             <Input
-              label="First Name"
-              placeholder="Enter customer's first name"
+              label={t('first_name')}
+              placeholder={t('enter_customers_first_name')}
               {...register('first_name')}
               className="col-span-[1/2]"
               error={errors.first_name?.message}
             />
             <Input
-              label="Last Name"
-              placeholder="Enter customer's last name"
+              label={t('last_name')}
+              placeholder={t('enter_customers_last_name')}
               {...register('last_name')}
               className="col-span-[1/2]"
               error={errors.last_name?.message}
             />
             <Input
-              label="Phone"
-              placeholder="Enter customer's phone"
+              label={t('phone')}
+              placeholder={t('enter_customers_phone')}
               className="col-span-full"
               {...register('phone')}
               error={errors.phone?.message}
             />
             <Input
-              label="Email"
-              placeholder="Enter customer's email"
+              label={t('email')}
+              placeholder={t('enter_customers_email')}
               className="col-span-full"
               {...register('email')}
               error={errors.email?.message}
@@ -96,13 +98,13 @@ export default function EditCustomer({ customer, active }: { customer: EditCusto
                   value={value}
                   onChange={onChange}
                   name={name}
-                  label="Status"
-                  placeholder="Select a status"
+                  label={t('status')}
+                  placeholder={t('select_a_status')}
                   className="col-span-full"
                   error={errors?.status?.message}
                   getOptionValue={(option: { value: any }) => option.value}
-                  getOptionDisplayValue={(option: { value: any }) => getStatusBadge(option.value as any)}
-                  displayValue={(selected: any) => getStatusBadge(selected)}
+                  getOptionDisplayValue={(option: { value: any }) => StatusBadge(option.value as any, t)}
+                  displayValue={(selected: any) => StatusBadge(selected, t)}
                   dropdownClassName="!z-[1]"
                   inPortal={false}
                 />
@@ -111,10 +113,10 @@ export default function EditCustomer({ customer, active }: { customer: EditCusto
 
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
-                Cancel
+                {t('cancel')}
               </Button>
               <Button type="submit" isLoading={isUpdateLoading} className="w-full @xl:w-auto">
-                Update customer
+                {t('update_customer')}
               </Button>
             </div>
           </>

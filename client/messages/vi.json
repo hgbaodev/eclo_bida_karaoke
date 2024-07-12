@@ -502,5 +502,45 @@
       "ip": "Địa chỉ IP",
       "created_at": "Ngày tạo"
     }
+  },
+  "customers": {
+    "title": "Khách hàng",
+    "breadcrumb_analytics": "Phân tích",
+    "add_a_new_customer": "Thêm khách hàng mới",
+    "edit_customer_tooltip": "Chỉnh sửa Khách hàng",
+    "delete_customer_title": "Xóa khách hàng này",
+    "delete_customer_description": "Bạn có chắc chắn muốn xóa khách hàng này không",
+    "customer": "khách hàng",
+    "delete_success": "Khách hàng",
+    "delete_failed": "Xóa khách hàng thất bại",
+    "status_active": "Hoạt động",
+    "status_inactive": "Ngưng hoạt động",
+    "columns": {
+      "no": "STT",
+      "name": "Tên",
+      "phone": "Điện thoại",
+      "created_at": "Ngày tạo",
+      "status": "Trạng thái"
+    },
+    "filter_by_status": "Lọc theo trạng thái",
+    "clear": "Xóa bộ lọc",
+    "search_for_customers": "Tìm kiếm khách hàng...",
+    "add_new_customer": "Thêm khách hàng mới",
+    "first_name": "Tên",
+    "enter_customers_first_name": "Nhập tên của khách hàng",
+    "last_name": "Họ",
+    "enter_customers_last_name": "Nhập họ của khách hàng",
+    "email": "Email",
+    "phone": "Điện thoại",
+    "enter_customers_email_address": "Nhập địa chỉ email của khách hàng",
+    "enter_customers_email": "Nhập email của khách hàng",
+    "enter_customers_phone": "Nhập số điện thoại của khách hàng",
+    "status": "Trạng thái",
+    "select_a_status": "Chọn trạng thái",
+    "cancel": "Hủy",
+    "create_customer": "Tạo khách hàng",
+    "customer_created_successfully": "Đã tạo khách hàng thành công",
+    "update_customer": "Cập nhật khách hàng",
+    "customer_updated_successfully": "Đã cập nhật khách hàng thành công"
   }
 }
