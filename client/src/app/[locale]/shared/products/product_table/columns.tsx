@@ -12,8 +12,9 @@ import { dispatch } from '@/store';
 import { deleteProduct, getProducts } from '@/store/slices/productSlices';
 import toast from 'react-hot-toast';
 import EditProduct from '../edit-product';
+import WithPermission from '@/guards/with-permisson';
 
-export const getColumns = (openModal: (args: any) => void, t:any) => [
+export const getColumns = (openModal: (args: any) => void, t: any) => [
   {
     title: <HeaderCell title="Id" />,
     dataIndex: 'id',
@@ -73,40 +74,44 @@ export const getColumns = (openModal: (args: any) => void, t:any) => [
     width: 10,
     render: (_: string, product: Product) => (
       <div className="flex items-center justify-end gap-3 pe-3">
-        <Tooltip size="sm" content={t('edit_product')} placement="top" color="invert">
-          <ActionIcon
-            onClick={() => {
-              const data = {
-                name: product.name,
-                selling_price: product.selling_price,
-                quantity: product.quantity,
-                product_type: product.product_type.active,
-              };
-              openModal({
-                view: <EditProduct product={data} active={product.active} />,
-              });
+        <WithPermission permission="product.Update">
+          <Tooltip size="sm" content={t('edit_product')} placement="top" color="invert">
+            <ActionIcon
+              onClick={() => {
+                const data = {
+                  name: product.name,
+                  selling_price: product.selling_price,
+                  quantity: product.quantity,
+                  product_type: product.product_type.active,
+                };
+                openModal({
+                  view: <EditProduct product={data} active={product.active} />,
+                });
+              }}
+              as="span"
+              size="sm"
+              variant="outline"
+              className="hover:!border-gray-900 hover:text-gray-700 cursor-pointer"
+            >
+              <PencilIcon className="h-4 w-4" />
+            </ActionIcon>
+          </Tooltip>
+        </WithPermission>
+        <WithPermission permission="product.Delete">
+          <DeletePopover
+            title={t('delete')}
+            description={t('delete_product')}
+            onDelete={async () => {
+              const result = await dispatch(deleteProduct(product.active)); // Remove the .then() block
+              if (deleteProduct.fulfilled.match(result)) {
+                await dispatch(getProducts({ page: 1, pageSize: 5, query: '', type: '' }));
+                toast.success(t('success'));
+              } else {
+                toast.error(t('failed'));
+              }
             }}
-            as="span"
-            size="sm"
-            variant="outline"
-            className="hover:!border-gray-900 hover:text-gray-700 cursor-pointer"
-          >
-            <PencilIcon className="h-4 w-4" />
-          </ActionIcon>
-        </Tooltip>
-        <DeletePopover
-          title={t('delete')}
-          description={t('delete_product')}
-          onDelete={async () => {
-            const result = await dispatch(deleteProduct(product.active)); // Remove the .then() block
-            if (deleteProduct.fulfilled.match(result)) {
-              await dispatch(getProducts({ page: 1, pageSize: 5, query: '',type:'' }));
-              toast.success(t('success'));
-            } else {
-              toast.error(t('failed'));
-            }
-          }}
-        />
+          />
+        </WithPermission>
       </div>
     ),
   },

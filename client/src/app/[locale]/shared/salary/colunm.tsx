@@ -1,5 +1,4 @@
 'use client';
-import React, { useState, useEffect } from 'react';
 import { HeaderCell } from '@/components/ui/table';
 export const getColumns = (openModal: (args: any) => void, t: any) => {
   const columns = [

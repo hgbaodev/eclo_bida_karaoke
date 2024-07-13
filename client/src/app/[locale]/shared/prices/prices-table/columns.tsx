@@ -10,6 +10,7 @@ import { dispatch } from '@/store';
 import { getPrices, deletePrice } from '@/store/slices/priceSlice';
 import toast from 'react-hot-toast';
 import EditPrice from '../edit-price';
+import WithPermission from '@/guards/with-permisson';
 
 export function StatusBadge(status: Price['status'], t: any) {
   switch (status) {
@@ -81,40 +82,44 @@ export const getColumns = (openModal: (args: any) => void, t: any) => [
     width: 10,
     render: (_: string, price: Price) => (
       <div className="flex items-center justify-end gap-3 pe-3">
-        <Tooltip size="sm" content={t('edit_price')} placement="top" color="invert">
-          <ActionIcon
-            onClick={() => {
-              const data = {
-                name: price.name,
-                pricePerHour: price.pricePerHour,
-                status: price.status,
-                service_type: price.service_type,
-              };
-              openModal({
-                view: <EditPrice price={data} active={price.active} />,
-              });
+        <WithPermission permission="price.Update">
+          <Tooltip size="sm" content={t('edit_price')} placement="top" color="invert">
+            <ActionIcon
+              onClick={() => {
+                const data = {
+                  name: price.name,
+                  pricePerHour: price.pricePerHour,
+                  status: price.status,
+                  service_type: price.service_type,
+                };
+                openModal({
+                  view: <EditPrice price={data} active={price.active} />,
+                });
+              }}
+              as="span"
+              size="sm"
+              variant="outline"
+              className="hover:!border-gray-900 hover:text-gray-700 cursor-pointer"
+            >
+              <PencilIcon className="h-4 w-4" />
+            </ActionIcon>
+          </Tooltip>
+        </WithPermission>
+        <WithPermission permission="price.Delete">
+          <DeletePopover
+            title={t('delete')}
+            description={t('delete_confirm_description')}
+            onDelete={async () => {
+              const result = await dispatch(deletePrice(price.active)); // Remove the .then() block
+              if (deletePrice.fulfilled.match(result)) {
+                await dispatch(getPrices({ page: 1, pageSize: 5, query: '', status: '' }));
+                toast.success(t('successful'));
+              } else {
+                toast.error(t('failed'));
+              }
             }}
-            as="span"
-            size="sm"
-            variant="outline"
-            className="hover:!border-gray-900 hover:text-gray-700 cursor-pointer"
-          >
-            <PencilIcon className="h-4 w-4" />
-          </ActionIcon>
-        </Tooltip>
-        <DeletePopover
-          title={t('delete')}
-          description={t('delete_confirm_description')}
-          onDelete={async () => {
-            const result = await dispatch(deletePrice(price.active)); // Remove the .then() block
-            if (deletePrice.fulfilled.match(result)) {
-              await dispatch(getPrices({ page: 1, pageSize: 5, query: '', status: '' }));
-              toast.success(t('successful'));
-            } else {
-              toast.error(t('failed'));
-            }
-          }}
-        />
+          />
+        </WithPermission>
       </div>
     ),
   },

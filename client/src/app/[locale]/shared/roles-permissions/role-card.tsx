@@ -14,6 +14,7 @@ import toast from 'react-hot-toast';
 import { permissions } from './utils';
 import { RolePermissionInput } from '@/utils/validators/role/edit-role.schema';
 import { useTranslations } from 'next-intl';
+import WithPermission from '@/guards/with-permisson';
 
 type User = {
   id: number;
@@ -93,12 +94,16 @@ export default function RoleCard({ id, name, color, users, functionals, classNam
             </ActionIcon>
           </Dropdown.Trigger>
           <Dropdown.Menu className="!z-0">
-            <Dropdown.Item className="gap-2 text-xs sm:text-sm" onClick={handleRenameRole}>
-              {t('rename')}
-            </Dropdown.Item>
-            <Dropdown.Item className="gap-2 text-xs sm:text-sm" onClick={handleDeleteRole}>
-              {t('remove')}
-            </Dropdown.Item>
+            <WithPermission permission="role.Update">
+              <Dropdown.Item className="gap-2 text-xs sm:text-sm" onClick={handleRenameRole}>
+                {t('rename')}
+              </Dropdown.Item>
+            </WithPermission>
+            <WithPermission permission="role.Delete">
+              <Dropdown.Item className="gap-2 text-xs sm:text-sm" onClick={handleDeleteRole}>
+                {t('remove')}
+              </Dropdown.Item>
+            </WithPermission>
           </Dropdown.Menu>
         </Dropdown>
       </header>

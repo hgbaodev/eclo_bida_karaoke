@@ -11,6 +11,7 @@ import { dispatch } from '@/store';
 import { deleteShiftDetail, getAllShiftDetails } from '@/store/slices/shift_detailSlice';
 import toast from 'react-hot-toast';
 import EditShiftDetail from '../edit-shift-detail';
+import WithPermission from '@/guards/with-permisson';
 
 export const getColumns = (openModal: (args: any) => void) => [
   {
@@ -62,39 +63,43 @@ export const getColumns = (openModal: (args: any) => void) => [
     width: 10,
     render: (_: string, shiftdetail: ShiftDetail) => (
       <div className="flex items-center justify-end gap-3 pe-3">
-        <Tooltip size="sm" content={'Edit Staff'} placement="top" color="invert">
-          <ActionIcon
-            onClick={() => {
-              const data = {
-                day_of_week: shiftdetail.day_of_week,
-                quantity_of_staff: shiftdetail.quantity_of_staff,
-                shift_id: shiftdetail.shift.active,
-              };
-              openModal({
-                view: <EditShiftDetail shift_detail={data} active={shiftdetail.active} />,
-              });
+        <WithPermission permission="shift.Update">
+          <Tooltip size="sm" content={'Edit Staff'} placement="top" color="invert">
+            <ActionIcon
+              onClick={() => {
+                const data = {
+                  day_of_week: shiftdetail.day_of_week,
+                  quantity_of_staff: shiftdetail.quantity_of_staff,
+                  shift_id: shiftdetail.shift.active,
+                };
+                openModal({
+                  view: <EditShiftDetail shift_detail={data} active={shiftdetail.active} />,
+                });
+              }}
+              as="span"
+              size="sm"
+              variant="outline"
+              className="hover:!border-gray-900 hover:text-gray-700 cursor-pointer"
+            >
+              <PencilIcon className="h-4 w-4" />
+            </ActionIcon>
+          </Tooltip>
+        </WithPermission>
+        <WithPermission permission="delete.Delete">
+          <DeletePopover
+            title={`Delete this staff`}
+            description={`Are you sure you want to delete this shift detail?`}
+            onDelete={async () => {
+              const result = await dispatch(deleteShiftDetail(shiftdetail.active)); // Remove the .then() block
+              if (deleteShiftDetail.fulfilled.match(result)) {
+                await dispatch(getAllShiftDetails({ page: 1, pageSize: 5, query: '', shift: '', day_of_week: '' }));
+                toast.success(`Shift detail has been deleted successfully.`);
+              } else {
+                toast.error(`Failed to delete staff.`);
+              }
             }}
-            as="span"
-            size="sm"
-            variant="outline"
-            className="hover:!border-gray-900 hover:text-gray-700 cursor-pointer"
-          >
-            <PencilIcon className="h-4 w-4" />
-          </ActionIcon>
-        </Tooltip>
-        <DeletePopover
-          title={`Delete this staff`}
-          description={`Are you sure you want to delete this shift detail?`}
-          onDelete={async () => {
-            const result = await dispatch(deleteShiftDetail(shiftdetail.active)); // Remove the .then() block
-            if (deleteShiftDetail.fulfilled.match(result)) {
-              await dispatch(getAllShiftDetails({ page: 1, pageSize: 5, query: '', shift: '', day_of_week: '' }));
-              toast.success(`Shift detail has been deleted successfully.`);
-            } else {
-              toast.error(`Failed to delete staff.`);
-            }
-          }}
-        />
+          />
+        </WithPermission>
       </div>
     ),
   },

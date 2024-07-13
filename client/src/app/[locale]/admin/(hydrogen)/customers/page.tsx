@@ -8,7 +8,7 @@ import useCheckPermissions from '@/hooks/use-check-permission';
 import WithPermission from '@/guards/with-permisson';
 
 export default function BlankPage() {
-  const t = useTranslations('customers'); // Thay 'common' bằng file translation chứa các key tương ứng
+  const t = useTranslations('customers');
   const check = useCheckPermissions('customer.View');
   if (!check) {
     window.location.href = '/error/403';
