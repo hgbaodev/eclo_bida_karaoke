@@ -13,6 +13,7 @@ import toast from 'react-hot-toast';
 import EditStaff from '../edit-staff';
 import { deleteUser } from '@/store/slices/userSlice';
 import env from '@/env';
+import WithPermission from '@/guards/with-permisson';
 
 export function getStatusBadge(status: Staff['status'], t: any) {
   switch (status) {
@@ -114,50 +115,56 @@ export const getColumns = (openModal: (args: any) => void, t: any) => [
     width: 10,
     render: (_: string, staff: Staff) => (
       <div className="flex items-center justify-end gap-3 pe-3">
-        <Tooltip size="sm" content={t('edit_staff')} placement="top" color="invert">
-          <ActionIcon
-            onClick={() => {
-              const data = {
-                first_name: staff.first_name,
-                last_name: staff.last_name,
-                birthday: staff.birthday,
-                idcard: staff.idcard,
-                position: staff.position.active,
-                phone: staff.phone,
-                status: staff.status,
-                gender: staff.gender,
-                image: staff.image,
-                address: staff.address,
-                email: staff.user ? staff.user.email : '',
-                role: staff.user ? staff.user.role.active : '',
-                password: staff.user ? staff.user.password : '',
-              };
-              openModal({
-                view: <EditStaff staff={data} active={staff.active} activeUser={staff.user ? staff.user.active : ''} />,
-              });
+        <WithPermission permission="staff.Update">
+          <Tooltip size="sm" content={t('edit_staff')} placement="top" color="invert">
+            <ActionIcon
+              onClick={() => {
+                const data = {
+                  first_name: staff.first_name,
+                  last_name: staff.last_name,
+                  birthday: staff.birthday,
+                  idcard: staff.idcard,
+                  position: staff.position.active,
+                  phone: staff.phone,
+                  status: staff.status,
+                  gender: staff.gender,
+                  image: staff.image,
+                  address: staff.address,
+                  email: staff.user ? staff.user.email : '',
+                  role: staff.user ? staff.user.role.active : '',
+                  password: staff.user ? staff.user.password : '',
+                };
+                openModal({
+                  view: (
+                    <EditStaff staff={data} active={staff.active} activeUser={staff.user ? staff.user.active : ''} />
+                  ),
+                });
+              }}
+              as="span"
+              size="sm"
+              variant="outline"
+              className="hover:!border-gray-900 hover:text-gray-700 cursor-pointer"
+            >
+              <PencilIcon className="h-4 w-4" />
+            </ActionIcon>
+          </Tooltip>
+        </WithPermission>
+        <WithPermission permission="staff.Delete">
+          <DeletePopover
+            title={t('title_delete')}
+            description={t('delete_description')}
+            onDelete={async () => {
+              const result = await dispatch(deleteStaff(staff.active)); // Remove the .then() block
+              if (deleteStaff.fulfilled.match(result)) {
+                await dispatch(deleteUser(staff.user ? staff.user.active : ''));
+                await dispatch(getStaffs({ page: 1, pageSize: 5, query: '', position: '', status: '' }));
+                toast.success(t('delete_success'));
+              } else {
+                toast.error(`Failed to delete staff #${staff.active}.`);
+              }
             }}
-            as="span"
-            size="sm"
-            variant="outline"
-            className="hover:!border-gray-900 hover:text-gray-700 cursor-pointer"
-          >
-            <PencilIcon className="h-4 w-4" />
-          </ActionIcon>
-        </Tooltip>
-        <DeletePopover
-          title={t('title_delete')}
-          description={t('delete_description')}
-          onDelete={async () => {
-            const result = await dispatch(deleteStaff(staff.active)); // Remove the .then() block
-            if (deleteStaff.fulfilled.match(result)) {
-              await dispatch(deleteUser(staff.user ? staff.user.active : ''));
-              await dispatch(getStaffs({ page: 1, pageSize: 5, query: '', position: '', status: '' }));
-              toast.success(t('delete_success'));
-            } else {
-              toast.error(`Failed to delete staff #${staff.active}.`);
-            }
-          }}
-        />
+          />
+        </WithPermission>
       </div>
     ),
   },

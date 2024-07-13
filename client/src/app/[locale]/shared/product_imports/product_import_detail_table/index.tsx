@@ -1,27 +1,21 @@
 'use client';
 
 import { useEffect, useMemo } from 'react';
-import dynamic from 'next/dynamic';
 import { useColumn } from '@/hooks/use-column';
 import ControlledTable from '@/components/controlled-table';
 import { getColumns } from '@/app/[locale]/shared/product_imports/product_import_detail_table/columns';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
-import { dispatch, useDispatch } from '@/store';
+import { dispatch } from '@/store';
 import { useSearchParams } from 'next/navigation';
 import { getProductImportDetails, setPage, setPageSize } from '@/store/slices/product_import_detailSlice';
 import { getSinghle_ProductImport } from '@/store/slices/product_importSlice';
 import { getSinghle_Product } from '@/store/slices/productSlices';
 import { getSinghle_Supplier } from '@/store/slices/supplier_slice';
 import { useModal } from '../../modal-views/use-modal';
-import { useRouter } from 'next/router';
 import { useTranslations } from 'next-intl';
-// const FilterElement = dynamic(() => import('@/app/[locale]/shared/products/product_table/filter-elements'), {
-//   ssr: false,
-// });
 
 export default function Product_import_detail_Table() {
-
   const t = useTranslations('product_import_detail');
   const { listProduct } = useSelector((state: RootState) => state.product);
   const { listSupplier } = useSelector((state: RootState) => state.supplier);
@@ -58,7 +52,7 @@ export default function Product_import_detail_Table() {
     dispatch(getSinghle_Supplier());
   }, []);
   const columns = useMemo(
-    () => getColumns(openModal,t),
+    () => getColumns(openModal, t),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [t],
   );
@@ -74,7 +68,6 @@ export default function Product_import_detail_Table() {
   const { visibleColumns } = useColumn(columns);
   return (
     <div className="mt-0">
-    
       <ControlledTable
         variant="modern"
         data={data}

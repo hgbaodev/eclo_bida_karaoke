@@ -4,18 +4,16 @@ import { PiTrashDuotone, PiMagnifyingGlassBold } from 'react-icons/pi';
 import StatusField from '@/components/controlled-table/status-field';
 import { Button, Input } from 'rizzui';
 import { dispatch } from '@/store';
-import { setQuery, setReset,setStatus } from '@/store/slices/product_importSlice';
+import { setQuery, setReset, setStatus } from '@/store/slices/product_importSlice';
 import { RootState } from '@/store/types';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import useDebounce from '@/hooks/use-debounce';
 import { getStatusBadge } from './columns';
 import { statusOptions } from '../type';
-// import { getPositions } from '@/store/slices/positionSlice';
 
 export default function FilterElement() {
-  const { isFiltered, query,status} = useSelector((state: RootState) => state.product_import);
-//   const { listPositions } = useSelector((state: RootState) => state.position);
+  const { isFiltered, query, status } = useSelector((state: RootState) => state.product_import);
   const [searchTerm, setSearchTerm] = useState(query);
   const debounceSearchTerm = useDebounce(searchTerm, 1000);
 
@@ -23,15 +21,10 @@ export default function FilterElement() {
     dispatch(setQuery(debounceSearchTerm));
   }, [debounceSearchTerm]);
 
-  useEffect(() => {
-    // dispatch(getPositions());
-  }, []);
-
   return (
     <>
       <div className="relative z-50 mb-4 flex flex-wrap items-center justify-between gap-2.5 @container ">
-    
-      <StatusField
+        <StatusField
           className=" -order-9 w-full @[25rem]:w-[calc(calc(100%_-_10px)_/_2)] @4xl:-order-5 @4xl:w-auto"
           options={statusOptions}
           dropdownClassName="!z-10"

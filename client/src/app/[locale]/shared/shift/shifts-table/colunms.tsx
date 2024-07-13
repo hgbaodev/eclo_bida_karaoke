@@ -10,6 +10,7 @@ import { dispatch } from '@/store';
 import toast from 'react-hot-toast';
 import EditShift from '../edit-shift';
 import { deleteShift, getAllShifts } from '@/store/slices/shiftSlice';
+import WithPermission from '@/guards/with-permisson';
 
 export function getStatusBadge(status: Shift['status'], t: any) {
   switch (status) {
@@ -109,40 +110,44 @@ export const getColumns = (openModal: (args: any) => void, t: any) => [
     width: 10,
     render: (_: string, shift: Shift) => (
       <div className="flex items-center justify-end gap-3 pe-3">
-        <Tooltip size="sm" content={'Edit Shift'} placement="top" color="invert">
-          <ActionIcon
-            onClick={() => {
-              const data = {
-                time_in: shift.time_in,
-                time_out: shift.time_out,
-                status: shift.status,
-                shift_type: shift.shift_type,
-              };
-              openModal({
-                view: <EditShift shift={data} active={shift.active} />,
-              });
+        <WithPermission permission="shift.Update">
+          <Tooltip size="sm" content={'Edit Shift'} placement="top" color="invert">
+            <ActionIcon
+              onClick={() => {
+                const data = {
+                  time_in: shift.time_in,
+                  time_out: shift.time_out,
+                  status: shift.status,
+                  shift_type: shift.shift_type,
+                };
+                openModal({
+                  view: <EditShift shift={data} active={shift.active} />,
+                });
+              }}
+              as="span"
+              size="sm"
+              variant="outline"
+              className="hover:!border-gray-900 hover:text-gray-700 cursor-pointer"
+            >
+              <PencilIcon className="h-4 w-4" />
+            </ActionIcon>
+          </Tooltip>
+        </WithPermission>
+        <WithPermission permission="shift.Delete">
+          <DeletePopover
+            title={t('delete_shift')}
+            description={t('delete_description')}
+            onDelete={async () => {
+              const result = await dispatch(deleteShift(shift.active)); // Remove the .then() block
+              if (deleteShift.fulfilled.match(result)) {
+                await dispatch(getAllShifts({ page: 1, pageSize: 5, query: '', status: '', shift_type: '' }));
+                toast.success(t('delete_success'));
+              } else {
+                toast.error(`Failed to delete Shift #${shift.active}.`);
+              }
             }}
-            as="span"
-            size="sm"
-            variant="outline"
-            className="hover:!border-gray-900 hover:text-gray-700 cursor-pointer"
-          >
-            <PencilIcon className="h-4 w-4" />
-          </ActionIcon>
-        </Tooltip>
-        <DeletePopover
-          title={t('delete_shift')}
-          description={t('delete_description')}
-          onDelete={async () => {
-            const result = await dispatch(deleteShift(shift.active)); // Remove the .then() block
-            if (deleteShift.fulfilled.match(result)) {
-              await dispatch(getAllShifts({ page: 1, pageSize: 5, query: '', status: '', shift_type: '' }));
-              toast.success(t('delete_success'));
-            } else {
-              toast.error(`Failed to delete Shift #${shift.active}.`);
-            }
-          }}
-        />
+          />
+        </WithPermission>
       </div>
     ),
   },

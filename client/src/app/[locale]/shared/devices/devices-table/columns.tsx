@@ -11,6 +11,7 @@ import EditDevice from '../edit-device';
 import { getDevices, deleteDevice } from '@/store/slices/device_slice';
 import toast from 'react-hot-toast';
 import { useTranslations } from 'next-intl';
+import WithPermission from '@/guards/with-permisson';
 
 export const getColumns = (openModal: (args: any) => void, t: any) => [
   {
@@ -74,41 +75,45 @@ export const getColumns = (openModal: (args: any) => void, t: any) => [
     width: 10,
     render: (_: string, device: Device) => (
       <div className="flex items-center justify-end gap-3 pe-3">
-        <Tooltip size="sm" content={t('edit_device')} placement="top" color="invert">
-          <ActionIcon
-            onClick={() => {
-              const data = {
-                name: device.name,
-                description: device.description,
-                status: device.status,
-                value: Number(device.value),
-                image: device.image,
-              };
-              openModal({
-                view: <EditDevice device={data} active={device.active} />,
-              });
+        <WithPermission permission="device.Update">
+          <Tooltip size="sm" content={t('edit_device')} placement="top" color="invert">
+            <ActionIcon
+              onClick={() => {
+                const data = {
+                  name: device.name,
+                  description: device.description,
+                  status: device.status,
+                  value: Number(device.value),
+                  image: device.image,
+                };
+                openModal({
+                  view: <EditDevice device={data} active={device.active} />,
+                });
+              }}
+              as="span"
+              size="sm"
+              variant="outline"
+              className="hover:!border-gray-900 hover:text-gray-700 cursor-pointer"
+            >
+              <PencilIcon className="h-4 w-4" />
+            </ActionIcon>
+          </Tooltip>
+        </WithPermission>
+        <WithPermission permission="device.Delete">
+          <DeletePopover
+            title={t('delete_device', { deviceName: device.name })}
+            description={t('delete_device_confirm', { deviceName: device.name })}
+            onDelete={async () => {
+              const result = await dispatch(deleteDevice(device.active));
+              if (deleteDevice.fulfilled.match(result)) {
+                await dispatch(getDevices({ page: 1, pageSize: 5, query: '', status: '' }));
+                toast.success(t('delete_device_success', { deviceName: device.name }));
+              } else {
+                toast.error(t('delete_device_failed', { deviceName: device.name }));
+              }
             }}
-            as="span"
-            size="sm"
-            variant="outline"
-            className="hover:!border-gray-900 hover:text-gray-700 cursor-pointer"
-          >
-            <PencilIcon className="h-4 w-4" />
-          </ActionIcon>
-        </Tooltip>
-        <DeletePopover
-          title={t('delete_device', { deviceName: device.name })}
-          description={t('delete_device_confirm', { deviceName: device.name })}
-          onDelete={async () => {
-            const result = await dispatch(deleteDevice(device.active));
-            if (deleteDevice.fulfilled.match(result)) {
-              await dispatch(getDevices({ page: 1, pageSize: 5, query: '', status: '' }));
-              toast.success(t('delete_device_success', { deviceName: device.name }));
-            } else {
-              toast.error(t('delete_device_failed', { deviceName: device.name }));
-            }
-          }}
-        />
+          />
+        </WithPermission>
       </div>
     ),
   },

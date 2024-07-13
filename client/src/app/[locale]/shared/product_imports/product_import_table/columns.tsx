@@ -42,7 +42,7 @@ export function getStatusBadge(status: Product_Import['status']) {
       );
   }
 }
-export const getColumns = (openModal: (args: any) => void,t:any) => [
+export const getColumns = (openModal: (args: any) => void, t: any) => [
   {
     title: <HeaderCell title="Id" />,
     dataIndex: 'id',
@@ -91,10 +91,6 @@ export const getColumns = (openModal: (args: any) => void,t:any) => [
   },
   {
     title: <HeaderCell title={t('product')} />,
-    // dataIndex: 'status',
-    // key: 'status',
-    // width: 50,
-    // render: (status: Product_Import['status']) => getStatusBadge(status),
     dataIndex: 'action',
     key: 'action',
     width: 50,
@@ -195,7 +191,7 @@ export const getColumns = (openModal: (args: any) => void,t:any) => [
           onDelete={async () => {
             const result = await dispatch(deleteProduct(product_import.active)); // Remove the .then() block
             if (deleteProduct.fulfilled.match(result)) {
-              await dispatch(getProductImports({ page: 1, pageSize: 5, query: '',status:'' }));
+              await dispatch(getProductImports({ page: 1, pageSize: 5, query: '', status: '' }));
               toast.success(t('success'));
             } else {
               toast.error(t('failed'));

@@ -3,13 +3,9 @@ import { useState } from 'react';
 import { PiXBold } from 'react-icons/pi';
 import { Controller, SubmitHandler } from 'react-hook-form';
 import { Form } from '@/components/ui/form';
-import { Input, Button, ActionIcon, Title, Select, Password, Textarea } from 'rizzui';
+import { Input, Button, ActionIcon, Title, Select } from 'rizzui';
 import { useModal } from '@/app/[locale]/shared/modal-views/use-modal';
 import { updateProduct, getProductImports } from '@/store/slices/product_importSlice';
-import {
-  CreateProduc_ImporttInput,
-  createProduct_ImportSchema,
-} from '@/utils/validators/product/create-product_import.schema';
 import { dispatch } from '@/store';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
@@ -18,7 +14,6 @@ import {
   EditProduc_ImporttInput,
   editProduct_ImportSchema,
 } from '@/utils/validators/product/edit-product_import.schema';
-import { number } from 'zod';
 import { getStatusBadge } from './product_import_table/columns';
 import { statusOptions } from './type';
 import { useTranslations } from 'next-intl';
@@ -32,7 +27,7 @@ export default function EditProduct({
   const { closeModal } = useModal();
   const [reset, setReset] = useState<any>(product_import);
   const [errors, setErrors] = useState<any>({});
-  const { pageSize, page, query, isUpdateLoading,status } = useSelector((state: RootState) => state.product_import);
+  const { pageSize, page, query, isUpdateLoading, status } = useSelector((state: RootState) => state.product_import);
   const t = useTranslations('product_import');
   const onSubmit: SubmitHandler<EditProduc_ImporttInput> = async (data) => {
     const result: any = await dispatch(updateProduct({ product_import: data, active }));
@@ -45,7 +40,7 @@ export default function EditProduct({
       });
       setErrors({});
       closeModal();
-      await dispatch(getProductImports({ page, pageSize, query,status }));
+      await dispatch(getProductImports({ page, pageSize, query, status }));
       toast.success('Import updated successfully');
     } else {
       setErrors(result?.payload?.errors);
@@ -64,7 +59,7 @@ export default function EditProduct({
           <>
             <div className="col-span-full flex items-center justify-between">
               <Title as="h4" className="font-semibold">
-              {t('edit_import')}
+                {t('edit_import')}
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
@@ -117,10 +112,10 @@ export default function EditProduct({
             />
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
-              {t('cancel')}
+                {t('cancel')}
               </Button>
               <Button type="submit" isLoading={isUpdateLoading} className="w-full @xl:w-auto">
-              {t('btn_edit')}
+                {t('btn_edit')}
               </Button>
             </div>
           </>

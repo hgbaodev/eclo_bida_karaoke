@@ -108,34 +108,32 @@ export default function BlankPage() {
                           onClick={() => console.log('service ' + service.active + ' clicked')}
                         />
                       </Dropdown.Trigger>
-                      <WithPermission permission="order.Create">
-                        <Dropdown.Menu className="!z-0">
-                          {service.is_booked ? (
-                            <>
-                              <Dropdown.Item
-                                onClick={() => navigate.push(`/admin/orders/${service?.order_active}`)}
-                                className="gap-2 text-xs sm:text-sm"
-                              >
-                                Pay
-                              </Dropdown.Item>
-                            </>
-                          ) : (
+                      <Dropdown.Menu className="!z-0">
+                        {service.is_booked ? (
+                          <>
                             <Dropdown.Item
-                              onClick={async () => {
-                                const result = await dispatch(createOrder(service?.active));
-                                if (createOrder.fulfilled.match(result)) {
-                                  navigate.push(`/admin/orders/${result.payload.data.active}`);
-                                } else {
-                                  toast.error('Failed to create order');
-                                }
-                              }}
+                              onClick={() => navigate.push(`/admin/orders/${service?.order_active}`)}
                               className="gap-2 text-xs sm:text-sm"
                             >
-                              Order
+                              Pay
                             </Dropdown.Item>
-                          )}
-                        </Dropdown.Menu>
-                      </WithPermission>
+                          </>
+                        ) : (
+                          <Dropdown.Item
+                            onClick={async () => {
+                              const result = await dispatch(createOrder(service?.active));
+                              if (createOrder.fulfilled.match(result)) {
+                                navigate.push(`/admin/orders/${result.payload.data.active}`);
+                              } else {
+                                toast.error('Failed to create order');
+                              }
+                            }}
+                            className="gap-2 text-xs sm:text-sm"
+                          >
+                            Order
+                          </Dropdown.Item>
+                        )}
+                      </Dropdown.Menu>
                     </Dropdown>
                     <Text className="font-bold">{service.name}</Text>
                   </div>

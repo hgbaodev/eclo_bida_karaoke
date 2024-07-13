@@ -55,8 +55,7 @@ export default function BlankPage({ params }: { params: { slug: string } }) {
   };
 
   usePusher('kitchenOrderWaitingEvent', (data) => {
-    // Truy cập và xử lý dữ liệu từ đối tượng `data`
-    const active = data.active;
+   
     const productName = data.product_name;
     const productQuantity = data.product_quantity;
     const serviceName = data.service_name;

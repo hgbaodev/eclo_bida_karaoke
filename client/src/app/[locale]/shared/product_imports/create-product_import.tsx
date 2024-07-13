@@ -21,7 +21,7 @@ export default function CreateStaff() {
   const { closeModal } = useModal();
   const [reset, setReset] = useState({});
   const [errors, setErrors] = useState<any>({});
-  const { pageSize, page, query, isCreateLoading,status } = useSelector((state: RootState) => state.product_import);
+  const { pageSize, page, query, isCreateLoading, status } = useSelector((state: RootState) => state.product_import);
   const t = useTranslations('product_import');
   // const { listPositions } = useSelector((state: RootState) => state.position);
   const onSubmit: SubmitHandler<CreateProduc_ImporttInput> = async (data) => {
@@ -36,7 +36,7 @@ export default function CreateStaff() {
       });
       setErrors({});
       closeModal();
-      await dispatch(getProductImports({ page, pageSize, query,status }));
+      await dispatch(getProductImports({ page, pageSize, query, status }));
       toast.success('Import created successfully');
     } else {
       setErrors(result?.payload?.errors);
@@ -75,17 +75,6 @@ export default function CreateStaff() {
               className="col-span-full"
               error={errors.receive_time?.message}
             />
-
-            {/* <Input
-             type="number"
-              label="Total cost"
-              placeholder="Enter total cost"
-              {...register('total_cost')}
-              className="col-span-full"
-          
-              error={errors.total_cost?.message}
-            /> */}
-
             <Controller
               name="status"
               control={control}
@@ -110,10 +99,10 @@ export default function CreateStaff() {
 
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
-              {t('cancel')}
+                {t('cancel')}
               </Button>
               <Button type="submit" isLoading={isCreateLoading} className="w-full @xl:w-auto">
-              {t('btn_add')}
+                {t('btn_add')}
               </Button>
             </div>
           </>
