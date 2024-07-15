@@ -94,7 +94,8 @@ export const getColumns = (openModal: (args: any) => void, Data: Attendance[], m
             <div>
               {dataForDate.map((item) => (
                 <div key={item.active} className="mb-4">
-                  {(item.type === 'Approved' || item.type === 'Unapproved') && <p>{item.type}</p>}
+                  {item.type === 'Approved' && <p className="text-sm text-green-600 flex items-center">{item.type}</p>}
+                  {item.type === 'Unapproved' && <p className="text-sm text-red-600 flex items-center">{item.type}</p>}
                   <p>{item.check_in}</p>
                   <p>{item.check_out}</p>
                   {item.check_in && (

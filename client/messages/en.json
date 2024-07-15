@@ -336,7 +336,8 @@
     "failed": "Failed.",
     "service_type": "Service type",
     "filter_by_status": "Filter by status",
-    "search": "Search"
+    "search": "Search",
+    "enter_service_type": "Select service type"
   },
   "devices": {
     "title": "Devices",
@@ -490,6 +491,60 @@
     "successful": "Succeeded",
     "users": "Users",
     "total": "Total"
+  },
+  "loggers": {
+    "title": "Logger",
+    "breadcrumb_analytics": "Analytics",
+    "columns": {
+      "id": "Id",
+      "name": "Name",
+      "functional": "Functional",
+      "action": "Action",
+      "role": "Role",
+      "url": "URL",
+      "ip": "IP",
+      "created_at": "Created"
+    }
+  },
+  "customers": {
+    "title": "Customer",
+    "breadcrumb_analytics": "Analytics",
+    "add_a_new_customer": "Add a new customer",
+    "edit_customer_tooltip": "Edit Customer",
+    "delete_customer_title": "Delete this customer",
+    "delete_customer_description": "Are you sure you want to delete this",
+    "customer": "customer",
+    "delete_success": "Customer",
+    "delete_failed": "Failed to delete customer",
+    "status_active": "Active",
+    "status_inactive": "InActive",
+    "columns": {
+      "no": "No.",
+      "name": "Name",
+      "phone": "Phone",
+      "created_at": "Created",
+      "status": "Status"
+    },
+    "filter_by_status": "Filter by Status",
+    "clear": "Clear",
+    "search_for_customers": "Search for customers...",
+    "add_new_customer": "Add a new customer",
+    "first_name": "First Name",
+    "enter_customers_first_name": "Enter customer's first name",
+    "last_name": "Last Name",
+    "enter_customers_last_name": "Enter customer's last name",
+    "email": "Email",
+    "enter_customers_email_address": "Enter customer's email address",
+    "phone": "Phone",
+    "enter_customers_phone": "Enter customer's phone",
+    "status": "Status",
+    "select_a_status": "Select a status",
+    "cancel": "Cancel",
+    "create_customer": "Create customer",
+    "customer_created_successfully": "Customer created successfully",
+    "update_customer": "Update customer",
+    "enter_customers_email": "Enter customer's email",
+    "customer_updated_successfully": "Customer updated successfully"
   },
   "staffs": {
     "title": "Staff",
@@ -681,6 +736,8 @@
     "date": "Date",
     "cancel": "Cancel",
     "create": "Create",
+    "approved": "Approved: Leave with permission",
+    "unapproved": "Unapproved: Leave without permission",
     "edit_attendance": "Edit Attendance",
     "title_edit": "Edit Attendance",
     "staff_uuid": "Staff UUID",

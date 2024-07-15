@@ -1,10 +1,11 @@
+'use client';
 import Statistical from '@/app/[locale]/shared/statistical';
-import { metaObject } from '@/config/site.config';
+import useCheckPermissions from '@/hooks/use-check-permission';
 
-export const metadata = {
-  ...metaObject('Statistical'),
-};
-
-export default function JobBoardPage() {
+export default function BlankPage() {
+  const check = useCheckPermissions('role.View');
+  if (!check) {
+    window.location.href = '/error/403';
+  }
   return <Statistical />;
 }

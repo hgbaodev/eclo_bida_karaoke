@@ -13,9 +13,11 @@ import { createCustomer, getCustomers } from '@/store/slices/customerSlice';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
-import { getStatusBadge } from './customers-table/columns';
+import { StatusBadge } from './customers-table/columns';
+import { useTranslations } from 'next-intl';
 
 export default function CreateCustomer() {
+  const t = useTranslations('customers');
   const { closeModal } = useModal();
   const [reset, setReset] = useState({});
   const [errors, setErrors] = useState<any>({});
@@ -34,7 +36,7 @@ export default function CreateCustomer() {
       setErrors({});
       closeModal();
       await dispatch(getCustomers({ page, pageSize, query, status }));
-      toast.success('Customer created successfully');
+      toast.success(t('customer_created_successfully'));
     } else {
       setErrors(result?.payload?.errors);
     }
@@ -49,43 +51,42 @@ export default function CreateCustomer() {
       className="grid grid-cols-1 gap-6 p-6 @container md:grid-cols-2 [&_.rizzui-input-label]:font-medium [&_.rizzui-input-label]:text-gray-900"
     >
       {({ setError, register, control, watch, formState: { errors } }) => {
-        console.log('errors', errors);
         return (
           <>
             <div className="col-span-full flex items-center justify-between">
               <Title as="h4" className="font-semibold">
-                Add a new customer
+                {t('add_new_customer')}
               </Title>
               <ActionIcon size="sm" variant="text" onClick={closeModal}>
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
             <Input
-              label="First Name"
-              placeholder="Enter customer's first name"
+              label={t('first_name')}
+              placeholder={t('enter_customers_first_name')}
               {...register('first_name')}
               className="col-span-[1/2]"
               error={errors.first_name?.message}
             />
             <Input
-              label="Last Name"
-              placeholder="Enter customer's last name"
+              label={t('last_name')}
+              placeholder={t('enter_customers_last_name')}
               {...register('last_name')}
               className="col-span-[1/2]"
               error={errors.last_name?.message}
             />
 
             <Input
-              label="Email"
-              placeholder="Enter customer's email address"
+              label={t('email')}
+              placeholder={t('enter_customers_email_address')}
               className="col-span-full"
               {...register('email')}
               error={errors.email?.message}
             />
 
             <Input
-              label="Phone"
-              placeholder="Enter customer's phone"
+              label={t('phone')}
+              placeholder={t('enter_customers_phone')}
               className="col-span-full"
               {...register('phone')}
               error={errors.phone?.message}
@@ -100,13 +101,13 @@ export default function CreateCustomer() {
                   value={value}
                   onChange={onChange}
                   name={name}
-                  label="Status"
-                  placeholder="Select a status"
+                  label={t('status')}
+                  placeholder={t('select_a_status')}
                   className="col-span-full"
                   error={errors?.status?.message}
                   getOptionValue={(option: { value: any }) => option.value}
-                  getOptionDisplayValue={(option: { value: any }) => getStatusBadge(option.value as any)}
-                  displayValue={(selected: any) => getStatusBadge(selected)}
+                  getOptionDisplayValue={(option: { value: any }) => StatusBadge(option.value as any, t)}
+                  displayValue={(selected: any) => StatusBadge(selected, t)}
                   dropdownClassName="!z-[1]"
                   inPortal={false}
                 />
@@ -114,10 +115,10 @@ export default function CreateCustomer() {
             />
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
-                Cancel
+                {t('cancel')}
               </Button>
               <Button type="submit" isLoading={isCreateLoading} className="w-full @xl:w-auto">
-                Create price
+                {t('create_customer')}
               </Button>
             </div>
           </>

@@ -6,7 +6,7 @@ import SocialItems from '@/components/ui/social-shares';
 import { siteConfig } from '@/config/site.config';
 import NotFoundImg from '@public/not-found.png';
 
-export default function NotFound() {
+export default function Page() {
   return (
     <div className="flex min-h-screen flex-col bg-[#F8FAFC]">
       <div className="sticky top-0 z-40 flex justify-center py-5 backdrop-blur-lg lg:backdrop-blur-none xl:py-10">
@@ -23,7 +23,7 @@ export default function NotFound() {
             className="mx-auto mb-8 aspect-[360/326] max-w-[256px] xs:max-w-[370px] lg:mb-12 2xl:mb-16"
           />
           <Title as="h1" className="text-[22px] font-bold leading-normal text-gray-1000 lg:text-3xl">
-            Sorry, the page not found
+            Sorry, the page permission denied.
           </Title>
           <p className="mt-3 text-sm leading-loose text-gray-500 lg:mt-6 lg:text-base lg:leading-loose">
             We have been spending long hours in order to launch our new website. Join our

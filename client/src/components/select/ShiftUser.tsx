@@ -9,6 +9,7 @@ import { deleteShiftUserDetail, getShiftUserDetails } from '@/store/slices/shift
 import { dispatch } from '@/store';
 import { ActionIcon, Tooltip } from 'rizzui';
 import { deleteAttendance } from '@/store/slices/attendanceSlice';
+import WithPermission from '@/guards/with-permisson';
 interface DayColumnProps {
   data: ShiftUserDetail[];
   dayOfWeek: string;
@@ -39,44 +40,50 @@ const DayColumn: React.FC<DayColumnProps> = ({ data, dayOfWeek, shift, workshift
             className="flex items-center border border-gray-300 rounded-md mr-2"
             style={{ width: '150px' }}
           >
-            <Tooltip size="sm" content={t('delete')} placement="top" color="invert">
-              <ActionIcon
-                as="span"
-                size="sm"
-                variant="outline"
-                className="hover:!border-gray-900  hover:text-gray-700 cursor-pointer rounded-full w-6 h-6 flex items-center justify-center"
-              >
-                <TiDeleteOutline
-                  className="w-6 h-6"
-                  onClick={async () => {
-                    const result = await dispatch(deleteShiftUserDetail(dayData.active)); // Remove the .then() block
-                    if (deleteShiftUserDetail.fulfilled.match(result)) {
-                      const days = getDaysOfWeekByName(workshift.date_start, workshift.date_end, dayOfWeek);
-                      days.map((day) => {
-                        const formattedDate = `${day.getFullYear()}-${('0' + (day.getMonth() + 1)).slice(-2)}-${(
-                          '0' + day.getDate()
-                        ).slice(-2)}`;
-                        dispatch(deleteAttendance({ uuid: dayData.staff.uuid, day: formattedDate }));
-                      });
-                      await dispatch(getShiftUserDetails(workshift.active));
-                      toast.success(t('delete_success'));
-                    } else {
-                      toast.error(`Failed to delete staff #${dayData.staff.first_name}.`);
-                    }
-                  }}
-                />
-              </ActionIcon>
-            </Tooltip>
+            <WithPermission permission="shiftdetail.Delete">
+              <Tooltip size="sm" content={t('delete')} placement="top" color="invert">
+                <ActionIcon
+                  as="span"
+                  size="sm"
+                  variant="outline"
+                  className="hover:!border-gray-900  hover:text-gray-700 cursor-pointer rounded-full w-6 h-6 flex items-center justify-center"
+                >
+                  <TiDeleteOutline
+                    className="w-6 h-6"
+                    onClick={async () => {
+                      const result = await dispatch(deleteShiftUserDetail(dayData.active)); // Remove the .then() block
+                      if (deleteShiftUserDetail.fulfilled.match(result)) {
+                        const days = getDaysOfWeekByName(workshift.date_start, workshift.date_end, dayOfWeek);
+                        days.map((day) => {
+                          const formattedDate = `${day.getFullYear()}-${('0' + (day.getMonth() + 1)).slice(-2)}-${(
+                            '0' + day.getDate()
+                          ).slice(-2)}`;
+                          dispatch(deleteAttendance({ uuid: dayData.staff.uuid, day: formattedDate }));
+                        });
+                        await dispatch(getShiftUserDetails(workshift.active));
+                        toast.success(t('delete_success'));
+                      } else {
+                        toast.error(`Failed to delete staff #${dayData.staff.first_name}.`);
+                      }
+                    }}
+                  />
+                </ActionIcon>
+              </Tooltip>
+            </WithPermission>
             {dayData.staff.last_name + ' ' + dayData.staff.first_name} <br />
           </div>
         ))}
-        <Create onClick={<CreateShiftDetailStaff day_of_week={dayOfWeek} shift={shift} />} t={t} />
+        <WithPermission permission="shiftdetail.Create">
+          <Create onClick={<CreateShiftDetailStaff day_of_week={dayOfWeek} shift={shift} />} t={t} />
+        </WithPermission>
       </div>
     );
   } else {
     return (
       <div>
-        <Create onClick={<CreateShiftDetailStaff day_of_week={dayOfWeek} shift={shift} />} t={t} />
+        <WithPermission permission="shiftdetail.Create">
+          <Create onClick={<CreateShiftDetailStaff day_of_week={dayOfWeek} shift={shift} />} t={t} />
+        </WithPermission>
       </div>
     );
   }

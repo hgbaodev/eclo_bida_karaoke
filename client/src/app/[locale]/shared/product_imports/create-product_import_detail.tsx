@@ -5,7 +5,6 @@ import { Controller, SubmitHandler } from 'react-hook-form';
 import { Form } from '@/components/ui/form';
 import { Input, Button, ActionIcon, Title, Select, Textarea } from 'rizzui';
 import { useModal } from '@/app/[locale]/shared/modal-views/use-modal';
-// import { createProduct, getProductImports } from '@/store/slices/product_importSlice';
 import { createProductImportDetail, getProductImportDetails } from '@/store/slices/product_import_detailSlice';
 import {
   CreateProduct_Import_DetailtInput,
@@ -15,10 +14,7 @@ import { dispatch } from '@/store';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
-import { statusOptions } from './type';
 import { useSearchParams } from 'next/navigation';
-import { values } from 'lodash';
-import { updateProduct } from '@/store/slices/productSlices';
 import { useTranslations } from 'next-intl';
 
 export default function CreateProductImportDetail() {
@@ -34,7 +30,6 @@ export default function CreateProductImportDetail() {
   const t = useTranslations('product_import_detail');
   const onSubmit: SubmitHandler<CreateProduct_Import_DetailtInput> = async (data) => {
     const result: any = await dispatch(createProductImportDetail(data));
-    console.log(result);
     if (createProductImportDetail.fulfilled.match(result)) {
       setReset({
         product: '',
@@ -55,7 +50,6 @@ export default function CreateProductImportDetail() {
       closeModal();
       toast.error(result.payload.errors);
     }
-    console.log(data);
   };
   return (
     <Form<CreateProduct_Import_DetailtInput>
@@ -66,7 +60,6 @@ export default function CreateProductImportDetail() {
       className="grid grid-cols-1 gap-6 p-6 @container md:grid-cols-2 [&_.rizzui-input-label]:font-medium [&_.rizzui-input-label]:text-gray-900"
     >
       {({ setError, register, control, watch, formState: { errors } }) => {
-        console.log('errors', errors);
         return (
           <>
             <div className="col-span-full flex items-center justify-between">
@@ -78,14 +71,14 @@ export default function CreateProductImportDetail() {
               </ActionIcon>
             </div>
             <Input
-              label= {t('import_day')}
+              label={t('import_day')}
               className="col-span-full"
               error={errors.import?.message}
               value={data1.create_time}
               readOnly
             />
             <Controller
-              name= "product"
+              name="product"
               control={control}
               render={({ field: { name, onChange, value } }) => (
                 <Select
@@ -108,7 +101,7 @@ export default function CreateProductImportDetail() {
               )}
             />
             <Controller
-              name= "supplier"
+              name="supplier"
               control={control}
               render={({ field: { name, onChange, value } }) => (
                 <Select
@@ -133,24 +126,24 @@ export default function CreateProductImportDetail() {
 
             <Input
               type="number"
-              label= {t('cost_price')}
-              placeholder= {t('input_cost_price')}
+              label={t('cost_price')}
+              placeholder={t('input_cost_price')}
               {...register('cost_price')}
               className="col-span-full"
               error={errors.cost_price?.message}
             />
             <Input
               type="number"
-              label= {t('selling_price')}
-              placeholder= {t('input_selling_price')}
+              label={t('selling_price')}
+              placeholder={t('input_selling_price')}
               {...register('selling_price')}
               className="col-span-full"
               error={errors.selling_price?.message}
             />
             <Input
               type="number"
-              label= {t('quantity')}
-              placeholder= {t('input_quantity')}
+              label={t('quantity')}
+              placeholder={t('input_quantity')}
               {...register('quantity')}
               className="col-span-full"
               error={errors.quantity?.message}
@@ -158,7 +151,7 @@ export default function CreateProductImportDetail() {
 
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
-              {t('cancel')}
+                {t('cancel')}
               </Button>
               <Button type="submit" isLoading={isCreateLoading} className="w-full @xl:w-auto">
                 {t('btn_add')}

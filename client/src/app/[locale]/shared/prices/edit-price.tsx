@@ -62,7 +62,6 @@ export default function EditPrice({ price, active }: { price: EditPriceInput; ac
       className="grid grid-cols-1 gap-6 p-6 @container md:grid-cols-2 [&_.rizzui-input-label]:font-medium [&_.rizzui-input-label]:text-gray-900"
     >
       {({ setError, register, control, watch, formState: { errors } }) => {
-        console.log('errors', errors);
         return (
           <>
             <div className="col-span-full flex items-center justify-between">
@@ -99,7 +98,7 @@ export default function EditPrice({ price, active }: { price: EditPriceInput; ac
                   name={name}
                   label={t('service_type')}
                   className="col-span-full"
-                  placeholder={t('service_type')}
+                  placeholder={t('enter_service_type')}
                   error={errors?.service_type?.message}
                   //@ts-ignore
                   getOptionValue={(option) => option.active}

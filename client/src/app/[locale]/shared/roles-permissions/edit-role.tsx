@@ -35,7 +35,6 @@ export default function EditRole({
   const [errors, setErrors] = useState({} as any);
 
   const onSubmit: SubmitHandler<any> = (data) => {
-    console.log(data);
     const values = {
       id: id,
       functionals: data,

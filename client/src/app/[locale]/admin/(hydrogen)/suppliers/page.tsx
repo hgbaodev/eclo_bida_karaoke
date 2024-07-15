@@ -5,8 +5,14 @@ import { useTranslations } from 'next-intl';
 
 import SuppliersTable from '@/app/[locale]/shared/suppliers/suppliers-table';
 import CreateSupplier from '@/app/[locale]/shared/suppliers/create-supplier';
+import useCheckPermissions from '@/hooks/use-check-permission';
+import WithPermission from '@/guards/with-permisson';
 export default function BlankPage() {
   const t = useTranslations('suppliers');
+  const check = useCheckPermissions('supplier.View');
+  if (!check) {
+    window.location.href = '/error/403';
+  }
 
   return (
     <>
@@ -22,7 +28,9 @@ export default function BlankPage() {
           },
         ]}
       >
-        <ModalButton label={t('add_new_supplier')} view={<CreateSupplier />} customSize="600px" className="mt-0" />
+        <WithPermission permission="supplier.Create">
+          <ModalButton label={t('add_new_supplier')} view={<CreateSupplier />} customSize="600px" className="mt-0" />
+        </WithPermission>
       </PageHeader>
       <SuppliersTable />
     </>

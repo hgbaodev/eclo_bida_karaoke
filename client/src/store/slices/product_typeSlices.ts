@@ -132,7 +132,6 @@ const product_typeSlices = createSlice({
         state.isLoading = false;
         const result = action.payload.data;
         state.listType = result;
-        console.log('result:' + result);
         state.data = result;
       })
       .addCase(getProductType.rejected, (state) => {

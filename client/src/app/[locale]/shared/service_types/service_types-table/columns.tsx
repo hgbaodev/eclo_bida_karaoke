@@ -11,6 +11,7 @@ import { dispatch } from '@/store';
 import { deleteServiceType, getServiceTypes } from '@/store/slices/service_type_slice';
 import toast from 'react-hot-toast';
 import EditServiceType from '../edit-service_type';
+import WithPermission from '@/guards/with-permisson';
 // import EditSupplier from '../edit-supplier';
 
 export function StatusBadge(status: ServiceType['status'], t: any) {
@@ -76,38 +77,42 @@ export const getColumns = (openModal: (args: any) => void, t: any) => [
     width: 10,
     render: (_: string, serviceType: ServiceType) => (
       <div className="flex items-center justify-end gap-3 pe-3">
-        <Tooltip size="sm" content={t('edit')} placement="top" color="invert">
-          <ActionIcon
-            onClick={() => {
-              const data = {
-                name: serviceType.name,
-                status: serviceType.status,
-              };
-              openModal({
-                view: <EditServiceType service_type={data} active={serviceType.active} />,
-              });
+        <WithPermission permission="servicetype.Update">
+          <Tooltip size="sm" content={t('edit')} placement="top" color="invert">
+            <ActionIcon
+              onClick={() => {
+                const data = {
+                  name: serviceType.name,
+                  status: serviceType.status,
+                };
+                openModal({
+                  view: <EditServiceType service_type={data} active={serviceType.active} />,
+                });
+              }}
+              as="span"
+              size="sm"
+              variant="outline"
+              className="hover:!border-gray-900 hover:text-gray-700 cursor-pointer"
+            >
+              <PencilIcon className="h-4 w-4" />
+            </ActionIcon>
+          </Tooltip>
+        </WithPermission>
+        <WithPermission permission="servicetype.Delete">
+          <DeletePopover
+            title={t('delete')}
+            description={t('are_you_sure_to_delete')}
+            onDelete={async () => {
+              const result = await dispatch(deleteServiceType(serviceType.active)); // Remove the .then() block
+              if (deleteServiceType.fulfilled.match(result)) {
+                await dispatch(getServiceTypes({ page: 1, pageSize: 5, query: '', status: '' }));
+                toast.success(t('successful'));
+              } else {
+                toast.error(t('failed'));
+              }
             }}
-            as="span"
-            size="sm"
-            variant="outline"
-            className="hover:!border-gray-900 hover:text-gray-700 cursor-pointer"
-          >
-            <PencilIcon className="h-4 w-4" />
-          </ActionIcon>
-        </Tooltip>
-        <DeletePopover
-          title={t('delete')}
-          description={t('are_you_sure_to_delete')}
-          onDelete={async () => {
-            const result = await dispatch(deleteServiceType(serviceType.active)); // Remove the .then() block
-            if (deleteServiceType.fulfilled.match(result)) {
-              await dispatch(getServiceTypes({ page: 1, pageSize: 5, query: '', status: '' }));
-              toast.success(t('successful'));
-            } else {
-              toast.error(t('failed'));
-            }
-          }}
-        />
+          />
+        </WithPermission>
       </div>
     ),
   },

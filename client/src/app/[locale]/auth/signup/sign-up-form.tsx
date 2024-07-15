@@ -22,7 +22,6 @@ export default function SignUpForm() {
   const [reset, setReset] = useState({});
 
   const onSubmit: SubmitHandler<SignUpSchema> = (data) => {
-    console.log(data);
     setReset({ ...initialValues, isAgreed: false });
   };
 

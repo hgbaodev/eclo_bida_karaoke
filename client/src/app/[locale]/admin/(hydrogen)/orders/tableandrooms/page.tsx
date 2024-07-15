@@ -16,10 +16,15 @@ import RingBellSolidIcon from '@/components/icons/ring-bell-solid';
 import { Badge, ActionIcon } from 'rizzui';
 import { appendNoti, setIsLoading } from '@/store/slices/kitchen_order_notification_slice';
 import { useTranslations } from 'next-intl';
+import useCheckPermissions from '@/hooks/use-check-permission';
+import WithPermission from '@/guards/with-permisson';
 
 export default function BlankPage() {
   const t = useTranslations('tables_rooms');
-
+  const check = useCheckPermissions('order.View');
+  if (!check) {
+    window.location.href = '/error/403';
+  }
   const pageHeader = {
     title: t('title'),
     breadcrumb: [

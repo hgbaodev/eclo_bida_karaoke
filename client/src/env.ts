@@ -6,5 +6,5 @@ const env = {
   PUSHER_APP_CLUSTER: 'ap1',
   API_STORAGE: 'http://localhost:8000/storage/uploads/',
 };
-
+// "dev": "next dev -p 3010 --experimental-https",
 export default env;
