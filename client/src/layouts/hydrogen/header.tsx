@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import HamburgerButton from '@/layouts/hamburger-button';
-import SearchWidget from '@/components/search/search';
 import Sidebar from '@/layouts/hydrogen/sidebar';
 import HeaderMenuRight from '@/layouts/header-menu-right';
 import StickyHeader from '@/layouts/sticky-header';
@@ -21,7 +20,6 @@ export default function Header() {
         >
           <Title>ECLO</Title>
         </Link>
-        <SearchWidget />
       </div>
       <HeaderMenuRight />
     </StickyHeader>
