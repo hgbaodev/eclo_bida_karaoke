@@ -10,6 +10,7 @@ import { dispatch } from '@/store';
 import { getSuppliers, deleteSupplier } from '@/store/slices/supplier_slice';
 import toast from 'react-hot-toast';
 import EditSupplier from '../edit-supplier';
+import WithPermission from '@/guards/with-permisson';
 
 export function StatusBadge(status: Supplier['status'], t: any) {
   switch (status) {
@@ -83,40 +84,44 @@ export const getColumns = (openModal: (args: any) => void, t: any) => [
     width: 10,
     render: (_: string, supplier: Supplier) => (
       <div className="flex items-center justify-end gap-3 pe-3">
-        <Tooltip size="sm" content={t('edit_supplier_tooltip')} placement="top" color="invert">
-          <ActionIcon
-            onClick={() => {
-              const data = {
-                name: supplier.name,
-                address: supplier.address,
-                phone: supplier.phone,
-                status: supplier.status,
-              };
-              openModal({
-                view: <EditSupplier supplier={data} active={supplier.active} />,
-              });
+        <WithPermission permission="supplier.Update">
+          <Tooltip size="sm" content={t('edit_supplier_tooltip')} placement="top" color="invert">
+            <ActionIcon
+              onClick={() => {
+                const data = {
+                  name: supplier.name,
+                  address: supplier.address,
+                  phone: supplier.phone,
+                  status: supplier.status,
+                };
+                openModal({
+                  view: <EditSupplier supplier={data} active={supplier.active} />,
+                });
+              }}
+              as="span"
+              size="sm"
+              variant="outline"
+              className="hover:!border-gray-900 hover:text-gray-700 cursor-pointer"
+            >
+              <PencilIcon className="h-4 w-4" />
+            </ActionIcon>
+          </Tooltip>
+        </WithPermission>
+        <WithPermission permission="supplier.Update">
+          <DeletePopover
+            title={t('delete_supplier_title')}
+            description={t('delete_supplier_description', { supplier_name: supplier.name })}
+            onDelete={async () => {
+              const result = await dispatch(deleteSupplier(supplier.active));
+              if (deleteSupplier.fulfilled.match(result)) {
+                await dispatch(getSuppliers({ page: 1, pageSize: 5, query: '', status: '' }));
+                toast.success(t('supplier_deleted_success', { supplier_name: supplier.name }));
+              } else {
+                toast.error(t('supplier_delete_failed', { supplier_active: supplier.active }));
+              }
             }}
-            as="span"
-            size="sm"
-            variant="outline"
-            className="hover:!border-gray-900 hover:text-gray-700 cursor-pointer"
-          >
-            <PencilIcon className="h-4 w-4" />
-          </ActionIcon>
-        </Tooltip>
-        <DeletePopover
-          title={t('delete_supplier_title')}
-          description={t('delete_supplier_description', { supplier_name: supplier.name })}
-          onDelete={async () => {
-            const result = await dispatch(deleteSupplier(supplier.active));
-            if (deleteSupplier.fulfilled.match(result)) {
-              await dispatch(getSuppliers({ page: 1, pageSize: 5, query: '', status: '' }));
-              toast.success(t('supplier_deleted_success', { supplier_name: supplier.name }));
-            } else {
-              toast.error(t('supplier_delete_failed', { supplier_active: supplier.active }));
-            }
-          }}
-        />
+          />
+        </WithPermission>
       </div>
     ),
   },

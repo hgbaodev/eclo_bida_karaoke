@@ -43,7 +43,6 @@ export default function CreateShiftDetailStaff({ day_of_week, shift }: { day_of_
         shift: shift.active,
       };
       const resultAttendance: any = dispatch(createAttendance(detail));
-      console.log(resultAttendance);
     });
     if (createShiftUserDetail.fulfilled.match(result)) {
       setReset({});

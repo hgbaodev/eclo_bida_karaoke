@@ -20,6 +20,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { Table } from 'antd'; // Sử dụng Ant Design cho bảng
 import type { ColumnsType } from 'antd/es/table';
+import WithPermission from '@/guards/with-permisson';
 
 export function getStatusBadge(status: DayOff['type']) {
   switch (status) {
@@ -47,7 +48,7 @@ export function getStatusBadge(status: DayOff['type']) {
   }
 }
 
-export const getColumns = (openModal: (args: any) => void,t:any) => [
+export const getColumns = (openModal: (args: any) => void, t: any) => [
   {
     title: <HeaderCell title="Id" />,
     dataIndex: 'id',
@@ -84,7 +85,7 @@ export const getColumns = (openModal: (args: any) => void,t:any) => [
     render: (_: string, dayoff: DayOff) => dayoff.reason,
   },
   {
-    title: <HeaderCell title={t('type')}/>,
+    title: <HeaderCell title={t('type')} />,
     dataIndex: 'type',
     key: 'type',
     width: 50,
@@ -97,19 +98,21 @@ export const getColumns = (openModal: (args: any) => void,t:any) => [
     width: 10,
     render: (_: string, dayoff: DayOff) => (
       <div className=" ">
-        <DeletePopover
-          title={t('delete')}
-          description={t('delete_dayoff')}
-          onDelete={async () => {
-            const result = await dispatch(deleteDayoff(dayoff.active)); // Remove the .then() block
-            if (deleteDayoff.fulfilled.match(result)) {
-              await dispatch(getDayoffs({ page: 1, pageSize: 5, query: '' ,type:'' }));
-              toast.success(t('success'));
-            } else {
-              toast.error(t('failed'));
-            }
-          }}
-        />
+        <WithPermission permission="dayoff.Delete">
+          <DeletePopover
+            title={t('delete')}
+            description={t('delete_dayoff')}
+            onDelete={async () => {
+              const result = await dispatch(deleteDayoff(dayoff.active)); // Remove the .then() block
+              if (deleteDayoff.fulfilled.match(result)) {
+                await dispatch(getDayoffs({ page: 1, pageSize: 5, query: '', type: '' }));
+                toast.success(t('success'));
+              } else {
+                toast.error(t('failed'));
+              }
+            }}
+          />
+        </WithPermission>
       </div>
     ),
   },

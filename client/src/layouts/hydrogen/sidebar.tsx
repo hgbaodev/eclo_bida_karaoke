@@ -13,15 +13,31 @@ import { RootState } from '@/store/types';
 export default function Sidebar({ className }: { className?: string }) {
   const { role } = useSelector((state: RootState) => state.auth);
 
-  const checkRoleMenuItems = MenuItems().filter((item) => {
-    if (item.permission) {
-      if (role.permissions.includes(item.permission as never)) {
+  const checkRoleMenuItems = MenuItems()
+    .filter((item) => {
+      if (item.permission) {
+        if (role.permissions.includes(item.permission as never)) {
+          return item;
+        }
+      } else {
         return item;
       }
-    } else {
+    })
+    .map((item) => {
+      if (item.dropdownItems) {
+        const dropdownItems = item.dropdownItems.filter((dropdownItem) => {
+          if (dropdownItem.permission) {
+            if (role.permissions.includes(dropdownItem.permission as never)) {
+              return dropdownItem;
+            }
+          } else {
+            return dropdownItem;
+          }
+        });
+        return { ...item, dropdownItems };
+      }
       return item;
-    }
-  });
+    });
 
   const pathname = usePathname();
   return (

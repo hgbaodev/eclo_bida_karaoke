@@ -10,6 +10,7 @@ import dayjs from 'dayjs';
 import { dispatch } from '@/store';
 import { getRevenueEx } from '@/store/slices/statisticalSlice';
 import { useTranslations } from 'next-intl';
+import useCheckPermissions from '@/hooks/use-check-permission';
 
 export default function BlankPage() {
   const t = useTranslations('revenue-expenditure');
@@ -28,7 +29,10 @@ export default function BlankPage() {
   const [drawerState, setDrawerState] = React.useState(false);
   const [starRangeDate, setStartRangeDate] = React.useState<Date | null>(null);
   const [endRangeDate, setEndRangeDate] = React.useState<Date | null>(null);
-
+  const check = useCheckPermissions('revenue.View');
+  if (!check) {
+    window.location.href = '/error/403';
+  }
   useEffect(() => {
     const now = new Date();
     const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);

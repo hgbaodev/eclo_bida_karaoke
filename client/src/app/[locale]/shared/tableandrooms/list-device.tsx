@@ -6,7 +6,6 @@ import { Button, Input, Select, Title } from 'rizzui';
 
 const ListDevices = () => {
   const { listDevices } = useSelector((state: RootState) => state.service);
-  console.log('listDevices', listDevices);
   return (
     <>
       <div className="col-span-full">

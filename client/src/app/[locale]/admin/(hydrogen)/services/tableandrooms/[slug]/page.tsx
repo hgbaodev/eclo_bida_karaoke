@@ -5,9 +5,14 @@ import { useEffect, useState } from 'react';
 import { dispatch } from '@/store';
 import { getServiceByActive } from '@/store/slices/serviceSlice';
 import { useTranslations } from 'next-intl';
+import useCheckPermissions from '@/hooks/use-check-permission';
 
 export default function BlankPage({ params }: { params: { slug: string } }) {
   const t = useTranslations('tables_rooms');
+  const check = useCheckPermissions('table&room.View');
+  if (!check) {
+    window.location.href = '/error/403';
+  }
   const pageHeader = {
     breadcrumb: [
       {

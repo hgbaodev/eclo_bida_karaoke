@@ -4,12 +4,16 @@ import ModalButton from '@/app/[locale]/shared/modal-button';
 import ProductsTable from '@/app/[locale]/shared/product_imports/product_import_table';
 import CreateProduct from '@/app/[locale]/shared/product_imports/create-product_import';
 import { useTranslations } from 'next-intl';
-
+import useCheckPermissions from '@/hooks/use-check-permission';
+import WithPermission from '@/guards/with-permisson';
 
 export default function BlankPage() {
   const t = useTranslations('product_import');
+  const check = useCheckPermissions('product.View');
+  if (!check) {
+    window.location.href = '/error/403';
+  }
   const pageHeader = {
-  
     title: t('title'),
     breadcrumb: [
       {
@@ -21,11 +25,13 @@ export default function BlankPage() {
       },
     ],
   };
-  
+
   return (
     <>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb}>
-        <ModalButton label={t('add_import')} view={<CreateProduct />} customSize="600px" className="mt-0" />
+        <WithPermission permission="product.Create">
+          <ModalButton label={t('add_import')} view={<CreateProduct />} customSize="600px" className="mt-0" />
+        </WithPermission>
       </PageHeader>
       <ProductsTable />
     </>

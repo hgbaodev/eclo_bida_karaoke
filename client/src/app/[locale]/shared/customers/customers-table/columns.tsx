@@ -11,6 +11,7 @@ import DeletePopover from '@/app/[locale]/shared/delete-popover';
 import { dispatch } from '@/store';
 import { getCustomers, deleteCustomer } from '@/store/slices/customerSlice';
 import toast from 'react-hot-toast';
+import WithPermission from '@/guards/with-permisson';
 
 export interface Customer {
   active: string;
@@ -104,41 +105,45 @@ export const getColumns = (openModal: (args: any) => void, t: any) => [
     width: 10,
     render: (_: string, customer: Customer) => (
       <div className="flex items-center justify-end gap-3 pe-3">
-        <Tooltip size="sm" content={t('edit_customer_tooltip')} placement="top" color="invert">
-          <ActionIcon
-            onClick={() => {
-              const data = {
-                first_name: customer.first_name,
-                last_name: customer.last_name,
-                email: customer.email,
-                phone: customer.phone,
-                status: customer.status,
-              };
-              openModal({
-                view: <EditCustomer customer={data} active={customer.active} />,
-              });
+        <WithPermission permission="customer.Update">
+          <Tooltip size="sm" content={t('edit_customer_tooltip')} placement="top" color="invert">
+            <ActionIcon
+              onClick={() => {
+                const data = {
+                  first_name: customer.first_name,
+                  last_name: customer.last_name,
+                  email: customer.email,
+                  phone: customer.phone,
+                  status: customer.status,
+                };
+                openModal({
+                  view: <EditCustomer customer={data} active={customer.active} />,
+                });
+              }}
+              as="span"
+              size="sm"
+              variant="outline"
+              className="hover:!border-gray-900 hover:text-gray-700 cursor-pointer"
+            >
+              <PencilIcon className="h-4 w-4" />
+            </ActionIcon>
+          </Tooltip>
+        </WithPermission>
+        <WithPermission permission="customer.Delete">
+          <DeletePopover
+            title={t('delete_customer_title')}
+            description={`${t('delete_customer_description')} #${customer.last_name} ${t('customer')}`}
+            onDelete={async () => {
+              const result = await dispatch(deleteCustomer(customer.active));
+              if (deleteCustomer.fulfilled.match(result)) {
+                await dispatch(getCustomers({ page: 1, pageSize: 5, query: '', status: '' }));
+                toast.success(`${t('customer.delete_success')} ${customer.first_name} ${customer.last_name}.`);
+              } else {
+                toast.error(`${t('delete_failed')} ${customer.active}.`);
+              }
             }}
-            as="span"
-            size="sm"
-            variant="outline"
-            className="hover:!border-gray-900 hover:text-gray-700 cursor-pointer"
-          >
-            <PencilIcon className="h-4 w-4" />
-          </ActionIcon>
-        </Tooltip>
-        <DeletePopover
-          title={t('delete_customer_title')}
-          description={`${t('delete_customer_description')} #${customer.last_name} ${t('customer')}`}
-          onDelete={async () => {
-            const result = await dispatch(deleteCustomer(customer.active));
-            if (deleteCustomer.fulfilled.match(result)) {
-              await dispatch(getCustomers({ page: 1, pageSize: 5, query: '', status: '' }));
-              toast.success(`${t('customer.delete_success')} ${customer.first_name} ${customer.last_name}.`);
-            } else {
-              toast.error(`${t('delete_failed')} ${customer.active}.`);
-            }
-          }}
-        />
+          />
+        </WithPermission>
       </div>
     ),
   },

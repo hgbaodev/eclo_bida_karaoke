@@ -5,17 +5,40 @@ import { Button, Title, Text } from 'rizzui';
 import LaptopImg from '@public/welcome-laptop.png';
 import MobileImg from '@public/welcome-mobile.png';
 import { useRouter } from 'next/navigation';
-import Head from 'next/head';
+import { useEffect } from 'react';
 
 export default function WelcomePage() {
   const router = useRouter();
 
+  useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker
+        .register('/sw.js')
+        .then((registration) => {
+          console.log('Registration successful');
+        })
+        .catch((error) => {
+          console.log('Service worker registration failed');
+        });
+    }
+  }, []);
+
+  const requestNotificationPermission = () => {
+    if ('Notification' in window) {
+      Notification.requestPermission().then((permission) => {
+        if (permission === 'granted') {
+          new Notification('You will receive updates from us.');
+        } else {
+          console.log('Notification permission denied.');
+        }
+      });
+    } else {
+      alert('Notification API not supported.');
+    }
+  };
+
   return (
     <>
-      <Head>
-        <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
-        <script src="/sw.js" defer></script>
-      </Head>
       <div className="flex grow items-center px-6 xl:px-10">
         <div className="mx-auto flex w-full max-w-[1180px] flex-col-reverse items-center justify-between text-center lg:flex-row lg:gap-5 lg:text-start 3xl:max-w-[1520px]">
           <div>
@@ -40,8 +63,13 @@ export default function WelcomePage() {
               >
                 Start Installation
               </Button>
-              <Button size="lg" variant="outline" className="h-12 px-4 xl:h-14 xl:px-6">
-                User Guide
+              <Button
+                size="lg"
+                variant="outline"
+                className="h-12 px-4 xl:h-14 xl:px-6"
+                onClick={requestNotificationPermission}
+              >
+                Notification
               </Button>
             </div>
           </div>
