@@ -34,6 +34,16 @@ export default function BlankPage() {
           <ModalButton label={t('day_off')} view={<CreateDayOff />} customSize="600px" className="mt-0" />
         </WithPermission>
       </PageHeader>
+      <div className="mb-4 flex items-center space-x-4">
+        <p className="text-sm text-green-600 flex items-center">
+          <span className="inline-block w-3 h-3 bg-green-600 mr-2 rounded-full"></span>
+          {t('approved')}
+        </p>
+        <p className="text-sm text-red-600 flex items-center">
+          <span className="inline-block w-3 h-3 bg-red-600 mr-2 rounded-full"></span>
+          {t('unapproved')}
+        </p>
+      </div>
       <AttendanceTable />
     </>
   );

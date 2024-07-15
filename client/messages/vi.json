@@ -734,6 +734,8 @@
     "date": "Ngày",
     "cancel": "Hủy",
     "create": "Tạo",
+    "approved": "Approved: Nghỉ có phép",
+    "unapproved": "Unapproved: Nghỉ không phép",
     "edit_attendance": "Chỉnh Sửa Chấm Công",
     "title_edit": "Chỉnh Sửa Chấm Công",
     "staff_uuid": "UUID Nhân Viên",

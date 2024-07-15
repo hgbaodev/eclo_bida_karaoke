@@ -736,6 +736,8 @@
     "date": "Date",
     "cancel": "Cancel",
     "create": "Create",
+    "approved": "Approved: Leave with permission",
+    "unapproved": "Unapproved: Leave without permission",
     "edit_attendance": "Edit Attendance",
     "title_edit": "Edit Attendance",
     "staff_uuid": "Staff UUID",
