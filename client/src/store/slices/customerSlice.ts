@@ -1,10 +1,10 @@
 import axiosInstance from '@/api/axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { customerType } from '../types';
+import { customer_type } from '../types';
 import { EditCustomerInput } from '@/utils/validators/customer/edit-customer.schema';
 import env from '@/env';
 
-const initialState: customerType = {
+const initialState: customer_type = {
   data: [],
   isLoading: false,
   isFiltered: false,
@@ -108,7 +108,7 @@ const customerSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getCustomers.pending, (state: customerType) => {
+      .addCase(getCustomers.pending, (state: customer_type) => {
         state.isLoading = true;
       })
       .addCase(getCustomers.fulfilled, (state, action) => {
@@ -120,7 +120,7 @@ const customerSlice = createSlice({
       .addCase(getCustomers.rejected, (state) => {
         state.isLoading = false;
       })
-      .addCase(createCustomer.pending, (state: customerType) => {
+      .addCase(createCustomer.pending, (state: customer_type) => {
         state.isCreateLoading = true;
       })
       .addCase(createCustomer.fulfilled, (state, action) => {
@@ -129,7 +129,7 @@ const customerSlice = createSlice({
       .addCase(createCustomer.rejected, (state) => {
         state.isCreateLoading = false;
       })
-      .addCase(updateCustomer.pending, (state: customerType) => {
+      .addCase(updateCustomer.pending, (state: customer_type) => {
         state.isUpdateLoading = true;
       })
       .addCase(updateCustomer.fulfilled, (state, action) => {

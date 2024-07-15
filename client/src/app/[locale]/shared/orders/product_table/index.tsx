@@ -12,10 +12,10 @@ import { getColumns } from './columns';
 import FilterElement from './filter-elements';
 
 export default function ProductsOrderTable() {
-  const { data, isLoading, pageSize, page, totalRow, query } = useSelector((state: RootState) => state.product);
+  const { data, isLoading, pageSize, page, totalRow, query, type } = useSelector((state: RootState) => state.product);
   useEffect(() => {
     const fetch = async () => {
-      await dispatch(getProducts({ page, pageSize, query }));
+      await dispatch(getProducts({ page, pageSize, query, type }));
     };
     fetch();
   }, [page, pageSize, query]);
