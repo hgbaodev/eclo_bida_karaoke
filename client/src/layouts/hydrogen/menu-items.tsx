@@ -136,7 +136,7 @@ export const MenuItems = () => {
       name: t('shifts'),
       href: routes.admin.shifts,
       icon: <LuClock />,
-      permission: 'shift.View',
+      permission: 'shifts.View',
     },
     {
       name: t('attendance'),
@@ -160,7 +160,7 @@ export const MenuItems = () => {
       name: t('shift_details_for_staff'),
       href: routes.admin.shift_detail_staff,
       icon: <FaUserClock />,
-      permission: 'shift.View',
+      permission: 'shiftdetail.View',
     },
     {
       name: t('customers'),

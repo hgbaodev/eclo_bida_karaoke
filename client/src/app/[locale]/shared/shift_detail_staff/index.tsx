@@ -16,6 +16,7 @@ import CreateWorkShift from './work_shift/create-work_shift';
 import dynamic from 'next/dynamic';
 import { getAllWorkShifts, getWorkShift } from '@/store/slices/workshiftSlice';
 import { useTranslations } from 'next-intl';
+import WithPermission from '@/guards/with-permisson';
 const FilterElement = dynamic(() => import('@/app/[locale]/shared/shift_detail_staff/work_shift/filter-element'), {
   ssr: false,
 });
@@ -55,7 +56,14 @@ export default function ShiftDetailStaffTable() {
       <div className="mt-0">
         <label style={{ fontWeight: 'bold', fontSize: '15px' }}>{t('workshift')}</label>
         <FilterElement />
-        <ModalButton label={t('copy')} view={<CreateWorkShift />} customSize="600px" className="mt-10 w-30 h-15 mb-4" />
+        <WithPermission permission="shiftdetail.Create">
+          <ModalButton
+            label={t('copy')}
+            view={<CreateWorkShift />}
+            customSize="600px"
+            className="mt-10 w-30 h-15 mb-4"
+          />
+        </WithPermission>
         <ControlledTable
           variant="modern"
           data={data}
