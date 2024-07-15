@@ -82,9 +82,15 @@ class DayOffController extends Controller
 
     public function destroy(string $active)
     {
-        if (!$this->dayOffRepository->getDayOffByActive($active)) {
+        $day_off = $this->dayOffRepository->getDayOffByActive($active);
+        if (!$day_off) {
             return $this->sentErrorResponse('Not found day off');
         }
+        $attendance = $this->attendanceRepo->getAttendanceByUUIDAndDay($day_off->staff_id, $day_off);
+        $updateAttendance = [
+            "type" => ""
+        ];
+        $this->attendanceRepo->updateAttendanceByActive($attendance->active, $updateAttendance);
         return $this->sentSuccessResponse($this->dayOffRepository->deleteByActive($active), ' day off has been deleted!!!', 200);
     }
 }
