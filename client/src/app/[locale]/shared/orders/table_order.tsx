@@ -12,13 +12,15 @@ import { ActionIcon, Loader } from 'rizzui';
 import { IoIosAdd } from 'react-icons/io';
 import { VscChromeMinimize } from 'react-icons/vsc';
 import toast from 'react-hot-toast';
+import { useTranslations } from 'next-intl';
 
 const TableOrder = () => {
+  const t = useTranslations('order');
   const { order, isLoadingGetOrder } = useSelector((state: RootState) => state.order);
   const columns = useMemo(
     () => [
       {
-        title: <HeaderCell title="Image" />,
+        title: <HeaderCell title={t('image')} />,
         dataIndex: 'image',
         key: 'image',
         width: 20,
@@ -35,21 +37,21 @@ const TableOrder = () => {
         ),
       },
       {
-        title: 'Name',
+        title: t('name'),
         dataIndex: 'name',
         key: 'name',
         width: 50,
         render: (_: any, orderdetail: OrderDetail) => orderdetail.name,
       },
       {
-        title: 'Price',
+        title: t('value'),
         dataIndex: 'price',
         key: 'selling_price',
         width: 10,
         render: (_: any, orderdetail: OrderDetail) => orderdetail.selling_price,
       },
       {
-        title: 'Quantity',
+        title: t('quantity'),
         dataIndex: 'quantity',
         key: 'quantity',
         width: 10,
@@ -66,7 +68,7 @@ const TableOrder = () => {
               onClick={() => {
                 const value = orderdetail.quantity - 1;
                 if (value == 0) {
-                  const check = confirm('Are you sure you want to delete this product?');
+                  const check = confirm(t('delete_confirm_message'));
                   if (!check) {
                     return;
                   }
@@ -87,7 +89,7 @@ const TableOrder = () => {
             <ActionIcon
               onClick={() => {
                 if (orderdetail.quantity > orderdetail.quantity_stock) {
-                  return toast.error('Product out of stock');
+                  return toast.error(t('out_of_stock'));
                 }
                 const data = {
                   active: orderdetail.active,

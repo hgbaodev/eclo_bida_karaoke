@@ -11,8 +11,10 @@ import { getDevicesByService, setAddDevice } from '@/store/slices/orderSlice';
 import { dispatch } from '@/store';
 import { PiMagnifyingGlassBold } from 'react-icons/pi';
 import toast from 'react-hot-toast';
+import { useTranslations } from 'next-intl';
 
 const SearchDevice = () => {
+  const t = useTranslations('order');
   const { order, devices } = useSelector((state: RootState) => state.order);
 
   useEffect(() => {
@@ -23,7 +25,7 @@ const SearchDevice = () => {
     <Popover showArrow={false}>
       <Popover.Trigger>
         <Input
-          placeholder="Search devices ....."
+          placeholder={t('search_devices')}
           prefix={<PiMagnifyingGlassBold className="h-[18px] w-[18px] text-gray-600" />}
         />
       </Popover.Trigger>
@@ -60,7 +62,7 @@ const SearchDevice = () => {
                     <ActionIcon
                       onClick={() => {
                         if (device.quantity == 0) {
-                          toast.error('Device out of stock');
+                          toast.error(t('out_of_stock'));
                           return;
                         }
                         const value = {

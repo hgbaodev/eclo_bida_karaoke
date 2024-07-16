@@ -85,7 +85,7 @@ export const getColumns = (openModal: (args: any) => void, t: any) => [
     render: (_: string, user: User) => (
       <div className="flex items-center justify-end gap-3 pe-3">
         <WithPermission permission="user.Update">
-          <Tooltip size="sm" content={t('editUser')} placement="top" color="invert">
+          <Tooltip size="sm" content={t('edit_user')} placement="top" color="invert">
             <ActionIcon
               onClick={() => {
                 const data = {
@@ -110,15 +110,15 @@ export const getColumns = (openModal: (args: any) => void, t: any) => [
         </WithPermission>
         <WithPermission permission="user.Delete">
           <DeletePopover
-            title={t('deleteUserTitle')}
-            description={`${t('deleteUserDescription')} #${user.last_name} ${t('user')}`}
+            title={t('delete_user_title')}
+            description={`${t('delete_user_description')} #${user.last_name} ${t('user')}`}
             onDelete={async () => {
               const result = await dispatch(deleteUser(user.active)); // Remove the .then() block
               if (deleteUser.fulfilled.match(result)) {
                 await dispatch(getUsers({ page: 1, pageSize: 5, query: '', role: '', status: '' }));
-                toast.success(`${t('user')} #${user.first_name} ${user.last_name} ${t('deletedSuccessfully')}.`);
+                toast.success(`${t('user')} #${user.first_name} ${user.last_name} ${t('deleted_successfully')}.`);
               } else {
-                toast.error(`${t('failedToDeleteUser')} #${user.active}.`);
+                toast.error(`${t('failed_to_delete_user')} #${user.active}.`);
               }
             }}
           />

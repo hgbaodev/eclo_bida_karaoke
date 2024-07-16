@@ -4,7 +4,7 @@ import { PiTrashDuotone, PiMagnifyingGlassBold } from 'react-icons/pi';
 import StatusField from '@/components/controlled-table/status-field';
 import { Button, Input } from 'rizzui';
 import { dispatch } from '@/store';
-import { setQuery, setReset, setStatus } from '@/store/slices/customerSlice';
+import { setQuery, setReset, setStatus } from '@/store/slices/customer_slice';
 import { RootState } from '@/store/types';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';

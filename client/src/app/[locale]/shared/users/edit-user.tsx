@@ -37,7 +37,7 @@ export default function EditUser({ user, active }: { user: EditUserInput; active
       setErrors({});
       closeModal();
       await dispatch(getUsers({ page, pageSize, query, status, role }));
-      toast.success(t('userUpdatedSuccessfully'));
+      toast.success(t('user_updated_successfully'));
     } else {
       setErrors(result?.payload?.errors);
     }
@@ -55,7 +55,7 @@ export default function EditUser({ user, active }: { user: EditUserInput; active
         <>
           <div className="col-span-full flex items-center justify-between">
             <Title as="h4" className="font-semibold">
-              {t('update_ser')}
+              {t('update_user')}
             </Title>
             <ActionIcon size="sm" variant="text" onClick={closeModal}>
               <PiXBold className="h-auto w-5" />
@@ -69,7 +69,7 @@ export default function EditUser({ user, active }: { user: EditUserInput; active
             error={errors.first_name?.message}
           />
           <Input
-            label={t('lastName')}
+            label={t('last_name')}
             placeholder={t('enter_user_last_name')}
             {...register('last_name')}
             className="col-span-[1/2]"

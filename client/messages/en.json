@@ -193,7 +193,20 @@
     "service": "Service",
     "title": "Order",
     "update": "Update",
-    "an_order_has_to_be_delivered": "An order has to be delivered"
+    "an_order_has_to_be_delivered": "An order has to be delivered",
+    "updated_successfully": "Updated successfully",
+    "please_enter_product_name": "Please enter product name",
+    "no_product_found": "No product found",
+    "out_of_stock": "Out of stock",
+    "search_products": "Search for products...",
+    "search_customer": "Search for customer...",
+    "please_enter_customer_name": "Please enter customer's name",
+    "search_devices": "Search for devices...",
+    "image": "Image",
+    "name": "Name",
+    "value": "Value",
+    "quantity": "Quantity",
+    "delete_confirm_message": "Are you sure you want to delete this record?"
   },
   "revenue-expenditure": {
     "add_condition": "Add condition",

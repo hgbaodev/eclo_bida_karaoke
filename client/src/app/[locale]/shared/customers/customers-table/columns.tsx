@@ -9,7 +9,7 @@ import DateCell from '@/components/ui/date-cell';
 import EditCustomer from '../edit-customer';
 import DeletePopover from '@/app/[locale]/shared/delete-popover';
 import { dispatch } from '@/store';
-import { getCustomers, deleteCustomer } from '@/store/slices/customerSlice';
+import { getCustomers, deleteCustomer } from '@/store/slices/customer_slice';
 import toast from 'react-hot-toast';
 import WithPermission from '@/guards/with-permisson';
 

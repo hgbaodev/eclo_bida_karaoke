@@ -55,7 +55,6 @@ export default function BlankPage({ params }: { params: { slug: string } }) {
   };
 
   usePusher('kitchenOrderWaitingEvent', (data) => {
-   
     const productName = data.product_name;
     const productQuantity = data.product_quantity;
     const serviceName = data.service_name;
@@ -78,7 +77,7 @@ export default function BlankPage({ params }: { params: { slug: string } }) {
 
     const result = await dispatch(updateOrder(value));
     if (updateOrder.fulfilled.match(result)) {
-      toast.success('Update success');
+      toast.success(t('updated_successfully'));
     }
   };
 

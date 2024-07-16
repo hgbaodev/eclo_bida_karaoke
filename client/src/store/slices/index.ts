@@ -22,7 +22,7 @@ import product_import from './product_importSlice';
 import product_import_detail from './product_import_detailSlice';
 import area from './areaSlice';
 import service_type from './service_type_slice';
-import customer from './customerSlice';
+import customer from './customer_slice';
 import price from './priceSlice';
 import kitchen_order from './kitchen_order_slice';
 import device from './device_slice';

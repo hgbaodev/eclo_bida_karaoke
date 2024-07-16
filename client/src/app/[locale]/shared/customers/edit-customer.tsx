@@ -7,7 +7,7 @@ import { Form } from '@/components/ui/form';
 import { Input, Button, ActionIcon, Title, Select } from 'rizzui';
 import { useModal } from '@/app/[locale]/shared/modal-views/use-modal';
 import { dispatch } from '@/store';
-import { getCustomers, updateCustomer } from '@/store/slices/customerSlice';
+import { getCustomers, updateCustomer } from '@/store/slices/customer_slice';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
