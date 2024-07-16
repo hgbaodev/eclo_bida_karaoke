@@ -86,7 +86,10 @@ class DayOffController extends Controller
         if (!$day_off) {
             return $this->sentErrorResponse('Not found day off');
         }
-        $attendance = $this->attendanceRepo->getAttendanceByUUIDAndDay($day_off->staff_id, $day_off);
+        $attendance = $this->attendanceRepo->getAttendanceByUUIDAndDay($day_off->staff_id, $day_off->day_off);
+        if (!$attendance) {
+            return $this->sentErrorResponse("Don't have attendance", 'error', 404);
+        }
         $updateAttendance = [
             "type" => ""
         ];

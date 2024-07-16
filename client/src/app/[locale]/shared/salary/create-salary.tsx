@@ -83,9 +83,9 @@ export default function CreateSalary() {
                   className="col-span-full"
                   error={errors?.month?.message}
                   getOptionValue={(option) => option.value}
-                  getOptionDisplayValue={(option) => option.label}
+                  getOptionDisplayValue={(option) => option.value}
                   displayValue={(selected: number) =>
-                    monthOptions.find((option) => option.value === selected)?.label ?? selected
+                    monthOptions.find((option) => option.value === selected)?.value ?? selected
                   }
                   dropdownClassName="!z-[1] h-[130px] overflow-y-auto rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                   inPortal={false}

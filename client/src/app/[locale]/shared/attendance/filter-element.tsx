@@ -50,10 +50,10 @@ export default function FilterElement() {
           onChange={(value: any) => {
             dispatch(setMonth(value));
           }}
-          placeholder="Filter by Status"
+          placeholder="Filter by Month"
           getOptionValue={(option) => option.value}
-          getOptionDisplayValue={(option) => option.label}
-          displayValue={(selected: any) => monthOptions.find((option) => option.value === selected)?.label || selected}
+          getOptionDisplayValue={(option) => option.value}
+          displayValue={(selected: any) => monthOptions.find((option) => option.value === selected)?.value || selected}
         />
         <StatusField
           className=" -order-9 w-full @[25rem]:w-[calc(calc(100%_-_10px)_/_2)] @4xl:-order-5 @4xl:w-auto"

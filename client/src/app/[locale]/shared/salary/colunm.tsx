@@ -28,7 +28,8 @@ export const getColumns = (openModal: (args: any) => void, t: any) => {
       dataIndex: 'sop',
       key: 'sop',
       width: 50,
-      render: (_: string, salary: Salary) => salary.staff.position.base_salary,
+      render: (_: string, salary: Salary) =>
+        salary.staff.position.base_salary.toLocaleString('de-DE', { minimumFractionDigits: 2 }),
     },
     {
       title: <HeaderCell title={t('table_structure')} />,

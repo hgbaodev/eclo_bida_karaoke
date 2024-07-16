@@ -110,7 +110,7 @@ export const getColumns = (openModal: (args: any) => void, t: any) => [
     width: 10,
     render: (_: string, shift: Shift) => (
       <div className="flex items-center justify-end gap-3 pe-3">
-        <WithPermission permission="shift.Update">
+        <WithPermission permission="shifts.Update">
           <Tooltip size="sm" content={'Edit Shift'} placement="top" color="invert">
             <ActionIcon
               onClick={() => {
@@ -133,7 +133,7 @@ export const getColumns = (openModal: (args: any) => void, t: any) => [
             </ActionIcon>
           </Tooltip>
         </WithPermission>
-        <WithPermission permission="shift.Delete">
+        <WithPermission permission="shifts.Delete">
           <DeletePopover
             title={t('delete_shift')}
             description={t('delete_description')}
