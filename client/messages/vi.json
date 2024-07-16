@@ -109,7 +109,8 @@
     "total_devices": "Tổng thiết bị",
     "total_price": "Tổng cộng",
     "total_products": "Tổng sản phẩm",
-    "total_service": "Tổng dịch vụ"
+    "total_service": "Tổng dịch vụ",
+    "view_this_order": "Xem chi tiết hoá đơn"
   },
   "kitchen_notifications": {
     "delete": "Xoá",

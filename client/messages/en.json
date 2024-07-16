@@ -110,7 +110,8 @@
     "total_products": "Total products",
     "total_service": "Total services",
     "update": "Update",
-    "quantity": "Quantity"
+    "quantity": "Quantity",
+    "view_this_order": "View this order"
   },
   "kitchen_notifications": {
     "delete": "Delete",
