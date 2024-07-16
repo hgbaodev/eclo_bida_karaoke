@@ -318,7 +318,11 @@
     "under_maintenance": "Đang bảo trì",
     "under_maintenance_quantity": "Số lượng đang bảo trì",
     "update": "Cập nhật",
-    "value": "Giá trị"
+    "value": "Giá trị",
+    "select_device": "Chọn thiết bị",
+    "edit_this_record": "Chỉnh sửa bảng ghi này",
+    "succeeded": "Thành công",
+    "delete_confirm_message": "Bạn có chắc chắn bạn muốn xoá bảng ghi này?"
   },
   "price": {
     "title": "Cấu hình giá",

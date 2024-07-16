@@ -62,7 +62,7 @@ export default function EditServiceDeviceDetail({
       setErrors({});
       closeModal();
       await dispatch(getServiceDevicesDetail({ page, pageSize, query, status, serviceActive }));
-      toast.success('Device updated successfully');
+      toast.success(t('succeeded'));
     } else {
       setErrors(result?.payload?.errors);
     }
@@ -100,7 +100,7 @@ export default function EditServiceDeviceDetail({
                   name={name}
                   label={t('device')}
                   className="col-span-full"
-                  placeholder="Select a device"
+                  placeholder={t('select_device')}
                   error={errors?.device?.message}
                   getOptionValue={(option) => option.active}
                   getOptionDisplayValue={(option) => option.name}
@@ -131,7 +131,7 @@ export default function EditServiceDeviceDetail({
                   onChange={onChange}
                   name={name}
                   label={t('status')}
-                  placeholder="Select a status"
+                  placeholder={t('select_status')}
                   className="col-span-full"
                   error={errors?.status?.message}
                   getOptionValue={(option: { value: any }) => option.value}

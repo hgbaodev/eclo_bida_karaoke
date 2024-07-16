@@ -57,7 +57,7 @@ export default function CreateServiceDeviceDetail({ serviceActive }: { serviceAc
         setErrors({});
         closeModal();
         await dispatch(getServiceDevicesDetail({ page, pageSize, query, status, serviceActive }));
-        toast.success('Device updated successfully');
+        toast.success(t('succeeded'));
       } else {
         closeModal();
         const errorMessage = result.payload?.errors || 'Failed to create service device detail.';
@@ -65,7 +65,7 @@ export default function CreateServiceDeviceDetail({ serviceActive }: { serviceAc
       }
     } catch (error) {
       console.error('Error submitting form:', error);
-      toast.error('Failed to create service device detail. Please try again.');
+      toast.error(t('failed'));
     }
   };
 
@@ -101,7 +101,7 @@ export default function CreateServiceDeviceDetail({ serviceActive }: { serviceAc
                   name={name}
                   label={t('device')}
                   className="col-span-full"
-                  placeholder="Select a device"
+                  placeholder={t('select_device')}
                   error={errors?.device?.message}
                   getOptionValue={(option) => option.active}
                   getOptionDisplayValue={(option) => option.name}
@@ -132,7 +132,7 @@ export default function CreateServiceDeviceDetail({ serviceActive }: { serviceAc
                   onChange={onChange}
                   name={name}
                   label={t('status')}
-                  placeholder="Select a status"
+                  placeholder={t('select_status')}
                   className="col-span-full"
                   error={errors?.status?.message}
                   getOptionValue={(option: { value: any }) => option.value}

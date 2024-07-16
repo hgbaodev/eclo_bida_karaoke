@@ -71,7 +71,7 @@ export const getColumns = (openModal: (args: any) => void, t: any) => [
     width: 10,
     render: (_: string, serviceDeviceDetail: ServiceDeviceDetail) => (
       <div className="flex items-center justify-end gap-3 pe-3">
-        <Tooltip size="sm" content={'Edit this record'} placement="top" color="invert">
+        <Tooltip size="sm" content={t('edit_this_record')} placement="top" color="invert">
           <ActionIcon
             onClick={() => {
               const data = {
@@ -100,7 +100,7 @@ export const getColumns = (openModal: (args: any) => void, t: any) => [
         </Tooltip>
         <DeletePopover
           title={t('delete')}
-          description={t('are_you_sure_to_delete')}
+          description={t('delete_confirm_message')}
           onDelete={async () => {
             const result = await dispatch(deleteServiceDeviceDetail(serviceDeviceDetail.active)); // Remove the .then() block
             if (deleteServiceDeviceDetail.fulfilled.match(result)) {

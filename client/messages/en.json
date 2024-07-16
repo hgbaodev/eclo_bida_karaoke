@@ -321,7 +321,11 @@
     "under_maintenance": "Under maintenance",
     "under_maintenance_quantity": "Under maintenance quantity",
     "update": "Update",
-    "value": "Value"
+    "value": "Value",
+    "select_device": "Select device",
+    "edit_this_record": "Edit this record",
+    "succeeded": "Succeeded",
+    "delete_confirm_message": "Are you sure you want to delete this record?"
   },
   "price": {
     "title": "Price Configuration",
