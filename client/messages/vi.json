@@ -200,6 +200,8 @@
     "search_customer": "Tìm kiếm khách hàng...",
     "please_enter_customer_name": "Vui lòng nhập tên khách hàng",
     "search_devices": "Tìm kiếm thiết bị...",
+    "no_customer_found": "Không tìm thấy khách hàng",
+    "no_device_found": "Không tìm thấy sản phẩm",
     "image": "Hình ảnh",
     "name": "Tên",
     "value": "Giá trị",

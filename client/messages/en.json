@@ -202,6 +202,8 @@
     "search_customer": "Search for customer...",
     "please_enter_customer_name": "Please enter customer's name",
     "search_devices": "Search for devices...",
+    "no_customer_found": "No customer found",
+    "no_device_found": "No device found",
     "image": "Image",
     "name": "Name",
     "value": "Value",
