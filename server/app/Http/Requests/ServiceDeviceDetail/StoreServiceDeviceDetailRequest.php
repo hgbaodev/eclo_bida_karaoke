@@ -24,16 +24,8 @@ class StoreServiceDeviceDetailRequest extends HelperRequest
         return [
             'quantity' => ['required', 'integer', 'max:1000'],
             'status' => ['required', 'string', 'in:in_use,available,maintenance'],
-            'device' => [
-                'required',
-                'string',
-                'regex:/^[a-zA-Z0-9_-]{43}$/' // Chỉ cho phép các ký tự chữ cái, số, gạch ngang và gạch dưới, với độ dài cố định là 43
-            ],
-            'service' => [
-                'required',
-                'string',
-                'regex:/^[a-zA-Z0-9_-]{43}$/' // Chỉ cho phép các ký tự chữ cái, số, gạch ngang và gạch dưới, với độ dài cố định là 43
-            ],
+            'device' => 'required|exists:devices,active',
+            'service' => 'required|exists:services,active',
             'maintenance_quantity' => ['required', 'integer', 'lte:quantity'],
         ];
     }
