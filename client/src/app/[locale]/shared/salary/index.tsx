@@ -24,6 +24,14 @@ export default function SalaryTable() {
   const columns = useMemo(() => getColumns(openModal, t), [openModal, t]);
   return (
     <div className="mt-0">
+      <div className="mb-4 flex items-center space-x-14">
+        <p className="mr-14">
+          <strong>{t('month')}:</strong>
+        </p>
+        <p>
+          <strong>{t('year')}:</strong>
+        </p>
+      </div>
       <FilterElement />
       <ControlledTable
         variant="modern"

@@ -29,7 +29,7 @@ export default function BlankPage() {
   return (
     <>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb}>
-        <WithPermission permission="shift.Create">
+        <WithPermission permission="shifts.Create">
           <ModalButton label={t('add_shift')} view={<CreateShift />} customSize="600px" className="mt-0" />
         </WithPermission>
       </PageHeader>

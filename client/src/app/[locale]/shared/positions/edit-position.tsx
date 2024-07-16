@@ -117,10 +117,10 @@ export default function EditPosition({ position, active }: { position: EditPosit
 
             <div className="col-span-full flex items-center justify-end gap-4">
               <Button variant="outline" onClick={closeModal} className="w-full @xl:w-auto">
-                Cancel
+                {t('cancel')}
               </Button>
               <Button type="submit" isLoading={updateLoading} className="w-full @xl:w-auto">
-                Edit Position
+                {t('edit_position')}
               </Button>
             </div>
           </>

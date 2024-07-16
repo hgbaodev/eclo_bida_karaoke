@@ -16,6 +16,9 @@ class AttendanceRepository implements AttendanceRepositoryInterface
         $year = $request->input('year');
         $month = $request->input('month');
         $attendance = Attendance::query()->with(["staff"]);
+        $attendance->whereHas('staff', function ($query) {
+            $query->whereNull('deleted_at');
+        });
         if ($query) {
             $attendance->whereRaw("CONCAT(staff.first_name, ' ',staff.last_name) LIKE ?", ["%$query%"]);
         }
@@ -28,7 +31,6 @@ class AttendanceRepository implements AttendanceRepositoryInterface
         if ($month) {
             $attendance->whereMonth("day", $month);
         }
-
         return $attendance->get();
     }
     public function getAllAttendance()

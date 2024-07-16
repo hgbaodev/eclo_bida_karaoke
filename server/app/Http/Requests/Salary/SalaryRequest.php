@@ -23,8 +23,8 @@ class SalaryRequest extends FormRequest
     {
         return [
             "staff" => "nullable",
-            "month" => "required",
-            "year" => "required",
+            "month" => "required|integer|between:1,12",
+            "year" => "required|integer|min:2024",
             "working_days" => "nullable",
             "off_days" => "nullable",
             "working_hours" => "nullable"

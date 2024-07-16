@@ -124,6 +124,9 @@ class AttendanceController extends Controller
         $month = date('m', strtotime($attendance->day));
         $year = date('Y', strtotime($attendance->day));
         $salary = $this->salaryRepo->getSalaryByStaffAndDate($staff->id, $month, $year);
+        if (!$salary) {
+            return $this->sentErrorResponse("You need create salary for staff", "error", 404);
+        }
         $time = $validatedData['time'];
         if (!isset($validatedData['update'])) {
             if (!$attendance->check_in) {
@@ -176,6 +179,9 @@ class AttendanceController extends Controller
         unset($validatedData['update']);
         $updateAtt = $this->attendanceRepository->updateAttendanceByActive($attendance->active, $validatedData);
         $count = $this->attendanceRepository->countAttendanceComplete($staff->id, $month, $year);
+        $date = Carbon::create($year, $month, 1);
+
+        $daysInMonth = $date->daysInMonth;
         if ($salary->staff->position->salary_structure === 'Day') {
             $updateSal = [
                 'working_days' => $count,
@@ -198,7 +204,7 @@ class AttendanceController extends Controller
         } else {
             $updateSal = [
                 'working_days' => $count,
-                'total' => $salary->staff->position->base_salary,
+                'total' => ($salary->staff->position->base_salary / $daysInMonth) * $count,
             ];
         }
         $this->salaryRepo->updateSalaryByActive($salary->active, $updateSal);

@@ -24,8 +24,8 @@ class UpdateSalaryRequest extends HelperRequest
     {
         return [
             "staff" => "required",
-            "month" => "required",
-            "year" => "required",
+            "month" => "required|integer|between:1,12",
+            "year" => "required|integer|min:2024",
             "working_days" => "required",
             "off_days" => "required"
         ];

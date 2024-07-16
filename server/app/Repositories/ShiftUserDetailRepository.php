@@ -13,6 +13,9 @@ class ShiftUserDetailRepository implements ShiftUserDetailRepositoryInterface
         $staff = $request->input('staff');
         $shiftUserDetails = ShiftUserDetail::query()->with(["shift", "staff", "workshift"]);
         $shiftUserDetails->orderByRaw("FIELD(day_of_week, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')")->orderBy('shift_id');
+        $shiftUserDetails->whereHas('staff', function ($query) {
+            $query->whereNull('deleted_at');
+        });
         if ($workshift) {
             $shiftUserDetails->whereHas('workshift', function ($query) use ($workshift) {
                 $query->where("active", $workshift);
