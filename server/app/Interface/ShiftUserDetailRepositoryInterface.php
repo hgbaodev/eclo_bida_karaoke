@@ -13,4 +13,5 @@ interface ShiftUserDetailRepositoryInterface
     public function deleteShiftUserDetailByActive($active);
 
     public function checkUniqueByStaffDay($staff, $day_of_week, $workshift);
+    public function getShiftUserDetailByShift($shift_id);
 }

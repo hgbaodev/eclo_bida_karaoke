@@ -691,7 +691,8 @@
     "search": "Search for shifts...",
     "filter_status": "Filter by Status",
     "filter_shifttype": "Filter by Shift Type",
-    "clear": "Clear"
+    "clear": "Clear",
+    "delete_failed": "Shift is already in Shift-For-Staff, Can't delete"
   },
   "schedule": {
     "title": "Shift",

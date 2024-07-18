@@ -15,8 +15,11 @@ class AttendanceRepository implements AttendanceRepositoryInterface
         $staff = $request->input('staff');
         $year = $request->input('year');
         $month = $request->input('month');
-        $attendance = Attendance::query()->with(["staff"]);
+        $attendance = Attendance::query()->with(["staff", "shift"]);
         $attendance->whereHas('staff', function ($query) {
+            $query->whereNull('deleted_at');
+        });
+        $attendance->whereHas('shift', function ($query) {
             $query->whereNull('deleted_at');
         });
         if ($query) {
@@ -59,7 +62,13 @@ class AttendanceRepository implements AttendanceRepositoryInterface
     }
     public function getAttendanceByUUIDAndDay($id, $day)
     {
-        $attendance = Attendance::query();
+        $attendance = Attendance::query()->with(["staff", "shift"]);
+        $attendance->whereHas('staff', function ($query) {
+            $query->whereNull('deleted_at');
+        });
+        $attendance->whereHas('shift', function ($query) {
+            $query->whereNull('deleted_at');
+        });
         $attendance->where("staff_id", $id);
         $attendance->where("day", $day);
         return $attendance->first();

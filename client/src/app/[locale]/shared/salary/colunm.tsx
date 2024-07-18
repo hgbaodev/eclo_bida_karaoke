@@ -21,22 +21,29 @@ export const getColumns = (openModal: (args: any) => void, t: any) => {
       dataIndex: 'position',
       key: 'position',
       width: 50,
-      render: (_: string, salary: Salary) => salary.staff.position.name,
+      render: (_: string, salary: Salary) => {
+        return salary.staff.position ? salary.staff.position.name : '';
+      },
     },
     {
       title: <HeaderCell title={t('table_basesalary')} />,
       dataIndex: 'sop',
       key: 'sop',
       width: 50,
-      render: (_: string, salary: Salary) =>
-        salary.staff.position.base_salary.toLocaleString('de-DE', { minimumFractionDigits: 2 }),
+      render: (_: string, salary: Salary) => {
+        return salary.staff.position
+          ? salary.staff.position.base_salary.toLocaleString('de-DE', { minimumFractionDigits: 2 })
+          : '';
+      },
     },
     {
       title: <HeaderCell title={t('table_structure')} />,
       dataIndex: 'sos',
       key: 'sos',
       width: 50,
-      render: (_: string, salary: Salary) => salary.staff.position.salary_structure,
+      render: (_: string, salary: Salary) => {
+        return salary.staff.position ? salary.staff.position.salary_structure : '';
+      },
     },
     {
       title: <HeaderCell title={t('table_workingdays')} />,

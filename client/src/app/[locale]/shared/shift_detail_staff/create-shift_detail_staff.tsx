@@ -32,19 +32,19 @@ export default function CreateShiftDetailStaff({ day_of_week, shift }: { day_of_
   const { oneWorkShift } = useSelector((state: RootState) => state.work_shift);
   const onSubmit: SubmitHandler<CreateShiftUserDetailInput> = async (data) => {
     const result: any = await dispatch(createShiftUserDetail(data));
-    const days = getDaysOfWeekByName(oneWorkShift.date_start, oneWorkShift.date_end, day_of_week);
-    days.map((day) => {
-      const formattedDate = `${day.getFullYear()}-${('0' + (day.getMonth() + 1)).slice(-2)}-${(
-        '0' + day.getDate()
-      ).slice(-2)}`;
-      const detail: Detail = {
-        staff: data.staff,
-        day: formattedDate,
-        shift: shift.active,
-      };
-      const resultAttendance: any = dispatch(createAttendance(detail));
-    });
     if (createShiftUserDetail.fulfilled.match(result)) {
+      const days = getDaysOfWeekByName(oneWorkShift.date_start, oneWorkShift.date_end, day_of_week);
+      days.map((day) => {
+        const formattedDate = `${day.getFullYear()}-${('0' + (day.getMonth() + 1)).slice(-2)}-${(
+          '0' + day.getDate()
+        ).slice(-2)}`;
+        const detail: Detail = {
+          staff: data.staff,
+          day: formattedDate,
+          shift: shift.active,
+        };
+        const resultAttendance: any = dispatch(createAttendance(detail));
+      });
       setReset({});
       setErrors({});
       closeModal();

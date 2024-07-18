@@ -16,6 +16,9 @@ class ShiftUserDetailRepository implements ShiftUserDetailRepositoryInterface
         $shiftUserDetails->whereHas('staff', function ($query) {
             $query->whereNull('deleted_at');
         });
+        $shiftUserDetails->whereHas('shift', function ($query) {
+            $query->whereNull('deleted_at');
+        });
         if ($workshift) {
             $shiftUserDetails->whereHas('workshift', function ($query) use ($workshift) {
                 $query->where("active", $workshift);
@@ -37,7 +40,9 @@ class ShiftUserDetailRepository implements ShiftUserDetailRepositoryInterface
     }
     public function getShiftUserDetailByActive($active)
     {
-        return ShiftUserDetail::where("active", $active);
+        $shiftUserDetail = ShiftUserDetail::query()->with(["workshift"]);
+        $shiftUserDetail->where("active", $active);
+        return $shiftUserDetail->first();
     }
     public function createShiftUserDetail(array $data)
     {
@@ -62,5 +67,11 @@ class ShiftUserDetailRepository implements ShiftUserDetailRepositoryInterface
         $shiftUserDetail->where("day_of_week", $day_of_week);
         $shiftUserDetail->where("workshift_id", $workshift);
         return $shiftUserDetail->get();
+    }
+    public function getShiftUserDetailByShift($shift_id)
+    {
+        $shiftUserDetail = ShiftUserDetail::query();
+        $shiftUserDetail->where("shift_id", $shift_id);
+        return $shiftUserDetail->first();
     }
 }
