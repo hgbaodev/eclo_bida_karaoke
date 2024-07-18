@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Role;
 
 use App\Http\Helpers\HelperRequest;
+use Illuminate\Validation\Rule;
 
 class RenameRoleRequest extends HelperRequest
 {
@@ -21,9 +22,10 @@ class RenameRoleRequest extends HelperRequest
      */
     public function rules(): array
     {
+        $id = $this->route('id');
         return [
-            'name' => 'required|unique:roles,name',
-            'color' => 'required|unique:roles,color'
+            'name' => ['required', Rule::unique('roles')->ignore($id, 'id')],
+            'color' => ['required', Rule::unique('roles')->ignore($id, 'id')],
         ];
     }
 }
