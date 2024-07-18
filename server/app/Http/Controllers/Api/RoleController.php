@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Role\RenameRoleRequest;
 use App\Http\Requests\Role\StoreRoleRequest;
 use App\Http\Requests\Role\UpdateRoleRequest;
 use App\Interface\RoleFunctionalPermissionRepositoryInterface;
@@ -38,6 +39,16 @@ class RoleController extends Controller
     {
         $validatedData = $request->validated();
         return $this->sentSuccessResponse($this->roleRepository->createRole($validatedData));
+    }
+
+    function rename(RenameRoleRequest $request, string $id)
+    {
+        $validatedData = $request->validated();
+        if (!$this->roleRepository->getRoleById($id)) {
+            return $this->sentErrorResponse('Role not found', 'error', 404);
+        }
+        $role =  $this->sentSuccessResponse($this->roleRepository->renameRoleById($id, $validatedData));
+        return $role;
     }
 
     function update(UpdateRoleRequest $request, $id)

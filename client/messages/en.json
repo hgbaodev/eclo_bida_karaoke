@@ -510,7 +510,8 @@
     "remove": "Remove",
     "successful": "Succeeded",
     "users": "Users",
-    "total": "Total"
+    "total": "Total",
+    "rename_role": "Rename role"
   },
   "loggers": {
     "title": "Logger",

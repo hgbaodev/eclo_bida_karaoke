@@ -42,6 +42,21 @@ export const createRole = createAsyncThunk('roles/createRole', async (data: any,
   }
 });
 
+export const renameRole = createAsyncThunk(
+  'roles/renameRole',
+  async ({ id, role }: { id: number; role: any }, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.put(`roles/${id}/rename`, role);
+      return response.data;
+    } catch (error: any) {
+      if (!error.response) {
+        throw error;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
+
 export const deleteRole = createAsyncThunk('roles/deleteRole', async (id: number, { rejectWithValue }) => {
   try {
     const response = await axiosInstance.delete(`roles/${id}`);
@@ -103,6 +118,15 @@ const roleSlice = createSlice({
       })
       .addCase(createRole.rejected, (state) => {
         state.createLoading = false;
+      })
+      .addCase(renameRole.pending, (state) => {
+        state.fetchDataLoading = true;
+      })
+      .addCase(renameRole.fulfilled, (state) => {
+        state.fetchDataLoading = false;
+      })
+      .addCase(renameRole.rejected, (state) => {
+        state.fetchDataLoading = false;
       })
       .addCase(deleteRole.fulfilled, (state, action) => {
         state.fetchData = state.fetchData.filter((role) => role.id !== action.payload.data.id);

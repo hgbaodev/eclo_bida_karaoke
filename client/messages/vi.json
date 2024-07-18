@@ -507,7 +507,8 @@
     "rename": "Đổi tên",
     "successful": "Thành công",
     "users": "Người dùng",
-    "total": "Tổng"
+    "total": "Tổng",
+    "rename_role": "Đổi tên vai trò"
   },
   "loggers": {
     "title": "Nhật ký",

@@ -10,4 +10,5 @@ interface RoleRepositoryInterface
     public function updateRoleById($id, array $data);
     public function deleteRoleById($id);
     public function getRoleByActive($active);
+    public function renameRoleById(string $id, array $data);
 }
