@@ -71,7 +71,7 @@ export default function CreateUser() {
             error={errors.first_name?.message}
           />
           <Input
-            label={t('lastName')}
+            label={t('last_name')}
             placeholder={t('enter_user_last_name')}
             {...register('last_name')}
             className="col-span-[1/2]"

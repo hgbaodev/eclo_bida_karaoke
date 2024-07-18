@@ -85,6 +85,13 @@ class RoleRepository implements RoleRepositoryInterface
     return $role;
   }
 
+    public function renameRoleById($id, array $data)
+    {
+        $role = Role::find($id);
+        $role->update($data);
+        return $role;
+    }
+
   public function deleteRoleById($id)
   {
     $role = Role::find($id);

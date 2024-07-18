@@ -14,8 +14,10 @@ import useDebounce from '@/hooks/use-debounce';
 import { PiMagnifyingGlassBold } from 'react-icons/pi';
 import { MdOutlineFindInPage } from 'react-icons/md';
 import toast from 'react-hot-toast';
+import { useTranslations } from 'next-intl';
 
 const SearchProduct = () => {
+  const t = useTranslations('order');
   const { queryProduct, isLoadingQueryProduct, products } = useSelector((state: RootState) => state.order);
   const searchProduct = useDebounce(queryProduct, 500);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -35,7 +37,7 @@ const SearchProduct = () => {
           ref={inputRef}
           value={queryProduct}
           onChange={(event) => dispatch(setQueryProduct(event.target.value))}
-          placeholder="Search product ....."
+          placeholder={t('search_products')}
           prefix={<PiMagnifyingGlassBold className="h-[18px] w-[18px] text-gray-600" />}
           suffix={
             queryProduct && (
@@ -65,12 +67,12 @@ const SearchProduct = () => {
               ) : queryProduct.length == 0 ? (
                 <div className="h-100px flex flex-col items-center justify-center">
                   <MdOutlineFindInPage className="w-10 h-10" />
-                  <span className="text-gray-400 mt-2">Please enter name product</span>
+                  <span className="text-gray-400 mt-2">{t('please_enter_product_name')}</span>
                 </div>
               ) : products.length == 0 ? (
                 <div className="h-100px flex flex-col items-center justify-center">
                   <RiFinderFill className="w-10 h-10" />
-                  <span className="text-gray-400">No product found</span>
+                  <span className="text-gray-400">{t('no_product_found')}</span>
                 </div>
               ) : (
                 <>
@@ -98,7 +100,7 @@ const SearchProduct = () => {
                         <ActionIcon
                           onClick={() => {
                             if (product.quantity == 0) {
-                              toast.error('Product out of stock');
+                              toast.error(t('out_of_stock'));
                               return;
                             }
                             const pro = {

@@ -5,7 +5,7 @@ import { Tooltip, ActionIcon } from 'rizzui';
 import { HeaderCell } from '@/components/ui/table';
 import { IoAddCircleOutline } from 'react-icons/io5';
 
-export const getColumns = () => [
+export const getColumns = (t: any) => [
   {
     title: <HeaderCell title="Id" />,
     dataIndex: 'id',

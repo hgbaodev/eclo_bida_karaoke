@@ -9,7 +9,7 @@ import { CreateCustomerInput, CreateCustomerSchema } from '@/utils/validators/cu
 import { useModal } from '@/app/[locale]/shared/modal-views/use-modal';
 import { statusOptions } from './type';
 import { dispatch } from '@/store';
-import { createCustomer, getCustomers } from '@/store/slices/customerSlice';
+import { createCustomer, getCustomers } from '@/store/slices/customer_slice';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';

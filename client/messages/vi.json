@@ -109,7 +109,8 @@
     "total_devices": "Tổng thiết bị",
     "total_price": "Tổng cộng",
     "total_products": "Tổng sản phẩm",
-    "total_service": "Tổng dịch vụ"
+    "total_service": "Tổng dịch vụ",
+    "view_this_order": "Xem chi tiết hoá đơn"
   },
   "kitchen_notifications": {
     "delete": "Xoá",
@@ -191,7 +192,22 @@
     "service": "Dịch vụ",
     "title": "Đặt hàng",
     "update": "Cập nhật",
-    "an_order_has_to_be_delivered": "Có đơn hàng cần giao"
+    "an_order_has_to_be_delivered": "Có đơn hàng cần giao",
+    "updated_successfully": "Cập nhật thành công",
+    "please_enter_product_name": "Vui lòng nhập tên sản phẩm",
+    "no_product_found": "Không tìm thấy sản phẩm",
+    "out_of_stock": "Hết hàng",
+    "search_products": "Tìm kiếm sản phẩm...",
+    "search_customer": "Tìm kiếm khách hàng...",
+    "please_enter_customer_name": "Vui lòng nhập tên khách hàng",
+    "search_devices": "Tìm kiếm thiết bị...",
+    "no_customer_found": "Không tìm thấy khách hàng",
+    "no_device_found": "Không tìm thấy sản phẩm",
+    "image": "Hình ảnh",
+    "name": "Tên",
+    "value": "Giá trị",
+    "quantity": "Số lượng",
+    "delete_confirm_message": "Bạn có chắc chắn bạn muốn xoá bảng ghi này?"
   },
   "revenue-expenditure": {
     "add_condition": "Thêm điều kiện",
@@ -302,7 +318,11 @@
     "under_maintenance": "Đang bảo trì",
     "under_maintenance_quantity": "Số lượng đang bảo trì",
     "update": "Cập nhật",
-    "value": "Giá trị"
+    "value": "Giá trị",
+    "select_device": "Chọn thiết bị",
+    "edit_this_record": "Chỉnh sửa bảng ghi này",
+    "succeeded": "Thành công",
+    "delete_confirm_message": "Bạn có chắc chắn bạn muốn xoá bảng ghi này?"
   },
   "price": {
     "title": "Cấu hình giá",
@@ -487,7 +507,8 @@
     "rename": "Đổi tên",
     "successful": "Thành công",
     "users": "Người dùng",
-    "total": "Tổng"
+    "total": "Tổng",
+    "rename_role": "Đổi tên vai trò"
   },
   "loggers": {
     "title": "Nhật ký",

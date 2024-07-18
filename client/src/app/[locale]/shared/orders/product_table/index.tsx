@@ -18,7 +18,7 @@ export default function ProductsOrderTable() {
       await dispatch(getProducts({ page, pageSize, query, type }));
     };
     fetch();
-  }, [page, pageSize, query]);
+  }, [page, pageSize, query, type]);
 
   const columns = useMemo(
     () => getColumns(),

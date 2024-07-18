@@ -8,7 +8,7 @@ import { getColumns } from '@/app/[locale]/shared/customers/customers-table/colu
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
-import { getCustomers, setPage, setPageSize } from '@/store/slices/customerSlice';
+import { getCustomers, setPage, setPageSize } from '@/store/slices/customer_slice';
 import { useTranslations } from 'next-intl';
 import { useModal } from '../../modal-views/use-modal';
 const FilterElement = dynamic(() => import('@/app/[locale]/shared/customers/customers-table/filter-element'), {

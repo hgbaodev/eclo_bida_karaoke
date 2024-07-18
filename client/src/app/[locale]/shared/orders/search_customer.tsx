@@ -12,8 +12,10 @@ import { dispatch } from '@/store';
 import useDebounce from '@/hooks/use-debounce';
 import { PiMagnifyingGlassBold } from 'react-icons/pi';
 import { MdOutlineFindInPage } from 'react-icons/md';
+import { useTranslations } from 'next-intl';
 
 const SearchCustomer = () => {
+  const t = useTranslations('order');
   const { queryCustomer, isLoadingQueryCustomer, customers } = useSelector((state: RootState) => state.order);
   const searchCustomer = useDebounce(queryCustomer, 500);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -33,7 +35,7 @@ const SearchCustomer = () => {
           ref={inputRef}
           value={queryCustomer}
           onChange={(event) => dispatch(setQueryCustomer(event.target.value))}
-          placeholder="Search customer ....."
+          placeholder={t('search_customer')}
           prefix={<PiMagnifyingGlassBold className="h-[18px] w-[18px] text-gray-600" />}
           suffix={
             queryCustomer && (
@@ -64,12 +66,12 @@ const SearchCustomer = () => {
               ) : queryCustomer.length == 0 ? (
                 <div className="h-100px flex flex-col items-center justify-center">
                   <MdOutlineFindInPage className="w-10 h-10" />
-                  <span className="text-gray-400 mt-2">Please enter name cusomter</span>
+                  <span className="text-gray-400 mt-2">{t('please_enter_customer_name')}</span>
                 </div>
               ) : customers.length == 0 ? (
                 <div className="h-100px flex flex-col items-center justify-center">
                   <RiFinderFill className="w-10 h-10" />
-                  <span className="text-gray-400">No customer found</span>
+                  <span className="text-gray-400">{t('no_customer_found')}</span>
                 </div>
               ) : (
                 <>

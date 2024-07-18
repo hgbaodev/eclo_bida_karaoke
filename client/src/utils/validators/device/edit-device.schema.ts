@@ -14,12 +14,12 @@ export const editDeviceSchema = z.object({
     .any()
     .nullable()
     .refine((files) => {
-      if (files === null) return true; // Allow null value
-      return files.length === 0 || (files.length > 0 && files[0]?.size <= MAX_FILE_SIZE);
+      if (files === null || files.length === 0) return true; // Allow null or empty value
+      return files[0]?.size <= MAX_FILE_SIZE;
     }, `Max image size is 2MB.`)
     .refine((files) => {
-      if (files === null) return true; // Allow null value
-      return files.length === 0 || ACCEPTED_IMAGE_MIME_TYPES.includes(files[0]?.type);
+      if (files === null || files.length === 0) return true; // Allow null or empty value
+      return ACCEPTED_IMAGE_MIME_TYPES.includes(files[0]?.type);
     }, 'Only .jpg, .jpeg, .png and .webp formats are supported.'),
   status: z.string().min(1, { message: messages.statusIsRequired }),
   value: z.preprocess((val) => {

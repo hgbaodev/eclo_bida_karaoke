@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests\ServiceDeviceDetail;
+namespace App\Http\Requests\Role;
 
 use App\Http\Helpers\HelperRequest;
+use Illuminate\Validation\Rule;
 
-class UpdateServiceDeviceDetailRequest extends HelperRequest
+class RenameRoleRequest extends HelperRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,11 +22,10 @@ class UpdateServiceDeviceDetailRequest extends HelperRequest
      */
     public function rules(): array
     {
+        $id = $this->route('id');
         return [
-            'quantity' => ['required', 'integer', 'max:1000'],
-            'status' => ['required', 'string', 'in:in_use,available,maintenance'],
-            'device' => 'required|exists:devices,active',
-            'maintenance_quantity' => ['required', 'integer', 'lte:quantity'],
+            'name' => ['required', Rule::unique('roles')->ignore($id, 'id')],
+            'color' => ['required', Rule::unique('roles')->ignore($id, 'id')],
         ];
     }
 }

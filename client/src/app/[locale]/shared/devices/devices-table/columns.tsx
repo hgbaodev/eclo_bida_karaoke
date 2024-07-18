@@ -10,7 +10,6 @@ import DeletePopover from '@/app/[locale]/shared/delete-popover';
 import EditDevice from '../edit-device';
 import { getDevices, deleteDevice } from '@/store/slices/device_slice';
 import toast from 'react-hot-toast';
-import { useTranslations } from 'next-intl';
 import WithPermission from '@/guards/with-permisson';
 
 export const getColumns = (openModal: (args: any) => void, t: any) => [
@@ -84,7 +83,7 @@ export const getColumns = (openModal: (args: any) => void, t: any) => [
                   description: device.description,
                   status: device.status,
                   value: Number(device.value),
-                  image: device.image,
+                  image: null,
                 };
                 openModal({
                   view: <EditDevice device={data} active={device.active} />,

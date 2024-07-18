@@ -15,6 +15,7 @@ import { permissions } from './utils';
 import { RolePermissionInput } from '@/utils/validators/role/edit-role.schema';
 import { useTranslations } from 'next-intl';
 import WithPermission from '@/guards/with-permisson';
+import RenameRole from './rename-role';
 
 type User = {
   id: number;
@@ -40,7 +41,13 @@ export default function RoleCard({ id, name, color, users, functionals, classNam
   const t = useTranslations('roles_permissions');
 
   const handleRenameRole = () => {
-    console.log('rename role');
+    const data = {
+      name: name,
+      color: color,
+    };
+    openModal({
+      view: <RenameRole id={id} role={data} />,
+    });
   };
 
   const handleDeleteRole = () => {

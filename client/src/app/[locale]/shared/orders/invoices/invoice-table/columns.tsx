@@ -53,7 +53,7 @@ export const getColumns = (openModal: any, t: any) => [
     key: 'action',
     width: 10,
     render: (_: string, invoice: Invoice) => (
-      <Tooltip size="sm" content={'View this order'} placement="top" color="invert">
+      <Tooltip size="sm" content={t('view_this_order')} placement="top" color="invert">
         <ActionIcon
           onClick={async () => {
             await dispatch(getOrder(invoice.active));
