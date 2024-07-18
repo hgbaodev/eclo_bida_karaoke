@@ -23,11 +23,12 @@ export default function EditDevice({ device, active }: { device: EditDeviceInput
   const { pageSize, page, query, status, isUpdateLoading } = useSelector((state: RootState) => state.device);
   const t = useTranslations('devices');
 
+  console.log(device);
+
   const onSubmit: SubmitHandler<EditDeviceInput> = async (data) => {
     const formData = new FormData();
-    if (data['image'] && data['image'].length > 0) {
-      const imageFile = data['image'][0];
-      formData.append('image', imageFile);
+    if (data.image && data.image.length > 0 && data.image[0] instanceof File) {
+      formData.append('image', data.image[0]);
     }
     formData.append('name', data.name);
     formData.append('status', data.status);
@@ -43,7 +44,7 @@ export default function EditDevice({ device, active }: { device: EditDeviceInput
           status: '',
           value: '',
           description: '',
-          image: '',
+          image: null,
         });
         setErrors({});
         closeModal();
