@@ -10,6 +10,7 @@ use App\Interface\SalaryRepositoryInterface;
 use App\Interface\StaffRepositoryInterface;;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class DayOffController extends Controller
 {
@@ -59,7 +60,7 @@ class DayOffController extends Controller
         $salary = $this->salaryRepo->getSalaryByStaffAndDate($staff->id, $month, $year);
         $count = $this->dayOffRepository->countDayOffByStaff($staff->id, $month, $year);
         $updateSalary = [
-            "off_days" => $count
+            "off_days" => $count,
         ];
         $this->salaryRepo->updateSalaryByActive($salary->active, $updateSalary);
         return $this->sentSuccessResponse($device, 'create successfully !!!', 200);

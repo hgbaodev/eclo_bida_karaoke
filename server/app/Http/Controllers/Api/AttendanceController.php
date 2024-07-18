@@ -209,7 +209,7 @@ class AttendanceController extends Controller
         } else {
             $updateSal = [
                 'working_days' => $count,
-                'total' => ($salary->staff->position->base_salary / $daysInMonth) * $count,
+                'total' => ($salary->staff->position->base_salary / ($daysInMonth - $salary->off_days)) * $count,
             ];
         }
         $this->salaryRepo->updateSalaryByActive($salary->active, $updateSal);
