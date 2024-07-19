@@ -645,7 +645,9 @@
     "table_workinghours": "working hours",
     "table_total": "total",
     "create_success": "Salaries created successfully",
-    "clear": "Clear"
+    "clear": "Clear",
+    "approveds": "Approved days: ",
+    "unapproveds": "UnApproved days: "
   },
   "position": {
     "title": "Position",
@@ -712,7 +714,8 @@
     "search": "Search for shifts...",
     "filter_status": "Filter by Status",
     "filter_shifttype": "Filter by Shift Type",
-    "clear": "Clear"
+    "clear": "Clear",
+    "delete_failed": "Shift is already in Shift-For-Staff, Can't delete"
   },
   "schedule": {
     "title": "Shift",

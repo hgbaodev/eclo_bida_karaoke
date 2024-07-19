@@ -63,7 +63,7 @@ const DayColumn: React.FC<DayColumnProps> = ({ data, dayOfWeek, shift, workshift
                         await dispatch(getShiftUserDetails(workshift.active));
                         toast.success(t('delete_success'));
                       } else {
-                        toast.error(`Failed to delete staff #${dayData.staff.first_name}.`);
+                        toast.error(`Failed to delete staff.`);
                       }
                     }}
                   />

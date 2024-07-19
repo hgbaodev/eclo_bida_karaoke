@@ -53,6 +53,7 @@ class SalaryController extends Controller
                         'working_days' => 0,
                         'working_hours' => 0,
                         'off_days' => 0,
+                        'off_days_unapproved' => 0,
                         'total' => 0
                     ];
                     $result = $this->salaryRepo->createSalary($salary);

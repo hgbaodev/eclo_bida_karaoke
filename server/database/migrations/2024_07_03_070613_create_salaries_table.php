@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer("month");
             $table->integer("year");
             $table->integer("off_days")->nullable();
+            $table->integer("off_days_unapproved")->nullable();
             $table->integer("working_days")->nullable();
             $table->double("working_hours")->nullable();
             $table->double("total")->nullable();

@@ -34,4 +34,8 @@ class Shift extends Model
     {
         return $this->hasMany(ShiftDetail::class);
     }
+    public function attendance()
+    {
+        return $this->hasMany(Attendance::class);
+    }
 }

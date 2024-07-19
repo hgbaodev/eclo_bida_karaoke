@@ -27,7 +27,8 @@ class UpdateSalaryRequest extends HelperRequest
             "month" => "required|integer|between:1,12",
             "year" => "required|integer|min:2024",
             "working_days" => "required",
-            "off_days" => "required"
+            "off_days" => "required",
+            "off_days_unapproved" => "required"
         ];
     }
 }

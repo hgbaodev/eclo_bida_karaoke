@@ -5,14 +5,19 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Shift\ShiftRequest;
 use App\Interface\ShiftRepositoryInterface;
+use App\Interface\ShiftUserDetailRepositoryInterface;
 use Illuminate\Http\Request;
+
+use function PHPUnit\Framework\isEmpty;
 
 class ShiftController extends Controller
 {
     protected $shiftRepository;
-    public function __construct(ShiftRepositoryInterface $shiftRepositoryInterface)
+    protected $shiftUserDetailRepos;
+    public function __construct(ShiftRepositoryInterface $shiftRepositoryInterface, ShiftUserDetailRepositoryInterface $shiftUserDetailRepositoryInterface)
     {
         $this->shiftRepository = $shiftRepositoryInterface;
+        $this->shiftUserDetailRepos = $shiftUserDetailRepositoryInterface;
     }
     /**
      * Display a listing of the resource.
@@ -76,9 +81,18 @@ class ShiftController extends Controller
      */
     public function destroy(string $active)
     {
-        if (!$this->shiftRepository->getShiftByActive($active)) {
-            return $this->sentErrorResponse('Shift is not found', "error", 404);
+        try {
+            $shift = $this->shiftRepository->getShiftByActive($active);
+            if (!$shift) {
+                return $this->sentErrorResponse('Shift is not found', "error", 404);
+            }
+            $shiftuserdetail = $this->shiftUserDetailRepos->getShiftUserDetailByShift($shift->id);
+            if ($shiftuserdetail) {
+                return $this->sentErrorResponse("Shift is in Shift-For-Staff, Can't delete");
+            }
+            return $this->sentSuccessResponse($this->shiftRepository->deleteShiftByActive($active), "Shift is deleted successfully", 200);
+        } catch (\Exception $e) {
+            return $this->sentErrorResponse($e);
         }
-        return $this->sentSuccessResponse($this->shiftRepository->deleteShiftByActive($active), "Shift is deleted successfully", 200);
     }
 }

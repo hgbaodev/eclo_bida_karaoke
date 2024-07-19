@@ -21,6 +21,7 @@ class Attendance extends Model
         'check_out',
         'time_in',
         'time_out',
+        'shift_id',
         'type',
     ];
 
@@ -41,5 +42,9 @@ class Attendance extends Model
     public function staff()
     {
         return $this->belongsTo(Staff::class, 'staff_id');
+    }
+    public function shift()
+    {
+        return $this->belongsTo(Shift::class, 'shift_id');
     }
 }

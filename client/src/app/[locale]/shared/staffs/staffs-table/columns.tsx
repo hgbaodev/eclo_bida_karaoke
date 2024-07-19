@@ -71,7 +71,9 @@ export const getColumns = (openModal: (args: any) => void, t: any) => [
     dataIndex: 'position',
     key: 'position',
     width: 100,
-    render: (_: string, staff: Staff) => staff.position.name,
+    render: (_: string, staff: Staff) => {
+      return staff.position ? staff.position.name : '';
+    },
   },
   {
     title: <HeaderCell title={t('table_birthday')} />,

@@ -22,6 +22,8 @@ return new class extends Migration
             $table->time("check_out")->nullable();
             $table->time("time_in");
             $table->time("time_out");
+            $table->unsignedBigInteger('shift_id');
+            $table->foreign('shift_id')->references('id')->on('shifts');
             $table->string("type")->nullable();
             $table->timestamps();
         });

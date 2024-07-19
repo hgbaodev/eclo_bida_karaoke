@@ -143,7 +143,7 @@ export const getColumns = (openModal: (args: any) => void, t: any) => [
                 await dispatch(getAllShifts({ page: 1, pageSize: 5, query: '', status: '', shift_type: '' }));
                 toast.success(t('delete_success'));
               } else {
-                toast.error(`Failed to delete Shift #${shift.active}.`);
+                toast.error(t('delete_failed'));
               }
             }}
           />

@@ -59,6 +59,7 @@ class AttendanceController extends Controller
         $validatedData['time_in'] = $shift->time_in;
         $validatedData['time_out'] = $shift->time_out;
         $validatedData['staff_id'] = $staff->id;
+        $validatedData['shift_id'] = $shift->id;
         unset($validatedData['staff']);
         unset($validatedData['shift']);
         return $this->sentSuccessResponse($this->attendanceRepository->createAttendance($validatedData));
@@ -79,7 +80,8 @@ class AttendanceController extends Controller
                 'day' => $item['day'],
                 'staff_id' => $staff->id,
                 'time_in' => $shift->time_in,
-                'time_out' => $shift->time_out
+                'time_out' => $shift->time_out,
+                "shift_id" => $shift->id,
             ];
             $this->attendanceRepository->createAttendance($attendance);
         }
@@ -126,6 +128,9 @@ class AttendanceController extends Controller
         $salary = $this->salaryRepo->getSalaryByStaffAndDate($staff->id, $month, $year);
         if (!$salary) {
             return $this->sentErrorResponse("You need create salary for staff", "error", 404);
+        }
+        if (!$salary->staff->position) {
+            return $this->sentErrorResponse("You need edit position for staff", "error", 404);
         }
         $time = $validatedData['time'];
         if (!isset($validatedData['update'])) {
@@ -204,7 +209,7 @@ class AttendanceController extends Controller
         } else {
             $updateSal = [
                 'working_days' => $count,
-                'total' => ($salary->staff->position->base_salary / $daysInMonth) * $count,
+                'total' => ($salary->staff->position->base_salary / ($daysInMonth - $salary->off_days)) * $count,
             ];
         }
         $this->salaryRepo->updateSalaryByActive($salary->active, $updateSal);

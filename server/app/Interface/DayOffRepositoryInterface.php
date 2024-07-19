@@ -14,4 +14,5 @@ interface DayOffRepositoryInterface
 
     public function countDayOffByStaff($staff_id, $month, $year);
     public function getDayOffByStaffAndDay($staff_id, $day_off);
+    public function countDayOffByStaffUnapproved($staff_id, $month, $year);
 }

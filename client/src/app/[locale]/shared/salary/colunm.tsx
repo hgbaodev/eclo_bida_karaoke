@@ -21,22 +21,29 @@ export const getColumns = (openModal: (args: any) => void, t: any) => {
       dataIndex: 'position',
       key: 'position',
       width: 50,
-      render: (_: string, salary: Salary) => salary.staff.position.name,
+      render: (_: string, salary: Salary) => {
+        return salary.staff.position ? salary.staff.position.name : '';
+      },
     },
     {
       title: <HeaderCell title={t('table_basesalary')} />,
       dataIndex: 'sop',
       key: 'sop',
       width: 50,
-      render: (_: string, salary: Salary) =>
-        salary.staff.position.base_salary.toLocaleString('de-DE', { minimumFractionDigits: 2 }),
+      render: (_: string, salary: Salary) => {
+        return salary.staff.position
+          ? salary.staff.position.base_salary.toLocaleString('de-DE', { minimumFractionDigits: 2 })
+          : '';
+      },
     },
     {
       title: <HeaderCell title={t('table_structure')} />,
       dataIndex: 'sos',
       key: 'sos',
       width: 50,
-      render: (_: string, salary: Salary) => salary.staff.position.salary_structure,
+      render: (_: string, salary: Salary) => {
+        return salary.staff.position ? salary.staff.position.salary_structure : '';
+      },
     },
     {
       title: <HeaderCell title={t('table_workingdays')} />,
@@ -50,7 +57,20 @@ export const getColumns = (openModal: (args: any) => void, t: any) => {
       dataIndex: 'od',
       key: 'od',
       width: 50,
-      render: (_: string, salary: Salary) => salary.off_days,
+      render: (_: string, salary: Salary) => {
+        return (
+          <>
+            <div>
+              {t('approveds')}
+              {salary.off_days}
+            </div>
+            <div>
+              {t('unapproveds')}
+              {salary.off_days_unapproved}
+            </div>
+          </>
+        );
+      },
     },
     {
       title: <HeaderCell title={t('table_workinghours')} />,
@@ -86,6 +106,7 @@ export interface Salary {
   };
   working_days: number;
   off_days: number;
+  off_days_unapproved: number;
   working_hours: number;
   total: number;
   active: string;

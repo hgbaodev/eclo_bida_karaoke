@@ -642,7 +642,9 @@
     "table_workinghours": "giờ làm việc",
     "table_total": "tổng cộng",
     "create_success": "Tạo lương thành công",
-    "clear": "Xóa"
+    "clear": "Xóa",
+    "approveds": "Nghỉ có phép: ",
+    "unapproveds": "Nghỉ không phép: "
   },
   "position": {
     "title": "Chức Vụ",
@@ -709,7 +711,8 @@
     "search": "Tìm kiếm ca làm việc...",
     "filter_status": "Lọc theo trạng thái",
     "filter_shifttype": "Lọc theo loại ca",
-    "clear": "Xóa"
+    "clear": "Xóa",
+    "delete_failed": "Ca làm việc đã có trong Chi Tiết Ca Làm Việc Cho Nhân Viên, Không thể xóa"
   },
   "schedule": {
     "title": "Lịch trình",

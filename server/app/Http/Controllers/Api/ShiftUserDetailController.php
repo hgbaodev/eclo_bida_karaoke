@@ -10,6 +10,7 @@ use App\Interface\ShiftUserDetailRepositoryInterface;
 use App\Interface\StaffRepositoryInterface;
 use App\Interface\WorkShiftRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class ShiftUserDetailController extends Controller
 {
@@ -61,6 +62,12 @@ class ShiftUserDetailController extends Controller
         $shiftuserdetail = $this->shiftUserDetailRes->checkUniqueByStaffDay($staff->id, $validateData["day_of_week"], $workshift->id);
         if ($shiftuserdetail->isNotEmpty()) {
             return $this->sentErrorResponse("This staff already have one shift in this day", "error", 404);
+        }
+        $currentDate = Carbon::now();
+        $date_start = Carbon::createFromFormat('Y-m-d', $workshift->date_start);
+        $date_end = Carbon::createFromFormat('Y-m-d', $workshift->date_end);
+        if ($currentDate->between($date_start, $date_end)) {
+            return $this->sentErrorResponse("Shift For Staff is already in workshift time, Can't delete", "error", 404);
         }
         $validateData["workshift_id"] = $workshift->id;
         $validateData["staff_id"] = $staff->id;
@@ -137,6 +144,12 @@ class ShiftUserDetailController extends Controller
         $shiftUserDetail = $this->shiftUserDetailRes->getShiftUserDetailByActive($active);
         if (!$shiftUserDetail) {
             return $this->sentErrorResponse("Shift User Detail is not found", "error", 404);
+        }
+        $currentDate = Carbon::now();
+        $date_start = Carbon::createFromFormat('Y-m-d', $shiftUserDetail->workshift->date_start);
+        $date_end = Carbon::createFromFormat('Y-m-d', $shiftUserDetail->workshift->date_end);
+        if ($currentDate->between($date_start, $date_end)) {
+            return $this->sentErrorResponse("Shift For Staff is already in workshift time, Can't delete", "error", 404);
         }
         return $this->sentSuccessResponse($this->shiftUserDetailRes->deleteShiftUserDetailByActive($active), "Deleted successfully!", 200);
     }
