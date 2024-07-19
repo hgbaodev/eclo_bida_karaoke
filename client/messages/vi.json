@@ -621,7 +621,9 @@
     "table_workinghours": "giờ làm việc",
     "table_total": "tổng cộng",
     "create_success": "Tạo lương thành công",
-    "clear": "Xóa"
+    "clear": "Xóa",
+    "approveds": "Nghỉ có phép: ",
+    "unapproveds": "Nghỉ không phép: "
   },
   "position": {
     "title": "Chức Vụ",

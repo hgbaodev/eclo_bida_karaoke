@@ -57,7 +57,20 @@ export const getColumns = (openModal: (args: any) => void, t: any) => {
       dataIndex: 'od',
       key: 'od',
       width: 50,
-      render: (_: string, salary: Salary) => salary.off_days,
+      render: (_: string, salary: Salary) => {
+        return (
+          <>
+            <div>
+              {t('approveds')}
+              {salary.off_days}
+            </div>
+            <div>
+              {t('unapproveds')}
+              {salary.off_days_unapproved}
+            </div>
+          </>
+        );
+      },
     },
     {
       title: <HeaderCell title={t('table_workinghours')} />,
@@ -93,6 +106,7 @@ export interface Salary {
   };
   working_days: number;
   off_days: number;
+  off_days_unapproved: number;
   working_hours: number;
   total: number;
   active: string;

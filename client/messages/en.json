@@ -624,7 +624,9 @@
     "table_workinghours": "working hours",
     "table_total": "total",
     "create_success": "Salaries created successfully",
-    "clear": "Clear"
+    "clear": "Clear",
+    "approveds": "Approved days: ",
+    "unapproveds": "UnApproved days: "
   },
   "position": {
     "title": "Position",
