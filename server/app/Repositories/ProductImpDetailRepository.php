@@ -66,4 +66,9 @@ class ProductImpDetailRepository implements ProductImpDetailInterface
     {
         return ProductImportDetail::where("id", $id)->first();
     }
+    public function deleteByID($id)
+    {
+
+        return ProductImportDetail::destroy($id);
+    }
 }

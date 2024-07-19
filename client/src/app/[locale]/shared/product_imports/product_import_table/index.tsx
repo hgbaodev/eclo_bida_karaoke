@@ -11,6 +11,7 @@ import { dispatch } from '@/store';
 import { getProductImports, setPage, setPageSize } from '@/store/slices/product_importSlice';
 import { useModal } from '../../modal-views/use-modal';
 import { getProductType } from '@/store/slices/product_typeSlices';
+import { getSinghle_Product } from '@/store/slices/productSlices';
 import { useTranslations } from 'next-intl';
 const FilterElement = dynamic(() => import('@/app/[locale]/shared/product_imports/product_import_table/filter-elements'), {
   ssr: false,
@@ -32,7 +33,9 @@ export default function Product_Imports_Table() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [t],
   );
-
+  useEffect(() => {
+    dispatch(getSinghle_Product());
+  }, []);
   const handleChangePageSize = (size: any) => {
     dispatch(setPageSize(size));
   };

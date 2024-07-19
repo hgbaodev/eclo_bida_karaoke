@@ -26,7 +26,11 @@ class ProductImportRequest extends HelperRequest
             'total_cost' => 'nullable',
             'create_time' => 'required',
             'receive_time' => 'required',
-            'status' => 'required',
+            'products' => 'required|array',
+            'products.*.cost_price' => 'required|numeric|min:0',
+            'products.*.quantity' => 'required|integer|min:1',
+            'products.*.product' => 'required|string',
+            'products.*.supplier' => 'nullable|string'
         ];
     }
 }

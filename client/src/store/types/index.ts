@@ -216,7 +216,6 @@ export interface product_ImportType {
   pageSize: number;
   totalRow: number;
   query: string;
-  status:string;
   errors: any;
   isCreateLoading: boolean;
   isUpdateLoading: boolean;

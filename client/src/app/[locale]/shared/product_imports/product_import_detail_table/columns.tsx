@@ -40,13 +40,13 @@ export const getColumns = (openModal: (args: any) => void, t: any) => [
     width: 50,
     render: (_: string, product_detail: Product_Detail) => product_detail.quantity,
   },
-  {
-    title: <HeaderCell title={t('supplier')} />,
-    dataIndex: 'supplier',
-    key: 'supplier',
-    width: 50,
-    render: (_: string, product_detail: Product_Detail) => product_detail.supplier_detail.name,
-  },
+  // {
+  //   title: <HeaderCell title={t('supplier')} />,
+  //   dataIndex: 'supplier',
+  //   key: 'supplier',
+  //   width: 50,
+  //   render: (_: string, product_detail: Product_Detail) => product_detail.supplier_detail.name,
+  // },
 ];
 
 export interface Product_Detail {
@@ -57,9 +57,9 @@ export interface Product_Detail {
   cost_price: number;
   selling_price: number;
   quantity: string;
-  supplier_detail: {
-    name: string;
-  };
+  // supplier_detail: {
+  //   name: string;
+  // };
   import_detail: {
     create_time: Date;
   };
