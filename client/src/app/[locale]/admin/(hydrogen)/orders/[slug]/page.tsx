@@ -123,7 +123,7 @@ export default function BlankPage({ params }: { params: { slug: string } }) {
                 {t('price')}: {order?.service?.price?.pricePerHour}$/ 1 Hours
               </Text>
               <Text className="mt-1">
-                {t('check_in')}: {formatDate(new Date(order?.checkin_time ?? ''), 'DD/MM/YYYY, hh:mm:ss')}
+                {t('check_in')}: {formatDate(new Date(order?.checkin_time ?? ''), 'HH:mm DD/MM/YYYY')}
               </Text>
             </div>
             <div>

@@ -68,6 +68,7 @@ class AreaRepository implements AreaRepositoryInterface
                 if ($foundServiceOrder) {
                     $service->is_booked = true;
                     $service->order_active = $foundServiceOrder->active;
+                    $service->checkin_time = $foundServiceOrder->checkin_time;
                 } else {
                     $service->is_booked = false;
                 }

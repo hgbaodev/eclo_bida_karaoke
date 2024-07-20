@@ -17,7 +17,8 @@ import { Badge, ActionIcon } from 'rizzui';
 import { appendNoti, setIsLoading } from '@/store/slices/kitchen_order_notification_slice';
 import { useTranslations } from 'next-intl';
 import useCheckPermissions from '@/hooks/use-check-permission';
-import WithPermission from '@/guards/with-permisson';
+import dayjs from 'dayjs';
+import ServiceCard from '@/app/[locale]/shared/orders/service_card';
 
 export default function BlankPage() {
   const t = useTranslations('tables_rooms');
@@ -95,48 +96,7 @@ export default function BlankPage() {
             <Tab.Panel key={area.active}>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {area.services.map((service: any) => (
-                  <div
-                    key={service.active}
-                    className={`relative border h-[100px] flex items-center justify-center rounded px-4 py-2 ${
-                      service.is_booked ? 'bg-red-300' : 'bg-green-300'
-                    }`}
-                  >
-                    <Dropdown placement="right-start" className="absolute top-1 right-1 cursor-pointer">
-                      <Dropdown.Trigger>
-                        <MdMoreHoriz
-                          className="size-5 mb-2"
-                          onClick={() => console.log('service ' + service.active + ' clicked')}
-                        />
-                      </Dropdown.Trigger>
-                      <Dropdown.Menu className="!z-0">
-                        {service.is_booked ? (
-                          <>
-                            <Dropdown.Item
-                              onClick={() => navigate.push(`/admin/orders/${service?.order_active}`)}
-                              className="gap-2 text-xs sm:text-sm"
-                            >
-                              Pay
-                            </Dropdown.Item>
-                          </>
-                        ) : (
-                          <Dropdown.Item
-                            onClick={async () => {
-                              const result = await dispatch(createOrder(service?.active));
-                              if (createOrder.fulfilled.match(result)) {
-                                navigate.push(`/admin/orders/${result.payload.data.active}`);
-                              } else {
-                                toast.error('Failed to create order');
-                              }
-                            }}
-                            className="gap-2 text-xs sm:text-sm"
-                          >
-                            Order
-                          </Dropdown.Item>
-                        )}
-                      </Dropdown.Menu>
-                    </Dropdown>
-                    <Text className="font-bold">{service.name}</Text>
-                  </div>
+                  <ServiceCard key={service.active} service={service} />
                 ))}
               </div>
             </Tab.Panel>

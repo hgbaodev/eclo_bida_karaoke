@@ -13,7 +13,7 @@ import { useModal } from '@/app/[locale]/shared/modal-views/use-modal';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { dispatch } from '@/store';
-import { createRole } from '@/store/slices/roleSlice';
+import { createRole, getRoles } from '@/store/slices/roleSlice';
 import toast from 'react-hot-toast';
 
 export default function CreateRole() {
@@ -33,6 +33,7 @@ export default function CreateRole() {
     dispatch(createRole(values)).then((action: any) => {
       if (createRole.fulfilled.match(action)) {
         toast.success(t('role_created_successfully'));
+        dispatch(getRoles());
         closeModal();
       } else {
         setErrors(action.payload.errors);

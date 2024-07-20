@@ -35,7 +35,8 @@ class RoleFunctionalPermissionSeeder extends Seeder
             'servicetype',
             'price',
             'statistical',
-            'revenue'
+            'revenue',
+            'order'
         ];
 
         $permissions = [

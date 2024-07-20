@@ -20,6 +20,8 @@ use App\Interface\CustomerRepositoryInterface;
 use App\Interface\OrderDetailRepositoryInterface;
 use App\Interface\ServiceRepositoryInterface;
 use App\Http\Controllers\Event\SendEvent;
+use Carbon\Carbon;
+use DateTime;
 
 class OrderController extends Controller
 {
@@ -184,6 +186,9 @@ class OrderController extends Controller
         $user_id = auth()->user()->id;
         $validated_data['user_id'] = $user_id;
         $validated_data['service_id'] = $service_id;
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $now = new DateTime();
+        $validated_data['checkin_time'] = $now->format('Y-m-d H:i:s');
         $order = $this->orderRepository->createOrder($validated_data);
         return $this->sentSuccessResponse($order);
     }
@@ -213,7 +218,8 @@ class OrderController extends Controller
         return $this->sentSuccessResponse($order, 'Order has been paid successfully', 200);
     }
 
-    public function handleKitchenOrder($products, $order){
+    public function handleKitchenOrder($products, $order)
+    {
         $data = [];
         $deductData = [];
         $deletedData = [];
@@ -290,7 +296,7 @@ class OrderController extends Controller
     {
         try {
             $serviceId = $service->id;
-            foreach ($devices as $device){
+            foreach ($devices as $device) {
                 $maintenance_quantiy = $device['quantity'];
                 $device = $this->deviceRepository->getDeviceByActive($device['active']);
                 $serviceDeviceDetail = $this->serviceDeviceDetailRepository
@@ -303,7 +309,6 @@ class OrderController extends Controller
         } catch (\Exception $e) {
             dd($e);
         }
-
     }
 
     public function updateOrder(UpdateOrderRequest $request, $active)
