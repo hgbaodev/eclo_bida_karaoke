@@ -24,8 +24,8 @@ class ProductImportRequest extends HelperRequest
         return [
             'user_import' => 'nullable',
             'total_cost' => 'nullable',
-            'create_time' => 'required',
-            'receive_time' => 'required',
+            'import_day' => 'required',
+
             'products' => 'required|array',
             'products.*.cost_price' => 'required|numeric|min:0',
             'products.*.quantity' => 'required|integer|min:1',

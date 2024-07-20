@@ -13,6 +13,7 @@ import { useModal } from '../../modal-views/use-modal';
 import { getProductType } from '@/store/slices/product_typeSlices';
 import { getSinghle_Product } from '@/store/slices/productSlices';
 import { useTranslations } from 'next-intl';
+
 const FilterElement = dynamic(() => import('@/app/[locale]/shared/product_imports/product_import_table/filter-elements'), {
   ssr: false,
 });
@@ -20,13 +21,13 @@ const FilterElement = dynamic(() => import('@/app/[locale]/shared/product_import
 export default function Product_Imports_Table() {
   const { openModal } = useModal();
   const t = useTranslations('product_import');
-  const { data, isLoading, pageSize, page, totalRow, query ,status} = useSelector((state: RootState) => state.product_import);
+  const { data, isLoading, pageSize, page, totalRow, query } = useSelector((state: RootState) => state.product_import);
   useEffect(() => {
     const fetch = async () => {
-      await dispatch(getProductImports({ page, pageSize, query,status }));
+      await dispatch(getProductImports({ page, pageSize, query }));
     };
     fetch();
-  }, [page, pageSize, query,status]);
+  }, [page, pageSize, query]);
 
   const columns = useMemo(
     () => getColumns(openModal,t),

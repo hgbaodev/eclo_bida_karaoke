@@ -24,6 +24,12 @@ export default function CreateStaff() {
   const [additionalInputs, setAdditionalInputs] = useState<string[][]>([]); 
   const { pageSize, page, query, isCreateLoading } = useSelector((state: RootState) => state.product_import);
   const { listProduct } = useSelector((state: RootState) => state.product);
+  const now = new Date();
+  const Year = now.getFullYear();
+  const Month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  const [currentTime, setCurrentTime] = useState('');
+  const currentDate = `${Year}-${Month}-${day}`;
   const t = useTranslations('product_import');
   // const { listPositions } = useSelector((state: RootState) => state.position);
   const onSubmit: SubmitHandler<CreateProduc_ImporttInput> = async (data) => {
@@ -31,14 +37,14 @@ export default function CreateStaff() {
 
     if (createProduct.fulfilled.match(result)) {
       setReset({
-        create_time: '',
-        receive_time: '',
-        status: '',
+        import_day: '',
         total_cost: '',
+
         products: data.products.map(product => ({
           product: product.product,
           quantity: product.quantity,
           cost_price: product.cost_price,
+          // supplier: product.supplier,
       })),
       });
       setErrors({});
@@ -69,7 +75,7 @@ export default function CreateStaff() {
 
   return (
     <Form<CreateProduc_ImporttInput>
-      resetValues={reset}
+    resetValues={reset}
       onSubmit={onSubmit}
       validationSchema={createProduct_ImportSchema}
       serverError={errors}
@@ -87,26 +93,15 @@ export default function CreateStaff() {
                 <PiXBold className="h-auto w-5" />
               </ActionIcon>
             </div>
-            <Input
-              type="date"
-              label={t('create_time')}
-              className="col-span-full"
-              {...register('create_time')}
-              error={errors.create_time?.message}
-            />
-            <Input
-              type="date"
-              label={t('receive_time')}
-              {...register('receive_time')}
-              className="col-span-full"
-              error={errors.receive_time?.message}
-            />
+            
+            <Input label={t('import_day')} className="col-span-full" value={currentDate} {...register('import_day')} />
             <div
               onClick={addAdditionalInputs}
               className="col-span-full p-1 text-sm bg-transparent cursor-pointer"
               style={{ border: 'none', display: 'inline-block', color: 'blue', textDecoration: 'underline' }}
+             
             >
-              {t('add_more_inputs')}
+                {t('btn_add_product')}
             </div>
 
             {additionalInputs.map((inputGroup, index) => (
@@ -133,6 +128,7 @@ export default function CreateStaff() {
                 />
               )}
             />
+            
                 <Input
                   key={inputGroup[1]}
                   label={`Quantity`}

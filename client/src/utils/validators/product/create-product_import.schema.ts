@@ -4,11 +4,11 @@ const productSchema = z.object({
   product: z.string().min(1, { message: messages.createtimeIsRequired }),
   quantity: z.string().min(1,{ message: messages.createtimeIsRequired }),
   cost_price: z.string().min(1,{ message: messages.createtimeIsRequired }),
+  // supplier: z.string().min(1,{ message: messages.createtimeIsRequired }),
 });
 // form zod validation schema
 export const createProduct_ImportSchema = z.object({
-  create_time: z.string().min(1, { message: messages.createtimeIsRequired }),
-  receive_time: z.string().min(1, { message: messages.receivetimeIsRequired }), 
+  import_day: z.string().min(1, { message: messages.createtimeIsRequired }),
   products: z.array(productSchema).min(1, { message: messages.createtimeIsRequired }),
 });
 

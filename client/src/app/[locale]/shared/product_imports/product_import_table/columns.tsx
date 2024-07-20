@@ -12,7 +12,7 @@ import DeletePopover from '@/app/[locale]/shared/delete-popover';
 import { dispatch } from '@/store';
 import { deleteProduct, getProductImports } from '@/store/slices/product_importSlice';
 import toast from 'react-hot-toast';
-import EditProduct_Detail from '../create-product_import_detail';
+// import EditProduct_Detail from '../edit-product_import_detail';
 import Link from 'next/link';
 import { act } from 'react';
 
@@ -36,18 +36,11 @@ export const getColumns = (openModal: (args: any) => void, t: any) => [
       product_import.user_import.first_name + ' ' + product_import.user_import.last_name,
   },
   {
-    title: <HeaderCell title={t('create_time')} />,
-    dataIndex: 'create_time',
-    key: 'create_time',
+    title: <HeaderCell title={t('import_day')} />,
+    dataIndex: 'import_day',
+    key: 'import_day',
     width: 50,
-    render: (_: string, product_import: Product_Import) => product_import.create_time,
-  },
-  {
-    title: <HeaderCell title={t('receive_time')} />,
-    dataIndex: 'receive_time',
-    key: 'receive_time',
-    width: 100,
-    render: (_: number, product_import: Product_Import) => product_import.receive_time,
+    render: (_: string, product_import: Product_Import) => product_import.import_day,
   },
   {
     title: <HeaderCell title={t('total_cost')} />,
@@ -105,42 +98,35 @@ export const getColumns = (openModal: (args: any) => void, t: any) => [
   },
 
   {
-    title: <></>,
+    title: <HeaderCell title={'Action'} />,
     dataIndex: 'action',
     key: 'action',
     width: 10,
     render: (_: string, product_import: Product_Import) => (
-      <div className="flex items-center justify-end gap-3 pe-3">
-        <DeletePopover
-          title={t('delete')}
-          description={t('delete_import')}
-          onDelete={async () => {
-            const result = await dispatch(deleteProduct(product_import.active)); // Remove the .then() block
-            if (deleteProduct.fulfilled.match(result)) {
-              await dispatch(getProductImports({ page: 1, pageSize: 5, query: ''}));
-              toast.success(t('success'));
-            } else {
-              toast.error(t('failed'));
-            }
-          }}
-        />
-      </div>
+        <div className="flex items-center justify-end">
+            <DeletePopover
+                title={t('delete')}
+                description={t('delete_import')}
+                onDelete={async () => {
+                    
+                        const result = await dispatch(deleteProduct(product_import.active));
+                        if (deleteProduct.fulfilled.match(result)) {
+                            await dispatch(getProductImports({ page: 1, pageSize: 5, query: '' }));
+                            toast.success(t('success'));
+                        } else if (deleteProduct.rejected.match(result)) {
+                            const errorMessage = result.error.message || t('failed');
+                            toast.error(`${t('failed')}: ${errorMessage}`);
+                        }
+                }}
+            />
+        </div>
     ),
-  },
+}
 ];
-
-// export interface Product {
-//     active: string;
-//     name: string;
-//     cost_price: string;
-//     selling_price: string;
-//     quantity: string;
-
-//   }
 export interface Product_Import {
   active: string;
-  receive_time: string;
-  create_time: string;
+  import_day: string;
+
   total_cost: any;
   user_import: {
     first_name: string;

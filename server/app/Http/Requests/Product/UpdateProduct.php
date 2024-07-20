@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests\Product;
 
-use App\Http\Helpers\HelperRequest;
-use Symfony\Component\Console\Helper\Helper;
+use Illuminate\Foundation\Http\FormRequest;
 
-class ProductRequest extends HelperRequest
+class UpdateProduct extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +22,9 @@ class ProductRequest extends HelperRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
-            'product_type' => 'required',
-            'selling_price' => 'required',
+            'name' => 'nullable',
+            'product_type' => 'nullable',
+            'selling_price' => 'nullable',
             'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'quantity' => 'nullable',
         ];

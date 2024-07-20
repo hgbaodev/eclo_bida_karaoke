@@ -43,8 +43,8 @@ class ProductImportController extends Controller
             // $validated_data["user_id"] = $user->id;
             // Tạo phiếu nhập
             $importData = [
-                'create_time' => $validated_data['create_time'],
-                'receive_time' => $validated_data['receive_time'],
+                'import_day' => $validated_data['import_day'],
+
                 'user_id' => $userId
                 // Thêm các trường khác nếu cần thiết
             ];
@@ -99,58 +99,13 @@ class ProductImportController extends Controller
     }
     public function destroy($active)
     {
-        DB::beginTransaction();
+        $result = $this->product_import_Repository->deleteProductImportAndDetails($active);
 
-        try {
-            $productImport = $this->product_import_Repository->getProductImportByActive($active);
-
-            if (!$productImport) {
-                Log::error("Product import with active code $active is not found");
-                return $this->sentErrorResponse('Product import with active code ' . $active . ' is not found', 'error', 404);
-            }
-
-            Log::info("Found product import: ", ['productImport' => $productImport]);
-
-            // Lấy danh sách các sản phẩm trong phiếu nhập
-            $importDetails = $this->product_import_detail_Repository->getProductImportDetailByIdProdutImport($productImport->id);
-
-            foreach ($importDetails as $detail) {
-                $product = $this->product_Repository->getProductByID($detail->product_id);
-
-                if ($product) {
-                    Log::info("Processing product: ", ['product' => $product, 'detail' => $detail]);
-
-                    if ($detail->quantity > $product->quantity) {
-                        Log::error("The quantity of the import is greater than the quantity of the product", ['detail' => $detail, 'product' => $product]);
-                        return $this->sentErrorResponse('The quantity of the import is greater than the quantity of the product', 'error', 400);
-                    }
-
-                    // Cập nhật số lượng sản phẩm trong kho
-                    $product->quantity -= $detail->quantity;
-                    $product->save();
-
-                    Log::info("Updated product quantity", ['product' => $product]);
-                } else {
-                    Log::error("Product not found for detail", ['detail' => $detail]);
-                }
-
-                // Xóa chi tiết phiếu nhập
-                $this->product_import_detail_Repository->deleteByID($detail->id);
-                Log::info("Deleted product import detail", ['detail' => $detail]);
-            }
-
-            // Xóa phiếu nhập
-            $this->product_import_Repository->deleteByActive($active);
-            Log::info("Deleted product import", ['active' => $active]);
-
-            DB::commit();
-
-            return $this->sentSuccessResponse(null, $active . ' is deleted successfully', 200);
-        } catch (\Exception $e) {
-            DB::rollBack();
-            Log::error("Error occurred while deleting product import", ['exception' => $e]);
-            return $this->sentErrorResponse('An error occurred while deleting the product import: ' . $e->getMessage(), 'error', 500);
+        if ($result['status'] == 'error') {
+            return $this->sentErrorResponse($result['message'], 'error', 400);
         }
+
+        return $this->sentSuccessResponse(null, $result['message'], 200);
     }
     public function updateTotalCost($active)
     {

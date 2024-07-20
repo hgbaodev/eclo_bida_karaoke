@@ -28,6 +28,7 @@ export default function EditProduct({ product, active }: { product: EditProductI
 
       formData.append('image', imageFile);
       formData.append('name', data.name);
+      formData.append('selling_price', data.selling_price);
       formData.append('_method', 'PUT');
       formData.append('product_type', data.product_type);
 
@@ -85,6 +86,13 @@ export default function EditProduct({ product, active }: { product: EditProductI
               {...register('name')}
               className="col-span-[1/2]"
               error={errors.name?.message}
+            />
+             <Input
+              label={t('selling_price')}
+              placeholder={t('selling_price')}
+              {...register('selling_price')}
+              className="col-span-[1/2]"
+              error={errors.selling_price?.message}
             />
             <Controller
               name="product_type"

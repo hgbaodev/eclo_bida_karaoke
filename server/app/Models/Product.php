@@ -25,11 +25,11 @@ class Product extends Model
     protected $hidden = [
         'pivot'
     ];
-    
+
     protected $cats = [
         'quantity' => 'integer'
     ];
-    
+
 
     protected static function boot()
     {
