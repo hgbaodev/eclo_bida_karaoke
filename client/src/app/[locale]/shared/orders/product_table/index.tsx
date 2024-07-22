@@ -10,8 +10,9 @@ import { dispatch } from '@/store';
 import { getProducts, setPage, setPageSize } from '@/store/slices/productSlices';
 import { getColumns } from './columns';
 import FilterElement from './filter-elements';
-
+import { useTranslations } from 'next-intl';
 export default function ProductsOrderTable() {
+  const t = useTranslations('order');
   const { data, isLoading, pageSize, page, totalRow, query, type } = useSelector((state: RootState) => state.product);
   useEffect(() => {
     const fetch = async () => {
@@ -21,7 +22,7 @@ export default function ProductsOrderTable() {
   }, [page, pageSize, query, type]);
 
   const columns = useMemo(
-    () => getColumns(),
+    () => getColumns(t),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
