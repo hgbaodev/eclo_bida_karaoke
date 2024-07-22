@@ -95,14 +95,14 @@ export default function CreateStaff() {
             </div>
             
             <Input label={t('import_day')} className="col-span-full" value={currentDate} {...register('import_day')} />
-            <div
+            <Button
               onClick={addAdditionalInputs}
-              className="col-span-full p-1 text-sm bg-transparent cursor-pointer"
-              style={{ border: 'none', display: 'inline-block', color: 'blue', textDecoration: 'underline' }}
+              className=" p-1 text-sm  cursor-pointer"
+              style={{  display: 'inline-block', color: 'white' }}
              
             >
                 {t('btn_add_product')}
-            </div>
+            </Button>
 
             {additionalInputs.map((inputGroup, index) => (
               <div key={index} className="grid grid-cols-3 gap-4 col-span-full">
@@ -116,6 +116,7 @@ export default function CreateStaff() {
                   onChange={onChange}
                   name={name}
                   label={t('product_name')}
+                  
                   placeholder={t('select_product')}
                   error={errors.products?.[index]?.product?.message}
                   getOptionValue={(option) => option.active}
@@ -128,16 +129,17 @@ export default function CreateStaff() {
                 />
               )}
             />
-            
                 <Input
                   key={inputGroup[1]}
                   label={`Quantity`}
+                     className="col-span-[1/4]"
                   {...register(`products.${index}.quantity`)}
                   error={errors.products?.[index]?.quantity?.message}
                 />
                 <Input
                   key={inputGroup[2]}
                   label={`Import price`}
+                  className="col-span-[1/4]"
                   {...register(`products.${index}.cost_price`)}
                   error={errors.products?.[index]?.cost_price?.message}
                 />
