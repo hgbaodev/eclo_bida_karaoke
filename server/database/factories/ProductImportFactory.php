@@ -19,11 +19,19 @@ class ProductImportFactory extends Factory
      */
     public function definition(): array
     {
+        $startDate = strtotime('2024-01-01');
+        $endDate = strtotime('2024-12-31');
+
+        // Tạo timestamp ngẫu nhiên trong khoảng thời gian đã định nghĩa
+        $randomTimestamp = rand($startDate, $endDate);
+
+        // Chuyển đổi timestamp ngẫu nhiên thành định dạng ngày
+        $randomDate = date('Y-m-d H:i:s', $randomTimestamp);
         return [
-            "create_time" => $this->faker->dateTimeThisYear('now'),
-            "receive_time" => $this->faker->dateTimeBetween('now', '+1 month'),
+
             "user_id" => $this->faker->randomElement(['1', '2', '3']),
-            "status" => $this->faker->randomElement(['A', 'D']),
+
+            "import_day" => $randomDate,
         ];
     }
 }

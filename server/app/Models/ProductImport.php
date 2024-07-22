@@ -17,9 +17,7 @@ class ProductImport extends Model
     use SoftDeletes;
     protected $fillable = [
         'total_cost',
-        'create_time',
-        'receive_time',
-        'status',
+        'import_day',
         'user_id',
         'active',
     ];

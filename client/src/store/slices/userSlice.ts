@@ -18,6 +18,7 @@ const initialState: userType = {
   errors: null,
   isCreateLoading: false,
   isUpdateLoading: false,
+ 
 };
 
 export const getUsers = createAsyncThunk(
@@ -49,7 +50,6 @@ export const getUsers = createAsyncThunk(
     }
   },
 );
-
 export const createUser = createAsyncThunk('users/createUser', async (data: any, { rejectWithValue }) => {
   try {
     const response = await axiosInstance.post(`users`, data);

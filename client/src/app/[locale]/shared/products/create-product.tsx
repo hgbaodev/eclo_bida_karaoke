@@ -28,6 +28,7 @@ export default function CreateStaff() {
       const formData = new FormData();
       formData.append('image', imageFile);
       formData.append('name', data.name);
+      formData.append('selling_price', data.selling_price);
       formData.append('product_type', data.product_type);
       try {
         const result: any = await dispatch(createProduct(formData));
@@ -81,6 +82,13 @@ export default function CreateStaff() {
               className="col-span-full"
               {...register('name')}
               error={errors.name?.message}
+            />
+            <Input
+              label={t('selling_price')}
+              placeholder={t('selling_price')}
+              className="col-span-full"
+              {...register('selling_price')}
+              error={errors.selling_price?.message}
             />
             <Controller
               name="image"

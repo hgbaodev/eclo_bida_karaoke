@@ -2,9 +2,6 @@
 
 namespace App\Interface;
 
-use App\Models\ProductImpDetail;
-
-
 interface ProductImpDetailInterface
 {
     public function getProductImports($request);
@@ -14,4 +11,5 @@ interface ProductImpDetailInterface
     function getProductImportDetailByIdProdutImport($id);
     function getProductImportDetailById($id);
     function sumCost($active);
+    public function deleteByID($id);
 }

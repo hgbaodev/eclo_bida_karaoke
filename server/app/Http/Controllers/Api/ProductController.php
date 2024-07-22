@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\ProductRequest;
+use App\Http\Requests\Product\UpdateProduct;
+
 use App\Interface\ProductRepositoryInterface;
 use App\Interface\ProductTypeRepositoryInterface;
 use App\Repositories\ProductTypeRepository;
@@ -74,7 +76,7 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(ProductRequest $request, string $active)
+    public function update(UpdateProduct $request, string $active)
     {
         $validated_data = $request->validated();
         $quantity = $request->input('quantity');

@@ -2,6 +2,7 @@
 
 namespace App\Interface;
 
+use App\Models\Product;
 
 interface ProductRepositoryInterface
 {
@@ -12,4 +13,5 @@ interface ProductRepositoryInterface
     public function getProductByID($id);
     public function updateProductByActive($active, array $data);
     public function deleteByActive($active);
+    public function save(Product $product);
 }

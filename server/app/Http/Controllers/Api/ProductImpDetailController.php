@@ -35,7 +35,7 @@ class ProductImpDetailController extends Controller
     {
         try {
             $validated_data = $request->validated();
-            $selling_price = $request->input('selling_price');
+
             $cost_price = $request->input('cost_price');
             $quantity = $request->input('quantity');
             $product_import = $this->product_import_Repository->getProductImportByActive($validated_data['import']);
@@ -52,18 +52,12 @@ class ProductImpDetailController extends Controller
             if (!$supplier) {
                 return $this->sentErrorResponse("Supplier is not found", "error", 404);
             }
-            if ($cost_price >= $selling_price) {
-                return $this->sentErrorResponse("Selling price must be larger than cost price", "error", 404);
-            }
             $validated_data["import_id"] = $product_import->id;
             $validated_data["supplier_id"] = $supplier->id;
             $validated_data["id_product"] = $product->id;
             unset($validated_data['import']);
             unset($validated_data['product']);
             unset($validated_data['supplier']);
-            $product->quantity += $quantity;
-            $product->selling_price = $selling_price;
-            $product->save();
             $product->quantity += $quantity;
             $product->save();
             return $this->sentSuccessResponse($this->product_import_detail_Repository->create($validated_data));

@@ -11,4 +11,5 @@ interface ProductImportInterface
     public function getProductImportByActive($active);
     public function updateProductImportByActive($active, array $data);
     public function deleteByActive($active);
+    public function deleteProductImportAndDetails($active);
 }

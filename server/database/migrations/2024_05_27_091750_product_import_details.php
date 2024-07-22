@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('id_product');
             $table->double('cost_price');
-            $table->double('selling_price')->default(0);
             $table->bigInteger('quantity');
             $table->unsignedBigInteger('supplier_id')->nullable();
             $table->unsignedBigInteger('import_id');

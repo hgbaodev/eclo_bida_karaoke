@@ -67,4 +67,8 @@ class ProductRepository implements ProductRepositoryInterface
     {
         return Product::where("id", $id)->first();
     }
+    public function save(Product $product)
+    {
+        return $product->save();
+    }
 }

@@ -12,7 +12,6 @@ const initialState: product_ImportType = {
   page: 1,
   pageSize: 5,
   query: '',
-  status:'',
   errors: null,
   isCreateLoading: false,
   isUpdateLoading: false,
@@ -24,12 +23,12 @@ const initialState: product_ImportType = {
 
 export const getProductImports = createAsyncThunk(
   'product_imports',
-  async ({ page, pageSize, query,status }: { page: number; pageSize: number; query: string;status:string }) => {
+  async ({ page, pageSize, query }: { page: number; pageSize: number; query: string }) => {
     const url = new URL('/api/v1/product_imports', env.NEXT_API_URL);
     url.searchParams.set('page', `${page}`);
     url.searchParams.set('perPage', `${pageSize}`);
     url.searchParams.set('query', query);
-    url.searchParams.set('status', `${status}`);
+
 
     try {
       const response = await axiosInstance.get(url.href);
@@ -110,16 +109,11 @@ const product_importSlices = createSlice({
     },
     setReset: (state) => {
       state.page = 1;
-      state.status = '';
+
       state.isFiltered = false;
     },
     setErrors: (state, action) => {
       state.errors = action.payload;
-    },
-    setStatus: (state, action) => {
-      state.page = 1;
-      state.status = action.payload;
-      state.isFiltered = true;
     },
   },
   extraReducers: (builder) => {
@@ -165,9 +159,10 @@ const product_importSlices = createSlice({
       .addCase(updateProduct.rejected, (state) => {
         state.isUpdateLoading = false;
       });
+      
   },
 });
 
-export const { setPage, setPageSize, setReset, setQuery, setErrors,setStatus } = product_importSlices.actions;
+export const { setPage, setPageSize, setReset, setQuery, setErrors } = product_importSlices.actions;
 
 export default product_importSlices.reducer;
