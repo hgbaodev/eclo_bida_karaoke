@@ -46,6 +46,10 @@ class SalaryController extends Controller
             } else {
                 $staffs = $this->staffRepo->getAllStaffs();
                 foreach ($staffs as $staff) {
+                    $staff_salary = $this->salaryRepo->getSalaryByStaffAndDate($staff->id, $month, $year);
+                    if ($staff_salary) {
+                        return $this->sentErrorResponse("Salary in this month is already created", 'error', 404);
+                    }
                     $salary = [
                         'staff_id' => $staff->id,
                         'month' => $month,
