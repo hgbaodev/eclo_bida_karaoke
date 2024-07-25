@@ -8,6 +8,7 @@ use App\Interface\DeviceRepositoryInterface;
 use App\Interface\KitchenOrderRepositoryInterface;
 use App\Interface\LoggerRepositoryInterface;
 use App\Interface\AttendanceRepositoryInterface;
+use App\Interface\CompanyRepositoryInterface;
 use App\Interface\OrderDetailRepositoryInterface;
 use App\Interface\OrderRepositoryInterface;
 use App\Interface\PositionRepositoryInterface;
