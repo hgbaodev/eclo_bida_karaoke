@@ -8,7 +8,7 @@ use App\Interface\DeviceRepositoryInterface;
 use App\Interface\KitchenOrderRepositoryInterface;
 use App\Interface\LoggerRepositoryInterface;
 use App\Interface\AttendanceRepositoryInterface;
-use App\Interface\CompanyRepositoryInterface;
+
 use App\Interface\OrderDetailRepositoryInterface;
 use App\Interface\OrderRepositoryInterface;
 use App\Interface\PositionRepositoryInterface;
@@ -101,7 +101,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(OrderDetailRepositoryInterface::class, OrderDetailRepository::class);
         $this->app->bind(SalaryRepositoryInterface::class, SalaryRepository::class);
         $this->app->bind(DayOffRepositoryInterface::class, DayOffRepository::class);
-        $this->app->bind(CompanyRepositoryInterface::class, CompanyRepository::class);
         $this->app->bind(StatisticalRepositoryInterface::class, StatisticalRepository::class);
         $this->app->bind(FunctionalRepositoryInterface::class, FunctionalRepository::class);
     }
