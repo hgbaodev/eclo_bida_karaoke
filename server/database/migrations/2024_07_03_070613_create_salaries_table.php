@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreign('staff_id')->references('id')->on('staff');
             $table->integer("month");
             $table->integer("year");
+            $table->double("base_salary")->nullable();
             $table->integer("off_days")->nullable();
             $table->integer("off_days_unapproved")->nullable();
             $table->integer("working_days")->nullable();

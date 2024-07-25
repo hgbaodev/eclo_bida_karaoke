@@ -41,6 +41,7 @@ class DatabaseSeeder extends Seeder
             KitchenOrderSeeder::class,
             ServiceDeviceDetailSeeder::class,
             DayOffSeeder::class,
+            BranchSeeder::class,
             CompanySeeder::class
         ]);
     }
