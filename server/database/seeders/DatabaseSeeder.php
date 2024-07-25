@@ -42,6 +42,7 @@ class DatabaseSeeder extends Seeder
             ServiceDeviceDetailSeeder::class,
             DayOffSeeder::class,
             BranchSeeder::class,
+            CompanySeeder::class
         ]);
     }
 }

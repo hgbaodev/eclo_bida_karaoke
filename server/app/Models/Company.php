@@ -6,29 +6,31 @@ use App\Traits\GeneratesUniqueActive;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 
-class DayOffs extends Model
+class Company extends Model
 {
-    use HasFactory, GeneratesUniqueActive;
-    use SoftDeletes;
+    use HasFactory, SoftDeletes, GeneratesUniqueActive;
+
+    public $timestamps = true;
+
     protected $fillable = [
-        "id",
-        "staff_id",
-        "day_off",
-        "reason",
-        "type"
+        'active',
+        'company_name',
+        'address',
+        'phone_number',
+        'email',
     ];
+
     protected $hidden = [
-        "id",
-        "staff_id",
+        'id',
+        '`deleted_at'
     ];
-    public function staff_dayoff()
-    {
-        return $this->belongsTo(Staff::class, "staff_id");
-    }
+
     protected static function boot()
     {
         parent::boot();
+
         static::creating(function ($model) {
             if (empty($model->active)) {
                 $model->active = self::generateUniqueActive();
