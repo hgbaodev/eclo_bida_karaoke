@@ -11,7 +11,6 @@ class Salary extends Model
     use HasFactory, GeneratesUniqueActive;
     protected $fillable = [
         "staff_id",
-        "base_salary",
         "month",
         "year",
         "working_days",

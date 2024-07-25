@@ -48,13 +48,11 @@ class StaffRepository implements StaffRepositoryInterface
     }
     public function getAllStaffs()
     {
-        return Staff::query()->with(['position'])->get();
+        return Staff::all();
     }
     public function getStaffByActive($active)
     {
-        $staff = Staff::query()->with(["position"]);
-        $staff->where("active", $active);
-        return $staff->first();
+        return Staff::where("active", $active)->first();
     }
     public function createStaff(array $data)
     {

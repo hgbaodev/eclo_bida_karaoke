@@ -27,7 +27,6 @@ class AttendanceRequest extends HelperRequest
             "shift" => 'required',
             "day" => "required",
             "type" => 'nullable',
-            "workshift" => "required"
         ];
     }
 }

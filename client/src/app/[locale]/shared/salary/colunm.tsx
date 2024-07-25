@@ -31,7 +31,9 @@ export const getColumns = (openModal: (args: any) => void, t: any) => {
       key: 'sop',
       width: 50,
       render: (_: string, salary: Salary) => {
-        return salary.base_salary.toLocaleString('de-DE', { minimumFractionDigits: 2 });
+        return salary.staff.position
+          ? salary.staff.position.base_salary.toLocaleString('de-DE', { minimumFractionDigits: 2 })
+          : '';
       },
     },
     {
@@ -92,7 +94,6 @@ export const getColumns = (openModal: (args: any) => void, t: any) => {
 export interface Salary {
   month: number;
   year: number;
-  base_salary: number;
   staff: {
     first_name: string;
     last_name: string;
