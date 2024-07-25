@@ -72,7 +72,6 @@ class AreaRepository implements AreaRepositoryInterface
                 } else {
                     $service->is_booked = false;
                 }
-
                 return $service;
             });
             return $area;

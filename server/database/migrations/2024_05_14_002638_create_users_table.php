@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Str;
 
 return new class extends Migration
 {
@@ -21,6 +20,7 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->string('status')->default('A');
             $table->foreignId('role_id')->constrained('roles');
+            $table->foreignId('company_id')->nullable()->constrained('companies')->cascadeOnDelete();
             $table->string('active')->unique();
             $table->rememberToken();
             $table->timestamps();

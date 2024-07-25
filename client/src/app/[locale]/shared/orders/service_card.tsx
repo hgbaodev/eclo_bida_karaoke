@@ -73,8 +73,10 @@ const ServiceCard = ({ service }: { service: any }) => {
       </Dropdown>
       <div className="flex flex-col justify-center items-center">
         <Text className="font-bold">{service.name}</Text>
-        {service.is_booked && <Text className="font-bold text-white">Time Elapsed: {secondsElapsed}</Text>}
       </div>
+      {service.is_booked && (
+        <Text className="font-bold text-white absolute bottom-1 right-1 cursor-pointer">{secondsElapsed}</Text>
+      )}
     </div>
   );
 };
