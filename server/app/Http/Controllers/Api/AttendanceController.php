@@ -10,6 +10,7 @@ use App\Interface\AttendanceRepositoryInterface;
 use App\Interface\SalaryRepositoryInterface;
 use App\Interface\ShiftRepositoryInterface;
 use App\Interface\StaffRepositoryInterface;
+use App\Interface\WorkShiftRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
@@ -19,12 +20,14 @@ class AttendanceController extends Controller
     protected $staffRepo;
     protected $shiftRepo;
     protected $salaryRepo;
-    public function __construct(AttendanceRepositoryInterface $attendanceRepository, StaffRepositoryInterface $staffRepositoryInterface, ShiftRepositoryInterface $shiftRepositoryInterface, SalaryRepositoryInterface $salaryRepositoryInterface)
+    protected $workshiftRepo;
+    public function __construct(AttendanceRepositoryInterface $attendanceRepository, StaffRepositoryInterface $staffRepositoryInterface, ShiftRepositoryInterface $shiftRepositoryInterface, SalaryRepositoryInterface $salaryRepositoryInterface, WorkShiftRepositoryInterface $workShiftRepositoryInterface)
     {
         $this->attendanceRepository = $attendanceRepository;
         $this->staffRepo = $staffRepositoryInterface;
         $this->shiftRepo = $shiftRepositoryInterface;
         $this->salaryRepo = $salaryRepositoryInterface;
+        $this->workshiftRepo = $workShiftRepositoryInterface;
     }
     /**
      * Display a listing of the resource.
@@ -56,12 +59,20 @@ class AttendanceController extends Controller
         if (!$staff) {
             return $this->sentErrorResponse("Staff is not found", 'error', 404);
         }
-        $validatedData['time_in'] = $shift->time_in;
-        $validatedData['time_out'] = $shift->time_out;
-        $validatedData['staff_id'] = $staff->id;
-        $validatedData['shift_id'] = $shift->id;
-        unset($validatedData['staff']);
-        unset($validatedData['shift']);
+        $workshift = $this->workshiftRepo->getWorkShiftByActive($validatedData["workshift"]);
+        $start = Carbon::parse($workshift->date_start);
+        $end = Carbon::parse($workshift->date_end);
+        while ($start->lte($end)) {
+            $details = [
+                "staff_id" => $staff->id,
+                "shift_id" => $shift->id,
+                "time_in" => $shift->time_in,
+                "time_out" => $shift->time_out,
+                "day" => $start->toDateString()
+            ];
+            $this->attendanceRepository->createAttendance($details);
+            $start->addDay();
+        }
         return $this->sentSuccessResponse($this->attendanceRepository->createAttendance($validatedData));
     }
     public function storeByWorkShift(AttendanceByWSRequest $request)
@@ -190,7 +201,7 @@ class AttendanceController extends Controller
         if ($salary->staff->position->salary_structure === 'Day') {
             $updateSal = [
                 'working_days' => $count,
-                'total' => $count * $salary->staff->position->base_salary,
+                'total' => $count * $salary->base_salary,
             ];
         } else if ($salary->staff->position->salary_structure === 'Hour') {
             $currentDate = Carbon::today();
@@ -204,12 +215,12 @@ class AttendanceController extends Controller
             $updateSal = [
                 'working_days' => $count,
                 'working_hours' => $hours,
-                'total' => $hours * $salary->staff->position->base_salary,
+                'total' => $hours * $salary->base_salary,
             ];
         } else {
             $updateSal = [
                 'working_days' => $count,
-                'total' => ($salary->staff->position->base_salary / ($daysInMonth - $salary->off_days)) * $count,
+                'total' => ($salary->base_salary / ($daysInMonth - $salary->off_days)) * $count,
             ];
         }
         $this->salaryRepo->updateSalaryByActive($salary->active, $updateSal);
