@@ -36,4 +36,5 @@ Route::group([
     require __DIR__ . '/api/statistical.php';
     require __DIR__ . '/api/functional.php';
     require __DIR__ . '/api/companies.php';
+    require __DIR__ . '/api/branch.php';
 });
