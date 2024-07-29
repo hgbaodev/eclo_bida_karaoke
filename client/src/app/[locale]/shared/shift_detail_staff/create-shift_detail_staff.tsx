@@ -42,6 +42,7 @@ export default function CreateShiftDetailStaff({ day_of_week, shift }: { day_of_
           staff: data.staff,
           day: formattedDate,
           shift: shift.active,
+          workshift: oneWorkShift.active,
         };
         const resultAttendance: any = dispatch(createAttendance(detail));
       });
@@ -171,4 +172,5 @@ export interface Detail {
   staff: string;
   day: string;
   shift: string;
+  workshift: string;
 }

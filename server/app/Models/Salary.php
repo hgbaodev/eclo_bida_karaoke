@@ -13,6 +13,7 @@ class Salary extends Model
         "staff_id",
         "month",
         "year",
+        "base_salary",
         "working_days",
         "off_days",
         "off_days_unapproved",

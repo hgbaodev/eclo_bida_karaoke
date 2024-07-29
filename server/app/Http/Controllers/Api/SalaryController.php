@@ -39,6 +39,7 @@ class SalaryController extends Controller
                 $validateData['staff_id'] = $staff->id;
                 $validateData['working_days'] = 0;
                 $validateData['working_hours'] = 0;
+                $validateData['base_salary'] = $staff->position->base_salary;
                 $validateData['off_days'] = 0;
                 $validateData['total'] = 0;
                 unset($validateData['staff']);
@@ -54,6 +55,7 @@ class SalaryController extends Controller
                         'staff_id' => $staff->id,
                         'month' => $month,
                         'year' => $year,
+                        'base_salary' => $staff->position->base_salary,
                         'working_days' => 0,
                         'working_hours' => 0,
                         'off_days' => 0,
