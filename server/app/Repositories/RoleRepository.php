@@ -2,9 +2,11 @@
 
 namespace App\Repositories;
 
+use App\Enums\PermissionEnum;
 use App\Interface\RoleRepositoryInterface;
 use App\Models\Functional;
 use App\Models\Role;
+use Illuminate\Support\Facades\DB;
 
 class RoleRepository implements RoleRepositoryInterface
 {
@@ -85,12 +87,12 @@ class RoleRepository implements RoleRepositoryInterface
     return $role;
   }
 
-    public function renameRoleById($id, array $data)
-    {
-        $role = Role::find($id);
-        $role->update($data);
-        return $role;
-    }
+  public function renameRoleById($id, array $data)
+  {
+    $role = Role::find($id);
+    $role->update($data);
+    return $role;
+  }
 
   public function deleteRoleById($id)
   {
@@ -102,5 +104,56 @@ class RoleRepository implements RoleRepositoryInterface
   public function getRoleByActive($active)
   {
     return Role::where('active', $active)->first();
+  }
+
+  public function createAdminRole($role_id)
+  {
+    $functionalNames = [
+      'user',
+      'customer',
+      'logger',
+      'import',
+      'product',
+      'kitchenorder',
+      'supplier',
+      'shiftdetail',
+      'schedule',
+      'dayoff',
+      'attendance',
+      'shifts',
+      'position',
+      'salary',
+      'staff',
+      'role',
+      'device',
+      'table&room',
+      'servicetype',
+      'price',
+      'statistical',
+      'revenue',
+      'order'
+    ];
+
+    $permissions = [
+      PermissionEnum::VIEW,
+      PermissionEnum::CREATE,
+      PermissionEnum::UPDATE,
+      PermissionEnum::DELETE
+    ];
+
+    $functionalIds = DB::table('functionals')->whereIn('name', $functionalNames)->pluck('id', 'name');
+
+    $data = [];
+    foreach ($functionalNames as $functionalName) {
+      foreach ($permissions as $permission) {
+        $data[] = [
+          'role_id' => $role_id,
+          'functional_id' => $functionalIds[$functionalName],
+          'permission_id' => $permission
+        ];
+      }
+    }
+
+    DB::table('role_functional_permissions')->insert($data);
   }
 }

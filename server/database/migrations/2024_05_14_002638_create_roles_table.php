@@ -13,10 +13,13 @@ return new class extends Migration
     {
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->string('color')->unique();
+            $table->string('name');
+            $table->string('color');
             $table->string('active')->unique();
-            $table->foreignId('company_id')->nullable()->constrained('companies')->cascadeOnDelete();
+            $table->foreignId('branch_id')
+                ->nullable()
+                ->constrained('branches')
+                ->cascadeOnDelete();
         });
     }
 

@@ -8,6 +8,7 @@ use App\Interface\DeviceRepositoryInterface;
 use App\Interface\KitchenOrderRepositoryInterface;
 use App\Interface\LoggerRepositoryInterface;
 use App\Interface\AttendanceRepositoryInterface;
+use App\Interface\BranchRepositoryInterface;
 use App\Interface\CompanyRepositoryInterface;
 use App\Interface\OrderDetailRepositoryInterface;
 use App\Interface\OrderRepositoryInterface;
@@ -33,12 +34,14 @@ use App\Interface\WorkShiftRepositoryInterface;
 use App\Interface\DayOffRepositoryInterface;
 use App\Interface\FunctionalRepositoryInterface;
 use App\Interface\StatisticalRepositoryInterface;
+use App\Interface\UserBranchRepositoryInterface;
 use App\Repositories\AreaRepository;
 use App\Repositories\CustomerRepository;
 use App\Repositories\DeviceRepository;
 use App\Repositories\KitchenOrderRepository;
 use App\Repositories\LoggerRepository;
 use App\Repositories\AttendanceRepository;
+use App\Repositories\BranchRepository;
 use App\Repositories\CompanyRepository;
 use App\Repositories\OrderDetailRepository;
 use App\Repositories\OrderRepository;
@@ -50,7 +53,6 @@ use App\Repositories\RoleRepository;
 use App\Repositories\ServiceDeviceDetailRepository;
 use App\Repositories\SupplierRepository;
 use App\Repositories\UserRepository;
-use Illuminate\Support\ServiceProvider;
 use App\Repositories\ServiceTypeRepository;
 use App\Repositories\ShiftRepository;
 use App\Repositories\StaffRepository;
@@ -65,6 +67,8 @@ use App\Repositories\WorkShiftRepository;
 use App\Repositories\DayOffRepository;
 use App\Repositories\FunctionalRepository;
 use App\Repositories\StatisticalRepository;
+use App\Repositories\UserBranchRepository;
+use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -104,6 +108,8 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(StatisticalRepositoryInterface::class, StatisticalRepository::class);
         $this->app->bind(FunctionalRepositoryInterface::class, FunctionalRepository::class);
         $this->app->bind(CompanyRepositoryInterface::class, CompanyRepository::class);
+        $this->app->bind(BranchRepositoryInterface::class, BranchRepository::class);
+        $this->app->bind(UserBranchRepositoryInterface::class, UserBranchRepository::class);
     }
 
     /**

@@ -11,4 +11,5 @@ interface RoleRepositoryInterface
     public function deleteRoleById($id);
     public function getRoleByActive($active);
     public function renameRoleById(string $id, array $data);
+    public function createAdminRole($role_id);
 }
