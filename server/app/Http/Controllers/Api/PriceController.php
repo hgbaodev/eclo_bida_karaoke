@@ -32,7 +32,7 @@ class PriceController extends Controller
         if ($returnedData == null) {
             return $this->sentErrorResponse("Price not found");
         }
-        return $this->sentErrorResponse($returnedData);
+        return $this->sentSuccessResponse($returnedData);
     }
 
     public function store(StorePriceRequest $request)
