@@ -1,13 +1,11 @@
 'use client';
 import PageHeader from '@/app/[locale]/shared/page-header';
 import { dispatch } from '@/store';
-import { createOrder, getAreas } from '@/store/slices/orderSlice';
+import { getAreas } from '@/store/slices/orderSlice';
 import { RootState } from '@/store/types';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { MdMoreHoriz } from 'react-icons/md';
 import { useSelector } from 'react-redux';
-import { Dropdown, Text } from 'rizzui';
 import { Tab } from 'rizzui';
 import usePusher from '@/hooks/use-pusher';
 import toast from 'react-hot-toast';
@@ -17,7 +15,6 @@ import { Badge, ActionIcon } from 'rizzui';
 import { appendNoti, setIsLoading } from '@/store/slices/kitchen_order_notification_slice';
 import { useTranslations } from 'next-intl';
 import useCheckPermissions from '@/hooks/use-check-permission';
-import dayjs from 'dayjs';
 import ServiceCard from '@/app/[locale]/shared/orders/service_card';
 
 export default function BlankPage() {

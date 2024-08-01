@@ -7,7 +7,7 @@ const withNextIntl = createNextIntlPlugin();
 const nextConfig = {
   reactStrictMode: false,
   images: {
-    domains: ['avatars.githubusercontent.com', 'via.placeholder.com'],
+    domains: ['avatars.githubusercontent.com', 'via.placeholder.com', 'localhost'],
   },
 };
 

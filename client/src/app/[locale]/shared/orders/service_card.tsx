@@ -8,6 +8,7 @@ import { Dropdown, Text } from 'rizzui';
 import toast from 'react-hot-toast';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 const ServiceCard = ({ service }: { service: any }) => {
   const navigate = useRouter();
@@ -72,6 +73,7 @@ const ServiceCard = ({ service }: { service: any }) => {
         </Dropdown.Menu>
       </Dropdown>
       <div className="flex flex-col justify-center items-center">
+        <Image src="http://localhost:8000/storage/uploads/table.png" alt={service.name} width={60} height={60} />
         <Text className="font-bold">{service.name}</Text>
       </div>
       {service.is_booked && (
