@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Attendance;
+namespace App\Http\Requests\Branch;
 
 use App\Http\Helpers\HelperRequest;
 
-class AttendanceRequest extends HelperRequest
+class UpdateBranchRequest extends HelperRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,12 +22,8 @@ class AttendanceRequest extends HelperRequest
     public function rules(): array
     {
         return [
-            "time" => 'nullable',
-            "staff" => "required",
-            "shift" => 'required',
-            "day" => "required",
-            "type" => 'nullable',
-            "workshift" => "required"
+            "company" => "required",
+            "name" => "required"
         ];
     }
 }
